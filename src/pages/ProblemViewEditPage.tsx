@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useExamDetail, useExamEditor } from '@/features/content';
 import { PreviewEditToggle } from '../components/page/ProblemViewEditPage/PreviewEditToggle';
 import { ProblemMetaBlock } from '../components/page/ProblemViewEditPage/ProblemMetaBlock';
-import { QuestionBlock } from '../components/page/ProblemViewEditPage/QuestionBlock';
-import { SubQuestionBlock } from '../components/page/ProblemViewEditPage/SubQuestionBlock';
+import { QuestionSectionView } from '../components/page/ProblemViewEditPage/QuestionSectionView';
 import { ActionBar } from '../components/page/ProblemViewEditPage/ActionBar';
 import { ProblemEditor } from '../components/page/ProblemViewEditPage/ProblemEditor';
 import { useServiceHealthContext } from '../contexts/ServiceHealthContext';
@@ -41,6 +40,20 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
     }
   }, [exam]);
 
+  const hasEditPermission = !!props.user && !!exam && (
+    props.user.id === (exam as any).userId ||
+    props.user.id === (exam as any).user_id ||
+    props.user.username === (exam as any).userName ||
+    props.user.role === 'admin' ||
+    (props as any).isOwner
+  );
+
+  useEffect(() => {
+    if (!hasEditPermission && isEditMode) {
+      setIsEditMode(false);
+    }
+  }, [hasEditPermission, isEditMode]);
+
   if (loading) return <div>Loading...</div>;
   if (error || !exam) return <div>Error loading exam.</div>;
 
@@ -62,6 +75,8 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
           <PreviewEditToggle
             isEditMode={isEditMode}
             setIsEditMode={setIsEditMode}
+            disabled={!hasEditPermission}
+            disabledReason="編集権限が必要です"
           />
         </div>
 
@@ -71,30 +86,12 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
               <ProblemEditor
                 exam={editedExam}
                 onChange={setEditedExam}
+                canEdit={hasEditPermission}
               />
             ) : (
               <div className="space-y-8">
                 {exam.questions.map((q: any) => (
-                  <div key={q.id} className="space-y-6">
-                    <QuestionBlock
-                      questionNumber={q.question_number}
-                      content={q.question_content}
-                      format={q.question_format as 0 | 1}
-                    />
-                    <div className="pl-8 space-y-4">
-                      {q.sub_questions.map((sq: any) => (
-                        <SubQuestionBlock
-                          key={sq.id}
-                          subQuestionNumber={sq.sub_question_number}
-                          questionTypeId={sq.question_type_id}
-                          questionContent={sq.question_content}
-                          questionFormat={sq.question_format as 0 | 1}
-                          answerContent={sq.answer_content}
-                          answerFormat={sq.answer_format as 0 | 1}
-                        />
-                      ))}
-                    </div>
-                  </div>
+                  <QuestionSectionView key={q.id} question={q} />
                 ))}
               </div>
             )}

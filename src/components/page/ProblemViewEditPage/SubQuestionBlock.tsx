@@ -4,7 +4,10 @@ import { FileCode, FileText, Edit, Trash2, Plus, ChevronDown, ChevronUp } from '
 import { MarkdownBlock } from '@/components/common/MarkdownBlock';
 import { LatexBlock } from '@/components/common/LatexBlock';
 import ProblemTypeRegistry from '@/components/problemTypes/ProblemTypeRegistry';
+import MultipleChoiceView from '@/components/problemTypes/MultipleChoiceView';
 import { ProblemTypeViewProps } from '@/types/problemTypes';
+import { SubQuestionMetaEdit } from './common/SubQuestionMetaEdit';
+import { SubQuestionMetaView } from './common/SubQuestionMetaView';
 
 export type SubQuestionBlockProps = {
   subQuestionNumber: number;
@@ -23,6 +26,7 @@ export type SubQuestionBlockProps = {
   onFormatChange?: (type: 'question' | 'answer', format: 0 | 1) => void;
   onKeywordAdd?: (keyword: string) => void;
   onKeywordRemove?: (keywordId: string) => void;
+  onTypeChange?: (typeId: number) => void;
   onDelete?: () => void;
   className?: string;
 };
@@ -53,6 +57,7 @@ export function SubQuestionBlock({
   onFormatChange,
   onKeywordAdd,
   onKeywordRemove,
+  onTypeChange,
   onDelete,
   className = '',
 }: SubQuestionBlockProps) {
@@ -62,8 +67,9 @@ export function SubQuestionBlock({
   const [isEditingAnswer, setIsEditingAnswer] = useState(false);
   const [editQuestionContent, setEditQuestionContent] = useState(questionContent);
   const [editAnswerContent, setEditAnswerContent] = useState(answerContent || '');
-  const [newKeyword, setNewKeyword] = useState('');
   const [answerExpanded, setAnswerExpanded] = useState(showAnswer);
+  // ensure registry is ready for view components
+  ProblemTypeRegistry.registerDefaults();
 
   const handleQuestionFormatToggle = () => {
     const newFormat = currentQuestionFormat === 0 ? 1 : 0;
@@ -87,24 +93,41 @@ export function SubQuestionBlock({
     setIsEditingAnswer(false);
   };
 
-  const handleKeywordAdd = () => {
-    if (newKeyword.trim() && onKeywordAdd) {
-      onKeywordAdd(newKeyword.trim());
-      setNewKeyword('');
-    }
-  };
-
   return (
     <div className={`border-b border-gray-100 last:border-b-0 ${className}`}>
       <div className="p-4 sm:p-6">
         <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-3 sm:gap-4 flex-1">
             <div className="flex-shrink-0 w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">
               ({subQuestionNumber})
             </div>
-            <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs">
-              {questionTypeLabels[questionTypeId] || '記述式'}
-            </span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-gray-900 text-sm font-medium">小問{subQuestionNumber}</span>
+                <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs">
+                  {questionTypeLabels[questionTypeId] || '記述式'}
+                </span>
+              </div>
+              {/* タイプセレクト + キーワード（共通コンポーネント / 表示専用分岐） */}
+              {canEdit ? (
+                <SubQuestionMetaEdit
+                  questionTypeId={questionTypeId}
+                  questionTypeOptions={Object.entries(questionTypeLabels).map(([id, label]) => ({
+                    value: Number(id),
+                    label,
+                  }))}
+                  keywords={keywords}
+                  onTypeChange={onTypeChange}
+                  onKeywordAdd={onKeywordAdd}
+                  onKeywordRemove={onKeywordRemove}
+                />
+              ) : (
+                <SubQuestionMetaView
+                  questionTypeLabel={questionTypeLabels[questionTypeId] || '記述式'}
+                  keywords={keywords}
+                />
+              )}
+            </div>
           </div>
 
           {/* 編集/削除ボタン */}
@@ -184,32 +207,33 @@ export function SubQuestionBlock({
               <div className={canSwitchFormat ? 'pt-8' : ''}>
                 {/* Delegate rendering to the problem type view component */}
                 {(() => {
-                  try {
-                    ProblemTypeRegistry.registerDefaults();
-                    const Comp = ProblemTypeRegistry.getProblemTypeView
-                      ? ProblemTypeRegistry.getProblemTypeView(questionTypeId)
-                      : null;
-                    if (Comp) {
-                      const viewProps: ProblemTypeViewProps = {
-                        subQuestionNumber,
-                        questionContent: questionContent,
-                        questionFormat: currentQuestionFormat,
-                        answerContent,
-                        answerFormat: currentAnswerFormat,
-                        options,
-                        keywords,
-                      };
-                      return <Comp {...viewProps} />;
-                    }
-                  } catch (e) {
-                    // fall back to default rendering
+                  const viewProps: ProblemTypeViewProps = {
+                    subQuestionNumber,
+                    questionContent,
+                    questionFormat: currentQuestionFormat,
+                    answerContent,
+                    answerFormat: currentAnswerFormat,
+                    options,
+                    keywords,
+                    showAnswer: answerExpanded && showAnswer,
+                  };
+
+                  const Comp = ProblemTypeRegistry.getProblemTypeView
+                    ? ProblemTypeRegistry.getProblemTypeView(questionTypeId)
+                    : null;
+
+                  if (Comp) {
+                    return <Comp {...viewProps} />;
                   }
 
-                  return currentQuestionFormat === 0 ? (
-                    <MarkdownBlock content={questionContent} className="text-sm" />
-                  ) : (
-                    <LatexBlock content={questionContent} displayMode={false} className="text-sm" />
-                  );
+                  // fallback: multiple choice explicit
+                  if (questionTypeId === 2) {
+                    return <MultipleChoiceView {...viewProps} />;
+                  }
+
+                  return currentQuestionFormat === 0
+                    ? <MarkdownBlock content={questionContent} className="text-sm" />
+                    : <LatexBlock content={questionContent} displayMode={false} className="text-sm" />;
                 })()}
               </div>
             </div>
@@ -217,74 +241,6 @@ export function SubQuestionBlock({
         </div>
 
         {/* 選択肢（選択式の場合） */}
-        {questionTypeId === 2 && options.length > 0 && (
-          <div className="mb-4 space-y-2">
-            {options.map((option, index) => (
-              <div
-                key={option.id}
-                className={`p-3 rounded-lg border ${option.isCorrect
-                    ? 'border-green-300 bg-green-50'
-                    : 'border-gray-200 bg-white'
-                  }`}
-              >
-                <div className="flex items-start gap-2">
-                  <span className="flex-shrink-0 w-6 h-6 bg-gray-100 text-gray-700 rounded-full flex items-center justify-center text-xs">
-                    {String.fromCharCode(65 + index)}
-                  </span>
-                  <span className="text-sm text-gray-900">{option.content}</span>
-                  {option.isCorrect && (
-                    <span className="ml-auto px-2 py-0.5 bg-green-600 text-white rounded text-xs">
-                      正解
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* キーワード */}
-        {keywords.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-3">
-            {keywords.map((keyword) => (
-              <span
-                key={keyword.id}
-                className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-100 text-indigo-700 rounded text-xs"
-              >
-                {keyword.keyword}
-                {canEdit && onKeywordRemove && (
-                  <button
-                    onClick={() => onKeywordRemove(keyword.id)}
-                    className="hover:bg-indigo-200 rounded-full p-0.5"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                  </button>
-                )}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* キーワード追加 */}
-        {canEdit && onKeywordAdd && (
-          <div className="flex gap-2 mb-4">
-            <input
-              type="text"
-              value={newKeyword}
-              onChange={(e) => setNewKeyword(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleKeywordAdd()}
-              placeholder="キーワードを追加..."
-              className="flex-1 px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <button
-              onClick={handleKeywordAdd}
-              className="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
         {/* 解答セクション */}
         {answerContent && (
           <div className="mt-4 border-t border-gray-200 pt-4">
@@ -362,10 +318,12 @@ export function SubQuestionBlock({
                         )}
                       </div>
                     </div>
-                    {currentAnswerFormat === 0 ? (
-                      <MarkdownBlock content={answerContent} className="text-sm" />
-                    ) : (
-                      <LatexBlock content={answerContent} displayMode={false} className="text-sm" />
+                    {showAnswer && (
+                      currentAnswerFormat === 0 ? (
+                        <MarkdownBlock content={answerContent} className="text-sm" />
+                      ) : (
+                        <LatexBlock content={answerContent} displayMode={false} className="text-sm" />
+                      )
                     )}
                   </>
                 )}

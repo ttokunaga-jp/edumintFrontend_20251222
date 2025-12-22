@@ -6,6 +6,7 @@ export type ProblemTypeViewProps = {
   answerFormat?: 0 | 1;
   options?: Array<{ id: string; content: string; isCorrect: boolean }>;
   keywords?: Array<{ id: string; keyword: string }>;
+  showAnswer?: boolean;
 };
 
 export type ProblemTypeEditProps = ProblemTypeViewProps & {

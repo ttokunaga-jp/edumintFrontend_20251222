@@ -1,13 +1,15 @@
-import React, { Suspense, useEffect } from 'react';
-import { QuestionBlock } from './QuestionBlock';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/primitives/button';
 import { Plus } from 'lucide-react';
 import ProblemTypeRegistry from '@/components/problemTypes/ProblemTypeRegistry';
 import { ProblemTypeEditProps } from '@/types/problemTypes';
+import { QuestionSectionEdit } from './QuestionSectionEdit';
+import { QuestionSectionView } from './QuestionSectionView';
 
 export interface ProblemEditorProps {
     exam: any;
     onChange: (exam: any) => void;
+    canEdit?: boolean;
 }
 
 const editComponentLoaders: Record<number, React.LazyExoticComponent<React.ComponentType<ProblemTypeEditProps>>> = {
@@ -53,7 +55,7 @@ const FallbackEdit = ({ questionContent, answerContent, onQuestionChange, onAnsw
     </div>
 );
 
-export function ProblemEditor({ exam, onChange }: ProblemEditorProps) {
+export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorProps) {
     const safeExam = exam ?? { questions: [] };
     const questions = Array.isArray(safeExam.questions) ? safeExam.questions : [];
 
@@ -92,6 +94,33 @@ export function ProblemEditor({ exam, onChange }: ProblemEditorProps) {
         });
     };
 
+    const handleQuestionFormatChange = (qIdx: number, format: 0 | 1) => {
+        updateQuestion(qIdx, (question) => {
+            question.question_format = format;
+        });
+    };
+
+    const handleQuestionDifficultyChange = (qIdx: number, value: number) => {
+        updateQuestion(qIdx, (question) => {
+            question.difficulty = value;
+        });
+    };
+
+    const handleQuestionKeywordAdd = (qIdx: number, keyword: string) => {
+        updateQuestion(qIdx, (question) => {
+            const keywords = Array.isArray(question.keywords) ? [...question.keywords] : [];
+            keywords.push({ id: `kw-${Date.now()}`, keyword });
+            question.keywords = keywords;
+        });
+    };
+
+    const handleQuestionKeywordRemove = (qIdx: number, keywordId: string) => {
+        updateQuestion(qIdx, (question) => {
+            const keywords = Array.isArray(question.keywords) ? question.keywords.filter((k: any) => k.id !== keywordId) : [];
+            question.keywords = keywords;
+        });
+    };
+
     const handleSubQuestionContentChange = (qIdx: number, sqIdx: number, content: string) => {
         updateSubQuestion(qIdx, sqIdx, (sub) => {
             sub.question_content = content;
@@ -126,6 +155,28 @@ export function ProblemEditor({ exam, onChange }: ProblemEditorProps) {
         });
     };
 
+    const handleSubQuestionKeywordAdd = (qIdx: number, sqIdx: number, keyword: string) => {
+        updateSubQuestion(qIdx, sqIdx, (sub) => {
+            const keywords = Array.isArray(sub.keywords) ? [...sub.keywords] : [];
+            keywords.push({ id: `sqkw-${Date.now()}`, keyword });
+            sub.keywords = keywords;
+        });
+    };
+
+    const handleSubQuestionKeywordRemove = (qIdx: number, sqIdx: number, keywordId: string) => {
+        updateSubQuestion(qIdx, sqIdx, (sub) => {
+            const keywords = Array.isArray(sub.keywords) ? sub.keywords.filter((k: any) => k.id !== keywordId) : [];
+            sub.keywords = keywords;
+        });
+    };
+
+    const handleSubQuestionTypeChange = (qIdx: number, sqIdx: number, typeId: number) => {
+        updateSubQuestion(qIdx, sqIdx, (sub) => {
+            sub.sub_question_type_id = typeId;
+            sub.question_type_id = typeId;
+        });
+    };
+
     const addQuestion = () => {
         const newQuestion = {
             id: `new-q-${Date.now()}`,
@@ -156,75 +207,54 @@ export function ProblemEditor({ exam, onChange }: ProblemEditorProps) {
         });
     };
 
-    const renderSubQuestionEditor = (sq: any, qIdx: number, sqIdx: number) => {
-        const typeId = sq.sub_question_type_id ?? sq.question_type_id ?? sq.questionTypeId ?? 1;
-        const EditComponent = editComponentLoaders[typeId] ?? ProblemTypeRegistry.getProblemTypeEdit(typeId);
-        const normalizedProps: ProblemTypeEditProps = {
-            subQuestionNumber: sq.sub_question_number ?? sq.subQuestionNumber ?? sqIdx + 1,
-            questionContent: sq.sub_question_content ?? sq.question_content ?? '',
-            questionFormat: (sq.sub_question_format ?? sq.question_format ?? 0) as 0 | 1,
-            answerContent: sq.answer_content ?? '',
-            answerFormat: (sq.answer_format ?? 0) as 0 | 1,
-            options: sq.options ?? [],
-            keywords: sq.keywords ?? [],
-            onQuestionChange: (content) => handleSubQuestionContentChange(qIdx, sqIdx, content),
-            onAnswerChange: (content) => handleSubQuestionAnswerChange(qIdx, sqIdx, content),
-            onOptionsChange: (opts) => handleSubQuestionOptionsChange(qIdx, sqIdx, opts),
-            onFormatChange: (field, format) => handleSubQuestionFormatChange(qIdx, sqIdx, field, format),
-        };
-
-        const label = questionTypeLabels[typeId] ?? '記述式';
-        const content = EditComponent ? <EditComponent {...normalizedProps} /> : <FallbackEdit {...normalizedProps} />;
-
-        return (
-            <div key={sq.id || sqIdx} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-                <div className="mb-3 flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 text-sm">
-                        ({normalizedProps.subQuestionNumber})
-                    </div>
-                    <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-700">{label}</span>
-                </div>
-                <Suspense fallback={<div className="rounded-md bg-gray-50 p-4 text-sm text-gray-500">編集UIを読み込み中...</div>}>
-                    {content}
-                </Suspense>
-            </div>
-        );
-    };
-
     return (
         <div className="space-y-12">
             {questions.map((q: any, qIdx: number) => (
                 <div key={q.id || qIdx} className="space-y-6">
-                    <QuestionBlock
-                        questionNumber={q.question_number ?? q.questionNumber ?? qIdx + 1}
-                        content={q.question_content ?? ''}
-                        format={(q.question_format ?? 0) as 0 | 1}
-                        canEdit={true}
-                        onContentChange={(content) => handleQuestionChange(qIdx, content)}
-                    />
-                    <div className="space-y-4 pl-8">
-                        {(q.sub_questions || []).map((sq: any, sqIdx: number) => renderSubQuestionEditor(sq, qIdx, sqIdx))}
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="mt-2 border-dashed"
-                            onClick={() => addSubQuestion(qIdx)}
-                        >
-                            <Plus className="mr-2 h-4 w-4" />
-                            小問を追加
-                        </Button>
-                    </div>
+                    {canEdit ? (
+                        <>
+                            <QuestionSectionEdit
+                                question={q}
+                                onQuestionChange={(content) => handleQuestionChange(qIdx, content)}
+                                onQuestionFormatChange={(f) => handleQuestionFormatChange(qIdx, f)}
+                                onQuestionDifficultyChange={(d) => handleQuestionDifficultyChange(qIdx, d)}
+                                onQuestionKeywordAdd={(kw) => handleQuestionKeywordAdd(qIdx, kw)}
+                                onQuestionKeywordRemove={(kwId) => handleQuestionKeywordRemove(qIdx, kwId)}
+                                onSubQuestionChange={(sqIdx, content) => handleSubQuestionContentChange(qIdx, sqIdx, content)}
+                                onSubAnswerChange={(sqIdx, content) => handleSubQuestionAnswerChange(qIdx, sqIdx, content)}
+                                onSubOptionsChange={(sqIdx, opts) => handleSubQuestionOptionsChange(qIdx, sqIdx, opts)}
+                                onSubFormatChange={(sqIdx, field, format) => handleSubQuestionFormatChange(qIdx, sqIdx, field, format)}
+                                onSubKeywordAdd={(sqIdx, kw) => handleSubQuestionKeywordAdd(qIdx, sqIdx, kw)}
+                                onSubKeywordRemove={(sqIdx, kwId) => handleSubQuestionKeywordRemove(qIdx, sqIdx, kwId)}
+                                onSubTypeChange={(sqIdx, type) => handleSubQuestionTypeChange(qIdx, sqIdx, type)}
+                                editComponentLoaders={editComponentLoaders}
+                            />
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="mt-2 border-dashed ml-8"
+                                onClick={() => addSubQuestion(qIdx)}
+                            >
+                                <Plus className="mr-2 h-4 w-4" />
+                                小問を追加
+                            </Button>
+                        </>
+                    ) : (
+                        <QuestionSectionView question={q} />
+                    )}
                 </div>
             ))}
 
-            <Button
-                variant="ghost"
-                className="w-full rounded-xl border-2 border-dashed border-gray-200 py-8 text-gray-500 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
-                onClick={addQuestion}
-            >
-                <Plus className="mr-2 h-6 w-6" />
-                大問を追加
-            </Button>
+            {canEdit && (
+                <Button
+                    variant="ghost"
+                    className="w-full rounded-xl border-2 border-dashed border-gray-200 py-8 text-gray-500 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+                    onClick={addQuestion}
+                >
+                    <Plus className="mr-2 h-6 w-6" />
+                    大問を追加
+                </Button>
+            )}
         </div>
     );
 }

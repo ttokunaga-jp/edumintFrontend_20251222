@@ -1,8 +1,9 @@
 // @ts-nocheck
 import { useState } from 'react';
-import { FileCode, FileText, Edit, Trash2, Plus } from 'lucide-react';
-import { MarkdownBlock } from '@/components/common/MarkdownBlock';
-import { LatexBlock } from '@/components/common/LatexBlock';
+import { FileCode, FileText, Edit, Trash2 } from 'lucide-react';
+import QuestionForm from '@/components/common/QuestionForm';
+import { QuestionMetaView } from './common/QuestionMetaView';
+import { QuestionMetaEdit } from './common/QuestionMetaEdit';
 
 export type QuestionBlockProps = {
   questionNumber: number;
@@ -17,10 +18,13 @@ export type QuestionBlockProps = {
   onKeywordAdd?: (keyword: string) => void;
   onKeywordRemove?: (keywordId: string) => void;
   onDelete?: () => void;
+  difficultyOptions?: Array<{ value: number; label: string }>;
+  onDifficultyChange?: (value: number) => void;
   className?: string;
 };
 
 const difficultyLabels = {
+  0: { label: '未設定', color: 'bg-gray-100 text-gray-600' },
   1: { label: '基礎', color: 'bg-green-100 text-green-700' },
   2: { label: '応用', color: 'bg-yellow-100 text-yellow-700' },
   3: { label: '発展', color: 'bg-red-100 text-red-700' },
@@ -39,12 +43,18 @@ export function QuestionBlock({
   onKeywordAdd,
   onKeywordRemove,
   onDelete,
+  difficultyOptions = [
+    { value: 0, label: '未設定' },
+    { value: 1, label: '基礎' },
+    { value: 2, label: '応用' },
+    { value: 3, label: '発展' },
+  ],
+  onDifficultyChange,
   className = '',
 }: QuestionBlockProps) {
   const [currentFormat, setCurrentFormat] = useState<0 | 1>(format);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const [editContent, setEditContent] = useState(content);
-  const [newKeyword, setNewKeyword] = useState('');
 
   const handleFormatToggle = () => {
     const newFormat = currentFormat === 0 ? 1 : 0;
@@ -55,13 +65,6 @@ export function QuestionBlock({
   const handleSave = () => {
     onContentChange?.(editContent);
     setIsEditing(false);
-  };
-
-  const handleKeywordAdd = () => {
-    if (newKeyword.trim() && onKeywordAdd) {
-      onKeywordAdd(newKeyword.trim());
-      setNewKeyword('');
-    }
   };
 
   return (
@@ -78,127 +81,49 @@ export function QuestionBlock({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="text-gray-900">大問{questionNumber}</h3>
-                {difficulty && (
-                  <span className={`px-2 py-0.5 rounded text-xs ${difficultyLabels[difficulty as keyof typeof difficultyLabels].color}`}>
-                    {difficultyLabels[difficulty as keyof typeof difficultyLabels].label}
-                  </span>
-                )}
               </div>
 
-              {/* コンテンツ */}
-              {isEditing ? (
-                <div className="space-y-3">
-                  <textarea
-                    value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
-                    className="w-full min-h-[200px] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder={currentFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleSave}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                    >
-                      保存
-                    </button>
-                    <button
-                      onClick={() => {
-                        setEditContent(content);
-                        setIsEditing(false);
-                      }}
-                      className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                    >
-                      キャンセル
-                    </button>
-                  </div>
-                </div>
+              {/* 難易度セレクト + キーワード（共通コンポーネント / 表示専用） */}
+              {canEdit ? (
+                <QuestionMetaEdit
+                  difficulty={difficulty}
+                  difficultyOptions={difficultyOptions}
+                  keywords={keywords}
+                  onDifficultyChange={onDifficultyChange}
+                  onKeywordAdd={onKeywordAdd}
+                  onKeywordRemove={onKeywordRemove}
+                />
               ) : (
-                <div className="relative">
-                  {canSwitchFormat && (
-                    <button
-                      onClick={handleFormatToggle}
-                      className="absolute top-0 right-0 flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-gray-50 rounded-lg text-sm text-gray-700 transition-colors z-10 border border-gray-200"
-                    >
-                      {currentFormat === 0 ? (
-                        <>
-                          <FileText className="w-4 h-4" />
-                          <span className="hidden sm:inline">Markdown</span>
-                        </>
-                      ) : (
-                        <>
-                          <FileCode className="w-4 h-4" />
-                          <span className="hidden sm:inline">LaTeX</span>
-                        </>
-                      )}
-                    </button>
-                  )}
-
-                  <div className={canSwitchFormat ? 'pt-10' : ''}>
-                    {currentFormat === 0 ? (
-                      <MarkdownBlock content={content} />
-                    ) : (
-                      <LatexBlock content={content} displayMode={true} />
-                    )}
-                  </div>
-                </div>
+                <QuestionMetaView
+                  difficulty={difficulty}
+                  difficultyLabels={difficultyLabels as any}
+                  keywords={keywords}
+                />
               )}
 
-              {/* キーワード */}
-              {keywords.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {keywords.map((keyword) => (
-                    <span
-                      key={keyword.id}
-                      className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-100 text-indigo-700 rounded text-xs"
-                    >
-                      {keyword.keyword}
-                      {canEdit && onKeywordRemove && (
-                        <button
-                          onClick={() => onKeywordRemove(keyword.id)}
-                          className="hover:bg-indigo-200 rounded-full p-0.5"
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </button>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* キーワード追加 */}
-              {canEdit && onKeywordAdd && (
-                <div className="flex gap-2 mt-3">
-                  <input
-                    type="text"
-                    value={newKeyword}
-                    onChange={(e) => setNewKeyword(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleKeywordAdd()}
-                    placeholder="キーワードを追加..."
-                    className="flex-1 px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  />
-                  <button
-                    onClick={handleKeywordAdd}
-                    className="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition-colors"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
+              {/* コンテンツ */}
+              <QuestionForm
+                value={isEditing ? editContent : content}
+                format={currentFormat}
+                onChange={(v) => {
+                  setEditContent(v);
+                  onContentChange?.(v);
+                }}
+                onFormatChange={(f) => {
+                  setCurrentFormat(f);
+                  onFormatChange?.(f);
+                }}
+                readOnly={!canEdit}
+                textareaLabel="問題文"
+                previewLabel="プレビュー"
+                className="pt-2"
+              />
             </div>
           </div>
 
           {/* 編集/削除ボタン */}
           {canEdit && (
             <div className="flex gap-2">
-              {!isEditing && (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="編集"
-                >
-                  <Edit className="w-4 h-4" />
-                </button>
-              )}
               {onDelete && (
                 <button
                   onClick={onDelete}

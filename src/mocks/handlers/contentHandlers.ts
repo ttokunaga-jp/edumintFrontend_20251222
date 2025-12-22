@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { mockExams, mockQuestions, mockSubQuestions } from '../mockData/content';
+import { mockExams as searchMockExams } from '../mockData/search';
 
 const apiBase =
   (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(
@@ -20,7 +21,69 @@ export const contentHandlers = [
     const exam = mockExams.find((e) => e.id === normalizedId) || mockExams.find((e) => e.id === fallbackId);
 
     if (!exam) {
-      return HttpResponse.json({ message: 'Exam not found' }, { status: 404 });
+      // If search mocks contain the exam, use it to build a detail payload; otherwise synthesize a full-type sample.
+      const searchExam = searchMockExams.find((e) => e.id === normalizedId) || searchMockExams.find((e) => e.id === fallbackId);
+      const templateSubs = mockSubQuestions.filter((sq) => sq.questionId === 'exam-3-q1');
+      const syntheticQuestionId = `${normalizedId}-q1`;
+      const syntheticSubs = templateSubs.map((sq, idx) => ({
+        ...sq,
+        id: `${normalizedId}-sq${idx + 1}`,
+        questionId: syntheticQuestionId,
+        subQuestionNumber: idx + 1,
+      }));
+
+      const base = searchExam ?? {
+        id: normalizedId,
+        examName: `Mock Exam ${normalizedId}`,
+        school: 'Mock University',
+        universityName: 'Mock University',
+        universityId: 0,
+        teacherId: 'mock-teacher',
+        teacherName: 'Mock Teacher',
+        subjectId: 'mock-subject',
+        subjectName: 'Mock Subject',
+        examYear: 2024,
+        userId: 'mock-user',
+        userName: 'mock_user',
+        isPublic: true,
+        status: 'active',
+        commentCount: 0,
+        goodCount: 0,
+        badCount: 0,
+        viewCount: 0,
+        adCount: 0,
+        bookmarkCount: 0,
+        shareCount: 0,
+        pdfDownloadCount: 0,
+        fieldType: 'science',
+        level: 'basic',
+        questionCount: 1,
+        durationMinutes: 60,
+        majorType: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      const questions = [
+        {
+          id: syntheticQuestionId,
+          question_number: 1,
+          question_content: 'HMR auto mock question (all types preview)',
+          question_format: 0,
+          sub_questions: syntheticSubs.map((sq) => ({
+            ...sq,
+            sub_question_number: sq.subQuestionNumber ?? sq.sub_question_number ?? 1,
+            question_type_id: sq.questionTypeId ?? sq.sub_question_type_id ?? 1,
+            question_content: sq.questionContent ?? sq.sub_question_content ?? '',
+            question_format: sq.questionFormat ?? 0,
+            answer_content: sq.answerContent ?? '',
+            answer_format: sq.answerFormat ?? 0,
+            options: sq.options,
+          })),
+        },
+      ];
+
+      return HttpResponse.json({ ...base, questions });
     }
 
     const questions = mockQuestions
@@ -40,6 +103,7 @@ export const contentHandlers = [
             question_format: sq.questionFormat,
             answer_content: sq.answerContent,
             answer_format: sq.answerFormat,
+            keywords: sq.keywords ?? [],
           })),
       }));
 

@@ -10,6 +10,7 @@ import {
   StructureConfirmPage,
 } from "@/pages";
 import { ServiceHealthProvider } from "@/contexts/ServiceHealthContext";
+import { mockUser } from "@/mocks/mockData/user";
 import TopMenuBar from "@/components/common/TopMenuBar";
 import Sidebar from "@/components/common/Sidebar";
 import NotificationPopover from "@/components/common/NotificationPopover";
@@ -75,6 +76,11 @@ function App() {
       } catch (e) {
         console.error("Auto login failed", e);
       }
+    } else {
+      // デフォルトでモックユーザー（Alice Smith）でログイン扱いとする
+      setUser(mockUser);
+      localStorage.setItem("edumint_user", JSON.stringify(mockUser));
+      setCurrentPage("home");
     }
   };
 
