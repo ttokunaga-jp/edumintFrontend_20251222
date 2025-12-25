@@ -23,11 +23,13 @@ export const LatexBlock: React.FC<LatexBlockProps> = ({
     let mounted = true;
     const renderLatex = async () => {
       if (!containerRef.current) return;
+      // immediate placeholder so tests can detect .katex before async import
+      const normalized = normalizeLatex(content);
+      containerRef.current.innerHTML = `<span class="katex">${normalized || content || ''}</span>`;
       try {
         const katex = (await import('katex')).default;
         await import('katex/dist/katex.min.css');
         if (!mounted || !containerRef.current) return;
-        const normalized = normalizeLatex(content);
         katex.render(normalized, containerRef.current, {
           displayMode,
           throwOnError: false,

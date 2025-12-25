@@ -1,4 +1,5 @@
 import { setupServer } from 'msw/node';
-import { contentHandlers } from './handlers/contentHandlers';
+import { handlers } from './handlers';
 
-export const server = setupServer(...contentHandlers);
+// Centralized MSW server for tests (Vitest) covering all domains
+export const server = setupServer(...handlers);

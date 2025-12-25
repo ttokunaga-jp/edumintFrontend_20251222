@@ -183,7 +183,7 @@ export default function AdvancedSearchPanel({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0 z-10"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0"
                     onClick={() => {
                       clearFilter('universityId');
                       clearFilter('universityName');
@@ -215,7 +215,7 @@ export default function AdvancedSearchPanel({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0 z-10"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0"
                     onClick={() => {
                       clearFilter('facultyId');
                       clearFilter('facultyName');
@@ -247,7 +247,7 @@ export default function AdvancedSearchPanel({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0 z-10"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0"
                     onClick={() => {
                       clearFilter('subjectId');
                       clearFilter('subjectName');
@@ -282,7 +282,7 @@ export default function AdvancedSearchPanel({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0 z-10"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 size-6 p-0"
                     onClick={() => {
                       clearFilter('teacherId');
                       clearFilter('teacherName');

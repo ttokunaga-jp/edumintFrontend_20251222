@@ -4,9 +4,6 @@ import type { GenerationStep } from '@/components/page/ProblemCreatePage/Generat
 import { useFileUpload } from '@/features/content/hooks/useFileUpload';
 import { useGenerationStatus } from '@/features/content/hooks/useGenerationStatus';
 import type { ProblemSettings } from '@/components/page/ProblemCreatePage/ProblemSettingsBlock';
-import type { GenerationOptions } from '@/components/page/ProblemCreatePage/GenerationOptionsBlock';
-
-type Phase = 'input' | 'uploading' | 'generating' | 'complete' | 'error';
 
 const defaultProblemSettings: ProblemSettings = {
   autoGenerateQuestions: true,
@@ -19,15 +16,6 @@ const defaultProblemSettings: ProblemSettings = {
   isPublic: true,
 };
 
-const defaultGenerationOptions: GenerationOptions = {
-  useAdvancedAI: true,
-  preserveFormatting: true,
-  detectDiagrams: true,
-  splitBySection: true,
-  generatePracticeTests: false,
-  optimizeForMobile: true,
-};
-
 export const useProblemCreateController = ({
   onNavigate,
   onGenerated,
@@ -38,60 +26,48 @@ export const useProblemCreateController = ({
   jobId?: string;
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [phase, setPhase] = useState<Phase>(jobId ? 'generating' : 'input');
   const [problemSettings, setProblemSettings] = useState<ProblemSettings>(defaultProblemSettings);
-  const [generationOptions, setGenerationOptions] = useState<GenerationOptions>(defaultGenerationOptions);
   const [generatedProblemId, setGeneratedProblemId] = useState<string | undefined>();
+  const [localError, setLocalError] = useState<string | null>(null);
 
   const { files, isUploading, uploadFiles, clearFiles, lastUploadJobId, removeFile } = useFileUpload();
   const {
     jobId: activeJobId,
     phase: generationPhase,
+    currentStep,
     progress,
     errorMessage,
+    errorCode,
     startGeneration,
     trackExistingJob,
   } = useGenerationStatus({
     initialJobId: jobId,
     onComplete: (status) => {
-      setPhase('complete');
       const problemId = status.problemId || status.data?.problemId;
       if (problemId) {
         setGeneratedProblemId(problemId);
         onGenerated?.(problemId);
-        onNavigate('problem-view', problemId);
       }
     },
-    onError: () => setPhase('error'),
+    onError: (msg, code) => {
+      setLocalError(msg);
+      console.error(`Generation error [${code}]:`, msg);
+    },
   });
-
-  const currentStep: GenerationStep =
-    generationPhase === 'complete'
-      ? 'complete'
-      : generationPhase === 'analyzing'
-        ? 'analyzing'
-        : generationPhase === 'uploading'
-          ? 'uploading'
-          : generationPhase === 'structure-review'
-            ? 'structure-review'
-          : 'generating';
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selected = Array.from(event.target.files ?? []);
     if (!selected.length) return;
 
-    setPhase('uploading');
     const uploadJobId = await uploadFiles(selected);
     if (!uploadJobId) {
-      setPhase('input');
+      setLocalError('アップロードに失敗しました');
       return;
     }
 
     const startedJobId = await startGeneration(uploadJobId);
-    if (startedJobId) {
-      setPhase('generating');
-    } else {
-      setPhase('error');
+    if (!startedJobId) {
+      setLocalError('生成の開始に失敗しました');
     }
   };
 
@@ -99,27 +75,30 @@ export const useProblemCreateController = ({
 
   const handleReset = () => {
     clearFiles();
-    setPhase('input');
+    setLocalError(null);
   };
 
   if (jobId) {
     trackExistingJob(jobId);
   }
 
+  const uiPhase =
+    files.length === 0 && !isUploading ? 'input' : generationPhase || 'uploading';
+
   return {
     fileInputRef,
-    phase,
+    phase: uiPhase,
     problemSettings,
-    generationOptions,
     setProblemSettings,
-    setGenerationOptions,
     files,
     isUploading,
     lastUploadJobId,
     activeJobId,
-    generationStep: currentStep,
+    generationStep: generationPhase,
+    detailedStep: currentStep,
     progress,
-    errorMessage,
+    errorMessage: localError || errorMessage,
+    errorCode,
     generatedProblemId,
     removeFile,
     handleFileSelect,

@@ -1,182 +1,92 @@
 // @ts-nocheck
-import { Check, Clock, Loader, AlertCircle, FileText, Search, Settings, Sparkles } from 'lucide-react';
+import { Check, Clock, Loader, AlertCircle, FileText, Search, Settings, Sparkles, Upload, FileCheck, GitBranch, Hourglass } from 'lucide-react';
+import type { GenerationPhase } from '@/features/generation/stateMachine';
+import type { GenerationCurrentStep } from '@/services/api/gateway/generation';
 
-export type GenerationStep = 'uploading' | 'analyzing' | 'structure-review' | 'generating' | 'complete' | 'error';
+export type GenerationStep = GenerationPhase;
 
 interface GenerationStatusTimelineProps {
   currentStep: GenerationStep;
+  detailedStep?: GenerationCurrentStep;
   progress: number;
   jobId?: string;
   errorMessage?: string;
+  errorCode?: string;
   className?: string;
 }
 
-const steps = [
-  {
-    id: 'uploading' as GenerationStep,
-    label: 'ファイルアップロード',
-    icon: FileText,
-  },
-  {
-    id: 'analyzing' as GenerationStep,
-    label: 'コンテンツ解析',
-    icon: Search,
-  },
-  {
-    id: 'structure-review' as GenerationStep,
-    label: '構造確認',
-    icon: Settings,
-  },
-  {
-    id: 'generating' as GenerationStep,
-    label: '問題生成中',
-    icon: Sparkles,
-  },
-  {
-    id: 'complete' as GenerationStep,
-    label: '完了',
-    icon: Check,
-  },
-];
+const phaseLabels: Record<GenerationPhase, string> = {
+  'queued': 'ジョブ待機中',
+  'uploading': 'ファイルアップロード',
+  'analyzing': 'コンテンツ解析',
+  'structure-review': '構造確認',
+  'generating': '問題生成中',
+  'postprocessing': '最終検証中',
+  'complete': '完了',
+  'paused': '一時停止中',
+  'error': 'エラー',
+};
+
+const stepLabels: Record<GenerationCurrentStep, string> = {
+  'waiting_for_upload': 'アップロード待ち',
+  'uploading': 'ファイルアップロード中',
+  'upload_verifying': 'ファイル検証中',
+  'extracting': 'テキスト抽出中',
+  'sectioning': 'セクション分割中',
+  'structure_detecting': '構造検出中',
+  'structure_review': '構造確認待ち',
+  'waiting_for_slot': '生成スロット待ち',
+  'generating': 'AI生成実行中',
+  'postprocessing': '出力検証中',
+  'completed': '完了',
+};
 
 export function GenerationStatusTimeline({
   currentStep,
+  detailedStep,
   progress,
   jobId,
   errorMessage,
+  errorCode,
   className = '',
 }: GenerationStatusTimelineProps) {
-  const currentStepIndex = steps.findIndex(s => s.id === currentStep);
   const isError = currentStep === 'error';
+  const isComplete = currentStep === 'complete';
+  const isPaused = currentStep === 'paused';
 
-  const getStepStatus = (stepIndex: number): 'complete' | 'current' | 'pending' | 'error' => {
-    if (isError && stepIndex === currentStepIndex) return 'error';
-    if (stepIndex < currentStepIndex) return 'complete';
-    if (stepIndex === currentStepIndex) return 'current';
-    return 'pending';
-  };
+  // 表示するラベル（詳細ステップがあればそちらを優先）
+  const displayLabel = detailedStep ? stepLabels[detailedStep] : phaseLabels[currentStep];
 
   return (
     <div className={className}>
-      {/* ジョブID表示 */}
-      {jobId && (
-        <div className="mb-6 p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <p className="text-xs text-gray-500">ジョブID</p>
-          <p className="text-sm font-mono text-gray-700">{jobId}</p>
+      {/* 現在の状態表示 */}
+      {!isError && !isComplete && (
+        <div className="mb-4">
+          <div className="flex items-center gap-2 text-gray-700">
+            <Loader className="w-4 h-4 animate-spin text-indigo-600" />
+            <span className="text-sm font-medium">{displayLabel}</span>
+          </div>
+          {detailedStep && (
+            <p className="text-xs text-gray-500 mt-1 ml-6">
+              {getStepDescription(detailedStep)}
+            </p>
+          )}
         </div>
       )}
 
-      {/* タイムライン（デスクトップ） */}
-      <div className="hidden md:block">
-        <div className="relative">
-          {/* 背景ライン */}
-          <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200" />
-          
-          {/* プログレスライン */}
-          <div 
-            className="absolute top-5 left-0 h-0.5 bg-indigo-600 transition-all duration-500"
-            style={{ width: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
-          />
-
-          <div className="relative flex justify-between">
-            {steps.map((step, index) => {
-              const status = getStepStatus(index);
-              const StepIcon = step.icon;
-
-              return (
-                <div key={step.id} className="flex flex-col items-center">
-                  {/* アイコン */}
-                  <div
-                    className={`
-                      w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300
-                      ${status === 'complete' ? 'bg-indigo-600 border-indigo-600 text-white' : ''}
-                      ${status === 'current' ? 'bg-white border-indigo-600 text-indigo-600 animate-pulse' : ''}
-                      ${status === 'pending' ? 'bg-white border-gray-300 text-gray-400' : ''}
-                      ${status === 'error' ? 'bg-red-500 border-red-500 text-white' : ''}
-                    `}
-                  >
-                    {status === 'complete' ? (
-                      <Check className="w-5 h-5" />
-                    ) : status === 'error' ? (
-                      <AlertCircle className="w-5 h-5" />
-                    ) : status === 'current' ? (
-                      <Loader className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <StepIcon className="w-5 h-5" />
-                    )}
-                  </div>
-
-                  {/* ラベル */}
-                  <p
-                    className={`
-                      mt-2 text-xs text-center whitespace-nowrap
-                      ${status === 'complete' || status === 'current' ? 'text-gray-900' : 'text-gray-400'}
-                      ${status === 'error' ? 'text-red-600' : ''}
-                    `}
-                  >
-                    {step.label}
-                  </p>
-                </div>
-              );
-            })}
+      {/* 一時停止表示 */}
+      {isPaused && (
+        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-yellow-600" />
+            <span className="text-sm font-medium text-yellow-800">一時停止中</span>
           </div>
         </div>
-      </div>
-
-      {/* タイムライン（モバイル） */}
-      <div className="md:hidden space-y-3">
-        {steps.map((step, index) => {
-          const status = getStepStatus(index);
-          const StepIcon = step.icon;
-
-          return (
-            <div key={step.id} className="flex items-center gap-3">
-              {/* アイコン */}
-              <div
-                className={`
-                  w-8 h-8 rounded-full flex items-center justify-center border-2 flex-shrink-0 transition-all duration-300
-                  ${status === 'complete' ? 'bg-indigo-600 border-indigo-600 text-white' : ''}
-                  ${status === 'current' ? 'bg-white border-indigo-600 text-indigo-600 animate-pulse' : ''}
-                  ${status === 'pending' ? 'bg-white border-gray-300 text-gray-400' : ''}
-                  ${status === 'error' ? 'bg-red-500 border-red-500 text-white' : ''}
-                `}
-              >
-                {status === 'complete' ? (
-                  <Check className="w-4 h-4" />
-                ) : status === 'error' ? (
-                  <AlertCircle className="w-4 h-4" />
-                ) : status === 'current' ? (
-                  <Loader className="w-4 h-4 animate-spin" />
-                ) : (
-                  <StepIcon className="w-4 h-4" />
-                )}
-              </div>
-
-              {/* ラベル */}
-              <p
-                className={`
-                  text-sm flex-1
-                  ${status === 'complete' || status === 'current' ? 'text-gray-900' : 'text-gray-400'}
-                  ${status === 'error' ? 'text-red-600' : ''}
-                `}
-              >
-                {step.label}
-              </p>
-
-              {/* 進行中インジケーター */}
-              {status === 'current' && !isError && (
-                <div className="text-xs text-indigo-600 font-medium">
-                  {progress}%
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+      )}
 
       {/* プログレスバー */}
-      {!isError && currentStep !== 'complete' && (
-        <div className="mt-6">
+      {!isError && !isComplete && (
+        <div className="mt-4">
           <div className="flex justify-between text-sm text-gray-600 mb-2">
             <span>進行状況</span>
             <span>{progress}%</span>
@@ -190,17 +100,87 @@ export function GenerationStatusTimeline({
         </div>
       )}
 
+      {/* 完了表示 */}
+      {isComplete && (
+        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="flex items-center gap-3">
+            <Check className="w-5 h-5 text-green-600" />
+            <span className="text-sm font-medium text-green-800">生成が完了しました</span>
+          </div>
+        </div>
+      )}
+
       {/* エラーメッセージ */}
       {isError && errorMessage && (
-        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
             <div className="flex-1">
+              {errorCode && (
+                <p className="text-xs text-red-600 font-mono mb-1">{errorCode}</p>
+              )}
               <p className="text-sm text-red-800">{errorMessage}</p>
+              <p className="text-xs text-red-600 mt-2">
+                {getErrorAdvice(errorCode)}
+              </p>
             </div>
           </div>
         </div>
       )}
     </div>
   );
+}
+
+/**
+ * 各ステップの説明文
+ */
+function getStepDescription(step: GenerationCurrentStep): string {
+  switch (step) {
+    case 'waiting_for_upload':
+      return 'ファイルのアップロードを待機しています';
+    case 'uploading':
+      return 'ファイルをサーバーにアップロード中です';
+    case 'upload_verifying':
+      return 'アップロードされたファイルを検証しています';
+    case 'extracting':
+      return 'OCRとテキスト抽出を実行中です（この処理には時間がかかる場合があります）';
+    case 'sectioning':
+      return 'ドキュメントをセクションに分割しています';
+    case 'structure_detecting':
+      return '問題の構造（大問・小問）を推定しています';
+    case 'structure_review':
+      return '構造の確認をお待ちしています';
+    case 'waiting_for_slot':
+      return 'AI生成の順番待ちです';
+    case 'generating':
+      return 'AIが問題を生成中です（この処理には時間がかかる場合があります）';
+    case 'postprocessing':
+      return '生成結果の検証と正規化を実行中です';
+    case 'completed':
+      return '処理が完了しました';
+    default:
+      return '';
+  }
+}
+
+/**
+ * エラーコードに応じたアドバイス
+ */
+function getErrorAdvice(errorCode?: string): string {
+  if (!errorCode) return 'しばらく待ってから再試行してください。';
+  
+  switch (errorCode) {
+    case 'upload_failed':
+      return 'ネットワーク接続を確認して、再度アップロードしてください。';
+    case 'ocr_timeout':
+      return 'ファイルが大きすぎるか複雑すぎる可能性があります。ファイルを分割してお試しください。';
+    case 'structure_invalid':
+      return '問題構造を検出できませんでした。ファイルの形式を確認してください。';
+    case 'generation_timeout':
+      return 'AI生成に時間がかかりすぎました。問題数を減らして再試行してください。';
+    case 'policy_violation':
+      return 'コンテンツポリシーに違反する内容が検出されました。ファイルの内容を確認してください。';
+    default:
+      return 'エラーが発生しました。しばらく待ってから再試行してください。';
+  }
 }

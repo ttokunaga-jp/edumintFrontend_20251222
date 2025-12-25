@@ -6,9 +6,9 @@ import { QuestionMetaView } from './common/QuestionMetaView';
 import { QuestionMetaEdit } from './common/QuestionMetaEdit';
 
 export type QuestionBlockProps = {
-  questionNumber: number;
-  content: string;
-  format: 0 | 1; // 0: markdown, 1: latex
+  questionNumber?: number;
+  content?: string;
+  format?: 0 | 1; // 0: markdown, 1: latex
   difficulty?: number; // 1: 基礎, 2: 応用, 3: 発展
   keywords?: Array<{ id: string; keyword: string }>;
   canEdit?: boolean;
@@ -21,6 +21,7 @@ export type QuestionBlockProps = {
   difficultyOptions?: Array<{ value: number; label: string }>;
   onDifficultyChange?: (value: number) => void;
   className?: string;
+  question?: any; // optional shorthand input
 };
 
 const difficultyLabels = {
@@ -51,10 +52,18 @@ export function QuestionBlock({
   ],
   onDifficultyChange,
   className = '',
-}: QuestionBlockProps) {
-  const [currentFormat, setCurrentFormat] = useState<0 | 1>(format);
+  viewMode = 'full',
+  question,
+}: QuestionBlockProps & { viewMode?: 'full' | 'structure' }) {
+  const derivedContent = content ?? question?.question_content ?? question?.questionContent ?? '';
+  const derivedNumber = questionNumber ?? question?.question_number ?? question?.questionNumber ?? 1;
+  const derivedFormat = (format ?? question?.question_format ?? question?.questionFormat ?? 0) as 0 | 1;
+  const derivedDifficulty = difficulty ?? question?.difficulty ?? 0;
+  const derivedKeywords = keywords.length ? keywords : question?.keywords ?? [];
+
+  const [currentFormat, setCurrentFormat] = useState<0 | 1>(derivedFormat);
   const [isEditing, setIsEditing] = useState(true);
-  const [editContent, setEditContent] = useState(content);
+  const [editContent, setEditContent] = useState(derivedContent);
 
   const handleFormatToggle = () => {
     const newFormat = currentFormat === 0 ? 1 : 0;
@@ -75,49 +84,51 @@ export function QuestionBlock({
           <div className="flex items-start gap-3 sm:gap-4 flex-1">
             {/* 問題番号 */}
             <div className="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-lg flex items-center justify-center">
-              {questionNumber}
+              {derivedNumber}
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
-                <h3 className="text-gray-900">大問{questionNumber}</h3>
+                <h3 className="text-gray-900">大問{derivedNumber}</h3>
               </div>
 
               {/* 難易度セレクト + キーワード（共通コンポーネント / 表示専用） */}
               {canEdit ? (
                 <QuestionMetaEdit
-                  difficulty={difficulty}
+                  difficulty={derivedDifficulty}
                   difficultyOptions={difficultyOptions}
-                  keywords={keywords}
+                  keywords={derivedKeywords}
                   onDifficultyChange={onDifficultyChange}
                   onKeywordAdd={onKeywordAdd}
                   onKeywordRemove={onKeywordRemove}
                 />
               ) : (
                 <QuestionMetaView
-                  difficulty={difficulty}
+                  difficulty={derivedDifficulty}
                   difficultyLabels={difficultyLabels as any}
-                  keywords={keywords}
+                  keywords={derivedKeywords}
                 />
               )}
 
               {/* コンテンツ */}
-              <QuestionForm
-                value={isEditing ? editContent : content}
-                format={currentFormat}
-                onChange={(v) => {
-                  setEditContent(v);
-                  onContentChange?.(v);
-                }}
-                onFormatChange={(f) => {
-                  setCurrentFormat(f);
-                  onFormatChange?.(f);
-                }}
-                readOnly={!canEdit}
-                textareaLabel="問題文"
-                previewLabel="プレビュー"
-                className="pt-2"
-              />
+              {viewMode === 'full' && (
+                <QuestionForm
+                  value={isEditing ? editContent : derivedContent}
+                  format={currentFormat}
+                  onChange={(v) => {
+                    setEditContent(v);
+                    onContentChange?.(v);
+                  }}
+                  onFormatChange={(f) => {
+                    setCurrentFormat(f);
+                    onFormatChange?.(f);
+                  }}
+                  readOnly={!canEdit}
+                  textareaLabel="問題文"
+                  previewLabel="プレビュー"
+                  className="pt-2"
+                />
+              )}
             </div>
           </div>
 

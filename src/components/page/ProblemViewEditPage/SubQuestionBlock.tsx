@@ -188,7 +188,7 @@ export function SubQuestionBlock({
               {canSwitchFormat && (
                 <button
                   onClick={handleQuestionFormatToggle}
-                  className="absolute top-0 right-0 flex items-center gap-2 px-2 py-1 bg-white hover:bg-gray-50 rounded text-xs text-gray-700 transition-colors z-10 border border-gray-200"
+                  className="absolute top-0 right-0 flex items-center gap-2 px-2 py-1 bg-white hover:bg-gray-50 rounded text-xs text-gray-700 transition-colors border border-gray-200"
                 >
                   {currentQuestionFormat === 0 ? (
                     <>

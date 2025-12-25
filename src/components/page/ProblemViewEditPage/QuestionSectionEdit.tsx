@@ -19,6 +19,7 @@ type QuestionSectionEditProps = {
   onSubKeywordRemove?: (sqIdx: number, id: string) => void;
   onSubTypeChange?: (sqIdx: number, typeId: number) => void;
   editComponentLoaders: Record<number, React.LazyExoticComponent<React.ComponentType<ProblemTypeEditProps>>>;
+  viewMode?: 'full' | 'structure';
 };
 
 export const QuestionSectionEdit: React.FC<QuestionSectionEditProps> = ({
@@ -36,6 +37,7 @@ export const QuestionSectionEdit: React.FC<QuestionSectionEditProps> = ({
   onSubKeywordRemove,
   onSubTypeChange,
   editComponentLoaders,
+  viewMode = 'full',
 }) => {
   const subQuestions = question.sub_questions || [];
 
@@ -51,7 +53,10 @@ export const QuestionSectionEdit: React.FC<QuestionSectionEditProps> = ({
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-testid="question-section-edit" data-viewmode={viewMode}>
+      <div className="text-xs font-medium text-gray-500">
+        {viewMode === 'structure' ? 'Structure Mode' : 'Full Mode'}
+      </div>
       <QuestionCardEdit
         question={question}
         onContentChange={onQuestionChange}
@@ -59,6 +64,7 @@ export const QuestionSectionEdit: React.FC<QuestionSectionEditProps> = ({
         onDifficultyChange={onQuestionDifficultyChange}
         onKeywordAdd={onQuestionKeywordAdd}
         onKeywordRemove={onQuestionKeywordRemove}
+        viewMode={viewMode}
       />
 
       <div className="space-y-4 pl-8">
@@ -79,6 +85,7 @@ export const QuestionSectionEdit: React.FC<QuestionSectionEditProps> = ({
               onKeywordAdd={(kw) => onSubKeywordAdd?.(idx, kw)}
               onKeywordRemove={(id) => onSubKeywordRemove?.(idx, id)}
               onTypeChange={(type) => onSubTypeChange?.(idx, type)}
+              viewMode={viewMode}
             />
           );
         })}

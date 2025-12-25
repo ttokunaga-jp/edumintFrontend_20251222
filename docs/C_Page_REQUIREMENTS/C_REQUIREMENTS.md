@@ -196,6 +196,23 @@ NFR-OPS-001:
 - 編集機能の現状: ProblemView の編集が動作していないため、`C_3_ProblemViewEditPage_REQUIREMENTS.md` / `D_3_ProblemViewEditComponent_REQUIREMENTS.md` に修正要件を必須で記載。
 - 実装指針: 各ページごとに tsx を作成し、内部ブロックは「共通コンポーネント vs 画面専用コンポーネント」を分離。再利用が確認できたら共通側にファイル移動で複数画面へ展開。
 
+## レイヤー規格（z-indexと重なり順の統一ルール）
+- 目的: トップバーより前面に通常コンテンツがかぶる等の不具合を防ぎ、全ページで一貫した重なり順を維持する。
+- スケール定義:
+  - 900台: グローバルオーバーレイ層（999: モーダル最前面、950: ドロワー/全画面メニュー、930: Toast/ポップアップ）
+  - 800台: ナビ層（899: TopMenuBar、850: サブナビ/固定タブ）
+  - 700台: ページ上位コンテナ（750: ページ固有ヘッダー/ステップバー）
+  - 600台: 固定補助（650: 固定サイド/追従カード）
+  - 500台: 通常コンテンツ（カード/フォーム。原則 z-index 指定なし）
+  - 400台: 背景演出（装飾用のみ）
+- 運用ルール:
+  - z-index は必要最小限。レイヤー種別に合わせ固定値を使い、props で自由な値を受け取らない。
+  - ドロップダウン/ツールチップ/ポップオーバーはポータルルートで z-930 に統一。
+  - モーダル/ドロワーは Overlay z-950、Content z-999 の固定パターンを採用。
+  - TopMenuBar は常に z-899、ページ固有ヘッダー/進捗バーは z-750 以内、通常カードは z 指定なし。
+  - transform/filter/backdrop-filter による不要なスタッキングコンテキスト生成を避ける。
+  - 新規コンポーネントが z-index を要する場合、上記スケールから選び、レビュー時に種別を明記する。
+
 ## Sources
 - `../overview/requirements.md`, `../overview/ideal-requirements.md`, `../overview/current_implementation.md`
 - `../overview/use-cases.md`, `../overview/refactor-priorities.md`

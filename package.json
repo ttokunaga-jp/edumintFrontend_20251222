@@ -67,6 +67,7 @@
     "@vitejs/plugin-react-swc": "^4.2.2",
     "jsdom": "^26.0.0",
     "msw": "^2.12.4",
+    "@playwright/test": "^1.49.1",
     "typescript": "^5.5.3",
     "vite": "^7.0.0",
     "vitest": "^2.1.5"
@@ -75,7 +76,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest run --watch=false --passWithNoTests",
+    "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "lint": "npm run typecheck"
   },

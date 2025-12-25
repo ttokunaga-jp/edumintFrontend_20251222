@@ -383,11 +383,7 @@ function App() {
           />
         )}
         {currentPage === "problem-create" && (
-          <ProblemCreatePage
-            user={user!}
-            onNavigate={handleNavigate}
-            onLogout={handleLogout}
-          />
+          <ProblemCreatePage onNavigate={handleNavigate} />
         )}
         {currentPage === "structure-confirm" && (
           <StructureConfirmPage
@@ -399,9 +395,7 @@ function App() {
         )}
         {currentPage === "generating" && (
           <ProblemCreatePage
-            user={user!}
             onNavigate={handleNavigate}
-            onLogout={handleLogout}
             jobId={currentJobId}
             onGenerated={handleGenerated}
           />

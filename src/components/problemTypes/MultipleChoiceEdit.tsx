@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { CheckSquare, Plus, Square, Trash2 } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { ProblemTypeEditProps } from '@/types/problemTypes';
 import { MarkdownBlock } from '@/components/common/MarkdownBlock';
 import { LatexBlock } from '@/components/common/LatexBlock';
@@ -109,10 +109,10 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
               <button
                 type="button"
                 onClick={() => handleOptionChange(idx, { isCorrect: !opt.isCorrect })}
-                className="mt-0.5 text-indigo-600"
+                className="mt-0.5 text-indigo-600 font-semibold text-sm"
                 aria-label={opt.isCorrect ? '正解に設定済み' : '正解としてマーク'}
               >
-                {opt.isCorrect ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+                {opt.isCorrect ? '✔' : '□'}
               </button>
               <input
                 value={opt.content}

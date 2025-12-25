@@ -8,6 +8,7 @@ type QuestionCardEditProps = {
   onDifficultyChange?: (value: number) => void;
   onKeywordAdd?: (keyword: string) => void;
   onKeywordRemove?: (id: string) => void;
+  viewMode?: 'full' | 'structure';
 };
 
 export const QuestionCardEdit: React.FC<QuestionCardEditProps> = ({
@@ -17,6 +18,7 @@ export const QuestionCardEdit: React.FC<QuestionCardEditProps> = ({
   onDifficultyChange,
   onKeywordAdd,
   onKeywordRemove,
+  viewMode = 'full',
 }) => {
   return (
     <QuestionBlock
@@ -32,6 +34,7 @@ export const QuestionCardEdit: React.FC<QuestionCardEditProps> = ({
       onDifficultyChange={onDifficultyChange}
       onKeywordAdd={onKeywordAdd}
       onKeywordRemove={onKeywordRemove}
+      viewMode={viewMode}
     />
   );
 };

@@ -15,7 +15,7 @@ import {
   getHealthSummary,
   type HealthResponse,
   type HealthSummaryResponse,
-} from '../services/api/gateway/health';
+} from '@/services/api/gateway/health';
 
 /**
  * Service health state

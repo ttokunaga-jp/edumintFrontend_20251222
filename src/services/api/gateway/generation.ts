@@ -37,13 +37,29 @@ export const updateGenerationSettings = async (
   }
 };
 
+export type GenerationJobStatus = 'queued' | 'processing' | 'paused' | 'completed' | 'failed';
+
+export type GenerationCurrentStep =
+  | 'waiting_for_upload'
+  | 'uploading'
+  | 'upload_verifying'
+  | 'extracting'
+  | 'sectioning'
+  | 'structure_detecting'
+  | 'structure_review'
+  | 'waiting_for_slot'
+  | 'generating'
+  | 'postprocessing'
+  | 'completed';
+
 export interface GenerationStatusResponse {
   jobId: string;
-  status: 'pending' | 'queued' | 'processing' | 'paused' | 'completed' | 'error' | 'failed';
+  status: GenerationJobStatus;
+  currentStep: GenerationCurrentStep;
   progress: number;
-  currentStep?: string;
   eta?: number;
   problemId?: string;
+  errorCode?: string;
   errorMessage?: string;
   message?: string;
   estimatedTime?: number;

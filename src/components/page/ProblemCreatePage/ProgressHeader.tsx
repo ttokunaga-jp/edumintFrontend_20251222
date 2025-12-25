@@ -16,8 +16,11 @@ function ProgressHeaderComponent({ currentStep }: ProgressHeaderProps) {
   const currentIndex = steps.findIndex((step) => step.id === currentStep);
 
   return (
-    <div className="w-full bg-white border-b border-gray-200 sticky top-16 z-10 pt-4 pb-4 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
+    <div
+      className="fixed left-0 right-0 w-full bg-white border-b border-gray-200 shadow-sm md:top-16 z-[750] pt-4 pb-4 px-4 sm:px-6"
+      style={{ top: '6.5rem' }}
+    >
+      <div className="max-w-6xl mx-auto">
         <div className="relative flex justify-between">
           {/* Background Line - aligned with center of 32px (h-8) circles */}
           <div className="absolute top-4 left-0 right-0 h-0.5 bg-gray-100 -translate-y-1/2" />
@@ -29,7 +32,7 @@ function ProgressHeaderComponent({ currentStep }: ProgressHeaderProps) {
           />
 
           {steps.map((step, index) => (
-            <div key={step.id} className="relative flex flex-col items-center z-10">
+            <div key={step.id} className="relative flex flex-col items-center">
               <div
                 className={cn(
                   'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 bg-white ring-2', // Add bg-white to hide line behind

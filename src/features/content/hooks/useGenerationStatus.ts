@@ -1,113 +1,131 @@
-import { useEffect, useState } from 'react';
-import {
-  getGenerationStatus,
-  startStructureGeneration,
-  type GenerationStatusResponse,
-} from '@/services/api/gateway/generation';
+import { useEffect, useRef, useState } from 'react';
+import type { GenerationStatusResponse } from '@/services/api/gateway/generation';
+import { getGenerationStatus, startStructureGeneration } from '@/features/generation/api';
+import { initialGenerationState, nextGenerationState, seedAfterStart } from '@/features/generation/stateMachine';
+import { useGenerationStore } from '@/features/generation/store';
 
-export type GenerationPhase = 'uploading' | 'analyzing' | 'structure-review' | 'generating' | 'complete' | 'error';
+export type { GenerationPhase } from '@/features/generation/stateMachine';
 
 type Params = {
   initialJobId?: string;
   onComplete?: (result: GenerationStatusResponse) => void;
-  onError?: (message: string) => void;
+  onError?: (message: string, errorCode?: string) => void;
+  pollIntervalMs?: number;
 };
 
-const mapStep = (
-  status: GenerationStatusResponse['status'],
-  currentStep?: string,
-): GenerationPhase => {
-  if (status === 'pending' || status === 'queued') return 'uploading';
-  if (status === 'completed') return 'complete';
-  if (status === 'error' || status === 'failed') return 'error';
-
-  const stepLabel = currentStep || '';
-  if (stepLabel.includes('解析')) return 'analyzing';
-  if (stepLabel.includes('構造')) return 'structure-review';
-
-  return 'generating';
-};
-
-export const useGenerationStatus = ({ initialJobId, onComplete, onError }: Params) => {
+export const useGenerationStatus = ({
+  initialJobId,
+  onComplete,
+  onError,
+  pollIntervalMs = 2000,
+}: Params) => {
   const [jobId, setJobId] = useState<string | null>(initialJobId ?? null);
-  const [phase, setPhase] = useState<GenerationPhase>(initialJobId ? 'generating' : 'uploading');
-  const [progress, setProgress] = useState(0);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [result, setResult] = useState<GenerationStatusResponse | null>(null);
+  const { state, result, reset: resetStore, setState, advance, setError, setResult } = useGenerationStore(
+    initialJobId ? { phase: 'generating', currentStep: 'generating', progress: 60 } : initialGenerationState,
+  );
+
+  const stateRef = useRef(state);
+  const lastStablePhaseRef = useRef(state.phase);
+
+  useEffect(() => {
+    stateRef.current = state;
+    // フェーズが変わったときのみ更新
+    if (state.phase !== lastStablePhaseRef.current) {
+      lastStablePhaseRef.current = state.phase;
+    }
+  }, [state]);
+
+  const setErrorState = (message: string, errorCode?: string) => {
+    setError(message);
+    onError?.(message, errorCode);
+  };
 
   const startGeneration = async (structureId: string) => {
     try {
       const { jobId: newJobId } = await startStructureGeneration(structureId);
+      setResult(null);
       setJobId(newJobId);
-      setPhase('analyzing');
-      setProgress(10);
+      setState(seedAfterStart);
+      stateRef.current = seedAfterStart;
+      lastStablePhaseRef.current = seedAfterStart.phase;
       return newJobId;
     } catch (error) {
       console.error('Failed to start generation', error);
-      setPhase('error');
-      setErrorMessage('生成ジョブの開始に失敗しました');
-      onError?.('生成ジョブの開始に失敗しました');
+      setErrorState('生成ジョブの開始に失敗しました');
       return null;
     }
   };
 
   const trackExistingJob = (existingJobId: string) => {
     setJobId(existingJobId);
-    setPhase('generating');
+    const initialState = { phase: 'generating' as const, currentStep: 'generating' as const, progress: 60 };
+    setState(initialState);
+    stateRef.current = initialState;
+    lastStablePhaseRef.current = 'generating';
   };
 
   const reset = () => {
     setJobId(null);
-    setPhase('uploading');
-    setProgress(0);
-    setErrorMessage(null);
     setResult(null);
+    lastStablePhaseRef.current = initialGenerationState.phase;
+    resetStore();
   };
 
   useEffect(() => {
     if (!jobId) return;
+
     let isMounted = true;
+
     const interval = setInterval(async () => {
       try {
         const status = await getGenerationStatus(jobId);
         if (!isMounted) return;
 
-        const nextPhase = mapStep(status.status, status.currentStep);
-        setPhase(nextPhase);
-        setProgress(Math.min(status.progress ?? 0, 100));
-
+        // 次の状態を計算
+        const nextState = nextGenerationState(stateRef.current, status);
+        
+        // ステータスに応じて処理
         if (status.status === 'completed') {
+          setState(nextState);
+          stateRef.current = nextState;
           setResult(status);
           onComplete?.(status);
           clearInterval(interval);
-        } else if (status.status === 'error' || status.status === 'failed') {
-          const message = status.errorMessage || status.message || '生成に失敗しました';
-          setErrorMessage(message);
-          onError?.(message);
-          clearInterval(interval);
+          return;
         }
+
+        if (status.status === 'failed') {
+          setState(nextState);
+          stateRef.current = nextState;
+          setErrorState(status.errorMessage || '生成に失敗しました', status.errorCode);
+          clearInterval(interval);
+          return;
+        }
+
+        // 通常の状態更新
+        advance(status);
+        stateRef.current = nextState;
       } catch (error) {
         console.error('Failed to poll generation status', error);
         if (isMounted) {
-          setPhase('error');
-          setErrorMessage('生成ステータスの取得に失敗しました');
-          onError?.('生成ステータスの取得に失敗しました');
-          clearInterval(interval);
+          setErrorState('生成ステータスの取得に失敗しました');
         }
       }
-    }, 2000);
+    }, pollIntervalMs);
 
     return () => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [jobId, onComplete, onError]);
+  }, [jobId, onComplete, onError, pollIntervalMs]);
 
   return {
     jobId,
-    phase,
-    progress,
-    errorMessage,
+    phase: state.phase,
+    currentStep: state.currentStep,
+    progress: state.progress,
+    errorMessage: state.errorMessage ?? null,
+    errorCode: state.errorCode,
     result,
     startGeneration,
     trackExistingJob,

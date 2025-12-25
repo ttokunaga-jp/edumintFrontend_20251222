@@ -70,16 +70,19 @@ export const contentHandlers = [
           question_number: 1,
           question_content: 'HMR auto mock question (all types preview)',
           question_format: 0,
-          sub_questions: syntheticSubs.map((sq) => ({
-            ...sq,
-            sub_question_number: sq.subQuestionNumber ?? sq.sub_question_number ?? 1,
-            question_type_id: sq.questionTypeId ?? sq.sub_question_type_id ?? 1,
-            question_content: sq.questionContent ?? sq.sub_question_content ?? '',
-            question_format: sq.questionFormat ?? 0,
-            answer_content: sq.answerContent ?? '',
-            answer_format: sq.answerFormat ?? 0,
-            options: sq.options,
-          })),
+          sub_questions: syntheticSubs.map((sq) => {
+            const sqAny = sq as any;
+            return {
+              ...sqAny,
+              sub_question_number: sqAny.subQuestionNumber ?? sqAny.sub_question_number ?? 1,
+              question_type_id: sqAny.questionTypeId ?? sqAny.sub_question_type_id ?? 1,
+              question_content: sqAny.questionContent ?? sqAny.sub_question_content ?? '',
+              question_format: sqAny.questionFormat ?? sqAny.sub_question_format ?? 0,
+              answer_content: sqAny.answerContent ?? '',
+              answer_format: sqAny.answerFormat ?? 0,
+              options: sqAny.options,
+            };
+          }),
         },
       ];
 
@@ -95,16 +98,19 @@ export const contentHandlers = [
         question_format: q.questionFormat,
         sub_questions: mockSubQuestions
           .filter((sq) => sq.questionId === q.id)
-          .map((sq) => ({
-            ...sq,
-            sub_question_number: sq.subQuestionNumber,
-            question_type_id: sq.questionTypeId,
-            question_content: sq.questionContent,
-            question_format: sq.questionFormat,
-            answer_content: sq.answerContent,
-            answer_format: sq.answerFormat,
-            keywords: sq.keywords ?? [],
-          })),
+          .map((sq) => {
+            const sqAny = sq as any;
+            return {
+              ...sqAny,
+              sub_question_number: sqAny.subQuestionNumber ?? sqAny.sub_question_number,
+              question_type_id: sqAny.questionTypeId ?? sqAny.sub_question_type_id,
+              question_content: sqAny.questionContent ?? sqAny.sub_question_content,
+              question_format: sqAny.questionFormat ?? sqAny.sub_question_format,
+              answer_content: sqAny.answerContent ?? sqAny.answer_content,
+              answer_format: sqAny.answerFormat ?? sqAny.answer_format,
+              keywords: sqAny.keywords ?? [],
+            };
+          }),
       }));
 
     const responseBody = Object.assign({}, exam, {

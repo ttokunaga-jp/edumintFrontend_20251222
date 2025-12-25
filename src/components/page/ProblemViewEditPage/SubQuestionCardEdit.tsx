@@ -15,6 +15,7 @@ type SubQuestionCardEditProps = {
   onKeywordAdd?: (kw: string) => void;
   onKeywordRemove?: (id: string) => void;
   onTypeChange?: (typeId: number) => void;
+  viewMode?: 'full' | 'structure';
 };
 
 export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
@@ -29,6 +30,7 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
   onKeywordAdd,
   onKeywordRemove,
   onTypeChange,
+  viewMode = 'full',
 }) => {
   const typeId = subQuestion.sub_question_type_id ?? subQuestion.question_type_id ?? subQuestion.questionTypeId ?? 1;
   const number = subQuestion.sub_question_number ?? subQuestion.subQuestionNumber ?? 1;
@@ -50,8 +52,8 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
   };
 
   return (
-    <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-      <div className="mb-3 flex items-start gap-3 sm:gap-4 flex-1">
+    <div className={`rounded-xl border border-gray-100 bg-white p-4 shadow-sm ${viewMode === 'structure' ? 'border-dashed' : ''}`}>
+      <div className={`${viewMode === 'full' ? 'mb-3' : ''} flex items-start gap-3 sm:gap-4 flex-1`}>
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 text-sm">
           ({number})
         </div>
@@ -69,9 +71,11 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
           />
         </div>
       </div>
-      <Suspense fallback={<div className="rounded-md bg-gray-50 p-4 text-sm text-gray-500">編集UIを読み込み中...</div>}>
-        {Comp ? <Comp {...normalizedProps} /> : Fallback ? <Fallback {...normalizedProps} /> : null}
-      </Suspense>
+      {viewMode === 'full' && (
+        <Suspense fallback={<div className="rounded-md bg-gray-50 p-4 text-sm text-gray-500">編集UIを読み込み中...</div>}>
+          {Comp ? <Comp {...normalizedProps} /> : Fallback ? <Fallback {...normalizedProps} /> : null}
+        </Suspense>
+      )}
     </div>
   );
 };

@@ -165,6 +165,7 @@ export type Exam = {
   durationMinutes?: number;
   periodTag?: 'today' | 'week' | 'month' | 'year' | 'custom';
   keywordChipIds?: ID[];
+  majorType?: number | 'science' | 'humanities';
 
   createdAt: string;
   updatedAt: string;
@@ -182,7 +183,7 @@ export type Question = {
   questionNumber: number;
   questionContent: string;
   questionFormat: 0 | 1; // 0: text, 1: latex
-  keywords?: Keyword[];
+  keywords?: KeywordLike[];
   subQuestions?: SubQuestion[]; // Include sub_questions for details view
   createdAt: string;
   updatedAt: string;
@@ -203,7 +204,7 @@ export type SubQuestion = {
   numericSettings?: NumericAnswerSettings;
   clozeBlanks?: ClozeBlank[];
   executionMeta?: ExecutionMeta;
-  keywords?: Keyword[];
+  keywords?: KeywordLike[];
   createdAt: string;
   updatedAt: string;
 };
@@ -268,6 +269,7 @@ export type Keyword = {
   keyword: string;
   relevanceScore?: number;
 };
+export type KeywordLike = Keyword | string;
 
 // ==========================================
 // 5. ソーシャル・評価
