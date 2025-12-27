@@ -1,6 +1,8 @@
 # O_TASK_PHASES
 
-目的: `ProblemViewEditPage` を小問タイプ毎に責務分離し、拡張性・保守性・テスト性を向上させるための工程表。
+目的: `ProblemViewEditPage` の小問タイプ分離リファクタを安全に遂行するための段階的作業計画と運用ルールです。
+
+> 重要: 各 PR は小さく（目安 200 行未満）かつ独立した DoD を持ち、必ず `docs/P_IMPLEMENT_REPORT_FMT.md` に準拠した実装報告（YAML frontmatter + Markdown 概要）を添付してください。
 
 前提: フロントエンドは React + TypeScript。バックエンドは既存 API を維持。Moodle 等の OSS を参考に「タイプ別プラグイン」アーキテクチャを採用する。
 
@@ -48,7 +50,6 @@
 
 備考
 - Moodle の `question/type/*` は設計の参考に最適。コードを直接流用する場合はライセンス（GPLv3 等）に従うこと。OSS の導入はコードとライセンスの双方をレビューする担当を立てること。
-# Docker Implementation: Task Phases & Breakdown
 
 This document outlines the step-by-step phases to implement the Docker containerization for the Edumint Frontend.
 
