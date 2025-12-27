@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ProblemTypeEditProps } from '@/types/problemTypes';
 import { MarkdownBlock } from '@/components/common/MarkdownBlock';
 import { LatexBlock } from '@/components/common/LatexBlock';
+import ProblemTextEditor from '@/components/common/ProblemTextEditor';
 
 export default function FreeTextEdit(props: ProblemTypeEditProps) {
   const { questionContent, answerContent, questionFormat, answerFormat = 0, onQuestionChange, onAnswerChange, onFormatChange } =
@@ -42,68 +43,39 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
   return (
     <div className="space-y-4">
       <div>
-        <div className="mb-1 flex items-center justify-between">
-          <label className="block text-sm font-medium text-gray-700">問題文</label>
-          <button
-            type="button"
-            onClick={toggleQuestionFormat}
-            aria-label="問題文フォーマット切替"
-            className="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-50"
-          >
-            {questionFmt === 0 ? 'MD' : 'LaTeX'}
-          </button>
-        </div>
-        <textarea
+        <ProblemTextEditor
           value={question}
-          onChange={(e) => {
-            setQuestion(e.target.value);
-            onQuestionChange?.(e.target.value);
+          format={questionFmt}
+          onChange={(v) => {
+            setQuestion(v);
+            onQuestionChange?.(v);
           }}
-          aria-label="問題文入力"
-          className="w-full min-h-[160px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          onFormatChange={(f) => {
+            setQuestionFmt(f);
+            onFormatChange?.('question', f);
+          }}
+          ariaLabel="問題文"
           placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
+          showPreview={true}
         />
-        <div className="mt-3 rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
-          <div className="mb-2 text-xs font-semibold text-gray-600">プレビュー</div>
-          {questionFmt === 0 ? (
-            <MarkdownBlock content={question} className="prose prose-sm max-w-none" />
-          ) : (
-            <LatexBlock content={question} displayMode={false} className="text-gray-900" />
-          )}
-        </div>
       </div>
 
       <div>
-        <div className="mb-1 flex items-center justify-between">
-          <label className="block text-sm font-medium text-gray-700">解答 / メモ</label>
-          <button
-            type="button"
-            onClick={toggleAnswerFormat}
-            aria-label="解答フォーマット切替"
-            className="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-50"
-          >
-            {answerFmt === 0 ? 'MD' : 'LaTeX'}
-          </button>
-        </div>
-        <textarea
+        <ProblemTextEditor
           value={answer}
-          onChange={(e) => {
-            const next = e.target.value;
-            setAnswer(next);
-            onAnswerChange?.(next);
+          format={answerFmt}
+          onChange={(v) => {
+            setAnswer(v);
+            onAnswerChange?.(v);
           }}
-          aria-label="解答入力"
-          className="w-full min-h-[120px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          onFormatChange={(f) => {
+            setAnswerFmt(f);
+            onFormatChange?.('answer', f);
+          }}
+          ariaLabel="解答 / メモ"
           placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
+          showPreview={true}
         />
-        <div className="mt-3 rounded-lg border border-gray-100 bg-blue-50 p-3 text-sm">
-          <div className="mb-2 text-xs font-semibold text-gray-700">プレビュー</div>
-          {answerFmt === 0 ? (
-            <MarkdownBlock content={answer} className="prose prose-sm max-w-none" />
-          ) : (
-            <LatexBlock content={answer} displayMode={false} className="text-gray-900" />
-          )}
-        </div>
       </div>
     </div>
   );
