@@ -1,106 +1,72 @@
 # Q_PROMPT
 
-目的: 他の CodingAgent に実装を依頼する際に、そのままコピペできる詳細プロンプトテンプレート。
+目的: 他の CodingAgent（または人間の実装者）に実装を依頼する際にそのままコピペできる詳細プロンプトのテンプレート群です。PR 作成・実装報告・検証まで一貫して使える形に整えています。
 
 注意事項（必ず守る）
---------------------
-変更対象ファイルは必ず `git` でブランチを切って PR を作成すること。
-外部 OSS（例: Moodle、CodeRunner）のコードを参照・組み込む場合はライセンスに従うこと（GPL 等）。
-変更は小さなコミットに分割し、各コミットで CI が通るようにすること。
+- 変更対象ファイルは必ず `git` でブランチを切って PR を作成すること。
+- 外部 OSS（例: Moodle、CodeRunner）のコードを参照・組み込む場合はライセンスに従うこと（GPL 等）。
+- 変更は小さなコミットに分割し、各コミットで CI が通るようにすること。
+- PR 本文には `docs/P_IMPLEMENT_REPORT_FMT.md` 準拠の実装報告（YAML frontmatter + 概要）を必ず貼ること。
+- 実装前に `docs/F_ARCHITECTURE` の該当インデックスを確認し、影響範囲に Index の更新が必要かを判断すること。
 
------
+---
 
-【共通コンテキスト】
-- リポジトリ: edumintFrontend
+## 共通コンテキスト
+- リポジトリ: edumintFrontend_2025
 - 主言語: TypeScript + React
-- 既存ページ: `src/pages/ProblemViewEditPage.tsx`
+- 主要 Page: `src/pages/ProblemViewEditPage.tsx`
 - 既存 UI: `src/components/page/ProblemViewEditPage/*`（`SubQuestionBlock.tsx` 等）
-- DB: `sub_questions` に `sub_question_type_id` が存在（`docs/database.md` の `question_types` を参照）
-
------
-
-タスク指定テンプレート（コピーして使用）
-
-目的: `ProblemViewEditPage` を小問タイプ別のプラグインアーキテクチャにリファクタする。
-
-作業範囲（最小必須）
-- `src/components/problemTypes/ProblemTypeRegistry.tsx` を使ってタイプ登録機構を整備する。
-- `src/components/problemTypes/*View.tsx` を実装し、`SubQuestionBlock` の表示部分を委譲する。
-- `src/components/page/ProblemViewEditPage/ProblemEditor.tsx` を修正して、編集時にタイプ別 `Edit` を呼び出せるようにする（動的インポート可）。
-
-具体的な指示
-1. 既存の `SubQuestionBlock.tsx` は表示委譲済み。まず `ProblemTypeRegistry` に view コンポーネントを登録する。
-2. `question_types` ID とコンポーネントマッピングは次の通り: 1=FreeText, 2=MultipleChoice, 4=Cloze, 5=TrueFalse, 6=Numeric, 7=Proof, 8=Programming, 9=CodeReading。
-3. 各 View コンポーネントは `ProblemTypeViewProps`（`src/types/problemTypes.ts`）に従うこと。
-4. Edit コンポーネントは `ProblemTypeEditProps` に従い、`onQuestionChange/onAnswerChange` を呼ぶ仕様とする。
-5. 動的 import は `() => import('./SomeTypeEdit')` の形で行い、ビルドを最適化すること。
-
-受け入れ基準
-- 表示: `npm run build` して問題ページを開くと、各小問が期待通りの View で表示される。
-- 編集: 編集モードでタイプ毎の Edit コンポーネントがロードされ、編集→保存→サーバへ PUT/POST される（既存 `useExamEditor` を利用）。
-- テスト: 主要な View コンポーネントに `vitest` の snapshot テストが1つ以上あること。
-
-実行コマンド（検証用）
-```bash
-npm install
-npm run build
-npm run test
-``` 
-
-参照 OSS（設計参考）
-- Moodle: `question/type/*`（renderer.php / edit_*_form.php） — 表示と編集ロジック分離の例
-- CodeRunner: プログラミング問題の実行フロー（Jobe 統合）
-
-エラー報告ルール
-- 変更でビルドエラーが発生したら即 PR に `WIP` を付け、エラー解決のための最小変更で再提出すること。
-# Docker Implementation: AI Prompts
-
-Use the following prompts sequentially to instruct the Coding Agent (or AI assistant) to build the Docker environment.
+- 参照 Index: `docs/F_ARCHITECTURE/F1_ARCHITECTURE_INDEX_src_components_problemTypes.md`
 
 ---
 
-## Prompt 1: Files Creation (Phase 1 & 2)
+## テンプレ: フェーズ実装依頼（コピーして使用）
 
-```markdown
-# Role
-DevOps Engineer / Frontend Specialist
+目的: `ProblemViewEditPage` を小問タイプ別プラグインアーキテクチャにリファクタする（フェーズ指定）
 
-# Task
-We need to containerize our current React/Vite application. Please create the necessary Docker configuration files in the root directory.
+必須事項（PR 作成時）
+- ブランチ命名規約に従う: `refactor/problem-types/<phase>-<short-desc>`
+- PR 本文に `docs/P_IMPLEMENT_REPORT_FMT.md` に沿った YAML frontmatter を貼る
+- 関連する `docs/F_ARCHITECTURE` Index の更新が必要なら `scripts/generate-architecture-index.js` を実行し、生成された `docs/F_ARCHITECTURE/index.json` を差分に含める
 
-# Requirements
+作業範囲（例: フェーズ 1: Registry）
+1. `src/components/problemTypes/ProblemTypeRegistry.tsx` を追加
+2. `src/types/problemTypes.ts` に Props 型を追加
+3. Registry のユニットテストを追加
+4. `docs/F_ARCHITECTURE` の problemTypes Index に `entry_points` を追加（または `scripts/generate-architecture-index.js` で自動更新）
 
-1. **Dependency Preservation/Update**
-   - Ensure `react` and `react-dom` remain on **v18.x** (e.g., 18.3.1).
-   - Ensure `vite` is updated to the latest stable **v7.x** or compatible version.
+検証手順（必須）
+- `pnpm install && pnpm run build`（ビルドが通ること）
+- `pnpm run test`（ユニットテストが通ること）
+- Storybook がある場合は該当ストーリーで表示確認
 
-2. **.dockerignore**
-   - Exclude: `node_modules`, `dist`, `.git`, `.vscode`, `*.log`, `.env.local`.
-
-3. **Dockerfile**
-   - Base Image: **node:24.12.0-alpine**.
-   - Working Directory: `/app`.
-   - Steps:
-     - Copy `package.json` and `package-lock.json`.
-     - Run `npm install`.
-     - Copy the rest of the application code.
-     - Expose port `5173`.
-     - Default Command: `npm run dev -- --host`.
-
-3. **docker-compose.yml**
-   - Service Name: `frontend`.
-   - Build Context: `.` (current directory).
-   - Ports: Map host `5173` to container `5173`.
-   - Volumes:
-     - Bind mount `.` to `/app` (for Hot Module Replacement).
-     - Anonymous volume for `/app/node_modules` (to preserve container dependencies).
-   - Environment: Load from `.env` logic if applicable.
-
-# Output
-Please generate the content for `.dockerignore`, `Dockerfile`, and `docker-compose.yml`.
-```
+受け入れ基準（例）
+- Registry の基本機能がユニットテストで確認できること
+- PR に実装報告が添付されていること
+- `docs/F_ARCHITECTURE/index.json` に反映があること（必要な場合）
 
 ---
+
+## テンプレ: 小さな PR（チェックリスト）
+- [ ] Branch を切っている
+- [ ] 1 機能 = 1 PR（可能な限り小さい）
+- [ ] `docs/P_IMPLEMENT_REPORT_FMT.md` に準拠した実装報告を PR 本文に貼った
+- [ ] 必要なら `scripts/generate-architecture-index.js` を実行して `docs/F_ARCHITECTURE/index.json` を更新した
+- [ ] CI が通る
+
+---
+
+## テンプレ: CodingAgent に渡す短い実行命令（英語でも日本語でも可）
+- 「Please implement Phase 2 (FreeTextView): add `src/components/problemTypes/FreeTextView.tsx`, story, snapshot test. Use `ProblemTypeViewProps`. Create small PR, attach implementation report. Run `pnpm run test` and report failing tests (if any).」
+
+---
+
+## 補足: PR の自動化ルール（推奨）
+- CI ワークフローで `pnpm run generate:arch-index` を実行し、`docs/F_ARCHITECTURE/index.json` の変更がある場合はエラーか自動コミットのどちらかの運用にすること。これは Index の鮮度を保つために有効です。
+
+---
+
+必要ならこのテンプレをベースに特定フェーズ用のより詳細なプロンプトを生成します（例: FreeTextView の内部 DOM・アクセシビリティ要件など）。
 
 ## Prompt 2: Vite Configuration Adjustment (If needed)
 
