@@ -45,6 +45,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.55.0",
     "react-markdown": "^9.0.1",
+    "react-progress-bar": "^0.1.0",
     "react-resizable-panels": "^2.1.7",
     "react-router-dom": "^6.28.0",
     "recharts": "^2.15.2",
@@ -56,9 +57,11 @@
     "sonner": "^2.0.3",
     "tailwind-merge": "^2.5.4",
     "unified": "^11.0.5",
-    "vaul": "^1.1.2"
+    "vaul": "^1.1.2",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/node": "^20.10.0",
@@ -67,7 +70,6 @@
     "@vitejs/plugin-react-swc": "^4.2.2",
     "jsdom": "^26.0.0",
     "msw": "^2.12.4",
-    "@playwright/test": "^1.49.1",
     "typescript": "^5.5.3",
     "vite": "^7.0.0",
     "vitest": "^2.1.5"
@@ -79,7 +81,8 @@
     "test": "vitest run --watch=false --passWithNoTests",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "lint": "npm run typecheck"
+    "lint": "npm run typecheck",
+    "generate:arch-index": "node scripts/generate-architecture-index.js"
   },
   "msw": {
     "workerDirectory": [
