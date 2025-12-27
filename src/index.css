@@ -1,7 +1,21 @@
-/* NOTE: Tailwind-generated CSS present below is deprecated as we are migrating to MUI + Emotion + Design Tokens.
-   It will be removed in a coordinated Tailwind removal phase (see docs/O_TASK_PHASES.md). */
+/* Tailwind removed: base styles are now managed via MUI Theme / Emotion
+   Backup of the generated Tailwind CSS is preserved at `src/index.tailwind-backup.css`. */
 @import url("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css");
-/*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b0b0b;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Component-level styles should use MUI Theme and Emotion `sx` / styled */
 @layer properties {
   @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
     *, :before, :after, ::backdrop {
