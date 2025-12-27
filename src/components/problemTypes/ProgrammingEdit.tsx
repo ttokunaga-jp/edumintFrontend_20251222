@@ -1,7 +1,5 @@
-import React from 'react';
-import { ProblemTypeEditProps } from '@/types/problemTypes';
 import React, { useEffect, useState } from 'react';
-import { ProblemTypeEditProps } from '@/types/problemTypes';
+import type { ProblemTypeEditProps } from '@/types/problemTypes';
 import ProblemTextEditor from '@/components/common/ProblemTextEditor';
 import CodeEditorWrapper from '@/components/common/CodeEditorWrapper';
 
