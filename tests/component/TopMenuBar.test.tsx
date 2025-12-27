@@ -15,7 +15,7 @@ vi.mock('lucide-react', () => ({
 }));
 
 describe('TopMenuBar', () => {
-    it('has the correct visibility and z-index classes', () => {
+    it('has the correct visibility and does not use z-index classes', () => {
         // TopMenuBar uses NavLink and Navigate, so wrap in Router
         render(
             <MemoryRouter future={{ v7_startTransition: false }}>
@@ -28,6 +28,7 @@ describe('TopMenuBar', () => {
         // Check for bg-white (fully opaque) and z-index for nav layer
         expect(nav.className).toContain('bg-white');
         expect(nav.className).toContain('z-[899]');
+
         expect(nav.className).toContain('sticky');
         expect(nav.className).toContain('top-0');
     });
