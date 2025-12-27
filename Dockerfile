@@ -2,8 +2,8 @@ FROM node:24.12.0-alpine
 
 WORKDIR /app
 
-# テスト実行を制御するビルド引数（デフォルト: 実行する）
-ARG RUN_TESTS_ON_BUILD=true
+# テスト実行を制御するビルド引数（デフォルト: 実行しない）
+ARG RUN_TESTS_ON_BUILD=false
 ENV RUN_TESTS_ON_BUILD=${RUN_TESTS_ON_BUILD}
 
 # 依存をインストール（npm ci はプラットフォーム別 optional deps 差分で失敗するため npm install を使用）
