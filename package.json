@@ -42,9 +42,9 @@
     "markdown-it": "^14.1.0",
     "motion": "^11.16.0",
     "next-themes": "^0.4.6",
-    "react": "^18.3.1",
-    "react-day-picker": "^8.10.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.3",
+    "react-day-picker": "^9.13.0",
+    "react-dom": "^19.2.3",
     "react-hook-form": "^7.55.0",
     "react-markdown": "^9.0.1",
     "react-progress-bar": "^0.1.0",
@@ -67,15 +67,22 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/node": "^20.10.0",
-    "@types/react": "^18.3.7",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
     "jsdom": "^26.0.0",
     "msw": "^2.12.4",
+    "size-limit": "^6.0.0",
     "typescript": "^5.5.3",
     "vite": "^7.0.0",
     "vitest": "^2.1.5"
   },
+  "size-limit": [
+    {
+      "path": "build/assets/index-*.js",
+      "limit": "500 KB"
+    }
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -84,7 +91,9 @@
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "lint": "npm run typecheck",
-    "generate:arch-index": "node scripts/generate-architecture-index.js"
+    "generate:arch-index": "node scripts/generate-architecture-index.js",
+    "size-check": "size-limit",
+    "ci": "pnpm run typecheck && pnpm run test && pnpm run build && pnpm run size-check"
   },
   "msw": {
     "workerDirectory": [

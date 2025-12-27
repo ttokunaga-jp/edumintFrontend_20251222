@@ -1,122 +1,83 @@
-## U_REFACTOR_REQUIREMENTS
+# React 19 へのアップグレード要件定義書 ✅
 
-目的: `ProblemViewEditPage` と関連 UI を、小問タイプ毎のプラグイン的な設計にリファクタするための要件定義書。
+## 概要
+`React.startTransition` に関する警告（v7 系の警告）が開発／本番ログに出ているため、React を v19 へアップグレードし、警告の解消と互換性確保を行う。
 
-1) 背景
-- DB の `question_types`（`docs/database.md` 3.4節）に示された問題タイプ別に、表示と編集のロジックを分離する。
-- Moodle の `question/type/*` を設計参考に、フロント側で `ProblemTypeRegistry` を持ち、タイプ毎に `View` と `Edit` を登録する。
+## 目的
+- 実行時の警告を完全に解消する（コンソール／ログに警告が残らないこと）。
+- React v19 の新機能／挙動に対応し、既存機能（UI／テスト／ビルド）を壊さないこと。
 
-2) 主要ゴール
-- 表示（View）と編集（Edit）をタイプ別に分離し、拡張しやすい構造にする。
-- 既存 UX を壊さずに段階的に移行できること。
+## スコープ（含むもの）
+- `react` / `react-dom` を `^19.x` にアップグレード。
+- TypeScript 型パッケージ（`@types/react` / `@types/react-dom`）の更新。
+- 直接の依存パッケージで React の peerDependency を満たさないものの判定・アップデート／代替対応。
+- ビルド（Vite）、ユニットテスト（vitest）、E2E（Playwright）での検証。
+- ドキュメント（CHANGELOG、README、`docs/`）とリリース手順の更新。
 
-3) 仕様（必須）
-- **型定義**: `src/types/problemTypes.ts` に `ProblemTypeViewProps`, `ProblemTypeEditProps`, `ProblemTypeRegistration` を用意すること。
-- **レジストリ**: `src/components/problemTypes/ProblemTypeRegistry.tsx` を実装し、`registerProblemType(entry)` / `getProblemTypeView(id)` / `getProblemTypeEdit(id)` を提供すること。
-- **表示コンポーネント**: 次の View を実装すること（最低限 view）:
-  - ID 1: `FreeTextView`（記述式）
-  - ID 2: `MultipleChoiceView`（選択式）
-  - ID 4: `ClozeView`（穴埋め）
-  - ID 5: `TrueFalseView`（正誤）
-  - ID 6: `NumericView`（数値計算）
-  - ID 7: `ProofView`（証明/論述）
-  - ID 8: `ProgrammingView`（プログラミング）
-  - ID 9: `CodeReadingView`（コード読解）
-- **編集コンポーネント（編集側）**: 各タイプは `*Edit.tsx` を実装し、`ProblemTypeEditProps` に従って `onQuestionChange/onAnswerChange` を呼ぶこと。
-- **委譲**: `SubQuestionBlock.tsx` は view のレンダリングを `ProblemTypeRegistry` に委譲済（追加のエラーフォールバックを実装すること）。
-- **動的 import**: Edit コンポーネントは dynamic import で遅延ロードすること（Vite での最適化を考慮）。
+## 非スコープ（含めないもの）
+- バックエンドの大改修。フロントエンドのみの移行。
+- 主要なライブラリを React に合わせて大幅に置換すること（代替案が必要な場合、別タスクで検討）。
 
-4) API（サーバ ↔ クライアント）
-- フロントは `sub_questions` インスタンスを次の最小構造で扱うこと:
-  - `id`, `sub_question_number`, `sub_question_type_id`, `question_format`, `question_content`, `options?`, `answer_content?`。
-- `options` は選択肢用に `{id, content, isCorrect}` を想定。
+## 受け入れ基準（Definition of Done）✅
+- ローカル開発・ビルド（`npm run dev` / `npm run build` / `npm run preview`）において、対象の警告が再現されない。
+- `pnpm run typecheck`（もしくは `tsc --noEmit`）が通る。
+- `vitest` の全テストが成功する（少なくとも主要なテスト）。
+- Playwright の E2E（最低 1 シナリオ）が問題なく通過する。
+- CI（`pnpm ci`）がパスし、ステージング環境で問題なければ本番リリースできる状態である。
 
-5) テスト要件
-- 各 View の snapshot テスト（`vitest`）
-- Edit コンポーネントの操作テスト（入力→onChange 呼び出し）
-- Storybook ストーリーを追加すること（UI確認用）
+## リスクと対応策 ⚠️
+- 依存ライブラリの互換性不足 → 事前に peerDependencies を洗い出し、互換バージョンがなければ一時的にフォーク／Patch／差し替えを検討。
+- 型の不一致によるビルド失敗 → `@types` の更新と、必要ならローカル型定義の一時 patch を行う。
+- 重大なランタイム回帰 → ステージングでの回帰テストを厳格化、ロールバック手順を用意。
 
-6) セキュリティ要件（ID 8/9 特有）
-- プログラム実行はサーバ側のサンドボックス（Jobe/CodeRunner など）を想定。フロント側ではコードを直接評価しないこと。
-- 実行結果の受け取りは非同期ジョブで、タイムアウト・リソース制限・返却ログを厳格に扱う。
+## 影響調査方法（実施手順の一例）
+1. 再現: `npm run dev` と `npm run preview`（および本番ビルド）で警告を再現し、コンソールのスタックトレースで発生元パッケージを特定する。  
+2. 依存監査: `pnpm why <package>` / `pnpm ls` / `npm ls` を使って、`startTransition` を参照しているパッケージや React に依存するパッケージを洗い出す。  
+3. 互換性確認: 主要パッケージ（Radix, motion, lucide-react, sonner, zustand など）のリリースノートと peerDependencies を確認する。  
+4. テスト計画作成: 退避テスト（既存の UI フロー）、ユニット・E2E の優先テストケースを選定。
 
-7) マイグレーション / 互換性
-- 既存の `ProblemEditor` が扱っていた保存フロー（`useExamEditor`）を再利用しつつ、問題ペイロードに `sub_question_type_id` / `options` を含める。サーバ側が未対応なら `backend-contract` タスクを作成して調整する。
+## 推奨作業タスク（優先度順）
+- 調査フェーズ（1 日〜2 日）
+  - 警告発生箇所の特定（スタックトレース）、影響範囲調査。
+  - 互換性の取れないパッケージ一覧作成。
+- 実装フェーズ（1-3 日）
+  - `react` / `react-dom` / `@types/*` を `^19` に更新（別ブランチ、単一 PR）。
+  - 依存パッケージを順次更新し、必要に応じて差替えや簡易修正を実施。
+- テスト・修正フェーズ（1-4 日）
+  - 型エラー・テスト失敗を修正。E2E 環境で重点的にチェック。
+- CI / リリースフェーズ（0.5-1 日）
+  - CI の Node バージョンやビルドキャッシュを調整。ステージングで確認後、本番リリース。
 
-8) 開発者向け受け入れ基準
-- 表示: `ProblemViewEditPage` の表示モードで、各小問が対応する `*View` でレンダリングされること。
-- 編集: 編集モードで `*Edit` が呼ばれ、編集 → 保存 → `useExamEditor.updateExam()` が呼ばれること。
-- CI: `npm run build` と `npm run test` をローカルで通す。Storybook を用意していることが望ましい。
+## ロールと責任（提案例）
+- 実装（Owner）: フロントエンド開発者（A）
+- 依存監査（Owner）: ライブラリ担当（B）
+- テスト（Owner）: QA/テスト担当（C）
+- リリース（Owner）: リリース担当（D）
 
-9) PR チェックリスト（レビュワー）
-- 変更は小さなコミットに分かれているか。
-- 型定義が追加され、影響範囲が明記されているか。
-- dynamic import によりバンドルサイズの異常増加が無いか。
-- ID 8/9 の実行に関する安全設計が別途提出されているか。
+## ロールバック計画
+- PR マージ前: ブランチ保護とステージングの E2E が必須。  
+- 本番リリース後の不具合時: 迅速に元の `react` バージョンを復元する PR とタグを切り、即時ロールバック。ビルド済みアセットの保管と比較用ログを残す。
 
-10) 付録 — Phebe 向けタスク分割（短いコマンド・ファイル指定付き）
-- Task A — frontend-registry (担当: A, 1d)
-  - 変更: `src/types/problemTypes.ts`, `src/components/problemTypes/ProblemTypeRegistry.tsx`
-  - 受け入れ: registry が `registerProblemType` と `getProblemTypeView` を提供していること。`registerDefaults()` の骨子を作る。
+## 重要コマンド（参考）
+- 再現 / デバッグ: `pnpm dev` / `pnpm build` / `pnpm preview`  
+- 依存関係調査: `pnpm ls` / `pnpm why react`  
+- バージョン更新（提案）: `pnpm add -D @types/react@^19 @types/react-dom@^19` / `pnpm add react@^19 react-dom@^19`  
 
-- Task B — frontend-views-core (担当: B, 1-2d)
-  - 変更: `src/components/problemTypes/FreeTextView.tsx`, `MultipleChoiceView.tsx`
-  - 受け入れ: snapshot テスト 1 件ずつ。
+---
 
-- Task C — frontend-edit-wiring (担当: C, 2-3d)
-  - 変更: `src/components/page/ProblemViewEditPage/ProblemEditor.tsx`, dynamic import の追加
-  - 受け入れ: 編集モードで edit コンポーネントがロードされること。
 
-- Task D — frontend-views-rest (担当: D, 2-3d)
-  - 変更: Cloze/TrueFalse/Numeric/Proof/Programming/CodeReading の view 実装
+※ 本要件書は最初のドラフトです。調査の結果に応じて、互換対象パッケージの追加や作業見積の調整を行ってください。
 
-- Task E — tests-storybook (担当: E, 1-2d)
-  - 変更: `stories` と `vitest` のテスト追加
+## 調査結果（現時点） 🔎
+- 発生源: `react-router`（`react-router-dom` を含む）内に `v7_startTransition` に関する deprecation 警告のロジックが存在することを確認しました。  
+  - 該当箇所: `node_modules/react-router/dist/...` にて `logV6DeprecationWarnings` により警告が出力される実装があるため、`RouterProvider` / `MemoryRouter` 等の利用時に警告が表示される可能性があります。  
+- 影響: テスト実行時やブラウザ上で `React.startTransition` の将来挙動に関する警告が表示される（開発ログや CI ログにノイズ）。
 
-- Task F — backend-contract (担当: F, 1-2d)
-  - 作業: API スキーマ（sample JSON）を `docs/backend_question_schema.md` で定義し、サーバチームと合意する
+### 暫定対応（短期 / 低リスク） ✅
+- **テストコードと Router を利用するラッパーに `future: { v7_startTransition: false }` を明示的に渡す**ことで、当該 deprecation 警告を抑止できます（本リポジトリ内のテストに適用済み）。
 
-- Task G — sandbox (担当: G, 3-7d)
-  - 作業: Jobe/CodeRunner 統合仕様書作成（運用・監視・コスト想定）
+### 中・長期対応（推奨） 🔄
+- **React の v19 へのアップグレード**計画を進めつつ、`react-router` とその他主要ライブラリの互換性（peerDependencies）を確認・アップデートする。  
+- `react-router` の将来バージョン（v7 以降）が安定した時点で、`future` フラグの再見直し／機能の有効化を検討してください。
 
-以上。
-# Docker Containerization Requirements (Requirements Definition)
-
-## 1. Project Overview
-The goal is to containerize the existing React/Vite frontend application (`edumintFrontend_20251222`) using Docker. This will ensure a consistent development environment across different machines and simplify the deployment process.
-
-## 2. Technical Requirements
-
-### 2.1. Base Image & Environment
-- **Node.js**: Use version **node:24.12.0-alpine**.
-- **OS**: Alpine Linux.
-- **Package Manager**: NPM.
-- **React**: Maintain or use **v18.x** (Current project status).
-- **Vite**: Use the latest stable version (**v7.x** or **v6.x** depending on compatibility with React 18).
-
-### 2.2. Dockerfile Design
-- **Multi-Stage Build**:
-  - **Stage 1 (Base/Deps)**: Install dependencies.
-  - **Stage 2 (Development)**: optimized for local development with hot-reloading.
-  - **Stage 3 (Builder)**: Create production build (`npm run build`).
-  - **Stage 4 (Production)**: Serve static files using a lightweight server component (e.g., Nginx or a lightweight Node server), though for this immediate requirement, **Development focus** is priority.
-- **Working Directory**: `/app`.
-
-### 2.3. Orchestration (Docker Compose)
-- Create a `docker-compose.yml` to manage the service.
-- **Service Name**: `frontend` (or `edumint-web`).
-- **Network**: Define a default bridge network.
-- **Ports**: Expose the Vite default port (5173) to the host (e.g., `5173:5173`).
-- **Volumes**:
-  - **Bind Mount**: Mount the local project directory to `/app` in the container to enable Hot Module Replacement (HMR).
-  - **Anonymous Volume**: Mount `/app/node_modules` to prevent the host's `node_modules` from interfering with the container's Linux-native modules.
-
-### 2.4. Configuration Management
-- **.dockerignore**: Properly exclude files to keep the build context light and secure (`node_modules`, `.git`, `.env*`, `dist`, coverage reports).
-- **Environment Variables**: Support injection of environment variables via `.env` file or docker-compose `environment` section.
-
-## 3. Success Criteria
-1.  **Build Success**: `docker-compose build` completes without errors.
-2.  **Run Success**: `docker-compose up` starts the container and the Vite dev server.
-3.  **Accessibility**: The application is accessible via browser at `http://localhost:5173`.
-4.  **Hot Reloading**: Modifying a source file (e.g., a `.tsx` component) locally immediately updates the running application in the browser.
+---

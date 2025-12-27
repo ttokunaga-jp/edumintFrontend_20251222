@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { TopMenuBar } from '@/components/common/TopMenuBar';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 
 // Mock Lucide icons to avoid render issues in test
@@ -18,9 +18,9 @@ describe('TopMenuBar', () => {
     it('has the correct visibility and z-index classes', () => {
         // TopMenuBar uses NavLink and Navigate, so wrap in Router
         render(
-            <BrowserRouter>
+            <MemoryRouter future={{ v7_startTransition: false }}>
                 <TopMenuBar onNavigate={() => { }} />
-            </BrowserRouter>
+            </MemoryRouter>
         );
 
         const nav = screen.getByRole('navigation');

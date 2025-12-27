@@ -90,3 +90,42 @@ This document outlines the step-by-step phases to implement the Docker container
 
 *   4.1. Remove local `node_modules` (Optional)
     *   **Action**: Delete local `node_modules` to test if the container runs truly independently.
+
+---
+
+## フェーズ X — React 19 アップグレード（2-5 日） 🔧
+**目的**: `React.startTransition` による警告を解消し、React を `^19` に更新して互換性を確保する。
+
+### サブタスク（順序）
+- 調査（0.5-1 日）
+  - ローカルで警告を再現し、コンソールのスタックトレースで発生元（ライブラリ名／ファイル）を特定する。
+  - `pnpm ls` / `pnpm why react` で依存ツリーを洗い出す。
+- 互換性監査（0.5-1 日）
+  - 主要依存パッケージ（Radix, motion, sonner, lucide-react, zustand, @uiw/react-codemirror 等）の peerDependencies とリリースノートを確認。
+  - 互換性を満たさないパッケージは更新可能か代替可否を検討する。
+- 実装（1 日）
+  - `react` / `react-dom` / `@types/react` / `@types/react-dom` を `^19` に更新（単一 PR、feature branch）。
+  - 必要な依存パッケージを順次アップデートし、簡単なコード修正で対応可能か評価。
+- 検証（1 日）
+  - `pnpm run typecheck`、`pnpm run test`（vitest）、Playwright のサンプリング E2E を実行。
+  - ローカルビルド・プレビューで警告が再度発生しないことを確認。
+- CI / リリース（0.5-1 日）
+  - CI（Node version やキャッシュ含む）を更新、ステージングで動作確認後に本番リリース。
+
+### 受け入れ条件
+- コンソールに該当の警告が出ないこと。
+- 既存のテストが通ること。重大な UI 回帰がないこと。
+- CI がパスすること。
+
+### ロール（推奨）
+- 実装: `frontend-registry` チーム（担当 A）
+- 互換監査: ライブラリ担当（担当 B）
+- テスト: QA（担当 C）
+
+### リスク & 緩和
+- 互換性が取れない依存が存在する場合は、フォーク／shim／段階的アップデートを検討する。
+- 本番リリースは段階ロールアウトを推奨（必要なら feature flag を利用）。
+
+---
+
+*注*: 実行前に影響範囲の完全な洗い出しと簡易回帰テストケースの選定を行ってください。

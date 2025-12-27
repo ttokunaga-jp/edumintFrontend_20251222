@@ -21,7 +21,7 @@ type Props = {
   progress: number;
   sourceType: SourceType;
   setSourceType: (v: SourceType) => void;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   onFileInputClick: () => void;
   onFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void;
   files: UploadFile[];

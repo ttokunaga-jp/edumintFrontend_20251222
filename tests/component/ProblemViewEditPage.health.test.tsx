@@ -74,7 +74,7 @@ describe('ProblemViewEditPage - service health gating', () => {
     });
 
     render(
-      <MemoryRouter initialEntries={['/problem/1']}>
+      <MemoryRouter initialEntries={['/problem/1']} future={{ v7_startTransition: false }}>
         <Routes>
           <Route
             path="/problem/:id"
