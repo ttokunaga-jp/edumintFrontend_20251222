@@ -94,7 +94,7 @@ export function QuestionForm({
         style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
         placeholder={currentFormat === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
       />
       <div className="rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
