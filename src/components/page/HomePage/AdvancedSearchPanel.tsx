@@ -195,7 +195,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('universityId');
                       clearFilter('universityName');
-                    }}}
+                    }}
                   >
                     <X className="size-4" />
                   </Button>
@@ -227,7 +227,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('facultyId');
                       clearFilter('facultyName');
-                    }}}
+                    }}
                   >
                     <X className="size-4" />
                   </Button>
@@ -259,7 +259,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('subjectId');
                       clearFilter('subjectName');
-                    }}}
+                    }}
                   >
                     <X className="size-4" />
                   </Button>
@@ -294,7 +294,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('teacherId');
                       clearFilter('teacherName');
-                    }}}
+                    }}
                   >
                     <X className="size-4" />
                   </Button>
@@ -491,7 +491,7 @@ export default function AdvancedSearchPanel({
                     <button
                       onClick={() => clearFilter(key as keyof SearchFilters)}
                       className="ml-1 hover:text-red-600"
-                      disabled={isDisabled}}
+                      disabled={isDisabled}
                     >
                       <X className="size-3" />
                     </button>
