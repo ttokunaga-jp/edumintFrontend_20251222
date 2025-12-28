@@ -66,7 +66,7 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
           placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
         />
         <div className="mt-3 rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
@@ -105,7 +105,7 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
           placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
         />
         <div className="mt-3 rounded-lg border border-gray-100 bg-blue-50 p-3 text-sm">
