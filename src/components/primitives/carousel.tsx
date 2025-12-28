@@ -7,7 +7,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import { cn } from "./utils";
+
 import { Button } from "./button";
 
 type CarouselApi = UseEmblaCarouselType[1];
@@ -48,7 +48,7 @@ function Carousel({
   opts,
   setApi,
   plugins,
-  className,
+  cls,
   children,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
@@ -133,7 +133,7 @@ function Carousel({
   );
 }
 
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselContent({ cls, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
   return (
@@ -150,7 +150,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ cls, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel();
 
   return (
@@ -165,7 +165,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CarouselPrevious({
-  className,
+  cls,
   variant = "outline",
   size = "icon",
   ...props
@@ -189,7 +189,7 @@ function CarouselPrevious({
 }
 
 function CarouselNext({
-  className,
+  cls,
   variant = "outline",
   size = "icon",
   ...props

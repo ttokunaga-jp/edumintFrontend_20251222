@@ -9,7 +9,7 @@
 import React from 'react';
 import { CheckCircle, XCircle, Loader2, FileIcon, X, RotateCw } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
-import { cn } from '@/components/primitives/utils';
+
 import type { UploadFile } from '@/types/health';
 
 export interface FileUploadQueueProps {
@@ -32,7 +32,7 @@ export interface FileUploadQueueProps {
   maxFiles?: number;
 
   /** Additional CSS classes */
-  className?: string;
+  cls?: string;
 }
 
 /**
@@ -57,13 +57,13 @@ function getStatusIcon(status: UploadFile['status']) {
 function getStatusStyles(status: UploadFile['status']) {
   switch (status) {
     case 'success':
-      return 'bg-green-50 border-green-200';
+      return ;
     case 'error':
-      return 'bg-red-50 border-red-200';
+      return ;
     case 'uploading':
-      return 'bg-white border-indigo-300';
+      return ;
     case 'pending':
-      return 'bg-gray-50 border-gray-200';
+      return ;
   }
 }
 
@@ -95,7 +95,7 @@ export function FileUploadQueue({
   acceptedExtensions = ['pdf', 'txt', 'md', 'tex'],
   maxFileSize = 10,
   maxFiles = 10,
-  className,
+  cls,
 }: FileUploadQueueProps) {
   return (
     <div > {/* 8px spacing (grid) */}
@@ -108,11 +108,11 @@ export function FileUploadQueue({
         >
           {/* Header: Icon + Name + Size + Remove */}
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }> {/* 12px gap (grid) */}
@@ -122,7 +122,7 @@ export function FileUploadQueue({
               </span>
             </div>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }> {/* 12px gap (grid) */}
@@ -161,7 +161,7 @@ export function FileUploadQueue({
                 ⚠️ {file.errorMessage || 'アップロードに失敗しました'}
               </p>
               <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }> {/* 8px gap (grid) */}
                 <Button

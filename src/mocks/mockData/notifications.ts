@@ -9,7 +9,7 @@ export const mockNotifications: Notification[] = [
     content: "佐藤花子さんがあなたの問題「微分積分学 - 第3章」にいいねしました",
     message: "佐藤花子さんがあなたの問題「微分積分学 - 第3章」にいいねしました",
     isRead: false,
-    relatedExamId: "exam-1",
+    relatedExamId: "",
     createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -20,7 +20,7 @@ export const mockNotifications: Notification[] = [
     content: "山田太郎さん: とても分かりやすい解説でした！",
     message: "山田太郎さん: とても分かりやすい解説でした！",
     isRead: false,
-    relatedExamId: "exam-2",
+    relatedExamId: "",
     createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -61,7 +61,7 @@ export const mockNotifications: Notification[] = [
     content: "田中次郎さんがあなたの問題「線形代数 中間」にいいねしました",
     message: "田中次郎さんがあなたの問題「線形代数 中間」にいいねしました",
     isRead: true,
-    relatedExamId: "exam-2",
+    relatedExamId: "",
     createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -72,7 +72,7 @@ export const mockNotifications: Notification[] = [
     content: "鈴木一郎さんがコメントしました",
     message: "鈴木一郎さんがコメントしました",
     isRead: true,
-    relatedExamId: "exam-3",
+    relatedExamId: "",
     createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
   }
 ];

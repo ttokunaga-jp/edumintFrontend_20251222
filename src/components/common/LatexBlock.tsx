@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 export interface LatexBlockProps {
   content: string;
   displayMode?: boolean;
-  className?: string;
+  cls?: string;
 }
 
 const normalizeLatex = (raw: string) => {
@@ -15,7 +15,6 @@ const normalizeLatex = (raw: string) => {
 export const LatexBlock: React.FC<LatexBlockProps> = ({
   content,
   displayMode = false,
-  className = '',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 

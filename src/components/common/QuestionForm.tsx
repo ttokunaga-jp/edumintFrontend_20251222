@@ -10,7 +10,7 @@ export type QuestionFormProps = {
   onFormatChange?: (format: 0 | 1) => void;
   textareaLabel?: string;
   previewLabel?: string;
-  className?: string;
+  cls?: string;
   readOnly?: boolean;
 };
 
@@ -22,7 +22,6 @@ export function QuestionForm({
   onFormatChange,
   textareaLabel = '問題文',
   previewLabel = 'プレビュー',
-  className = '',
   readOnly = false,
 }: QuestionFormProps) {
   const [content, setContent] = useState(value);
@@ -42,7 +41,7 @@ export function QuestionForm({
       <div >
         {label && <div >{label}</div>}
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <span >{textareaLabel}</span>
@@ -66,7 +65,7 @@ export function QuestionForm({
     <div >
       {label && <div >{label}</div>}
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <label  aria-label={`${textareaLabel}-label`}>

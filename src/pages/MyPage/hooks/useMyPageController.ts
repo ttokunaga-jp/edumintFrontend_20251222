@@ -28,14 +28,14 @@ export const useMyPageController = ({ user, onNavigate, onNavigateToEdit, onLogo
     [stats],
   );
 
-  const handleCreateProblem = () => onNavigate('problem-create');
+  const handleCreateProblem = () => onNavigate();
 
   const handleEditProblem = () => {
     const dummyProblemId = crypto.randomUUID();
     if (onNavigateToEdit) {
-      onNavigateToEdit('problem-view', dummyProblemId, 'edit');
+      onNavigateToEdit(, dummyProblemId, 'edit');
     } else {
-      onNavigate('problem-view', dummyProblemId);
+      onNavigate(, dummyProblemId);
     }
   };
 

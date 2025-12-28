@@ -22,14 +22,14 @@ export function ActionBar({
     return (
         <div >
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                 <div >
                     編集モード：変更内容は「保存」するまで反映されません。
                 </div>
                 <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
                     {onReset && (

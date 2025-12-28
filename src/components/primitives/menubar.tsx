@@ -5,10 +5,10 @@ import * as React from "react";
 import * as MenubarPrimitive from "@radix-ui/react-menubar";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 
-import { cn } from "./utils";
+
 
 function Menubar({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Root>) {
   return (
@@ -47,7 +47,7 @@ function MenubarRadioGroup({
 }
 
 function MenubarTrigger({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {
   return (
@@ -60,7 +60,7 @@ function MenubarTrigger({
 }
 
 function MenubarContent({
-  className,
+  cls,
   align = "start",
   alignOffset = -4,
   sideOffset = 8,
@@ -81,7 +81,7 @@ function MenubarContent({
 }
 
 function MenubarItem({
-  className,
+  cls,
   inset,
   variant = "default",
   ...props
@@ -101,7 +101,7 @@ function MenubarItem({
 }
 
 function MenubarCheckboxItem({
-  className,
+  cls,
   children,
   checked,
   ...props
@@ -114,7 +114,7 @@ function MenubarCheckboxItem({
       {...props}
     >
       <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -128,7 +128,7 @@ function MenubarCheckboxItem({
 }
 
 function MenubarRadioItem({
-  className,
+  cls,
   children,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.RadioItem>) {
@@ -139,7 +139,7 @@ function MenubarRadioItem({
       {...props}
     >
       <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -153,7 +153,7 @@ function MenubarRadioItem({
 }
 
 function MenubarLabel({
-  className,
+  cls,
   inset,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Label> & {
@@ -170,7 +170,7 @@ function MenubarLabel({
 }
 
 function MenubarSeparator({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Separator>) {
   return (
@@ -183,7 +183,7 @@ function MenubarSeparator({
 }
 
 function MenubarShortcut({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<"span">) {
   return (
@@ -202,7 +202,7 @@ function MenubarSub({
 }
 
 function MenubarSubTrigger({
-  className,
+  cls,
   inset,
   children,
   ...props
@@ -223,7 +223,7 @@ function MenubarSubTrigger({
 }
 
 function MenubarSubContent({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.SubContent>) {
   return (

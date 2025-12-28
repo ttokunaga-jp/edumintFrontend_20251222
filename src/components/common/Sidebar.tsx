@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Home, Plus, User, X, LogOut } from 'lucide-react';
-import { cn } from '@/shared/utils';
+
 import type { Page } from '@/types';
 
 interface SidebarProps {
@@ -18,7 +18,7 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
     }, []);
     const menuItems = [
         { id: 'home', label: 'ホーム', icon: Home },
-        { id: 'problem-create', label: '投稿', icon: Plus },
+        { id: "", label: '投稿', icon: Plus },
         { id: 'my-page', label: 'マイページ', icon: User },
     ];
 

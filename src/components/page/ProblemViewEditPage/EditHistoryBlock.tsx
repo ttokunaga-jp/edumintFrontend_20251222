@@ -19,14 +19,13 @@ export interface EditHistoryBlockProps {
   history: EditHistory[];
   currentVersion: number;
   onRollback?: (version: number) => void;
-  className?: string;
+  cls?: string;
 }
 
 export default function EditHistoryBlock({
   history,
   currentVersion,
   onRollback,
-  className = '',
 }: EditHistoryBlockProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -41,14 +40,14 @@ export default function EditHistoryBlock({
   };
 
   return (
-    <Card className={className}>
+    <Card>
       <CardHeader >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <Clock  />
@@ -60,7 +59,7 @@ export default function EditHistoryBlock({
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}
           >
@@ -83,10 +82,10 @@ export default function EditHistoryBlock({
                   key={item.id}
                 >
                   <div style={{
-      display: "flex"
+      display: 
     }>
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                       <Badge variant={item.version === currentVersion ? 'default' : 'secondary'}>
@@ -102,7 +101,7 @@ export default function EditHistoryBlock({
                         size="sm"
                         onClick={() => onRollback(item.version)}
                         style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}
                       >
@@ -117,7 +116,7 @@ export default function EditHistoryBlock({
                       {item.description || getChangeDescription(item.changes)}
                     </div>
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                       <span>編集者: {item.changedBy}</span>
@@ -132,7 +131,7 @@ export default function EditHistoryBlock({
                       <div >
                         {Object.entries(item.changes).slice(0, 3).map(([key, value]) => (
                           <div key={key} style={{
-      display: "flex"
+      display: 
     }>
                             <span >{key}:</span>
                             <span >

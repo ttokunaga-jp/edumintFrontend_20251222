@@ -5,7 +5,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
-import { cn } from "./utils";
+
 
 function Dialog({
   ...props
@@ -32,7 +32,7 @@ function DialogClose({
 }
 
 function DialogOverlay({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
@@ -45,7 +45,7 @@ function DialogOverlay({
 }
 
 function DialogContent({
-  className,
+  cls,
   children,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content>) {
@@ -67,7 +67,7 @@ function DialogContent({
   );
 }
 
-function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
+function DialogHeader({ cls, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
@@ -77,7 +77,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
+function DialogFooter({ cls, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-footer"
@@ -88,7 +88,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function DialogTitle({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Title>) {
   return (
@@ -101,7 +101,7 @@ function DialogTitle({
 }
 
 function DialogDescription({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Description>) {
   return (

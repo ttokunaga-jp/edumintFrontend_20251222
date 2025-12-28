@@ -15,24 +15,7 @@ const meta: Meta<typeof FileUploadQueue> = {
     layout: 'padded',
     docs: {
       description: {
-        component: `
-FileUploadQueue Component - Displays file upload queue with 4 states
-
-**4 States:**
-1. **Pending**: Gray background, 0% progress
-2. **Uploading**: White background, animated progress bar
-3. **Success**: Green background, 100% progress, checkmark icon
-4. **Error**: Red background, error message + retry button
-
-**Grid System:**
-- Padding: 16px (p-4)
-- Spacing: 8px (space-y-2)
-- Gap: 12px (gap-3)
-
-**Use Cases:**
-- Step 2 of ProblemCreatePage (file upload)
-- Any file upload flow with status tracking
-        `,
+        component: "",
       },
     },
   },

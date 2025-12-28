@@ -15,7 +15,7 @@ export function AnalysisPhase({ exam, onChange, onBack, onNext }: AnalysisPhaseP
   return (
     <div >
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <div>
@@ -23,7 +23,7 @@ export function AnalysisPhase({ exam, onChange, onBack, onNext }: AnalysisPhaseP
           <p >解析された問題構造を確認し、必要に応じて大問・小問の構成を調整してください。</p>
         </div>
         <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
           <Button variant="outline" onClick={onBack} >

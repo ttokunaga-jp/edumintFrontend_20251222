@@ -6,16 +6,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { HealthStatus } from '@/types/health';
-import {
-  getHealthContent,
-  getHealthCommunity,
-  getHealthNotifications,
-  getHealthSearch,
-  getHealthWallet,
-  getHealthSummary,
-  type HealthResponse,
-  type HealthSummaryResponse,
-} from '@/services/api/gateway/health';
+import { getHealthContent, getHealthCommunity, getHealthNotifications, getHealthSearch, getHealthWallet, getHealthSummary, type HealthResponse, type HealthSummaryResponse } from '@/services/api/gateway/health';
 
 /**
  * Service health state

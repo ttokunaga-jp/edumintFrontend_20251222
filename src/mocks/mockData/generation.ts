@@ -14,7 +14,7 @@ export const generationStatuses: GenerationStatusResponse[] = [
     status: "completed",
     currentStep: "completed",
     progress: 100,
-    problemId: "exam-1",
+    problemId: "",
     message: "生成完了",
     eta: 0,
   },

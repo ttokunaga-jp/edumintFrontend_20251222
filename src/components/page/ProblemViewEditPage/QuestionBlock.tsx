@@ -20,15 +20,15 @@ export type QuestionBlockProps = {
   onDelete?: () => void;
   difficultyOptions?: Array<{ value: number; label: string }>;
   onDifficultyChange?: (value: number) => void;
-  className?: string;
+  cls?: string;
   question?: any; // optional shorthand input
 };
 
 const difficultyLabels = {
-  0: { label: '未設定', color: 'bg-gray-100 text-gray-600' },
-  1: { label: '基礎', color: 'bg-green-100 text-green-700' },
-  2: { label: '応用', color: 'bg-yellow-100 text-yellow-700' },
-  3: { label: '発展', color: 'bg-red-100 text-red-700' },
+  0: { label: '未設定', color:  },
+  1: { label: '基礎', color:  },
+  2: { label: '応用', color:  },
+  3: { label: '発展', color:  },
 };
 
 export function QuestionBlock({
@@ -51,7 +51,6 @@ export function QuestionBlock({
     { value: 3, label: '発展' },
   ],
   onDifficultyChange,
-  className = '',
   viewMode = 'full',
   question,
 }: QuestionBlockProps & { viewMode?: 'full' | 'structure' }) {
@@ -81,16 +80,16 @@ export function QuestionBlock({
       {/* ヘッダー */}
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             {/* 問題番号 */}
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -99,7 +98,7 @@ export function QuestionBlock({
 
             <div >
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -149,7 +148,7 @@ export function QuestionBlock({
           {/* 編集/削除ボタン */}
           {canEdit && (
             <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
               {onDelete && (

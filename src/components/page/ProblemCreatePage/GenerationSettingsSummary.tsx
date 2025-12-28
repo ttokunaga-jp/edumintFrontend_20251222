@@ -24,7 +24,7 @@ export interface GenerationSettingsSummaryProps {
   settings: GenerationSettings;
   onEdit?: () => void;
   showEditButton?: boolean;
-  className?: string;
+  cls?: string;
 }
 
 const difficultyLabels = ['超基礎', '基礎', '標準', '応用', '発展', '最難関'];
@@ -43,19 +43,18 @@ export function GenerationSettingsSummary({
   settings,
   onEdit,
   showEditButton = true,
-  className = '',
 }: GenerationSettingsSummaryProps) {
   return (
     <div >
       {/* ヘッダー */}
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
     }>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -74,7 +73,7 @@ export function GenerationSettingsSummary({
         {/* AI生成設定 */}
         <div>
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -83,7 +82,7 @@ export function GenerationSettingsSummary({
           </div>
           <div >
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <span >自動問題生成</span>
@@ -94,14 +93,14 @@ export function GenerationSettingsSummary({
             {settings.autoGenerateQuestions && (
               <>
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                   <span >生成数</span>
                   <span >{settings.questionCount || 5}問</span>
                 </div>
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                   <span >難易度</span>
@@ -118,7 +117,7 @@ export function GenerationSettingsSummary({
         {settings.questionTypes.length > 0 && (
           <div>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -126,7 +125,7 @@ export function GenerationSettingsSummary({
               <h4 >問題形式</h4>
             </div>
             <div style={{
-      display: "flex",
+      display: "",
       gap: "0.25rem"
     }>
               {settings.questionTypes.map(typeId => (
@@ -144,7 +143,7 @@ export function GenerationSettingsSummary({
           <div >
             {settings.includeAnswers && (
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -154,7 +153,7 @@ export function GenerationSettingsSummary({
             )}
             {settings.includeSolutions && (
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -164,7 +163,7 @@ export function GenerationSettingsSummary({
             )}
             {settings.extractKeywords && (
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -182,7 +181,7 @@ export function GenerationSettingsSummary({
             <div >
               {settings.useAdvancedAI && (
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -192,7 +191,7 @@ export function GenerationSettingsSummary({
               )}
               {settings.preserveFormatting && (
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -202,7 +201,7 @@ export function GenerationSettingsSummary({
               )}
               {settings.detectDiagrams && (
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -212,7 +211,7 @@ export function GenerationSettingsSummary({
               )}
               {settings.splitBySection && (
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -222,7 +221,7 @@ export function GenerationSettingsSummary({
               )}
               {settings.optimizeForMobile && (
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -237,11 +236,11 @@ export function GenerationSettingsSummary({
         {/* 公開設定 */}
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -266,7 +265,7 @@ export function GenerationSettingsSummary({
       paddingRight: "1rem"
     }>
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
             <div >

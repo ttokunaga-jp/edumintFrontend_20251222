@@ -29,11 +29,11 @@ export default function MultipleChoiceView(props: ProblemTypeViewProps) {
             
           >
             <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>

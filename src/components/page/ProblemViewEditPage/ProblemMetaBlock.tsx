@@ -1,19 +1,6 @@
 // @ts-nocheck
 import { useState } from 'react';
-import {
-  Eye,
-  ThumbsUp,
-  ThumbsDown,
-  MessageCircle,
-  Share2,
-  Bookmark,
-  FileText,
-  Flag,
-  Calendar,
-  School,
-  BookOpen,
-  User as UserIcon,
-} from 'lucide-react';
+import { Eye, ThumbsUp, ThumbsDown, MessageCircle, Share2, Bookmark, FileText, Flag, Calendar, School, BookOpen, User as UserIcon } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
 import { Card, CardContent } from '@/components/primitives/card';
@@ -30,7 +17,7 @@ export interface ProblemMetaBlockProps {
   onReport: () => void;
   onExportPDF: () => void;
   isBookmarked?: boolean;
-  className?: string;
+  cls?: string;
   disableCommunityActions?: boolean; // Disable like/dislike/bookmark/share
   disableShareAction?: boolean; // Disable only share
 }
@@ -45,7 +32,6 @@ export default function ProblemMetaBlock({
   onReport,
   onExportPDF,
   isBookmarked = false,
-  className = '',
   disableCommunityActions = false,
   disableShareAction = false,
 }: ProblemMetaBlockProps) {
@@ -84,25 +70,25 @@ export default function ProblemMetaBlock({
       icon: Eye,
       label: '閲覧数',
       value: formatNumber(exam.viewCount),
-      color: 'text-blue-600',
+      color: "",
     },
     {
       icon: ThumbsUp,
       label: 'いいね',
       value: formatNumber(exam.goodCount),
-      color: 'text-green-600',
+      color: "",
     },
     {
       icon: ThumbsDown,
       label: 'バッド',
       value: formatNumber(exam.badCount),
-      color: 'text-red-600',
+      color: "",
     },
     {
       icon: MessageCircle,
       label: 'コメント',
       value: formatNumber(exam.commentCount),
-      color: 'text-purple-600',
+      color: "",
     },
   ];
 
@@ -113,7 +99,7 @@ export default function ProblemMetaBlock({
         <div >
           <h1 >{exam.examName}</h1>
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
             <Badge >
@@ -137,7 +123,7 @@ export default function ProblemMetaBlock({
     }>
           {metaItems.map((item, index) => (
             <div key={index} style={{
-      display: "flex"
+      display: 
     }>
               <item.icon  />
               <div >
@@ -149,7 +135,7 @@ export default function ProblemMetaBlock({
             </div>
           ))}
           <div style={{
-      display: "flex"
+      display: 
     }>
             <UserIcon  />
             <div >
@@ -160,7 +146,7 @@ export default function ProblemMetaBlock({
             </div>
           </div>
           <div style={{
-      display: "flex"
+      display: 
     }>
             <Calendar  />
             <div >
@@ -195,7 +181,7 @@ export default function ProblemMetaBlock({
               onClick={onLike}
               disabled={disableCommunityActions}
               style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}
@@ -209,7 +195,7 @@ export default function ProblemMetaBlock({
               onClick={onDislike}
               disabled={disableCommunityActions}
               style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}
@@ -229,7 +215,7 @@ export default function ProblemMetaBlock({
               onClick={onBookmark}
               disabled={disableCommunityActions}
               style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}
@@ -243,7 +229,7 @@ export default function ProblemMetaBlock({
               onClick={onShare}
               disabled={disableCommunityActions || disableShareAction}
               style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}
@@ -262,7 +248,7 @@ export default function ProblemMetaBlock({
               size="sm"
               onClick={onExportPDF}
               style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}
@@ -276,7 +262,7 @@ export default function ProblemMetaBlock({
                 size="sm"
                 onClick={onReport}
                 style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}

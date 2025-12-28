@@ -21,7 +21,7 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
 
   return (
     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center",
       paddingLeft: "1rem",

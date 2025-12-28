@@ -93,7 +93,7 @@ const advanceJobState = (jobId: string): void => {
 
   // 完了時に problemId を付与
   if (nextStep.status === 'completed') {
-    state.problemId = `problem-${jobId}`;
+    state.problemId = ;
     state.locked = true;
   }
 };

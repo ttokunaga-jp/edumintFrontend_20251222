@@ -5,12 +5,7 @@ import { ProfileEditForm } from '@/components/page/MyPage/ProfileEditForm';
 import { ProblemCard } from '@/components/common/ProblemCard';
 import { UserStatsCards } from '@/components/page/MyPage/UserStatsCards';
 import { WalletCard } from '@/components/page/MyPage/WalletCard';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/primitives/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/primitives/accordion";
 import { mockExams } from '@/mocks/mockData/search';
 import type { Page, User } from '@/types';
 import { useMyPageController } from './MyPage/hooks/useMyPageController';
@@ -57,14 +52,14 @@ export function MyPage({
 
     }}
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}
-        <h3 className={undefined}>{title}</h3>
+        <h3>{title}</h3>
 
     }>
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <h3 >{title}</h3>
@@ -80,7 +75,7 @@ export function MyPage({
       </div>
       {problems.length > 0 ? (
         <div style={{
-      display: "flex",
+      display: "",
       paddingLeft: "1rem",
       paddingRight: "1rem"
 
@@ -92,7 +87,7 @@ export function MyPage({
             <div key={p.id} >
               <ProblemCard
                 problem={p}
-                onClick={(id) => onNavigate('problem-view', id)}
+                onClick={(id) => onNavigate(, id)}
                 
               />
             </div>
@@ -117,11 +112,11 @@ export function MyPage({
 
         {/* Profile Header (YouTube Style) */}
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
 
     }}
-          <Avatar className={undefined}>
+          <Avatar>
 
     }>
           <Avatar >
@@ -134,7 +129,7 @@ export function MyPage({
           <div>
             <h1 >{profile.displayName || profile.username}</h1>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
 

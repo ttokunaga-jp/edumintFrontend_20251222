@@ -5,7 +5,7 @@ import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 
-import { cn } from "./utils";
+
 
 function DropdownMenu({
   ...props
@@ -33,7 +33,7 @@ function DropdownMenuTrigger({
 }
 
 function DropdownMenuContent({
-  className,
+  cls,
   sideOffset = 4,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
@@ -58,7 +58,7 @@ function DropdownMenuGroup({
 }
 
 function DropdownMenuItem({
-  className,
+  cls,
   inset,
   variant = "default",
   ...props
@@ -78,7 +78,7 @@ function DropdownMenuItem({
 }
 
 function DropdownMenuCheckboxItem({
-  className,
+  cls,
   children,
   checked,
   ...props
@@ -91,7 +91,7 @@ function DropdownMenuCheckboxItem({
       {...props}
     >
       <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -116,7 +116,7 @@ function DropdownMenuRadioGroup({
 }
 
 function DropdownMenuRadioItem({
-  className,
+  cls,
   children,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
@@ -127,7 +127,7 @@ function DropdownMenuRadioItem({
       {...props}
     >
       <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -141,7 +141,7 @@ function DropdownMenuRadioItem({
 }
 
 function DropdownMenuLabel({
-  className,
+  cls,
   inset,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
@@ -158,7 +158,7 @@ function DropdownMenuLabel({
 }
 
 function DropdownMenuSeparator({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
   return (
@@ -171,7 +171,7 @@ function DropdownMenuSeparator({
 }
 
 function DropdownMenuShortcut({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<"span">) {
   return (
@@ -190,7 +190,7 @@ function DropdownMenuSub({
 }
 
 function DropdownMenuSubTrigger({
-  className,
+  cls,
   inset,
   children,
   ...props
@@ -211,7 +211,7 @@ function DropdownMenuSubTrigger({
 }
 
 function DropdownMenuSubContent({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
   return (

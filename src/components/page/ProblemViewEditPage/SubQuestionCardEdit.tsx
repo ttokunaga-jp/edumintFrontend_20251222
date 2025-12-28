@@ -55,7 +55,7 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
     <div >
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -63,7 +63,7 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
         </div>
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>

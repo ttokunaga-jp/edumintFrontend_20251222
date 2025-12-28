@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Bell, Heart, MessageSquare, Info, CheckCircle } from 'lucide-react';
-import { cn } from '@/shared/utils';
+
 
 interface Notification {
     id: string;
@@ -107,29 +107,24 @@ export default function NotificationPopover({ isOpen, onClose }: NotificationPop
                 // @ts-ignore -- popover is a native attribute not yet in TypeScript DOM typings
                 popover="auto"
                 data-notifications="true"
-
-                className={undefined}
-
-                
-
                 style={{ top: '4rem', right: '1rem', left: 'auto' }}
                 onClick={(e) => e.stopPropagation()}
                 role="dialog"
                 aria-label="通知ポップオーバー"
             >
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
-    }>
+    }}>
                     <h3 >通知</h3>
                 </div>
 
                 <div >
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
                         <Bell  />
                     </div>
                     <h3 >Coming Soon</h3>
@@ -147,26 +142,22 @@ export default function NotificationPopover({ isOpen, onClose }: NotificationPop
         <div
             id={popoverId}
             data-notifications="true"
-
-            className={undefined}
-
             
-
             style={{ visibility: isOpen ? 'visible' : 'hidden' }}
             onClick={(e) => e.stopPropagation()}>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
-    }>
+    }}>
                 <h3 >通知</h3>
             </div>
 
             <div >
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
                     <Bell  />
                 </div>
                 <h3 >Coming Soon</h3>

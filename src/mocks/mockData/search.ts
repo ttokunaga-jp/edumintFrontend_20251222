@@ -3,10 +3,10 @@ import type { SearchResponse, ReadingSuggestion } from "@/services/api/gateway/s
 
 const baseExams: Exam[] = [
   {
-    id: "exam-1",
+    id: "",
     examName: "微分積分学 期末試験",
     school: "筑波大学",
-    subjectId: "math-1",
+    subjectId: "",
     subjectName: "微分積分学",
     teacherId: "t1",
     teacherName: "山田太郎",
@@ -34,10 +34,10 @@ const baseExams: Exam[] = [
     updatedAt: "2024-12-01T10:00:00Z",
   },
   {
-    id: "exam-2",
+    id: "",
     examName: "線形代数 中間試験",
     school: "慶應義塾大学",
-    subjectId: "math-2",
+    subjectId: "",
     subjectName: "線形代数",
     teacherId: "t2",
     teacherName: "佐藤花子",
@@ -65,7 +65,7 @@ const baseExams: Exam[] = [
     updatedAt: "2023-11-15T09:00:00Z",
   },
   {
-    id: "exam-3",
+    id: "",
     examName: "量子力学 最終レポート",
     school: "東京大学",
     subjectId: "phys-1",
@@ -96,7 +96,7 @@ const baseExams: Exam[] = [
     updatedAt: "2024-12-20T11:00:00Z",
   },
   {
-    id: "exam-4",
+    id: "",
     examName: "マクロ経済学 基礎テスト",
     school: "早稲田大学",
     subjectId: "econ-1",
@@ -127,7 +127,7 @@ const baseExams: Exam[] = [
     updatedAt: "2024-12-21T08:00:00Z",
   },
   {
-    id: "exam-5",
+    id: "",
     examName: "データ構造とアルゴリズム",
     school: "筑波大学",
     subjectId: "cs-1",
@@ -157,7 +157,7 @@ const baseExams: Exam[] = [
     updatedAt: "2022-07-20T15:00:00Z",
   },
   {
-    id: "exam-6",
+    id: "",
     examName: "近代文学史 講義内課題",
     school: "慶應義塾大学",
     subjectId: "lit-1",
@@ -186,10 +186,10 @@ const baseExams: Exam[] = [
     updatedAt: "2024-12-21T16:00:00Z",
   },
   {
-    id: "exam-7",
+    id: "",
     examName: "有機化学I 中間試験",
     school: "東京大学",
-    subjectId: "chem-1",
+    subjectId: "",
     subjectName: "有機化学",
     teacherId: "t7",
     teacherName: "渡辺直人",
@@ -215,10 +215,10 @@ const baseExams: Exam[] = [
     updatedAt: "2023-05-10T11:00:00Z",
   },
   {
-    id: "exam-8",
+    id: "",
     examName: "憲法 判例百選のまとめ",
     school: "早稲田大学",
-    subjectId: "law-1",
+    subjectId: "",
     subjectName: "憲法",
     teacherId: "t8",
     teacherName: "中村博",
@@ -244,7 +244,7 @@ const baseExams: Exam[] = [
     updatedAt: "2024-11-20T09:00:00Z",
   },
   {
-    id: "exam-9",
+    id: "",
     examName: "英語表現I 期末レポートテーマ",
     school: "慶應義塾大学",
     subjectId: "eng-1",
@@ -270,7 +270,7 @@ const baseExams: Exam[] = [
     updatedAt: "2024-12-21T18:00:00Z",
   },
   {
-    id: "exam-10",
+    id: "",
     examName: "統計学 演習問題集",
     school: "筑波大学",
     subjectId: "stat-1",
@@ -297,7 +297,7 @@ const baseExams: Exam[] = [
     updatedAt: "2023-12-21T10:00:00Z",
   },
   {
-    id: "exam-11",
+    id: "",
     examName: "Alice Smith 編集テスト用",
     school: "テスト大学",
     subjectId: "test-owners",

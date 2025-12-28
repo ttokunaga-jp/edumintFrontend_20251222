@@ -4,7 +4,7 @@ export interface EmptyStateProps {
   title?: string;
   description?: string;
   action?: React.ReactNode;
-  className?: string;
+  cls?: string;
   children?: React.ReactNode;
 }
 
@@ -12,7 +12,6 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   title = 'No data available',
   description,
   action,
-  className = '',
   children,
 }) => {
   return (
@@ -23,7 +22,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       {description && <p >{description}</p>}
       {children}
       {action && <div style={{
-      display: "flex",
+      display: "",
       justifyContent: "center"
     }>{action}</div>}
     </div>

@@ -6,12 +6,12 @@ import React, { useEffect, useRef } from "react";
 type NativeDialogProps = {
   isOpen?: boolean;
   onClose?: () => void;
-  className?: string;
+  cls?: string;
   children?: React.ReactNode;
   id?: string;
 };
 
-export const NativeDialog = ({ isOpen = false, onClose, children, className = "", id }: NativeDialogProps) => {
+export const NativeDialog = ({ isOpen = false, onClose, children, id }: NativeDialogProps) => {
   const ref = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
@@ -50,7 +50,6 @@ export const NativeDialog = ({ isOpen = false, onClose, children, className = ""
     <dialog
       id={id}
       ref={ref}
-      className={className}
       onClick={(e) => {
         if (e.target === ref.current) onClose?.();
       }}

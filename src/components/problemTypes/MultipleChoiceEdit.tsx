@@ -68,7 +68,7 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
     <div >
       <div>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}>
           <label >問題文</label>
@@ -98,7 +98,7 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
 
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}>
             <label >選択肢</label>
@@ -119,7 +119,7 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
         <div >
           {localOptions.map((opt, idx) => (
             <div key={opt.id || idx} style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }}>
               <button
@@ -174,7 +174,7 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
 
       <div>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}>
           <label >解説 / 答え</label>

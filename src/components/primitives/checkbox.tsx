@@ -5,10 +5,10 @@ import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { CheckIcon } from "lucide-react";
 
-import { cn } from "./utils";
+
 
 function Checkbox({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
   return (
@@ -20,7 +20,7 @@ function Checkbox({
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
         style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}

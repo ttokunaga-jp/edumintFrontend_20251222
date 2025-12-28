@@ -14,26 +14,7 @@ const meta: Meta<typeof JobStatusRibbon> = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: `
-JobStatusRibbon Component - Sticky ribbon showing job generation status
-
-**Position:** sticky top-16 (below TopMenuBar)
-
-**5 States:**
-1. **Queued**: Gray background, clock icon, no progress bar
-2. **Processing**: Indigo background, spinning cog icon, progress bar + pause/cancel buttons
-3. **Paused**: Yellow background, pause icon, static progress bar + resume/cancel buttons
-4. **Completed**: Green background, checkmark icon, no progress bar + view result button
-5. **Error**: Red background, X icon, error message + retry button
-
-**Grid System:**
-- Padding: 12px vertical (py-3)
-- Gap: 16px (gap-4), 12px (gap-3), 8px (gap-2)
-
-**Use Cases:**
-- GeneratingPage (job status tracking)
-- Any long-running job with progress tracking
-        `,
+        component: "",
       },
     },
   },

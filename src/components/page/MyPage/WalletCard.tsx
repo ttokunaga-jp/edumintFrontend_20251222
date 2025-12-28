@@ -14,11 +14,11 @@ export type WalletCardProps = {
   balance?: WalletBalance;
   isLoading?: boolean;
   onWithdraw?: () => void;
-  className?: string;
+  cls?: string;
   disableWithdrawal?: boolean; // Add disable prop for health-based disabling
 };
 
-export function WalletCard({ balance, isLoading = false, onWithdraw, className = '', disableWithdrawal = false }: WalletCardProps) {
+export function WalletCard({ balance, isLoading = false, onWithdraw, disableWithdrawal = false }: WalletCardProps) {
   const [showDetails, setShowDetails] = useState(false);
 
   if (isLoading) {
@@ -35,7 +35,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
     return (
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -55,11 +55,11 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
   return (
     <div >
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -86,21 +86,21 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
       {showDetails && (
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <span >保留中の収益</span>
             <span >¥{balance.pendingEarnings.toLocaleString()}</span>
           </div>
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <span >累計収益</span>
             <span >¥{balance.totalEarnings.toLocaleString()}</span>
           </div>
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <span >最終更新</span>
@@ -118,7 +118,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
           onClick={onWithdraw}
           disabled={balance.balance < 1000 || disableWithdrawal}
           style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center",
       gap: "0.5rem",
@@ -132,7 +132,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
           <span >出金</span>
         </button>
         <button style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center",
       gap: "0.5rem",
@@ -155,7 +155,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
       <a
         href="#"
         style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center",
       gap: "0.25rem"

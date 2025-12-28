@@ -7,10 +7,10 @@ export type ProfileEditFormProps = {
   user: User;
   onSave: (updatedProfile: Partial<User>) => Promise<void>;
   onCancel: () => void;
-  className?: string;
+  cls?: string;
 };
 
-export function ProfileEditForm({ user, onSave, onCancel, className = '' }: ProfileEditFormProps) {
+export function ProfileEditForm({ user, onSave, onCancel, }: ProfileEditFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: user.username,
@@ -70,7 +70,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
         {/* ユーザー名 */}
         <div>
           <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -93,7 +93,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
         {/* メールアドレス（表示のみ） */}
         <div>
           <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -111,7 +111,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingBottom: "0.5rem"
 
     }} />
-          <p className={undefined}>
+          <p>
 
     }}
           />
@@ -124,7 +124,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
         {/* 所属学部 */}
         <div>
           <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -148,7 +148,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
         {/* 学問分野 */}
         <div>
           <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -174,7 +174,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
         {/* 自己紹介 */}
         <div>
           <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <span>自己紹介</span>
@@ -197,14 +197,14 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
 
       {/* アクションボタン */}
       <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
         <button
           type="submit"
           disabled={isLoading}
           style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center",
       gap: "0.5rem",

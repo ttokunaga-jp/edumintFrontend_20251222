@@ -36,12 +36,12 @@ function StructureStatusCard({
   return (
     <Card  aria-busy={!isPaused && !isError}>
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -91,12 +91,12 @@ function GenerationStatusCard({
   return (
     <Card  aria-busy={!isPaused && !isError}>
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -314,7 +314,7 @@ export function GenerationPhase({
   return (
     <div >
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <div>
@@ -332,7 +332,7 @@ export function GenerationPhase({
         </div>
         {!isComplete && (
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Button variant="outline" onClick={onBack} >
@@ -342,7 +342,7 @@ export function GenerationPhase({
         )}
         {isComplete && (
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Button variant="outline" onClick={onBack} >

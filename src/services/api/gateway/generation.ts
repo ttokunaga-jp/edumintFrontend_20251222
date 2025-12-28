@@ -1,9 +1,4 @@
-import {
-  API_BASE_URL,
-  getHeaders,
-  handleResponse,
-  ApiError,
-} from '../httpClient';
+import { API_BASE_URL, getHeaders, handleResponse, ApiError } from '../httpClient';
 
 export interface GenerationSettings {
   autoGenerateQuestions: boolean;

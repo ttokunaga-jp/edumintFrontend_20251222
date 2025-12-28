@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 import { ProblemEditor } from '@/components/page/ProblemViewEditPage/ProblemEditor';
 
 const buildExam = () => ({
-  id: 'exam-test',
+  id: "",
   examName: 'Mock Exam',
   questions: [
     {

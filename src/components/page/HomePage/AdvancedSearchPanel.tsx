@@ -40,26 +40,7 @@ export interface AdvancedSearchPanelProps {
  * - Integrates with useServiceHealth via searchStatus prop
  * - Disables all inputs when search service is not operational
  * - All text inputs use MultilingualAutocomplete + suggestReadings
- * - Defaults to user's university/faculty if provided
- * - Active filter count badge
- * - Clear all filters button
- * - Responsive grid layout (1→2 cols mobile→desktop)
- * 
- * @example
- * <AdvancedSearchPanel
- *   filters={filters}
- *   onFiltersChange={setFilters}
- *   defaultUniversity="東京大学"
- *   defaultFaculty="工学部"
- *   searchStatus={health.search}
- * />
- */
-export default function AdvancedSearchPanel({
-  filters,
-  onFiltersChange,
-  defaultUniversity,
-  defaultFaculty,
-  searchStatus = 'operational',
+ * - Defaults to useroperational',
   initialExpanded = false,
 }: AdvancedSearchPanelProps) {
   const [isExpanded, setIsExpanded] = useState(initialExpanded);
@@ -108,59 +89,7 @@ export default function AdvancedSearchPanel({
       ? selectedFormats.filter(id => id !== formatId)
       : [...selectedFormats, formatId];
     setSelectedFormats(newFormats);
-    updateFilter('formats', newFormats.length > 0 ? newFormats : undefined);
-  };
-
-  // Current year for exam year suggestions
-  const currentYear = new Date().getFullYear();
-  const recentYears = Array.from({ length: 5 }, (_, i) => currentYear - i);
-
-  return (
-    <div >
-      {/* ヘッダー */}
-      <div style={{
-      display: "flex",
-      alignItems: "center",
-      paddingLeft: "1rem",
-      paddingRight: "1rem"
-    }>
-        <div style={{
-      display: "flex",
-      alignItems: "center"
-    }>
-          <h3 >検索条件</h3>
-          {activeFilterCount > 0 && (
-            <Badge variant="secondary">{activeFilterCount}件の条件</Badge>
-          )}
-          {isDisabled && (
-            <Badge variant="error">検索機能停止中</Badge>
-          )}
-        </div>
-        <div style={{
-      display: "flex",
-      alignItems: "center"
-    }>
-          {activeFilterCount > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-              disabled={isDisabled}
-              
-            >
-              すべてクリア
-            </Button>
-          )}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-            style={{
-      display: "flex",
-      alignItems: "center"
-    }}
-          >
-            <span>{isExpanded ? '検索条件を隠す' : '検索条件を表示'}</span>
+    updateFilter('formats検索条件を隠す' : '検索条件を表示'}</span>
             {isExpanded ? <ChevronUp  /> : <ChevronDown  />}
           </Button>
         </div>
@@ -185,7 +114,7 @@ export default function AdvancedSearchPanel({
                   }}
                   placeholder="大学名を入力..."
                   category="university"
-                  className={isDisabled ? 'opacity-50 pointer-events-none' : ''}
+                 
                 />
                 {filters.universityName && !isDisabled && (
                   <Button
@@ -217,7 +146,7 @@ export default function AdvancedSearchPanel({
                   }}
                   placeholder="学部名を入力..."
                   category="faculty"
-                  className={isDisabled ? 'opacity-50 pointer-events-none' : ''}
+                 
                 />
                 {filters.facultyName && !isDisabled && (
                   <Button
@@ -249,7 +178,7 @@ export default function AdvancedSearchPanel({
                   }}
                   placeholder="科目名を入力..."
                   category="subject"
-                  className={isDisabled ? 'opacity-50 pointer-events-none' : ''}
+                 
                 />
                 {filters.subjectName && !isDisabled && (
                   <Button
@@ -284,7 +213,7 @@ export default function AdvancedSearchPanel({
                   }}
                   placeholder="教授名を入力..."
                   category="teacher"
-                  className={isDisabled ? 'opacity-50 pointer-events-none' : ''}
+                 
                 />
                 {filters.teacherName && !isDisabled && (
                   <Button
@@ -311,21 +240,7 @@ export default function AdvancedSearchPanel({
                   id="examYear"
                   name="examYear"
                   value={filters.examYear || ''}
-                  onChange={(e) => updateFilter('examYear', e.target.value ? parseInt(e.target.value) : undefined)}
-                  placeholder={`例: ${currentYear}`}
-                  min="2000"
-                  max={currentYear}
-                  disabled={isDisabled}
-                  
-                />
-                <div style={{
-      display: "flex",
-      gap: "0.5rem"
-    }>
-                  {recentYears.map(year => (
-                    <Badge
-                      key={year}
-                      variant={filters.examYear === year ? 'default' : 'outline'}
+                  onChange={(e) => updateFilter('examYeardefault' : 'outline'}
                       
                       onClick={() => !isDisabled && updateFilter('examYear', year)}
                     >
@@ -365,43 +280,7 @@ export default function AdvancedSearchPanel({
                 { value: '1', label: '基礎' },
                 { value: '2', label: '標準' },
                 { value: '3', label: '応用' },
-                { value: '5', label: '難関' },
-              ]}
-              placeholder="レベルを選択..."
-            />
-          </div>
-
-          {/* Row 5: Problem Format (問題形式) */}
-          <div >
-            <Label>問題形式</Label>
-            <div style={{
-      gap: "0.5rem"
-    }>
-              {problemFormats.map(format => (
-                <label
-                  key={format.id}
-                  
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedFormats.includes(format.id)}
-                    onChange={() => toggleFormat(format.id)}
-                    disabled={isDisabled}
-                    name={`problem-format-${format.id}`}
-                    
-                  />
-                  <span >{format.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 6: Period (期間) */}
-          <div >
-            <Label>期間</Label>
-            <NativeSelect
-              value={filters.period || undefined}
-              onChange={(value) => updateFilter('period', value === 'clear' ? undefined : value)}
+                { value: '5', label: '難関period', value === 'clear' ? undefined : value)}
               disabled={isDisabled}
               items={[
                 { value: 'clear', label: 'すべて' },
@@ -455,21 +334,7 @@ export default function AdvancedSearchPanel({
                 { value: '10', label: '10分' },
                 { value: '30', label: '30分' },
                 { value: '60', label: '1時間' },
-                { value: '0', label: 'その他' },
-              ]}
-              placeholder="所要時間を選択..."
-            />
-          </div>
-
-          {/* アクティブなフィルターのチップ表示 */}
-          {activeFilterCount > 0 && (
-            <div style={{
-      display: "flex",
-      gap: "0.5rem"
-    }>
-              <span >適用中:</span>
-              {Object.entries(filters).map(([key, value]) => {
-                if (key === 'sortBy' || key === 'page' || key === 'limit' || value === undefined) return null;
+                { value: '0', label: 'その他sortBy' || key === 'page' || key === 'limit' || value === undefined) return null;
 
                 let displayValue = String(value);
                 if (key === 'majorType') displayValue = value === 0 ? '理系' : '文系';
@@ -477,30 +342,4 @@ export default function AdvancedSearchPanel({
                   const levels: Record<number, string> = { 1: '基礎', 2: '標準', 3: '応用', 5: '難関' };
                   displayValue = levels[value as number] || String(value);
                 }
-                if (key === 'formats') displayValue = `${(value as number[]).length}種類`;
-
-                return (
-                  <Badge key={key} variant="secondary" style={{
-      display: "flex",
-      alignItems: "center"
-    }>
-                    <span >{displayValue}</span>
-                    <button
-                      onClick={() => clearFilter(key as keyof SearchFilters)}
-                      
-                      disabled={isDisabled}
-                    >
-                      <X  />
-                    </button>
-                  </Badge>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-export { AdvancedSearchPanel };
+                if (key === 'formats

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import {
-  AuthLayout,
-  AuthProviderButtons,
-  AcademicDomainHint,
-  LoginForm,
-  RegisterForm,
-} from '@/components/page/LoginRegisterPage';
-import { cn } from '@/shared/utils';
+import { AuthLayout, AuthProviderButtons, AcademicDomainHint, LoginForm, RegisterForm } from '@/components/page/LoginRegisterPage';
+
 import { useLoginForm, useRegisterForm, useSocialAuth } from './LoginRegisterPage/hooks';
 import type { User } from '@/types';
 
@@ -32,7 +26,7 @@ export function LoginRegisterPage({ onLogin }: LoginRegisterPageProps) {
         <AcademicDomainHint />
 
         <div style={{
-      display: "flex"
+      display: 
 
     }}
 

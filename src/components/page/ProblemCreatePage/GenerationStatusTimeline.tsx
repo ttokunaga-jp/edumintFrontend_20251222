@@ -12,7 +12,7 @@ interface GenerationStatusTimelineProps {
   jobId?: string;
   errorMessage?: string;
   errorCode?: string;
-  className?: string;
+  cls?: string;
 }
 
 const phaseLabels: Record<GenerationPhase, string> = {
@@ -48,7 +48,6 @@ export function GenerationStatusTimeline({
   jobId,
   errorMessage,
   errorCode,
-  className = '',
 }: GenerationStatusTimelineProps) {
   const isError = currentStep === 'error';
   const isComplete = currentStep === 'complete';
@@ -58,12 +57,12 @@ export function GenerationStatusTimeline({
   const displayLabel = detailedStep ? stepLabels[detailedStep] : phaseLabels[currentStep];
 
   return (
-    <div className={className}>
+    <div>
       {/* 現在の状態表示 */}
       {!isError && !isComplete && (
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -82,7 +81,7 @@ export function GenerationStatusTimeline({
       {isPaused && (
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -96,7 +95,7 @@ export function GenerationStatusTimeline({
       {!isError && !isComplete && (
         <div >
           <div style={{
-      display: "flex"
+      display: 
     }>
             <span>進行状況</span>
             <span>{progress}%</span>
@@ -114,7 +113,7 @@ export function GenerationStatusTimeline({
       {isComplete && (
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }>
@@ -128,7 +127,7 @@ export function GenerationStatusTimeline({
       {isError && errorMessage && (
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <AlertCircle  />

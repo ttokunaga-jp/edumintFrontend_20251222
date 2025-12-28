@@ -14,25 +14,7 @@ const meta: Meta<typeof ContextHealthAlert> = {
     layout: 'padded',
     docs: {
       description: {
-        component: `
-ContextHealthAlert コンポーネント - サービスヘルス状態を表示
-
-**20 Variants**: 5カテゴリ × 4ステータス
-- C1: AI生成エンジン
-- C2: コンテンツサービス
-- C3: コイン残高・出金
-- C4: コミュニティ機能
-- C5: 通知・お知らせ
-
-**Statuses**:
-- S1: operational (非表示)
-- S2: degraded (200ms animation)
-- S3: maintenance (250ms animation + pulse)
-- S4: outage (300ms animation + shake)
-
-**Grid**: 16px padding (p-4), 12px spacing (gap-3)
-**WCAG 2.1 AA**: コントラスト比 4.5:1以上
-        `,
+        component: "",
       },
     },
   },

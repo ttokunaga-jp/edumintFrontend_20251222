@@ -17,7 +17,7 @@ interface FileUploadQueueProps {
   onRetry?: (fileId: string) => void;
   acceptedExtensions?: string[];
   maxFileSize?: number; // in MB
-  className?: string;
+  cls?: string;
 }
 
 const ACCEPTED_EXTENSIONS = ['pdf', 'txt', 'md', 'tex', "docx", "pptx", "xlsx", "csv", "png", "jpg", "jpeg", "json"];
@@ -29,7 +29,6 @@ export function FileUploadQueue({
   onRetry,
   acceptedExtensions = ACCEPTED_EXTENSIONS,
   maxFileSize = MAX_FILE_SIZE,
-  className = '',
 }: FileUploadQueueProps) {
   const getFileExtension = (filename: string) => {
     return filename.split('.').pop()?.toLowerCase() || '';
@@ -88,14 +87,14 @@ export function FileUploadQueue({
   const getStatusColor = (file: UploadFile) => {
     switch (file.status) {
       case 'pending':
-        return 'text-gray-600';
+        return ;
       case 'uploading':
       case 'validating':
-        return 'text-indigo-600';
+        return ;
       case 'success':
-        return 'text-green-600';
+        return ;
       case 'error':
-        return 'text-red-600';
+        return ;
     }
   };
 
@@ -107,7 +106,7 @@ export function FileUploadQueue({
     <div >
       {/* ヘッダー */}
       <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <h3 >
@@ -129,7 +128,7 @@ export function FileUploadQueue({
               
             >
               <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
                 {/* アイコン */}
@@ -140,7 +139,7 @@ export function FileUploadQueue({
                 {/* ファイル情報 */}
                 <div >
                   <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                     <div >
@@ -152,7 +151,7 @@ export function FileUploadQueue({
                       </p>
                       {!validation.valid && uploadFile.status === 'pending' && (
                         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }>
@@ -164,7 +163,7 @@ export function FileUploadQueue({
 
                     {/* アクションボタン */}
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }>
@@ -215,7 +214,7 @@ export function FileUploadQueue({
       {/* サマリー */}
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <span>

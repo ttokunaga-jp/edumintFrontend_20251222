@@ -16,7 +16,7 @@ export type ProblemSettings = {
 export type ProblemSettingsBlockProps = {
   settings: ProblemSettings;
   onChange: (settings: ProblemSettings) => void;
-  className?: string;
+  cls?: string;
 };
 
 const difficultyOptions = [
@@ -34,7 +34,7 @@ const questionTypeOptions = [
   { id: 6, name: '数値計算式' },
 ];
 
-export function ProblemSettingsBlock({ settings, onChange, className = '' }: ProblemSettingsBlockProps) {
+export function ProblemSettingsBlock({ settings, onChange, }: ProblemSettingsBlockProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const handleToggle = (key: keyof ProblemSettings) => {
@@ -69,14 +69,14 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
     }}
       >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }>
@@ -99,7 +99,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
           {/* AI生成設定 */}
           <div >
             <h4 style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -109,7 +109,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
 
             {/* 自動生成オン/オフ */}
             <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <div >
@@ -143,7 +143,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
       paddingBottom: "0.5rem"
 
     }} />
-                <p className={undefined}>1〜20問の範囲で指定できます</p>
+                <p>1〜20問の範囲で指定できます</p>
 
     } />
                 <p >1〜20問の範囲で指定できます</p>
@@ -214,7 +214,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <h4 >コンテンツ設定</h4>
 
             <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <div >
@@ -232,7 +232,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             </label>
 
             <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <div >
@@ -251,7 +251,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             </label>
 
             <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <div >
@@ -274,7 +274,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <h4 >公開設定</h4>
 
             <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <div >

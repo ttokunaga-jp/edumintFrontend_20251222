@@ -12,7 +12,7 @@ import { Input } from '@/components/primitives/input';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
 import { ContextHealthAlert } from '@/components/common/ContextHealthAlert';
-import { cn } from '@/components/primitives/utils';
+
 import type { HealthStatus } from '@/types/health';
 
 export interface SearchSectionProps {
@@ -49,7 +49,7 @@ export interface SearchSectionProps {
   searchStatus?: HealthStatus;
 
   /** Additional CSS classes */
-  className?: string;
+  cls?: string;
 }
 
 /**
@@ -81,7 +81,7 @@ export function SearchSection({
   activeFilters,
   onClearAll,
   searchStatus = 'operational',
-  className,
+  cls,
 }: SearchSectionProps) {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(showAdvancedSearch || false);
 
@@ -94,7 +94,7 @@ export function SearchSection({
         {/* Search Input */}
         <div > {/* 768px max width */}
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }> {/* 8px gap (grid) */}
             <div >
@@ -146,7 +146,7 @@ export function SearchSection({
             size="sm"
             onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
             aria-expanded={isAdvancedOpen}
-            aria-controls="advanced-search-panel"
+            aria-controls=
           >
             <ChevronDown
               
@@ -158,7 +158,7 @@ export function SearchSection({
         {/* Advanced Search Panel */}
         {isAdvancedOpen && (
           <div
-            id="advanced-search-panel"
+            id=
              // 24px margin (grid)
           >
             <div > {/* 24px padding (grid) */}
@@ -178,7 +178,7 @@ export function SearchSection({
                 <div>
                   <label >難易度</label>
                   <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }> {/* 8px gap (grid) */}
                     <Badge variant="outline" >Easy</Badge>
@@ -194,7 +194,7 @@ export function SearchSection({
         {/* Filter Chips */}
         {activeFilters && activeFilters.length > 0 && (
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }> {/* 16px margin, 8px gap (grid) */}

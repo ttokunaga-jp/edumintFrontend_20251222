@@ -14,29 +14,25 @@ export interface HealthAlertProps {
     onClick: () => void;
   };
   disableCTA?: boolean; // CTAボタンを無効化するか
-  className?: string;
+  cls?: string;
 }
 
 const statusConfig = {
   operational: {
     icon: CheckCircle,
-    className: 'bg-green-50 border-green-200 text-green-900',
-    iconClassName: 'text-green-600',
+    iconClassName: "",
   },
   degraded: {
     icon: AlertTriangle,
-    className: 'bg-yellow-50 border-yellow-200 text-yellow-900',
-    iconClassName: 'text-yellow-600',
+    iconClassName: "",
   },
   outage: {
     icon: AlertCircle,
-    className: 'bg-red-50 border-red-200 text-red-900',
-    iconClassName: 'text-red-600',
+    iconClassName: "",
   },
   maintenance: {
     icon: Info,
-    className: 'bg-blue-50 border-blue-200 text-blue-900',
-    iconClassName: 'text-blue-600',
+    iconClassName: "",
   },
 };
 
@@ -46,7 +42,6 @@ export function ContextHealthAlert({
   message,
   action,
   disableCTA,
-  className = '',
 }: HealthAlertProps) {
   // operational の場合は表示しない
   if (status === 'operational') return null;
@@ -58,7 +53,7 @@ export function ContextHealthAlert({
     <Alert >
       <Icon  />
       <AlertTitle style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
         <span>{category}</span>
@@ -99,10 +94,10 @@ export interface ServiceHealthSummaryProps {
 
   }>;
 
-  className?: string;
+  cls?: string;
 }
 
-export function ServiceHealthSummary({ services, className = '' }: ServiceHealthSummaryProps) {
+export function ServiceHealthSummary({ services, }: ServiceHealthSummaryProps) {
   // 問題のあるサービスのみを表示
   const alertServices = services.filter((s) => s.status !== 'operational');
 
@@ -110,7 +105,7 @@ export function ServiceHealthSummary({ services, className = '' }: ServiceHealth
     return (
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <CheckCircle  />
@@ -139,7 +134,7 @@ export function ServiceHealthSummary({ services, className = '' }: ServiceHealth
               
             >
               <div style={{
-      display: "flex"
+      display: 
     }>
                 <Icon
                   

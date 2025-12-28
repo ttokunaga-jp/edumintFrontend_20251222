@@ -1,10 +1,5 @@
 import { http, HttpResponse } from "msw";
-import {
-  defaultSearchResponse,
-  emptySearchResponse,
-  mockExams,
-  readingSuggestions,
-} from "../mockData/search";
+import { defaultSearchResponse, emptySearchResponse, mockExams, readingSuggestions } from "../mockData/search";
 
 const apiBase =
   (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(

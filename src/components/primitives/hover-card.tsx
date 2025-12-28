@@ -4,7 +4,7 @@
 import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
-import { cn } from "./utils";
+
 
 function HoverCard({
   ...props
@@ -21,7 +21,7 @@ function HoverCardTrigger({
 }
 
 function HoverCardContent({
-  className,
+  cls,
   align = "center",
   sideOffset = 4,
   ...props

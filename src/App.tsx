@@ -1,14 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { User, Page } from "@/types";
-import {
-  HomePage,
-  ProblemViewEditPage,
-  LoginRegisterPage,
-  ProblemCreatePage,
-  MyPage,
-  ProfileSetupPage,
-  StructureConfirmPage,
-} from "@/pages";
+import { HomePage, ProblemViewEditPage, LoginRegisterPage, ProblemCreatePage, MyPage, ProfileSetupPage, StructureConfirmPage } from "@/pages";
 import { ServiceHealthProvider } from "@/contexts/ServiceHealthContext";
 import { mockUser } from "@/mocks/mockData/user";
 import TopMenuBar from "@/components/common/TopMenuBar";
@@ -57,7 +49,7 @@ function App() {
   const handleGenerated = (problemId: string) => {
     setLastGeneratedProblemId(problemId);
     setSelectedProblemId(problemId);
-    setCurrentPage("problem-view");
+    setCurrentPage();
   };
 
   // Cookie/セッションチェック（自動ログイン）
@@ -199,7 +191,7 @@ function App() {
     setSelectedProblemId(problemId);
     setEditMode(mode);
     // マイページからの編集では、ProblemViewEditPageを編集モードで開始
-    if (page === "problem-view") {
+    if (page === ) {
       setShouldStartInEditMode(true);
     }
   };
@@ -239,7 +231,7 @@ function App() {
   // 未ログインユーザーが問題構造ページにアクセスした場合（problem-viewに統合）
   if (
     !user &&
-    currentPage === "problem-structure" &&
+    currentPage ===  &&
     selectedProblemId
   ) {
     return (
@@ -262,7 +254,7 @@ function App() {
   if (
     !user &&
     currentPage !== "home" &&
-    currentPage !== "problem-structure"
+    currentPage !== 
   ) {
     if (needsProfileSetup) {
       return (
@@ -300,117 +292,4 @@ function App() {
             const willOpen = !isNotificationsOpen;
             setIsNotificationsOpen(willOpen);
             // If we are opening notifications, force sidebar close.
-            // Even if closing, sidebar shouldn't be open, but safe to set false.
-            closeSidebar();
-          }}
-          onQueryChange={(query: string) => {
-            setSearchQuery(query);
-          }}
-          onSearchSubmit={() => {
-            handleNavigate("home");
-          }}
-        />
-
-        <div >
-          <NotificationPopover
-            isOpen={isNotificationsOpen}
-            onClose={() => setIsNotificationsOpen(false)}
-          />
-        </div>
-
-        <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={closeSidebar}
-          currentPage={currentPage}
-          onNavigate={handleNavigate}
-        />
-
-        {currentPage === "home" && (
-          <HomePage
-            currentUser={{
-              id: user!.id,
-              username: user!.username,
-              email: user!.email,
-              university: user!.university || user!.universityName,
-              department: user!.department || user!.facultyName,
-            }}
-            onNavigate={handleNavigate}
-            onLogout={handleLogout}
-            initialQuery={searchQuery}
-          />
-        )}
-        {currentPage === "problem-structure" &&
-          selectedProblemId && (
-            <ProblemViewEditPage
-              user={user!}
-              problemId={selectedProblemId}
-              hasViewedAnswerAd={viewedAnswerAds.has(
-                selectedProblemId,
-              )}
-              onAnswerAdViewed={() =>
-                handleAnswerAdViewed(selectedProblemId)
-              }
-              hasViewedQuestionAd={viewedQuestionAds.has(
-                selectedProblemId,
-              )}
-              onQuestionAdViewed={() =>
-                handleQuestionAdViewed(selectedProblemId)
-              }
-              onNavigate={handleNavigate}
-              onLogout={handleLogout}
-              initialViewMode="structure"
-            />
-          )}
-        {currentPage === "problem-view" && selectedProblemId && (
-          <ProblemViewEditPage
-            user={user!}
-            problemId={selectedProblemId}
-            hasViewedAnswerAd={viewedAnswerAds.has(
-              selectedProblemId,
-            )}
-            onAnswerAdViewed={() =>
-              handleAnswerAdViewed(selectedProblemId)
-            }
-            hasViewedQuestionAd={viewedQuestionAds.has(
-              selectedProblemId,
-            )}
-            onQuestionAdViewed={() =>
-              handleQuestionAdViewed(selectedProblemId)
-            }
-            onNavigate={handleNavigate}
-            onLogout={handleLogout}
-            shouldStartInEditMode={shouldStartInEditMode}
-          />
-        )}
-        {currentPage === "problem-create" && (
-          <ProblemCreatePage onNavigate={handleNavigate} />
-        )}
-        {currentPage === "structure-confirm" && (
-          <StructureConfirmPage
-            user={user!}
-            onNavigate={handleNavigate}
-            onLogout={handleLogout}
-            mode={editMode}
-          />
-        )}
-        {currentPage === "generating" && (
-          <ProblemCreatePage
-            onNavigate={handleNavigate}
-            jobId={currentJobId}
-            onGenerated={handleGenerated}
-          />
-        )}
-        {currentPage === "my-page" && (
-          <MyPage
-            user={user!}
-            onNavigate={handleNavigate}
-            onNavigateToEdit={handleNavigateToEdit}
-            onLogout={handleLogout}
-          />
-        )}
-      </div>
-    </ServiceHealthProvider>
-  );
-}
-
-export default App;
+            // Even if closing, sidebar shouldn

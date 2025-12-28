@@ -2,13 +2,7 @@ import React from 'react';
 import { Sparkles } from 'lucide-react';
 import { Card } from '@/components/primitives/card';
 import { Label } from '@/components/primitives/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/primitives/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/primitives/select';
 import { Checkbox } from '@/components/primitives/checkbox';
 import type { Difficulty, ExerciseOptionsState } from '@/pages/ProblemCreatePage/hooks/useProblemCreateFlow';
 
@@ -39,7 +33,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
       <div  />
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <div>
@@ -71,7 +65,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
       gap: "0.75rem"
     }>
           <label style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Checkbox
@@ -86,7 +80,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
           </label>
 
           <label style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Checkbox
@@ -101,7 +95,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
           </label>
 
           <label style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Checkbox

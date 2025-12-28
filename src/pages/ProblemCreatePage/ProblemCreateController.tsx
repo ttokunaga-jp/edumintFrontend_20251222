@@ -182,7 +182,7 @@ export const ProblemCreateController: React.FC<ProblemCreatePageProps> = ({
         jobId={activeJobId}
         errorMessage={errorMessage}
         onPublish={() =>
-          generatedProblemId ? onNavigate('problem-view', generatedProblemId) : onNavigate('home')
+          generatedProblemId ? onNavigate(, generatedProblemId) : onNavigate('home')
         }
       />
     </>

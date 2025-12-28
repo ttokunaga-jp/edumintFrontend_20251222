@@ -4,10 +4,10 @@
 import * as React from "react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 
-import { cn } from "./utils";
+
 
 function Progress({
-  className,
+  cls,
   value,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) {

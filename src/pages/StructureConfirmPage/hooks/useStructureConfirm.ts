@@ -11,7 +11,7 @@ export const useStructureConfirm = ({ onNavigate, onLogout }: Params) => {
     onNavigate('generating', nextId);
   };
 
-  const goProblemView = () => onNavigate('problem-view');
+  const goProblemView = () => onNavigate();
   const goHome = () => onNavigate('home');
 
   return {

@@ -6,21 +6,20 @@ export interface ServiceHealthBarProps {
   serviceName?: string;
   status?: Status;
   message?: string;
-  className?: string;
+  cls?: string;
 }
 
 const statusColor: Record<Status, string> = {
-  operational: 'bg-green-50 text-green-800 border-green-200',
-  degraded: 'bg-yellow-50 text-yellow-800 border-yellow-200',
-  outage: 'bg-red-50 text-red-800 border-red-200',
-  maintenance: 'bg-blue-50 text-blue-800 border-blue-200',
+  operational: "",
+  degraded: "",
+  outage: "",
+  maintenance: "",
 };
 
 const ServiceHealthBar: React.FC<ServiceHealthBarProps> = ({
   serviceName = 'Service',
   status = 'operational',
   message,
-  className = '',
 }) => {
   return (
     <div >

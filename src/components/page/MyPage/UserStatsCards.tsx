@@ -13,45 +13,45 @@ export type UserStats = {
 export type UserStatsCardsProps = {
   stats: UserStats;
   isLoading?: boolean;
-  className?: string;
+  cls?: string;
 };
 
-export function UserStatsCards({ stats, isLoading = false, className = '' }: UserStatsCardsProps) {
+export function UserStatsCards({ stats, isLoading = false, }: UserStatsCardsProps) {
   const cards = [
     {
       icon: FileText,
       label: '投稿数',
       value: stats.totalProblems,
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-100',
+      color: "",
+      bgColor: "",
     },
     {
       icon: Eye,
       label: '総閲覧数',
       value: stats.totalViews.toLocaleString(),
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100',
+      color: "",
+      bgColor: "",
     },
     {
       icon: Heart,
       label: '総いいね数',
       value: stats.totalLikes.toLocaleString(),
-      color: 'text-pink-600',
-      bgColor: 'bg-pink-100',
+      color: "",
+      bgColor: "",
     },
     {
       icon: MessageCircle,
       label: '総コメント数',
       value: stats.totalComments.toLocaleString(),
-      color: 'text-green-600',
-      bgColor: 'bg-green-100',
+      color: "",
+      bgColor: "",
     },
     {
       icon: TrendingUp,
       label: '平均いいね/問題',
       value: stats.avgLikesPerProblem.toFixed(1),
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100',
+      color: "",
+      bgColor: "",
     },
   ];
 
@@ -60,8 +60,8 @@ export function UserStatsCards({ stats, isLoading = false, className = '' }: Use
       icon: Award,
       label: 'ランク',
       value: stats.rank,
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-100',
+      color: "",
+      bgColor: "",
     });
   }
 

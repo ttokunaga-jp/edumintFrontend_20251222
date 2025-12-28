@@ -10,7 +10,7 @@
 import React from 'react';
 import { Clock, Cog, PauseCircle, CheckCircle, XCircle } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
-import { cn } from '@/components/primitives/utils';
+
 import type { JobStatus } from '@/types/health';
 
 export interface JobStatusRibbonProps {
@@ -48,7 +48,7 @@ export interface JobStatusRibbonProps {
   onViewResult?: () => void;
 
   /** Additional CSS classes */
-  className?: string;
+  cls?: string;
 }
 
 /**
@@ -56,43 +56,43 @@ export interface JobStatusRibbonProps {
  */
 const statusConfig = {
   queued: {
-    border: 'border-gray-200',
-    accent: 'border-gray-300',
-    text: 'text-gray-900',
+    border: "",
+    accent: "",
+    text: "",
     icon: Clock,
-    iconColor: 'text-gray-600',
+    iconColor: "",
     label: 'ジョブを準備中...',
   },
   processing: {
-    border: 'border-indigo-200',
-    accent: 'border-indigo-600',
-    text: 'text-indigo-900',
+    border: "",
+    accent: "",
+    text: "",
     icon: Cog,
-    iconColor: 'text-indigo-600',
+    iconColor: "",
     label: '問題を生成中...',
   },
   paused: {
-    border: 'border-yellow-200',
-    accent: 'border-yellow-500',
-    text: 'text-yellow-900',
+    border: "",
+    accent: "",
+    text: "",
     icon: PauseCircle,
-    iconColor: 'text-yellow-600',
+    iconColor: "",
     label: '一時停止中',
   },
   completed: {
-    border: 'border-green-200',
-    accent: 'border-green-500',
-    text: 'text-green-900',
+    border: "",
+    accent: "",
+    text: "",
     icon: CheckCircle,
-    iconColor: 'text-green-600',
+    iconColor: "",
     label: '生成が完了しました！',
   },
   error: {
-    border: 'border-red-200',
-    accent: 'border-red-500',
-    text: 'text-red-900',
+    border: "",
+    accent: "",
+    text: "",
     icon: XCircle,
-    iconColor: 'text-red-600',
+    iconColor: "",
     label: 'エラーが発生しました',
   },
 } as const;
@@ -132,118 +132,11 @@ export function JobStatusRibbon({
   onCancel,
   onRetry,
   onViewResult,
-  className,
+  cls,
 }: JobStatusRibbonProps) {
   const config = statusConfig[status];
   const Icon = config.icon;
 
   return (
     <div
-      className={cn(
-        'sticky top-16 z-app-bar bg-white', // Below TopMenuBar (h-16), explicit L1 opacity
-        `border-b ${config.border} border-l-4 ${config.accent}`,
-        'py-3', // 12px padding (grid)
-        className
-      )}
-      role="status"
-      aria-live="polite"
-    >
-      <div style={{
-      paddingLeft: "1rem",
-      paddingRight: "1rem"
-    }>
-        <div style={{
-      display: "flex",
-      alignItems: "center"
-    }> {/* 16px gap (grid) */}
-          {/* Left: Icon + Status + Job ID */}
-          <div style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "0.75rem"
-    }> {/* 12px gap (grid) */}
-            <Icon
-              
-              aria-hidden="true"
-            />
-            <div>
-              <span >
-                {config.label}
-              </span>
-              <span >
-                Job ID: {jobId}
-              </span>
-            </div>
-          </div>
-
-          {/* Right: Actions */}
-          <div style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "0.5rem"
-    }> {/* 8px gap (grid) */}
-            {status === 'processing' && onPause && (
-              <Button variant="outline" size="sm" onClick={onPause}>
-                一時停止
-              </Button>
-            )}
-            {status === 'paused' && onResume && (
-              <Button variant="outline" size="sm" onClick={onResume}>
-                再開
-              </Button>
-            )}
-            {status === 'error' && onRetry && (
-              <Button variant="outline" size="sm" onClick={onRetry}>
-                再試行
-              </Button>
-            )}
-            {status === 'completed' && onViewResult && (
-              <Button variant="default" size="sm" onClick={onViewResult}>
-                結果を見る
-              </Button>
-            )}
-            {(status === 'queued' || status === 'processing' || status === 'paused') && onCancel && (
-              <Button variant="ghost" size="sm" onClick={onCancel}>
-                キャンセル
-              </Button>
-            )}
-          </div>
-        </div>
-
-        {/* Progress Bar (processing/paused only) */}
-        {(status === 'processing' || status === 'paused') && progress !== undefined && (
-          <div > {/* 12px margin (grid) */}
-            <div >
-              <div
-                
-                style={{ width: `${progress}%` }}
-                role="progressbar"
-                aria-valuenow={progress}
-                aria-valuemin={0}
-                aria-valuemax={100} />
-            </div>
-            {estimatedTimeRemaining && (
-              <p >
-                推定残り時間: {estimatedTimeRemaining}
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* Error Message */}
-        {status === 'error' && errorMessage && (
-          <p >
-            {errorMessage}
-          </p>
-        )}
-
-        {/* Completion Message */}
-        {status === 'completed' && message && (
-          <p >
-            {message}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
+      border-l-4 ${config.accent}${progress}%

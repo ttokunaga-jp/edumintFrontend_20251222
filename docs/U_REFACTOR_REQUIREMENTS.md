@@ -1,107 +1,183 @@
-# MUI（Material UI）移行 - リファクタリング要件定義書 ✅
-
-## 背景
-- 現状: `src/components/primitives` に多数の自作 UI コンポーネント（Button, Input, Select, Card, Modal, Table など）が存在。スタイリングは主に Tailwind を利用。  
-- 目的: 保守性、アクセシビリティ、開発効率の向上を目的に、デザインシステムに成熟した UI ライブラリ（MUI v5）へ段階的に移行する。
+## リファクタリング要件定義書（改訂版・2025） ✅
 
 ---
 
-## 目標（ゴール）🎯
-- **共通 UI の一貫性向上**: 全画面で一貫したテーマとアクセシビリティ基準を適用する。  
-- **保守性の向上**: UI の実装を少数のメンテナンス対象（MUI + thin wrapper）に集約する。  
-- **開発速度の改善**: MUI のコンポーネント・ユーティリティ利用により実装コストを低減する。  
-- **段階的導入**: 既存のページを壊さない段階的移行を採用（ラッパーで既存 API を維持）
+## 1. 背景
 
-## スコープ補足（重要）❗
-- 本移行では、**既存 Tailwind ユーティリティの全面撤廃を目標**とします。これは段階的な移行ではなく、一括でTailwindをコードベースから除去し、MUI テーマ / Design Tokens に移行するものです。ProgressBar、TopMenuBarなど全てのUIコンポーネントが置き換えの対象となります。レガシー資産に拘らず、MUI + Emotion を中心としたベストプラクティスでの実装を優先してください。デザイン・トークンをソースオブトゥルースにし、Tailwind に依存するアドホックなクラスは段階的に置換します。
+* 現状:
 
----
+  * `src/components/primitives` を中心に多数の自作 UI コンポーネントが存在
+  * スタイリングは Tailwind CSS に強く依存し、className の組み合わせが複雑化
+  * JSX/TSX とスタイル定義が密結合し、保守・変更コストが高い
+* 課題:
 
-## 影響調査（簡易サマリ）🔎
-- 置換対象: `src/components/primitives/*` が主要変更対象（Button, Input, Select, Checkbox, Radio, Switch, Modal/Dialog, Tooltip, Table, Tabs, Badge, Avatar 等）  
-- 依存箇所: 多数のページ・コンポーネントが primitives を利用しているため、置換は横断的。  
-- スタイリング: **既存 Tailwind の全面撤廃**を前提とし、スタイルは **MUI + Emotion + Design Tokens** に統一します。CSS-in-JS（Emotion）を標準として採用し、スタイルは MUI Theme / CSS 変数 / Design Tokens で一元管理します。  
-- 見た目差分: MUI と既存カスタム実装のデフォルトスタイル差分をテーマで調整する作業が発生します。
+  * UI 実装の一貫性・アクセシビリティの担保が困難
+  * Tailwind 依存によるデザインルールの分散
+  * 技術的負債が蓄積し、全体最適が困難
+* 方針:
 
----
-
-## API マッピング（主要例）🔁
-- `Button` → `@mui/material` の `Button` をベースに `src/components/primitives/button` をラップ
-- `Input` / `Textarea` → `TextField` / `Input` / `TextareaAutosize` 等をラップ
-- `Select` → `Select` + `MenuItem` をラップ
-- `Checkbox` / `Radio` / `Switch` → MUI 対応コンポーネントをラップ
-- `Dialog` / `Popover` / `Tooltip` → MUI の `Dialog` / `Popover` / `Tooltip`
-- `Table` → MUI `Table` 系をラップ（仮想化対応は別検討）
-
-> 方針: 各 primitives は**互換 API を維持した薄いラッパー**として実装し、移行期間中は内部実装のみ差し替える。
+  * **Tailwind CSS をコードベースから完全撤去**
+  * **MUI v5 + Emotion + Design Tokens を唯一の UI / スタイル基盤として採用**
 
 ---
 
-## 移行方針（推奨）🛠️
-1. **コンポーネント選定の優先順位（必須）**: 移行時は以下の順で実施します。必ず検討の上で下位の選択肢に進んでください。
-   1. **ライブラリのネイティブ（MUI）コンポーネントをそのまま利用する** — まずは可能な限り `@mui/material` の既製コンポーネントを利用し、デフォルトのアクセシビリティ・振る舞い・パフォーマンスを活用します。
-   2. **ライブラリの拡張／カスタマイズ（styling / props / slots）で要件を満たす** — MUI の `sx` / theme / slots 等を使って見た目/振る舞いを調整し、結果的にネイティブ API に沿った実装になるよう努めます。
-   3. **どうしても難しい場合のみ自作コンポーネントを作る** — 既製品・カスタマイズで再現できない固有要件のみ自作し、明確な理由（パフォーマンスや UX 上の不可欠性）をドキュメントに残すこと。
+## 2. 目標（ゴール）🎯
 
-2. **ベストプラクティス優先（推奨）**: レガシー資産に縛られず、MUI の標準 API/パターンに合わせた **直接差し替え** を基本戦略とします。必要に応じて互換性ラッパーを作ることは許容しますが、不要な互換層は作らない方針です。  
-3. **段階的ページ移行**: 重要度の低い画面から置換して、回帰テストとアクセシビリティ確認を行う。  
-4. **テーマ（Design Tokens）を作成**: 色、フォント、スペーシングなどを MUI テーマに集約し、Tailwind のユーティリティは全面的に Design Tokens に置換します。  
-5. **アクセシビリティ（A11y）基準を整備**: keyboard navigation, aria, color-contrast の検証プロセスを組込む。
+* **UI 基盤の単一化**
 
----
+  * スタイリング手段を *MUI Theme / Design Tokens* に完全統一
+* **保守性の最大化**
 
-## 技術選定（簡易）⚖️
-- Framework: **React 19** + Vite 5
-- UI: `@mui/material` (v5) + `@mui/system`（Design Tokens）
-- アイコン: `@mui/icons-material` を基本、必要なら lucide を限定的に使用
-- Styling engine: **Emotion（@emotion/react / @emotion/styled）を標準**とし、スタイルは MUI Theme / Design Tokens / CSS 変数で管理
-- Tailwind: **全面撤廃**（新規導入・継続使用は禁止）。既存 Tailwind は段階的に置換・削除します。
+  * UI 実装を MUI 標準コンポーネント＋最小限の拡張に集約
+* **アクセシビリティの担保**
+
+  * MUI が提供する A11y 標準を全面的に活用
+* **技術的負債の解消**
+
+  * Tailwind 由来の ad-hoc な class 設計・中間互換レイヤーを残さない
+* **リリース前前提の大胆な刷新**
+
+  * 後方互換性を考慮せず、将来最適を優先
 
 ---
 
-## 品質・テスト要件 ✅
-- ユニット/コンポーネントテスト: Vitest + React Testing Library で既存コンポーネントの振る舞いを担保。  
-- Storybook: 影響を受ける primitives は Story を更新して visual regression を取る。  
-- E2E: 主要ユーザーフロー（作成・編集・削除など）を Playwright/現行 e2e によりカバレッジを維持。  
-- A11y: axe 等を用いた自動チェックとマニュアルキーボード検証
+## 3. スコープ（重要）❗
+
+### 本移行の前提
+
+* **Tailwind CSS は段階的移行ではなく、一括で完全撤去する**
+* ProgressBar / TopMenuBar / primitives / pages を含む **全 UI が対象**
+* レガシー API・レイアウト・実装に拘らない
+* 一時的なビルド・TypeScript エラーは許容し、**最終フェーズでまとめて解消**
+
+### 明示的に禁止されるもの
+
+* Tailwind の部分残存
+* Tailwind 前提のユーティリティ・ラッパー
+* 将来のための互換レイヤー
+* TODO / FIXME による先送り
 
 ---
 
-## リスクと緩和策 ⚠️
-- 見た目の微妙な差分 → テーマ調整（カラーパレット、コンポーネントスタイル）で対応  
-- バンドルサイズ増加 → MUI の tree-shaking と必要なパッケージに限定（アイコンなどは必要時追加）  
-- Tailwind と CSS-in-JS の複雑化 → 明確なルールをドキュメント化（いつ Tailwind を残すか、いつ MUI style を利用するか）
+## 4. 影響範囲（簡易サマリ）🔎
+
+* **主要変更対象**
+
+  * `src/components/primitives/*`
+  * primitives を利用する全ページ・共通コンポーネント
+* **スタイリング**
+
+  * Tailwind → **MUI + Emotion + Design Tokens に全面移行**
+  * CSS-in-JS（Emotion）を標準
+* **見た目差分**
+
+  * MUI デフォルトとの差分は Theme 側で吸収
+  * 各コンポーネントで個別調整しない
 
 ---
 
-## 受け入れ基準（完了条件）✅
-- 既存の主要ユーザーフローにおいて UI レイアウト崩れがない（主要ブラウザ）  
-- Storybook の差分が審査を通過（視覚的に許容される差分のみ）  
-- A11y 自動チェックエラーが重大項目で 0 であること  
-- 必要なパフォーマンス（LCP/CLS）に悪影響がない
+## 5. コンポーネント方針・API マッピング 🔁
+
+### 原則（優先順）
+
+1. **MUI ネイティブコンポーネントを直接使う**
+2. **Theme / variants / slots で拡張**
+3. **どうしても必要な場合のみ自作**
+
+> 「既存 API を守る」ことより
+> **MUI の設計思想に寄せることを最優先**する。
+
+### 例
+
+* Button → `@mui/material/Button`
+* Input / Textarea → `TextField`, `Input`, `TextareaAutosize`
+* Select → `Select` + `MenuItem`
+* Checkbox / Radio / Switch → MUI 標準
+* Dialog / Popover / Tooltip → MUI 標準
+* Table → MUI Table（仮想化は別途検討）
 
 ---
 
-## タイムライン（ラフ見積）⏱️
-- Discovery + PoC（2週間）: Button/Input/Theme の PoC を 1 コンポーネントで実施  
-- Core primitives 置換（4–6 週）: Button, Input, Select, Checkbox, Radio, Switch, Dialog  
-- ページ逐次移行 & QA（6–10 週）: ページ単位で移行、E2E/アクセシビリティ検証  
-- 調整・残作業（2–4 週）: Theme 微調整、バンドル最適化、Docs更新
+## 6. 移行方針（実行ルール）🛠️
+
+### 重要な前提
+
+* **ビルド・型エラーの完全解消を待たずに進めてよい**
+* エラーは *最終フェーズで一括解消* する
+* 安全な中間状態を維持する必要はない
+
+### 実行ルール
+
+1. Tailwind を物理的に削除する
+2. 壊れた UI / JSX は後で直す
+3. MUI Theme / Tokens を唯一の正解にする
+4. 中途半端な互換実装を残さない
 
 ---
 
-## ロールアウト方針（プレリリース前提）
-- 本プロダクトはまだ正式リリース前のため、**公開互換性や feature-flag による段階的リリース、厳密なロールバック運用は必須ではありません**。より迅速な移行を優先し、必要に応じて API の変更や直接置換（ラッパーを介さない差し替え）を行って構いません。  
-- ただし、変更は必ず Storybook, Unit, E2E, A11y テストで検証し、重大な回帰がないことを確認してからマージしてください。  
-- 重大な問題が発生した場合は個別 hotfix（または修正 PR）での対処を行います。緊急対応はケースバイケースで行い、事後に振り返りを実施します。
+## 7. Design Tokens / Theme 方針 🎨
+
+* 色・フォント・余白・角丸・影は **Design Tokens がソースオブトゥルース**
+* Tokens → MUI Theme に集約
+* `sx` は例外的使用のみ（乱用禁止）
+* コンポーネント固有の style は theme overrides / variants に集約
 
 ---
 
-## アクション（当面）
-1. PoC 作成: `primitives/button` を MUI ボタンに置換する PoC を作る。  
-2. Theme 設計: デザイントークンの初版を作成。  
-3. テストカバレッジ: 既存 primitives の Storybook/Unit テストを整備しておく。
+## 8. 技術スタック ⚖️
+
+* Framework: React 19 + Vite 5
+* UI: `@mui/material` v5
+* Styling: Emotion（必須）
+* Icons: `@mui/icons-material`（必要最小限）
+* Tailwind: **完全撤廃（導入・再利用禁止）**
 
 ---
 
-> 補足: 実際の移行では「ラッパーで API を維持」する戦略が最も安全で効率的です。まず PoC と theme を固め、そこからコア primitives を段階的に差し替えましょう。
+## 9. 品質・テスト要件（最終フェーズ）✅
+
+* Unit / Component: Vitest + RTL
+* Storybook: primitives / 主要 UI
+* E2E: 主要ユーザーフロー
+* A11y: axe + 手動キーボード検証
+
+※ 移行途中でのテスト失敗は許容
+※ **最終状態でのみ全テストパスが必須**
+
+---
+
+## 10. 受け入れ基準（完了条件）✅
+
+* Tailwind 関連コード・依存が **完全に 0**
+* UI スタイル基盤が MUI Theme / Tokens に一本化されている
+* 不要ファイル・未使用 export が残っていない
+* `tsc` / `vite build` / `test` がすべて成功
+* Main ブランチがそのままリリース可能
+
+---
+
+## 11. ロールアウト方針（プレリリース前提）
+
+* 後方互換性・段階リリースは考慮しない
+* API 破壊的変更は許容
+* 問題が出た場合は **修正で前進**（ロールバック前提にしない）
+
+---
+
+## 12. アクション（更新）
+
+* ~~PoC 作成~~ → **不要（全面移行を即実施）**
+* Theme / Tokens 設計 → **最優先**
+* Tailwind 完全撤去 → **即時・一括**
+* 最終フェーズでエラー・テストを一括解消
+
+---
+
+### 最終補足
+
+本リファクタリングは
+**「安全に少しずつ移行するプロジェクト」ではありません。**
+
+> **Tailwind を捨て、MUI を前提にコードベースを再構築するプロジェクトです。**
+
+この前提をすべての実装・判断の基準としてください。

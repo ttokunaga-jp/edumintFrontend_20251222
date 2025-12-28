@@ -18,7 +18,7 @@ export type AnswerBlockProps = {
   onExplanationChange?: (content: string) => void;
   onFormatChange?: (type: 'answer' | 'explanation', format: 0 | 1) => void;
   onUnlock?: () => void;
-  className?: string;
+  cls?: string;
 };
 
 export function AnswerBlock({
@@ -35,7 +35,6 @@ export function AnswerBlock({
   onExplanationChange,
   onFormatChange,
   onUnlock,
-  className = '',
 }: AnswerBlockProps) {
   const [currentAnswerFormat, setCurrentAnswerFormat] = useState<0 | 1>(answerFormat);
   const [currentExplanationFormat, setCurrentExplanationFormat] = useState<0 | 1>(explanationFormat);
@@ -71,11 +70,11 @@ export function AnswerBlock({
     return (
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -106,14 +105,14 @@ export function AnswerBlock({
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
     }}
       >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -140,19 +139,19 @@ export function AnswerBlock({
           {/* 解答 */}
           <div>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <span >解答</span>
               <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                 {canSwitchFormat && (
                   <button
                     onClick={handleAnswerFormatToggle}
                     style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }}
@@ -191,7 +190,7 @@ export function AnswerBlock({
                   placeholder={currentAnswerFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
                 />
                 <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                   <button
@@ -236,19 +235,19 @@ export function AnswerBlock({
           {explanation && (
             <div>
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                 <span >解説</span>
                 <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                   {canSwitchFormat && (
                     <button
                       onClick={handleExplanationFormatToggle}
                       style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }}
@@ -287,7 +286,7 @@ export function AnswerBlock({
                     placeholder={currentExplanationFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
                   />
                   <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                     <button

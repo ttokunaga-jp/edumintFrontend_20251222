@@ -18,7 +18,7 @@ export const useProfileSetupForm = ({ onComplete, initialEmail }: Params) => {
     const now = new Date().toISOString();
     const user: User = {
       id: crypto.randomUUID(),
-      username: username || 'new-user',
+      username: username || ,
       displayName: username || 'New User',
       email: initialEmail || 'user@example.com',
       isEmailVerified: false,

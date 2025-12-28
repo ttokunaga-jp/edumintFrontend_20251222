@@ -76,13 +76,13 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
 
     }}
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }}
 
     }>
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
 

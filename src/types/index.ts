@@ -369,9 +369,9 @@ export type Page =
   | 'profile-setup'
   | 'home'
   | 'search'
-  | 'problem-structure'
-  | 'problem-view'
-  | 'problem-create'
+  | 
+  | 
+  | 
   | 'structure-confirm'
   | 'generating'
   | 'my-page'

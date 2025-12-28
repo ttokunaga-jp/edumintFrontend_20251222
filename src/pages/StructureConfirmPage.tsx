@@ -22,10 +22,10 @@ export function StructureConfirmPage({ user, onNavigate, onLogout, mode }: Struc
       paddingRight: "1rem"
 
     }}
-        <header className={undefined}>
-          <p className={undefined}>構造確認モード: {mode}</p>
-          <h1 className={undefined}>StructureConfirmPage</h1>
-          <p className={undefined}>
+        <header>
+          <p>構造確認モード: {mode}</p>
+          <h1>StructureConfirmPage</h1>
+          <p>
 
     }>
         <header >
@@ -44,7 +44,7 @@ export function StructureConfirmPage({ user, onNavigate, onLogout, mode }: Struc
         </div>
 
         <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
 
     }}

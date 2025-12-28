@@ -2,23 +2,12 @@ import React, { useMemo } from 'react';
 import { FileText } from 'lucide-react';
 import { Card } from '@/components/primitives/card';
 import { Label } from '@/components/primitives/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/primitives/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/primitives/select';
 import { Checkbox } from '@/components/primitives/checkbox';
 import { Slider } from '@/components/primitives/slider';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/primitives/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/primitives/accordion';
 import type { Difficulty, DocumentOptionsState } from '@/pages/ProblemCreatePage/hooks/useProblemCreateFlow';
-import { cn } from '@/shared/utils';
+
 
 type DocumentOptionsProps = {
   options: DocumentOptionsState;
@@ -36,7 +25,7 @@ const difficultyOptions: { value: Difficulty; label: string }[] = [
 const formatOptions: { id: string; label: string }[] = [
   { id: 'descriptive', label: '記述式' },
   { id: 'multiple-choice', label: '選択式' },
-  { id: 'fill-blank', label: '穴埋め式' },
+  { id: "", label: '穴埋め式' },
   { id: 'true-false', label: '正誤判定' },
   { id: 'numeric', label: '数値計算式' },
   { id: 'proof', label: '証明問題' },
@@ -92,7 +81,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
       <div  />
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
           <div>
@@ -162,12 +151,12 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
 
         <div >
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <Label >問題形式</Label>
             <label style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -221,7 +210,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
       gap: "0.75rem"
     }>
           <label style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Checkbox
@@ -236,7 +225,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           </label>
 
           <label style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Checkbox
@@ -251,7 +240,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           </label>
 
           <label style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <Checkbox

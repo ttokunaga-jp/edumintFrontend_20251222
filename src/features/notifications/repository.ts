@@ -1,11 +1,5 @@
 // Notifications repository: wraps gateway calls for UI consumption
-import {
-  getNotifications as getNotificationsClient,
-  getUnreadNotificationCount as getUnreadNotificationCountClient,
-  markNotificationAsRead as markNotificationAsReadClient,
-  markAllNotificationsAsRead as markAllNotificationsAsReadClient,
-  deleteNotification as deleteNotificationClient,
-} from '@/services/api/gateway/notifications';
+import { getNotifications as getNotificationsClient, getUnreadNotificationCount as getUnreadNotificationCountClient, markNotificationAsRead as markNotificationAsReadClient, markAllNotificationsAsRead as markAllNotificationsAsReadClient, deleteNotification as deleteNotificationClient } from '@/services/api/gateway/notifications';
 import type { Notification } from '@/types';
 
 export const getNotifications = (limit: number = 20): Promise<Notification[]> =>

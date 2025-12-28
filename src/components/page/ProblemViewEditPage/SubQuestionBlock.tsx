@@ -28,7 +28,7 @@ export type SubQuestionBlockProps = {
   onKeywordRemove?: (keywordId: string) => void;
   onTypeChange?: (typeId: number) => void;
   onDelete?: () => void;
-  className?: string;
+  cls?: string;
 };
 
 const questionTypeLabels: Record<number, string> = {
@@ -59,7 +59,6 @@ export function SubQuestionBlock({
   onKeywordRemove,
   onTypeChange,
   onDelete,
-  className = '',
 }: SubQuestionBlockProps) {
   const [currentQuestionFormat, setCurrentQuestionFormat] = useState<0 | 1>(questionFormat);
   const [currentAnswerFormat, setCurrentAnswerFormat] = useState<0 | 1>(answerFormat);
@@ -97,15 +96,15 @@ export function SubQuestionBlock({
     <div >
       <div >
         <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
           <div style={{
-      display: "flex",
+      display: "",
       gap: "0.75rem"
     }>
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>
@@ -113,7 +112,7 @@ export function SubQuestionBlock({
             </div>
             <div >
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -147,7 +146,7 @@ export function SubQuestionBlock({
           {/* 編集/削除ボタン */}
           {canEdit && (
             <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
               {!isEditingQuestion && (
@@ -183,7 +182,7 @@ export function SubQuestionBlock({
                 placeholder={currentQuestionFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
               />
               <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                 <button
@@ -219,7 +218,7 @@ export function SubQuestionBlock({
                 <button
                   onClick={handleQuestionFormatToggle}
                   style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }}
@@ -238,7 +237,7 @@ export function SubQuestionBlock({
                 </button>
               )}
 
-              <div className={canSwitchFormat ? 'pt-8' : ''}>
+              <div>
                 {/* Delegate rendering to the problem type view component */}
                 {(() => {
                   const viewProps: ProblemTypeViewProps = {
@@ -281,7 +280,7 @@ export function SubQuestionBlock({
             <button
               onClick={() => setAnswerExpanded(!answerExpanded)}
               style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }}
@@ -305,7 +304,7 @@ export function SubQuestionBlock({
                       placeholder={currentAnswerFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
                     />
                     <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                       <button
@@ -338,19 +337,19 @@ export function SubQuestionBlock({
                 ) : (
                   <>
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                       <span >解答</span>
                       <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                         {canSwitchFormat && (
                           <button
                             onClick={handleAnswerFormatToggle}
                             style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }}

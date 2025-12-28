@@ -4,7 +4,7 @@
 import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
-import { cn } from "./utils";
+
 
 function Popover({
   ...props
@@ -19,7 +19,7 @@ function PopoverTrigger({
 }
 
 function PopoverContent({
-  className,
+  cls,
   align = "center",
   sideOffset = 4,
   ...props

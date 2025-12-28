@@ -11,7 +11,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       
-      style={{ "--normal-bg": "var(--popover)", "--normal-text": "var(--popover-foreground)", "--normal-border": "var(--border)" } as React.CSSProperties}
+      style={{ "--normal-bg": "var(--popover)", "--normal-text": "var(--popover-foreground)", :  } as React.CSSProperties}
       {...props} />
   );
 };

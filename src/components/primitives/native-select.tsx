@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { cn } from "./utils";
+
 import NativePopover from "./native-popover";
 
 type Item = { value: string; label: React.ReactNode };
@@ -13,11 +13,11 @@ type NativeSelectProps = {
   items: Item[];
   placeholder?: string;
   disabled?: boolean;
-  className?: string;
+  cls?: string;
   triggerClassName?: string;
 };
 
-export const NativeSelect = ({ value, onChange, items, placeholder = "選択してください", disabled = false, className = "", triggerClassName = "" }: NativeSelectProps) => {
+export const NativeSelect = ({ value, onChange, items, placeholder = "選択してください", disabled = false, triggerClassName = "" }: NativeSelectProps) => {
   const [open, setOpen] = useState(false);
 
   const selected = items.find((it) => it.value === value);

@@ -1,15 +1,11 @@
 // @ts-nocheck
 import * as React from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 
-import { cn } from "./utils";
+
 import { Button, buttonVariants } from "./button";
 
-function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+function Pagination({ cls, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
       role="navigation"
@@ -22,7 +18,7 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
 }
 
 function PaginationContent({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<"ul">) {
   return (
@@ -44,7 +40,7 @@ type PaginationLinkProps = {
   React.ComponentProps<"a">;
 
 function PaginationLink({
-  className,
+  cls,
   isActive,
   size = "icon",
   ...props
@@ -53,13 +49,8 @@ function PaginationLink({
     <a
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
-      data-active={isActive}
-      className={cn(
-        buttonVariants({
-          variant: isActive ? "outline" : "ghost",
-          size,
-        }),
-        className,
+      data-active={isActive}),
+        cls,
       )}
       {...props}
     />
@@ -67,7 +58,7 @@ function PaginationLink({
 }
 
 function PaginationPrevious({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
@@ -84,7 +75,7 @@ function PaginationPrevious({
 }
 
 function PaginationNext({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
@@ -101,7 +92,7 @@ function PaginationNext({
 }
 
 function PaginationEllipsis({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<"span">) {
   return (

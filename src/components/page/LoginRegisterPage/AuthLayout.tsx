@@ -10,7 +10,7 @@ interface AuthLayoutProps {
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ title, description, children }) => {
   return (
     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center",
       paddingLeft: "1rem",

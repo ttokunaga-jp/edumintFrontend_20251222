@@ -18,12 +18,11 @@ const SearchInput = ({
     value,
     onChange,
     onKeyDown,
-    className
-}: {
+    cls}: {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    className?: string;
+    cls?: string;
 }) => (
     <div >
         <Search  />
@@ -77,12 +76,12 @@ export default function TopMenuBar({
     }>
                 {/* Main Nav Row */}
                 <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                     {/* Left Section: Hamburger & Logo */}
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>
@@ -110,7 +109,7 @@ export default function TopMenuBar({
 
                     {/* Right Section: Actions */}
                     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }>
@@ -118,7 +117,7 @@ export default function TopMenuBar({
                             variant="ghost"
                             size="icon"
                             
-                            onClick={() => onNavigate?.('problem-create')}
+                            onClick={() => onNavigate?.()}
                             title="問題をアップロード"
                         >
                             <Plus  />
@@ -129,7 +128,7 @@ export default function TopMenuBar({
                         </Button>
 
                         <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>

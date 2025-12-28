@@ -4,10 +4,10 @@
 import * as React from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 
-import { cn } from "./utils";
+
 
 function Switch({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
   return (
@@ -17,7 +17,7 @@ function Switch({
       {...props}
     >
       <SwitchPrimitive.Thumb
-        data-slot="switch-thumb"
+        data-slot=
         
       />
     </SwitchPrimitive.Root>

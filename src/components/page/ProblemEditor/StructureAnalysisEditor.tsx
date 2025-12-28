@@ -80,7 +80,7 @@ export function StructureAnalysisEditor({ exam, onChange, canEdit = true }: Stru
     const handleQuestionKeywordAdd = (qIdx: number, keyword: string) => {
         updateQuestion(qIdx, (question) => {
             const keywords = Array.isArray(question.keywords) ? [...question.keywords] : [];
-            keywords.push({ id: `kw-${Date.now()}`, keyword });
+            keywords.push({ id: "", keyword });
             question.keywords = keywords;
         });
     };
@@ -129,7 +129,7 @@ export function StructureAnalysisEditor({ exam, onChange, canEdit = true }: Stru
     const handleSubQuestionKeywordAdd = (qIdx: number, sqIdx: number, keyword: string) => {
         updateSubQuestion(qIdx, sqIdx, (sub) => {
             const keywords = Array.isArray(sub.keywords) ? [...sub.keywords] : [];
-            keywords.push({ id: `sqkw-${Date.now()}`, keyword });
+            keywords.push({ id: "", keyword });
             sub.keywords = keywords;
         });
     };
@@ -150,7 +150,7 @@ export function StructureAnalysisEditor({ exam, onChange, canEdit = true }: Stru
 
     const addQuestion = () => {
         const newQuestion = {
-            id: `new-q-${Date.now()}`,
+            id: "",
             question_number: questions.length + 1,
             question_content: '新しい大問',
             question_format: 0,
@@ -164,7 +164,7 @@ export function StructureAnalysisEditor({ exam, onChange, canEdit = true }: Stru
             const subQuestions = question.sub_questions as any[];
             const nextNumber = subQuestions.length + 1;
             subQuestions.push({
-                id: `new-sq-${Date.now()}`,
+                id: "",
                 sub_question_number: nextNumber,
                 question_type_id: 1,
                 sub_question_type_id: 1,

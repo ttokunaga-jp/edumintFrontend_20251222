@@ -1,10 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { mockExams } from "../mockData/search";
-import {
-  mockUser,
-  mockUserStats,
-  mockWalletBalance,
-} from "../mockData/user";
+import { mockUser, mockUserStats, mockWalletBalance } from "../mockData/user";
 
 const apiBase =
   (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(

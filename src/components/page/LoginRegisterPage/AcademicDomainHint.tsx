@@ -3,7 +3,7 @@ import { AlertCircle } from 'lucide-react';
 
 export const AcademicDomainHint: React.FC = () => (
   <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
     <AlertCircle  />

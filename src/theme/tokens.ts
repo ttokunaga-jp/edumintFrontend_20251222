@@ -22,7 +22,7 @@ export const tokens = {
     borderRadius: 8
   },
   typography: {
-    fontFamily: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
+    fontFamily: "",
     h1: { fontSize: '2rem' }
   }
 } as const;

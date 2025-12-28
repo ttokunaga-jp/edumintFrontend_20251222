@@ -15,18 +15,7 @@ const meta: Meta<typeof PageHeader> = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: `
-PageHeader コンポーネント - ページヘッダー
-
-**Features**:
-- オプションの BackButton（h-10, mb-4）
-- レスポンシブタイトル（text-xl → text-3xl）
-- タグ/バッジ表示
-- ステータスバッジ
-
-**Grid**: 16/24px spacing
-**Responsive**: Mobile-first design
-        `,
+        component: "",
       },
     },
   },

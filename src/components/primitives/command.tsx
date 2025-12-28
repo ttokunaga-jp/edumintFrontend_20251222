@@ -5,17 +5,11 @@ import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
 import { SearchIcon } from "lucide-react";
 
-import { cn } from "./utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "./dialog";
+
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./dialog";
 
 function Command({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
@@ -52,14 +46,14 @@ function CommandDialog({
 }
 
 function CommandInput({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
     <div
       data-slot="command-input-wrapper"
       style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }}
@@ -75,7 +69,7 @@ function CommandInput({
 }
 
 function CommandList({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
@@ -100,7 +94,7 @@ function CommandEmpty({
 }
 
 function CommandGroup({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Group>) {
   return (
@@ -113,7 +107,7 @@ function CommandGroup({
 }
 
 function CommandSeparator({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Separator>) {
   return (
@@ -126,7 +120,7 @@ function CommandSeparator({
 }
 
 function CommandItem({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
@@ -139,7 +133,7 @@ function CommandItem({
 }
 
 function CommandShortcut({
-  className,
+  cls,
   ...props
 }: React.ComponentProps<"span">) {
   return (

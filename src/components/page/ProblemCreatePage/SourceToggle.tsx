@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/shared/utils';
+
 import type { SourceType } from '@/pages/ProblemCreatePage/hooks/useProblemCreateFlow';
 
 type SourceToggleProps = {
@@ -18,7 +18,7 @@ export const SourceToggle = React.memo(function SourceToggle({
 
   return (
     <div style={{
-      display: "flex"
+      display: 
     }>
       {options.map((option) => (
         <button

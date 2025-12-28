@@ -49,11 +49,11 @@ const mapSize = (s: Size | undefined) => {
   }
 };
 
-function Button({ variant = "default", size = "default", className, ...props }: ButtonProps) {
+function Button({ variant = "default", size = "default", cls, ...props }: ButtonProps) {
   const mui = mapVariant(variant);
   const muiSize = mapSize(size);
 
-  return <MuiButton variant={mui.variant} color={mui.color} size={muiSize} className={className} {...props} />;
+  return <MuiButton variant={mui.variant} color={mui.color} size={muiSize} {...props} />;
 }
 
 export { Button };

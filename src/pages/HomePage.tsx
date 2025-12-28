@@ -8,19 +8,13 @@
 // ========================================
 
 import React, { useState, useEffect } from "react";
-import {
-  FileText,
-  Eye,
-  ThumbsUp,
-  MessageSquare,
-  Bookmark,
-} from "lucide-react";
+import { FileText, Eye, ThumbsUp, MessageSquare, Bookmark } from "lucide-react";
 import AdvancedSearchPanel from "@/components/page/HomePage/AdvancedSearchPanel";
 import { ContextHealthAlert } from "@/components/common/ContextHealthAlert";
 import { ProblemCard } from "@/components/common/ProblemCard";
 import { Card } from "@/components/primitives/card";
 import { Badge } from "@/components/primitives/badge";
-import { cn } from "@/shared/utils";
+
 import type { Exam } from "@/types/health";
 import type { Page } from "@/types";
 import { useServiceHealthContext } from "@/contexts/ServiceHealthContext";
@@ -156,7 +150,7 @@ export function HomePage({
 
   const handleProblemClick = (problemId: string) => {
     if (onNavigate) {
-      onNavigate("problem-view", problemId);
+      onNavigate(, problemId);
     } else {
       console.log("Navigate to problem:", problemId);
     }
@@ -229,21 +223,21 @@ export function HomePage({
 
     }}
           <div style={{
-      display: "flex"
+      display: 
     }}
 
     }>
           <div style={{
-      display: "flex"
+      display: 
     }>
 
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
 
     }}
-              <span className={undefined}>
+              <span>
 
     }>
               <span >
@@ -355,7 +349,7 @@ export function HomePage({
           {/* Pagination */}
           {!isLoading && problems.length > 0 && (
             <div style={{
-      display: "flex",
+      display: "",
       justifyContent: "center"
 
     }}
@@ -363,7 +357,7 @@ export function HomePage({
     }>
 
               <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
 

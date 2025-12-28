@@ -7,14 +7,14 @@ const baseTimestamps = {
 
 export const mockExams: Exam[] = [
   {
-    id: 'exam-1',
+    id: "",
     examName: '微分積分学 期末試験',
     school: '筑波大学',
     universityName: '筑波大学',
     universityId: 1,
     teacherId: 't1',
     teacherName: '山田太郎',
-    subjectId: 'math-1',
+    subjectId: "",
     subjectName: '微分積分学',
     examYear: 2024,
     userId: 'user-1',
@@ -37,14 +37,14 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-2',
+    id: "",
     examName: '線形代数 中間試験',
     school: '慶應義塾大学',
     universityName: '慶應義塾大学',
     universityId: 2,
     teacherId: 't2',
     teacherName: '佐藤花子',
-    subjectId: 'math-2',
+    subjectId: "",
     subjectName: '線形代数',
     examYear: 2023,
     userId: 'user-2',
@@ -67,7 +67,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-3',
+    id: "",
     examName: '全形式確認用モック試験',
     school: 'テスト大学',
     universityName: 'テスト大学',
@@ -97,7 +97,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-4',
+    id: "",
     examName: 'マクロ経済学 基礎テスト',
     school: '早稲田大学',
     universityName: '早稲田大学',
@@ -127,7 +127,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-5',
+    id: "",
     examName: '機械学習 期末試験',
     school: '京都大学',
     universityName: '京都大学',
@@ -157,7 +157,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-6',
+    id: "",
     examName: '日本史B 実力テスト',
     school: '早稲田大学',
     universityName: '早稲田大学',
@@ -187,14 +187,14 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-7',
+    id: "",
     examName: '民法 練習問題',
     school: '慶應義塾大学',
     universityName: '慶應義塾大学',
     universityId: 2,
     teacherId: 't7',
     teacherName: '松本花',
-    subjectId: 'law-1',
+    subjectId: "",
     subjectName: '民法',
     examYear: 2024,
     userId: 'user-7',
@@ -217,7 +217,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-8',
+    id: "",
     examName: '生物学 小テスト',
     school: '筑波大学',
     universityName: '筑波大学',
@@ -247,7 +247,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-9',
+    id: "",
     examName: '英語表現I 期末レポートテーマ',
     school: '慶應義塾大学',
     universityName: '慶應義塾大学',
@@ -277,7 +277,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-10',
+    id: "",
     examName: '統計学 演習問題集',
     school: '筑波大学',
     universityName: '筑波大学',
@@ -307,7 +307,7 @@ export const mockExams: Exam[] = [
     ...baseTimestamps,
   },
   {
-    id: 'exam-11',
+    id: "",
     examName: 'Alice Smith 編集テスト用',
     school: 'テスト大学',
     universityName: 'テスト大学',
@@ -340,8 +340,8 @@ export const mockExams: Exam[] = [
 
 export const mockQuestions: Question[] = [
   {
-    id: 'exam-1-q1',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 1,
     questionContent: '次の関数の導関数を求めよ。',
@@ -351,8 +351,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q2',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 3,
     questionNumber: 2,
     questionContent: '次の極限値を計算せよ。',
@@ -362,8 +362,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-2-q1',
-    examId: 'exam-2',
+    id: "",
+    examId: "",
     difficulty: 1,
     questionNumber: 1,
     questionContent: '次の行列 A, B の積 AB を求めよ。',
@@ -373,8 +373,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q3',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 3,
     questionContent: '三角関数の基本公式を用いた選択問題。',
@@ -384,8 +384,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q4',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 3,
     questionNumber: 4,
     questionContent: '線形代数の性質に関する複数選択問題。',
@@ -395,8 +395,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q5',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 5,
     questionContent: '微分の穴埋め問題。',
@@ -406,8 +406,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q6',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 1,
     questionNumber: 6,
     questionContent: '正誤判定問題。',
@@ -417,8 +417,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q7',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 4,
     questionNumber: 7,
     questionContent: '証明問題。',
@@ -428,8 +428,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q8',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 3,
     questionNumber: 8,
     questionContent: 'プログラミング問題。',
@@ -439,8 +439,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-q9',
-    examId: 'exam-1',
+    id: "",
+    examId: "",
     difficulty: 3,
     questionNumber: 9,
     questionContent: 'コード読解問題。',
@@ -450,8 +450,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-q1',
-    examId: 'exam-3',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 1,
     questionContent: '各小問は問題形式の動作確認用です。',
@@ -461,8 +461,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-4-q1',
-    examId: 'exam-4',
+    id: "",
+    examId: "",
     difficulty: 1,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（マクロ経済学）',
@@ -472,8 +472,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-5-q1',
-    examId: 'exam-5',
+    id: "",
+    examId: "",
     difficulty: 3,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（機械学習）',
@@ -483,8 +483,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-6-q1',
-    examId: 'exam-6',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（日本史B）',
@@ -494,8 +494,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-7-q1',
-    examId: 'exam-7',
+    id: "",
+    examId: "",
     difficulty: 3,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（民法）',
@@ -505,8 +505,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-8-q1',
-    examId: 'exam-8',
+    id: "",
+    examId: "",
     difficulty: 1,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（生物学）',
@@ -516,8 +516,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-9-q1',
-    examId: 'exam-9',
+    id: "",
+    examId: "",
     difficulty: 1,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（英語表現）',
@@ -527,8 +527,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-10-q1',
-    examId: 'exam-10',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 1,
     questionContent: '各形式の表示確認用（統計学）',
@@ -538,8 +538,8 @@ export const mockQuestions: Question[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-11-q1',
-    examId: 'exam-11',
+    id: "",
+    examId: "",
     difficulty: 2,
     questionNumber: 1,
     questionContent: 'Alice Smith の編集権限確認用モック大問',
@@ -552,8 +552,8 @@ export const mockQuestions: Question[] = [
 
 export const mockSubQuestions: SubQuestion[] = [
   {
-    id: 'exam-1-sq1',
-    questionId: 'exam-1-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 1,
     questionContent: 'f(x) = x^2 \sin(x)',
@@ -565,8 +565,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq2',
-    questionId: 'exam-1-q2',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 1,
     questionContent: '\\lim_{x \\to 0} \\frac{\\sin x}{x}',
@@ -578,8 +578,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-2-sq1',
-    questionId: 'exam-2-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 6,
     questionContent: 'A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}, B = \\begin{pmatrix} 5 & 6 \\\\ 7 & 8 \\end{pmatrix}',
@@ -596,8 +596,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq3',
-    questionId: 'exam-1-q3',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 2,
     selectionMode: 'single',
@@ -616,8 +616,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq4',
-    questionId: 'exam-1-q4',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 3,
     selectionMode: 'multiple',
@@ -636,8 +636,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq5',
-    questionId: 'exam-1-q5',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 4,
     questionContent: '次の関数 f(x) の導関数を求め、空欄を埋めよ。 f(x) = x^3',
@@ -653,8 +653,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq6',
-    questionId: 'exam-1-q6',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 5,
     selectionMode: 'single',
@@ -671,8 +671,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq7',
-    questionId: 'exam-1-q7',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 7,
     questionContent: '任意の実数 a, b に対して (a+b)^2 ≥ 4ab を証明せよ。',
@@ -684,8 +684,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq8',
-    questionId: 'exam-1-q8',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 8,
     questionContent: '標準入力から整数 n を受け取り、1 から n までの総和を出力せよ。',
@@ -703,8 +703,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-1-sq9',
-    questionId: 'exam-1-q9',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 9,
     questionContent: '以下のコードを読んでバグを指摘し、正しい出力を答えよ。\n\n```python\nnums = [1, 2, 3]\nfor i in range(len(nums)):\n    nums[i] += 1\nprint(nums[3])\n```\n',
@@ -717,8 +717,8 @@ export const mockSubQuestions: SubQuestion[] = [
   },
   // ---- 全形式確認用（exam-3-q1） ----
   {
-    id: 'exam-3-sq1',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 1,
     questionTypeId: 1,
     questionContent: 'Markdown 形式: **微分**の基本定理を述べよ。',
@@ -729,8 +729,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq2',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 2,
     questionTypeId: 1,
     questionContent: '\\int_0^{\\pi} \\sin x \\, dx を計算せよ。',
@@ -741,8 +741,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq3',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 3,
     questionTypeId: 2,
     selectionMode: 'single',
@@ -759,8 +759,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq4',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 4,
     questionTypeId: 4,
     questionContent: 'テイラー展開の空欄を埋めよ: e^x = 1 + \\_ + \\_ + \\cdots',
@@ -775,8 +775,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq5',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 5,
     questionTypeId: 5,
     selectionMode: 'single',
@@ -792,8 +792,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq6',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 6,
     questionTypeId: 6,
     questionContent: '\\lim_{x \\to 0} \\frac{\\sin x}{x} を数値的に求めよ。',
@@ -809,8 +809,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq7',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 7,
     questionTypeId: 7,
     questionContent: 'コーシー・シュワルツの不等式を証明せよ。',
@@ -821,8 +821,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq8',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 8,
     questionTypeId: 8,
     questionContent: 'Python でフィボナッチ数列の n 項目を返す再帰関数 fib(n) を書け。',
@@ -839,8 +839,8 @@ export const mockSubQuestions: SubQuestion[] = [
     updatedAt: '2024-01-01T00:00:00Z',
   },
   {
-    id: 'exam-3-sq9',
-    questionId: 'exam-3-q1',
+    id: "",
+    questionId: "",
     subQuestionNumber: 9,
     questionTypeId: 9,
     questionContent: '次の JavaScript コードの出力を答えよ。\n\n```js\nconst arr = [1,2,3];\nfor (let i in arr) { arr[i] += 1; }\nconsole.log(arr.reduce((a,b)=>a+b,0));\n```\n',
@@ -960,7 +960,7 @@ export const mockSubQuestions: SubQuestion[] = [
       },
     ];
 
-    const examIds = ['exam-4', 'exam-5', 'exam-6', 'exam-7', 'exam-8', 'exam-9', 'exam-10', 'exam-11'];
+    const examIds = [, , , , ];
 
     const subs: SubQuestion[] = [];
     examIds.forEach((examId) => {

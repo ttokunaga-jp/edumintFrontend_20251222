@@ -10,7 +10,7 @@ export type MultilingualAutocompleteProps = {
   placeholder?: string;
   category?: 'university' | 'faculty' | 'subject' | 'teacher';
   icon?: React.ReactNode;
-  className?: string;
+  cls?: string;
   showReadings?: boolean; // 読みを表示するか
   minChars?: number; // 最小検索文字数
 };
@@ -21,7 +21,6 @@ export function MultilingualAutocomplete({
   placeholder = '入力してください',
   category,
   icon,
-  className = '',
   showReadings = true,
   minChars = 1,
 }: MultilingualAutocompleteProps) {
@@ -173,7 +172,7 @@ export function MultilingualAutocomplete({
     }}
                 >
                   <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                     <div >
@@ -185,7 +184,7 @@ export function MultilingualAutocomplete({
                       {/* 読み情報 */}
                       {showReadings && (
                         <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                           {suggestion.nameKana && (

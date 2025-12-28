@@ -4,10 +4,10 @@ export interface PageHeaderProps {
   title: string;
   description?: string;
   actions?: React.ReactNode;
-  className?: string;
+  cls?: string;
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ title, description, actions, className = '' }) => {
+export const PageHeader: React.FC<PageHeaderProps> = ({ title, description, actions, }) => {
   return (
     <div >
       <div>
@@ -15,7 +15,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ title, description, acti
         {description && <p >{description}</p>}
       </div>
       {actions && <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }>{actions}</div>}

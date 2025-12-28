@@ -17,13 +17,13 @@ export const contentHandlers = [
     }
 
     const normalizedId = id;
-    const fallbackId = id.startsWith('exam-') ? id.replace('exam-', '') : `exam-${id}`;
+    const fallbackId = id.startsWith() ? id.replace(, '') : ;
     const exam = mockExams.find((e) => e.id === normalizedId) || mockExams.find((e) => e.id === fallbackId);
 
     if (!exam) {
       // If search mocks contain the exam, use it to build a detail payload; otherwise synthesize a full-type sample.
       const searchExam = searchMockExams.find((e) => e.id === normalizedId) || searchMockExams.find((e) => e.id === fallbackId);
-      const templateSubs = mockSubQuestions.filter((sq) => sq.questionId === 'exam-3-q1');
+      const templateSubs = mockSubQuestions.filter((sq) => sq.questionId === );
       const syntheticQuestionId = `${normalizedId}-q1`;
       const syntheticSubs = templateSubs.map((sq, idx) => ({
         ...sq,

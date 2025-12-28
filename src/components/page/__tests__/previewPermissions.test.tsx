@@ -7,7 +7,7 @@ import { PreviewEditToggle } from '@/components/page/ProblemViewEditPage/Preview
 import { ProblemEditor } from '@/components/page/ProblemViewEditPage/ProblemEditor';
 
 const sampleExam = {
-  id: 'exam-test',
+  id: "",
   examName: 'preview',
   questions: [
     {

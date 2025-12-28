@@ -10,10 +10,10 @@ type NativePopoverProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   id?: string;
-  className?: string;
+  cls?: string;
 };
 
-export const NativePopover = ({ trigger, children, open, onOpenChange, id, className = "" }: NativePopoverProps) => {
+export const NativePopover = ({ trigger, children, open, onOpenChange, id, }: NativePopoverProps) => {
   const uid = useId();
   const popId = id || `native-popover-${uid}`;
   const [supportsNative, setSupportsNative] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export const NativePopover = ({ trigger, children, open, onOpenChange, id, class
     return (
       <>
         {triggerWithAttr}
-        <div id={popId} popover="auto" className={className} role="dialog">
+        <div id={popId} popover="auto" role="dialog">
           {children}
         </div>
       </>
@@ -50,7 +50,7 @@ export const NativePopover = ({ trigger, children, open, onOpenChange, id, class
     <PopoverPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <PopoverPrimitive.Trigger asChild>{trigger}</PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Content sideOffset={8} className={className} id={popId}>
+        <PopoverPrimitive.Content sideOffset={8} id={popId}>
           {children}
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>

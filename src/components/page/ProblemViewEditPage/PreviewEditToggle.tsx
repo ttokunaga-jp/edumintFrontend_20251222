@@ -12,14 +12,14 @@ export interface PreviewEditToggleProps {
 export function PreviewEditToggle({ isEditMode, setIsEditMode, disabled = false, disabledReason }: PreviewEditToggleProps) {
   return (
     <div style={{
-      display: "flex"
+      display: 
     }>
       <Button
         variant={!isEditMode ? 'default' : 'ghost'}
         size="sm"
         onClick={() => setIsEditMode(false)}
         style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }}
@@ -33,7 +33,7 @@ export function PreviewEditToggle({ isEditMode, setIsEditMode, disabled = false,
         onClick={() => !disabled && setIsEditMode(true)}
         disabled={disabled}
         style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.5rem"
     }}

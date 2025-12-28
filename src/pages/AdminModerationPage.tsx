@@ -8,13 +8,13 @@ export function AdminModerationPage({
 }: AdminModerationPageProps) {
   return (
     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
 
     }}
-      <div className={undefined}>
-        <h1 className={undefined}>
+      <div>
+        <h1>
 
     }>
       <div >

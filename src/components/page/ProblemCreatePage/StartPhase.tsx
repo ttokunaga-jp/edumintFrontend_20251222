@@ -7,7 +7,7 @@ import type { DocumentOptionsState, ExerciseOptionsState, SourceType } from '@/p
 import { SourceToggle } from './SourceToggle';
 import { DocumentOptions } from './DocumentOptions';
 import { ExerciseOptions } from './ExerciseOptions';
-import { cn } from '@/shared/utils';
+
 
 type StartPhaseProps = {
   sourceType: SourceType;
@@ -47,7 +47,7 @@ export function StartPhase({
   return (
     <div >
       <div style={{
-      display: "flex",
+      display: "",
       justifyContent: "center"
     }>
         <SourceToggle value={sourceType} onChange={onSourceTypeChange} />
@@ -57,7 +57,7 @@ export function StartPhase({
         <Card >
           <div  />
           <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
             <div>
@@ -75,7 +75,7 @@ export function StartPhase({
 
           <div
             style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }}
@@ -105,7 +105,7 @@ export function StartPhase({
               onChange={onFileSelect}
             />
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       justifyContent: "center"
     }>

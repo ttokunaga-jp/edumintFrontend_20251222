@@ -4,7 +4,7 @@
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
-import { cn } from "./utils";
+
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -37,7 +37,7 @@ function useChart() {
 
 function ChartContainer({
   id,
-  className,
+  cls,
   children,
   config,
   ...props
@@ -105,7 +105,7 @@ const ChartTooltip = RechartsPrimitive.Tooltip;
 function ChartTooltipContent({
   active,
   payload,
-  className,
+  cls,
   indicator = "dot",
   hideLabel = false,
   hideIndicator = false,
@@ -193,20 +193,12 @@ function ChartTooltipContent({
                   ) : (
                     !hideIndicator && (
                       <div
-                        className={cn(
-                          "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
-                          {
-                            "h-2.5 w-2.5": indicator === "dot",
-                            "w-1": indicator === "line",
-                            "w-0 border-[1.5px] border-dashed bg-transparent":
-                              indicator === "dashed",
-                            "my-0.5": nestLabel && indicator === "dashed",
-                          },
+                       ,
                         )}
                         style={
                           {
                             "--color-bg": indicatorColor,
-                            "--color-border": indicatorColor,
+                            : indicatorColor,
                           } as React.CSSProperties
                         }
                       />
@@ -240,7 +232,7 @@ function ChartTooltipContent({
 const ChartLegend = RechartsPrimitive.Legend;
 
 function ChartLegendContent({
-  className,
+  cls,
   hideIcon = false,
   payload,
   verticalAlign = "bottom",

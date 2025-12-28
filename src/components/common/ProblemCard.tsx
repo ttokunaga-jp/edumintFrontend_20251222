@@ -2,16 +2,16 @@ import React from 'react';
 import { Eye, ThumbsUp, MessageSquare } from 'lucide-react';
 import { Card } from '@/components/primitives/card';
 import { Badge } from '@/components/primitives/badge';
-import { cn } from '@/shared/utils';
+
 import type { Exam } from '@/types';
 
 interface ProblemCardProps {
     problem: Exam;
     onClick?: (problemId: string) => void;
-    className?: string;
+    cls?: string;
 }
 
-export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
+export function ProblemCard({ problem, onClick, cls}: ProblemCardProps) {
     return (
         <Card
             
@@ -25,7 +25,7 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
 
                 {/* Tags */}
                 <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
                     {problem.subjectName && (
@@ -43,11 +43,11 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
 
             {/* Stats */}
             <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
                 <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }>
@@ -55,7 +55,7 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
                     {(problem.viewCount || 0).toLocaleString()}
                 </span>
                 <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }>
@@ -63,7 +63,7 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
                     {(problem.goodCount || 0).toLocaleString()}
                 </span>
                 <span style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.25rem"
     }>

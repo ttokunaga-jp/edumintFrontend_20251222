@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/shared/utils';
+
 import type { CreateStep } from '@/pages/ProblemCreatePage/hooks/useProblemCreateFlow';
 
 const steps: { id: CreateStep; label: string }[] = [
@@ -29,7 +29,7 @@ function ProgressHeaderComponent({ currentStep, progress }: ProgressHeaderProps)
     >
       <div >
         <div style={{
-      display: "flex"
+      display: 
     }>
           {/* Background Line - aligned with center of 32px (h-8) circles */}
           <div  />
@@ -42,7 +42,7 @@ function ProgressHeaderComponent({ currentStep, progress }: ProgressHeaderProps)
 
           {steps.map((step, index) => (
             <div key={step.id} style={{
-      display: "flex",
+      display: "",
       alignItems: "center"
     }>
               <div

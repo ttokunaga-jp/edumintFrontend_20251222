@@ -11,7 +11,7 @@ type KeywordEditorProps = {
   placeholder?: string;
   ariaLabelInput?: string;
   canEdit?: boolean;
-  className?: string;
+  cls?: string;
 };
 
 export const KeywordEditor: React.FC<KeywordEditorProps> = ({
@@ -21,14 +21,13 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
   placeholder = 'キーワードを追加...',
   ariaLabelInput,
   canEdit = false,
-  className = '',
 }) => {
   const [newKeyword, setNewKeyword] = useState('');
 
   const normalized = useMemo<Keyword[]>(() => {
     return (keywords ?? []).map((kw, idx) => {
-      if (typeof kw === 'string') return { id: `kw-${idx}`, keyword: kw };
-      if (!kw.id) return { ...kw, id: kw.keyword || `kw-${idx}` };
+      if (typeof kw === 'string') return { id: "", keyword: kw };
+      if (!kw.id) return { ...kw, id: kw.keyword ||  };
       return kw;
     });
   }, [keywords]);
@@ -42,7 +41,7 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
   return (
     <div >
       <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
         {normalized.map((kw) => (
@@ -69,7 +68,7 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
 
       {canEdit && onAdd && (
         <div style={{
-      display: "flex",
+      display: "",
       gap: "0.5rem"
     }>
           <input

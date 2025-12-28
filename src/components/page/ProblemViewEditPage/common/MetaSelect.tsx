@@ -21,7 +21,7 @@ export const MetaSelect: React.FC<MetaSelectProps> = ({
 }) => {
   return (
     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }>

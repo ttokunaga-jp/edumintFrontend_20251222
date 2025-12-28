@@ -5,7 +5,7 @@ import type { TextFieldProps } from '@mui/material/TextField';
 // Thin wrapper around MUI TextField to preserve existing usage patterns.
 function Input(props: Omit<TextFieldProps, 'variant'> & { type?: string }) {
   const { type, InputProps, ...rest } = props;
-  const ariaInvalid = (rest as any)['aria-invalid'];
+  const ariaInvalid = (rest as any)[];
   const error = ariaInvalid === true || ariaInvalid === 'true' || rest['error'] === true;
 
   return (

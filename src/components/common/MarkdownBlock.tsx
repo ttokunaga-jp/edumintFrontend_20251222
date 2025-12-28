@@ -15,17 +15,17 @@ const processor = unified()
 
 interface MarkdownBlockProps {
   content: string;
-  className?: string;
+  cls?: string;
 }
 
-export const MarkdownBlock: React.FC<MarkdownBlockProps> = ({ content, className }) => {
+export const MarkdownBlock: React.FC<MarkdownBlockProps> = ({ content, cls}) => {
   const rendered = React.useMemo(() => {
     const source = content || '';
     const file = processor.processSync(source);
     return String(file);
   }, [content]);
 
-  return <div className={className} dangerouslySetInnerHTML={{ __html: rendered }} />;
+  return <div dangerouslySetInnerHTML={{ __html: rendered }} />;
 };
 
 export default MarkdownBlock;

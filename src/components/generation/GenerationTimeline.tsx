@@ -49,7 +49,7 @@ export const GenerationTimeline: React.FC<Props> = ({ current }) => {
 
   return (
     <div style={{
-      display: "flex",
+      display: "",
       alignItems: "center",
       gap: "0.75rem"
     }} data-testid="generation-timeline">

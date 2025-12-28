@@ -78,7 +78,7 @@ export interface ExamHistory {
 }
 
 export const getExamHistory = async (examId: string): Promise<ExamHistory[]> => {
-  const response = await fetch(`${API_BASE_URL}/exam-edit-history/${examId}`, {
+  const response = await fetch(, {
     method: 'GET',
     headers: getHeaders(),
   });
@@ -87,7 +87,7 @@ export const getExamHistory = async (examId: string): Promise<ExamHistory[]> => 
 };
 
 export const rollbackExam = async (examId: string, version: number): Promise<Exam> => {
-  const response = await fetch(`${API_BASE_URL}/exam-history/${examId}/rollback`, {
+  const response = await fetch(, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ version }),
