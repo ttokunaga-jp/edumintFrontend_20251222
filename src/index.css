@@ -1,5 +1,4 @@
-/* Tailwind removed: base styles are now managed via MUI Theme / Emotion
-   Backup of the generated Tailwind CSS is preserved at `src/index.tailwind-backup.css`. */
+/* Global baseline managed by MUI Theme + Emotion. All tails of legacy CSS removed. */
 @import url("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css");
 
 :root {

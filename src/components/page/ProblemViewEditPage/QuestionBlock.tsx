@@ -83,17 +83,17 @@ export function QuestionBlock({
         <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
           <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             {/* 問題番号 */}
             <div style={{
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
               {derivedNumber}
             </div>
 
@@ -102,7 +102,7 @@ export function QuestionBlock({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
                 <h3 className="text-gray-900">大問{derivedNumber}</h3>
               </div>
 
@@ -151,7 +151,7 @@ export function QuestionBlock({
             <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
               {onDelete && (
                 <button
                   onClick={onDelete}

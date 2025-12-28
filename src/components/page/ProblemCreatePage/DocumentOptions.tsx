@@ -94,7 +94,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <div>
             <h3 className="text-xl font-bold text-gray-900">資料から生成</h3>
             <p className="text-sm text-gray-500">
@@ -142,7 +142,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
               <div style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}>
+    }>
                 <Slider
                   min={5}
                   max={20}
@@ -160,13 +160,13 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <Label className="text-sm text-gray-700">問題形式</Label>
             <label style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
               <Checkbox
                 checked={options.formatConfig.isAuto}
                 onCheckedChange={(checked) => handleFormatAutoToggle(Boolean(checked))}
@@ -179,7 +179,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
             <AccordionItem value="formats" style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
               <AccordionTrigger className="py-3 hover:no-underline">
                 <span className={cn('text-sm font-semibold', options.formatConfig.isAuto && 'text-gray-400')}>
                   個別指定（複数選択可）
@@ -188,7 +188,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
               <AccordionContent className="pb-4 pt-1">
                 <div style={{
       gap: "0.5rem"
-    }}>
+    }>
                   {formatOptions.map((format) => {
                     const isChecked = options.formatConfig.selectedFormats.includes(format.id);
                     return (
@@ -219,11 +219,11 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
 
         <div style={{
       gap: "0.75rem"
-    }}>
+    }>
           <label style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Checkbox
               checked={options.useDiagrams}
               onCheckedChange={() => handleCommonToggle('useDiagrams')}
@@ -238,7 +238,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           <label style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Checkbox
               checked={options.confirmStructure}
               onCheckedChange={() => handleCommonToggle('confirmStructure')}
@@ -253,7 +253,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           <label style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Checkbox
               checked={options.isPublic}
               onCheckedChange={() => handleCommonToggle('isPublic')}

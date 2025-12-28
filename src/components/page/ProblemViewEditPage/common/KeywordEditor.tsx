@@ -44,7 +44,7 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
       <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
         {normalized.map((kw) => (
           <span
             key={kw.id}
@@ -71,7 +71,7 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
         <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
           <input
             aria-label={ariaLabelInput ?? 'キーワード入力'}
             type="text"

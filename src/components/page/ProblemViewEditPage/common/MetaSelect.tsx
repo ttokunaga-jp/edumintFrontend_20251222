@@ -24,7 +24,7 @@ export const MetaSelect: React.FC<MetaSelectProps> = ({
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}>
+    }>
       <label className="text-xs text-gray-600">{label}</label>
       <select
         aria-label={ariaLabel ?? label}

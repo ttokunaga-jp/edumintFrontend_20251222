@@ -125,7 +125,7 @@ function Carousel({
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
-        {...props}}
+        {...props}
       >
         {children}
       </div>
@@ -194,7 +194,7 @@ function CarouselPrevious({
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
-      {...props}}
+      {...props}
     >
       <ArrowLeft />
       <span className="sr-only">Previous slide</span>
@@ -224,7 +224,7 @@ function CarouselNext({
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
-      {...props}}
+      {...props}
     >
       <ArrowRight />
       <span className="sr-only">Next slide</span>

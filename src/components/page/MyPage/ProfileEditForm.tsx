@@ -73,7 +73,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <UserIcon className="w-4 h-4" />
             <span>ユーザー名 <span className="text-red-500">*</span></span>
           </label>
@@ -97,7 +97,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <Mail className="w-4 h-4" />
             <span>メールアドレス</span>
           </label>
@@ -110,7 +110,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
           />
           <p className="mt-1 text-xs text-gray-500">
             メールアドレスは変更できません
@@ -123,7 +123,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <Building2 className="w-4 h-4" />
             <span>所属学部</span>
           </label>
@@ -136,7 +136,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
             placeholder="工学部"
           />
         </div>
@@ -147,7 +147,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <BookOpen className="w-4 h-4" />
             <span>学問分野</span>
           </label>
@@ -172,7 +172,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
           <label style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <span>自己紹介</span>
             <span className="text-xs text-gray-500">
               {formData.bio.length}/500文字
@@ -196,7 +196,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
         <button
           type="submit"
           disabled={isLoading}

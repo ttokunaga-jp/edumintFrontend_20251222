@@ -49,7 +49,7 @@ export function StartPhase({
       <div style={{
       display: "flex",
       justifyContent: "center"
-    }}>
+    }>
         <SourceToggle value={sourceType} onChange={onSourceTypeChange} />
       </div>
 
@@ -59,7 +59,7 @@ export function StartPhase({
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <div>
               <h3 className="text-xl font-bold text-gray-900">
                 {sourceType === 'exercise' ? '過去問・既存問題のアップロード' : '学習資料のアップロード'}
@@ -108,7 +108,7 @@ export function StartPhase({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
               <Upload className="w-8 h-8 text-indigo-600" />
             </div>
             <p className="font-bold text-indigo-900">ファイルを選択またはドラッグ＆ドロップ</p>

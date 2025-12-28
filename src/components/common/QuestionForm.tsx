@@ -44,7 +44,7 @@ export function QuestionForm({
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <span className="text-sm font-medium text-gray-700">{textareaLabel}</span>
           {/* 非対話で表示のみ */}
           <span className="rounded border border-gray-200 px-2 py-1 text-xs text-gray-500" aria-label="問題文フォーマット表示">
@@ -68,7 +68,7 @@ export function QuestionForm({
       <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
         <label className="text-sm font-medium text-gray-700" aria-label={`${textareaLabel}-label`}>
           {textareaLabel}
         </label>
@@ -95,8 +95,7 @@ export function QuestionForm({
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
     }}
-        placeholder={currentFormat === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
-      />
+        placeholder={currentFormat === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'} />
       <div className="rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
         <div className="mb-2 text-xs font-semibold text-gray-600">{previewLabel}</div>
         {currentFormat === 0 ? (

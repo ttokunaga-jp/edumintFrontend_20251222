@@ -18,7 +18,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ title, description, acti
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>{actions}</div>}
+    }>{actions}</div>}
     </div>
   );
 };

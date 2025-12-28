@@ -86,13 +86,13 @@ export function SearchSection({
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
         {/* Search Input */}
         <div className="w-full max-w-3xl mx-auto"> {/* 768px max width */}
           <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}> {/* 8px gap (grid) */}
+    }> {/* 8px gap (grid) */}
             <div className="relative flex-1">
               <Search
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -182,7 +182,7 @@ export function SearchSection({
                   <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}> {/* 8px gap (grid) */}
+    }> {/* 8px gap (grid) */}
                     <Badge variant="outline" className="cursor-pointer">Easy</Badge>
                     <Badge variant="outline" className="cursor-pointer">Medium</Badge>
                     <Badge variant="outline" className="cursor-pointer">Hard</Badge>
@@ -199,7 +199,7 @@ export function SearchSection({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}> {/* 16px margin, 8px gap (grid) */}
+    }> {/* 16px margin, 8px gap (grid) */}
             {activeFilters.map((filter) => (
               <Badge key={filter.id} variant="secondary" className="pl-3 pr-1 py-1">
                 {filter.label}

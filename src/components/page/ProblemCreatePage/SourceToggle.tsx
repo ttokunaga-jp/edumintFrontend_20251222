@@ -19,7 +19,7 @@ export const SourceToggle = React.memo(function SourceToggle({
   return (
     <div style={{
       display: "flex"
-    }}>
+    }>
       {options.map((option) => (
         <button
           key={option.id}

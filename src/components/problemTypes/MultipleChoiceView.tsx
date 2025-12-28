@@ -33,12 +33,12 @@ export default function MultipleChoiceView(props: ProblemTypeViewProps) {
             <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
               <div style={{
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
                 {String.fromCharCode(65 + idx)}
               </div>
               <div className="flex-1 min-w-0">

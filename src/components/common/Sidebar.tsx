@@ -127,8 +127,7 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
                                     ? "bg-indigo-50 text-indigo-700 font-medium"
                                     : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                             )}
-                            aria-current={isActive ? "page" : undefined}}
-                        >
+                            aria-current={isActive ? "page" : undefined}>
                             <Icon className={cn("h-5 w-5", isActive ? "text-indigo-600" : "text-gray-400")} />
                             <span>{item.label}</span>
                         </button>

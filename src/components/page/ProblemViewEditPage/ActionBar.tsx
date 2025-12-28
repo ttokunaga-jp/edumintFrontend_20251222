@@ -24,14 +24,14 @@ export function ActionBar({
             <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                 <div className="text-sm text-gray-500">
                     編集モード：変更内容は「保存」するまで反映されません。
                 </div>
                 <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
                     {onReset && (
                         <Button variant="outline" onClick={onReset} disabled={isSaving}>
                             <RotateCcw className="w-4 h-4 mr-2" />

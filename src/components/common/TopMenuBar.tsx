@@ -36,8 +36,7 @@ const SearchInput = ({
       paddingBottom: "0.5rem"
     }}
             onChange={onChange}
-            onKeyDown={onKeyDown}
-        />
+            onKeyDown={onKeyDown} />
     </div>
 );
 
@@ -75,18 +74,18 @@ export default function TopMenuBar({
             <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
                 {/* Main Nav Row */}
                 <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                     {/* Left Section: Hamburger & Logo */}
                     <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
                         <Button variant="ghost" size="icon" className="text-gray-500" title="メニュー" data-trigger="menu-button" onClick={onMenuClick}>
                             <Menu className="h-5 w-5" />
                         </Button>
@@ -100,7 +99,7 @@ export default function TopMenuBar({
                     {/* Center Section: Search (Desktop only) */}
                     <div style={{
       justifyContent: "center"
-    }}>
+    }>
                         <SearchInput
                             className="w-full"
                             value={localQuery}
@@ -114,7 +113,7 @@ export default function TopMenuBar({
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                         <Button
                             variant="ghost"
                             size="icon"
@@ -133,7 +132,7 @@ export default function TopMenuBar({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
                             <div className="hidden lg:block text-right mr-1">
                                 <div className="text-sm font-medium text-gray-900 truncate max-w-[120px]">
                                     {user?.username || 'ゲストユーザー'}

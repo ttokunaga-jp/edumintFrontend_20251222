@@ -73,12 +73,12 @@ export function AnswerBlock({
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <div style={{
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
             <Lock className="w-6 h-6 text-amber-600" />
           </div>
           <div>
@@ -116,7 +116,7 @@ export function AnswerBlock({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
           {isExpanded ? (
             <ChevronUp className="w-4 h-4 text-blue-700" />
           ) : (
@@ -136,18 +136,18 @@ export function AnswerBlock({
         <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
           {/* 解答 */}
           <div>
             <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
               <span className="text-sm font-medium text-blue-900">解答</span>
               <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                 {canSwitchFormat && (
                   <button
                     onClick={handleAnswerFormatToggle}
@@ -193,7 +193,7 @@ export function AnswerBlock({
                 <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                   <button
                     onClick={handleAnswerSave}
                     style={{
@@ -238,12 +238,12 @@ export function AnswerBlock({
               <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                 <span className="text-sm font-medium text-blue-900">解説</span>
                 <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                   {canSwitchFormat && (
                     <button
                       onClick={handleExplanationFormatToggle}
@@ -289,7 +289,7 @@ export function AnswerBlock({
                   <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                     <button
                       onClick={handleExplanationSave}
                       style={{

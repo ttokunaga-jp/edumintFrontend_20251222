@@ -58,7 +58,7 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
           ({number})
         </div>
         <div className="flex-1 min-w-0">
@@ -66,7 +66,7 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <span className="text-gray-900 text-sm font-medium">小問{number}</span>
           </div>
           <SubQuestionMetaEdit
@@ -82,7 +82,7 @@ export const SubQuestionCardEdit: React.FC<SubQuestionCardEditProps> = ({
       {viewMode === 'full' && (
         <Suspense fallback={<div style={{
       borderRadius: "0.375rem"
-    }}>編集UIを読み込み中...</div>}>
+    }>編集UIを読み込み中...</div>}>
           {Comp ? <Comp {...normalizedProps} /> : Fallback ? <Fallback {...normalizedProps} /> : null}
         </Suspense>
       )}

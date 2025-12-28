@@ -79,7 +79,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}>
+    }>
           <Settings className="w-5 h-5 text-indigo-600" />
           <div className="text-left">
             <h3 className="font-medium text-gray-900">問題設定</h3>
@@ -102,7 +102,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
               <span>AI生成設定</span>
               <Info className="w-4 h-4 text-gray-400" title="AIによる問題自動生成の設定" />
             </h4>
@@ -111,7 +111,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <label style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">自動問題生成</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -141,8 +141,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                   style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
-                />
+    } />
                 <p className="text-xs text-gray-500">1〜20問の範囲で指定できます</p>
               </div>
             )}
@@ -155,7 +154,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                 </label>
                 <div style={{
       gap: "0.75rem"
-    }}>
+    }>
                   {difficultyOptions.map((option) => (
                     <label
                       key={option.value}
@@ -189,7 +188,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                 </label>
                 <div style={{
       gap: "0.5rem"
-    }}>
+    }>
                   {questionTypeOptions.map((type) => (
                     <label
                       key={type.id}
@@ -220,7 +219,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <label style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">解答を含める</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -238,7 +237,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <label style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">解説を含める</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -257,7 +256,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <label style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">キーワード自動抽出</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -280,7 +279,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
             <label style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">公開する</div>
                 <div className="text-xs text-gray-600 mt-0.5">

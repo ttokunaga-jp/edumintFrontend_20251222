@@ -54,11 +54,11 @@ export function MyPage({
     <div style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}>
+    }>
       <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
         <h3 className="text-xl font-bold text-gray-900">{title}</h3>
         <Button
           variant="outline"
@@ -74,7 +74,7 @@ export function MyPage({
       display: "flex",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
           {problems.map(p => (
             <div key={p.id} className="min-w-[280px] w-[280px] flex-shrink-0 snap-start">
               <ProblemCard
@@ -96,13 +96,13 @@ export function MyPage({
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
 
         {/* Profile Header (YouTube Style) */}
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <Avatar className="w-20 h-20 border-2 border-white shadow-sm">
             <AvatarImage src={undefined} />
             <AvatarFallback className="bg-indigo-600 text-white text-2xl">
@@ -115,7 +115,7 @@ export function MyPage({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
               <span>@{profile.username}</span>
             </div>
           </div>

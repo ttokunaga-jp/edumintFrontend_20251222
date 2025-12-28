@@ -114,12 +114,12 @@ export function FileUploadQueue({
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}> {/* 12px gap (grid) */}
+    }> {/* 12px gap (grid) */}
               {getStatusIcon(file.status)}
               <span className="text-sm font-medium truncate">
                 {file.file.name}
@@ -129,7 +129,7 @@ export function FileUploadQueue({
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}> {/* 12px gap (grid) */}
+    }> {/* 12px gap (grid) */}
               <span className="text-xs text-gray-500">
                 {(file.file.size / 1024 / 1024).toFixed(1)} MB
               </span>
@@ -159,8 +159,7 @@ export function FileUploadQueue({
                 role="progressbar"
                 aria-valuenow={file.progress}
                 aria-valuemin={0}
-                aria-valuemax={100}
-              />
+                aria-valuemax={100} />
             </div>
           )}
 
@@ -173,7 +172,7 @@ export function FileUploadQueue({
               <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}> {/* 8px gap (grid) */}
+    }> {/* 8px gap (grid) */}
                 <Button
                   variant="outline"
                   size="sm"

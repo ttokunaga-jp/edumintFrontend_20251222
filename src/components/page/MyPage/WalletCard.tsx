@@ -38,7 +38,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
           <Wallet className="w-5 h-5" />
           <h3 className="font-medium">ウォレット</h3>
         </div>
@@ -57,12 +57,12 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
       <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
         <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
           <Wallet className="w-5 h-5" />
           <h3 className="font-medium">ウォレット残高</h3>
         </div>
@@ -88,21 +88,21 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <span className="text-white/80">保留中の収益</span>
             <span className="font-medium">¥{balance.pendingEarnings.toLocaleString()}</span>
           </div>
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <span className="text-white/80">累計収益</span>
             <span className="font-medium">¥{balance.totalEarnings.toLocaleString()}</span>
           </div>
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <span className="text-white/80">最終更新</span>
             <span className="font-medium">
               {new Date(balance.lastUpdated).toLocaleDateString('ja-JP')}
@@ -113,7 +113,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
 
       <div style={{
       gap: "0.75rem"
-    }}>
+    }>
         <button
           onClick={onWithdraw}
           disabled={balance.balance < 1000 || disableWithdrawal}
@@ -140,7 +140,7 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}>
+    }>
           <TrendingUp className="w-4 h-4" />
           <span className="text-sm font-medium">統計</span>
         </button>

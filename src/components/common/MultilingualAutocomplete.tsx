@@ -133,7 +133,7 @@ export function MultilingualAutocomplete({
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
         />
         {isLoading && (
           <Loader className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 animate-spin" />
@@ -146,7 +146,7 @@ export function MultilingualAutocomplete({
             <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
               検索中...
             </div>
           ) : (
@@ -155,7 +155,7 @@ export function MultilingualAutocomplete({
                 <div style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}>
+    }>
                   {suggestions.length}件の候補
                 </div>
               )}
@@ -171,7 +171,7 @@ export function MultilingualAutocomplete({
                   <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                     <div className="flex-1 min-w-0">
                       {/* メイン名称 */}
                       <div className="text-sm text-gray-900 font-medium mb-0.5">
@@ -183,7 +183,7 @@ export function MultilingualAutocomplete({
                         <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                           {suggestion.nameKana && (
                             <span className="bg-gray-100 px-2 py-0.5 rounded">
                               かな: {highlightMatch(suggestion.nameKana, inputValue)}
@@ -222,7 +222,7 @@ export function MultilingualAutocomplete({
           <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
             候補が見つかりませんでした
           </div>
         </div>

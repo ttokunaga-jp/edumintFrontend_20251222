@@ -99,16 +99,16 @@ export function SubQuestionBlock({
         <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
           <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <div style={{
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
               ({subQuestionNumber})
             </div>
             <div className="flex-1 min-w-0">
@@ -116,7 +116,7 @@ export function SubQuestionBlock({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
                 <span className="text-gray-900 text-sm font-medium">小問{subQuestionNumber}</span>
                 <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs">
                   {questionTypeLabels[questionTypeId] || '記述式'}
@@ -149,7 +149,7 @@ export function SubQuestionBlock({
             <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
               {!isEditingQuestion && (
                 <button
                   onClick={() => setIsEditingQuestion(true)}
@@ -185,7 +185,7 @@ export function SubQuestionBlock({
               <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                 <button
                   onClick={handleQuestionSave}
                   style={{
@@ -307,7 +307,7 @@ export function SubQuestionBlock({
                     <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                       <button
                         onClick={handleAnswerSave}
                         style={{
@@ -340,12 +340,12 @@ export function SubQuestionBlock({
                     <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                       <span className="text-sm font-medium text-blue-900">解答</span>
                       <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                         {canSwitchFormat && (
                           <button
                             onClick={handleAnswerFormatToggle}

@@ -45,7 +45,7 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <label className="block text-sm font-medium text-gray-700">問題文</label>
           <button
             type="button"
@@ -67,8 +67,7 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
     }}
-          placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
-        />
+          placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'} />
         <div className="mt-3 rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
           <div className="mb-2 text-xs font-semibold text-gray-600">プレビュー</div>
           {questionFmt === 0 ? (
@@ -83,7 +82,7 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <label className="block text-sm font-medium text-gray-700">解答 / メモ</label>
           <button
             type="button"
@@ -106,8 +105,7 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
     }}
-          placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
-        />
+          placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'} />
         <div className="mt-3 rounded-lg border border-gray-100 bg-blue-50 p-3 text-sm">
           <div className="mb-2 text-xs font-semibold text-gray-700">プレビュー</div>
           {answerFmt === 0 ? (

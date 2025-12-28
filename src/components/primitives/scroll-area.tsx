@@ -15,7 +15,7 @@ function ScrollArea({
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
       className={cn("relative", className)}
-      {...props}}
+      {...props}
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
@@ -46,7 +46,7 @@ function ScrollBar({
           "h-2.5 flex-col border-t border-t-transparent",
         className,
       )}
-      {...props}}
+      {...props}
     >
       <ScrollAreaPrimitive.ScrollAreaThumb
         data-slot="scroll-area-thumb"

@@ -154,7 +154,7 @@ export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorP
     const handleSubQuestionOptionsChange = (
         qIdx: number,
         sqIdx: number,
-        options: Array<{ id: string; content: string; isCorrect: boolean }}>,
+        options: Array<{  id: string; content: string; isCorrect: boolean }>,
     ) => {
         updateSubQuestion(qIdx, sqIdx, (sub) => {
             sub.options = options;
@@ -255,7 +255,7 @@ export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorP
                 <Button
                     variant="ghost"
                     className="w-full rounded-xl border-2 border-dashed border-gray-200 py-8 text-gray-500 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
-                    onClick={addQuestion}}
+                    onClick={addQuestion}
                 >
                     <Plus className="mr-2 h-6 w-6" />
                     大問を追加

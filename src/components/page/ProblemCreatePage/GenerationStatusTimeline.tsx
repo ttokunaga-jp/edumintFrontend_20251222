@@ -66,7 +66,7 @@ export function GenerationStatusTimeline({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <Loader className="w-4 h-4 animate-spin text-indigo-600" />
             <span className="text-sm font-medium">{displayLabel}</span>
           </div>
@@ -85,7 +85,7 @@ export function GenerationStatusTimeline({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
             <Clock className="w-4 h-4 text-yellow-600" />
             <span className="text-sm font-medium text-yellow-800">一時停止中</span>
           </div>
@@ -97,7 +97,7 @@ export function GenerationStatusTimeline({
         <div className="mt-4">
           <div style={{
       display: "flex"
-    }}>
+    }>
             <span>進行状況</span>
             <span>{progress}%</span>
           </div>
@@ -117,7 +117,7 @@ export function GenerationStatusTimeline({
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}>
+    }>
             <Check className="w-5 h-5 text-green-600" />
             <span className="text-sm font-medium text-green-800">生成が完了しました</span>
           </div>
@@ -130,7 +130,7 @@ export function GenerationStatusTimeline({
           <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
             <div className="flex-1">
               {errorCode && (

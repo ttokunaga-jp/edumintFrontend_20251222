@@ -109,7 +109,7 @@ export function FileUploadQueue({
       <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
         <h3 className="text-sm text-gray-700">
           アップロード待機列 ({files.length})
         </h3>
@@ -135,7 +135,7 @@ export function FileUploadQueue({
               <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
                 {/* アイコン */}
                 <div className="flex-shrink-0 mt-0.5">
                   {getStatusIcon(uploadFile)}
@@ -146,7 +146,7 @@ export function FileUploadQueue({
                   <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-900 truncate">
                         {uploadFile.file.name}
@@ -159,7 +159,7 @@ export function FileUploadQueue({
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                           <AlertTriangle className="w-3 h-3 text-amber-500" />
                           <p className="text-xs text-amber-600">{validation.error}</p>
                         </div>
@@ -171,7 +171,7 @@ export function FileUploadQueue({
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                       {uploadFile.status === 'error' && onRetry && (
                         <Button
                           variant="ghost"
@@ -221,7 +221,7 @@ export function FileUploadQueue({
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <span>
             成功: {files.filter(f => f.status === 'success').length} /
             エラー: {files.filter(f => f.status === 'error').length}

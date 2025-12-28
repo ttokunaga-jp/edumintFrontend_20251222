@@ -119,32 +119,23 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
+/* Base layout & typography using design tokens (no Tailwind) */
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+  outline-color: var(--ring);
 }
 
-@layer utilities {
-  .z-app-bar {
-    z-index: 10;
-  }
+.z-app-bar {
+  z-index: 10;
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
-@layer base {
-  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
-    h1 {
-      font-size: var(--text-2xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
+/* Base typography — apply site defaults directly */
+h1 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
     h2 {
       font-size: var(--text-xl);

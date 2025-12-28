@@ -60,7 +60,7 @@ export function ContextHealthAlert({
       <AlertTitle style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
         <span>{category}</span>
         {disableCTA && (
           <span className="text-xs font-normal opacity-75">
@@ -108,7 +108,7 @@ export function ServiceHealthSummary({ services, className = '' }: ServiceHealth
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <CheckCircle className="size-6 text-green-600" />
           <div>
             <h3 className="text-green-900">すべてのサービスが正常に稼働中</h3>
@@ -137,7 +137,7 @@ export function ServiceHealthSummary({ services, className = '' }: ServiceHealth
             >
               <div style={{
       display: "flex"
-    }}>
+    }>
                 <Icon
                   className={`size-5 flex-shrink-0 mt-0.5 ${service.status === 'operational' ? 'text-gray-500' : config.iconClassName
                     }`}

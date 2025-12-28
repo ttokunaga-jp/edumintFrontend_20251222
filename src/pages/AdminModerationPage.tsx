@@ -11,7 +11,7 @@ export function AdminModerationPage({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
       <div className="bg-white shadow rounded-lg p-8 text-center space-y-4">
         <h1 className="text-2xl font-semibold text-gray-900">
           Admin Moderation

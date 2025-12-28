@@ -123,11 +123,11 @@ export default function AdvancedSearchPanel({
       alignItems: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <h3 className="font-medium">検索条件</h3>
           {activeFilterCount > 0 && (
             <Badge variant="secondary">{activeFilterCount}件の条件</Badge>
@@ -139,7 +139,7 @@ export default function AdvancedSearchPanel({
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           {activeFilterCount > 0 && (
             <Button
               variant="ghost"
@@ -321,7 +321,7 @@ export default function AdvancedSearchPanel({
                 <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                   {recentYears.map(year => (
                     <Badge
                       key={year}

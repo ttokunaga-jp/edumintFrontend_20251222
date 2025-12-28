@@ -30,7 +30,7 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
                 <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                     {problem.subjectName && (
                         <Badge variant="outline" className="text-xs">
                             {problem.subjectName}
@@ -48,12 +48,12 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
             <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                 <span style={{
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                     <Eye className="w-3 h-3" />
                     {(problem.viewCount || 0).toLocaleString()}
                 </span>
@@ -61,7 +61,7 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                     <ThumbsUp className="w-3 h-3" />
                     {(problem.goodCount || 0).toLocaleString()}
                 </span>
@@ -69,7 +69,7 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                     <MessageSquare className="w-3 h-3" />
                     {(problem.commentCount || 0).toLocaleString()}
                 </span>

@@ -39,12 +39,12 @@ function StructureStatusCard({
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}>
+    }>
         <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
           {isError ? (
             <AlertTriangle className="w-5 h-5 text-red-500" />
           ) : isPaused ? (
@@ -58,7 +58,7 @@ function StructureStatusCard({
               <span style={{
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                 構造確認スキップ
               </span>
             )}
@@ -94,12 +94,12 @@ function GenerationStatusCard({
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}>
+    }>
         <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}>
+    }>
           {isError ? (
             <AlertTriangle className="w-5 h-5 text-red-500" />
           ) : isPaused ? (
@@ -113,7 +113,7 @@ function GenerationStatusCard({
               <span style={{
       alignItems: "center",
       gap: "0.25rem"
-    }}>
+    }>
                 構造確認スキップ
               </span>
             )}
@@ -316,7 +316,7 @@ export function GenerationPhase({
       <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
         <div>
           {isComplete ? (
             <>
@@ -334,7 +334,7 @@ export function GenerationPhase({
           <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Button variant="outline" onClick={onBack} className="rounded-xl px-6">
               キャンセル
             </Button>
@@ -344,7 +344,7 @@ export function GenerationPhase({
           <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Button variant="outline" onClick={onBack} className="rounded-xl px-6">
               戻る
             </Button>

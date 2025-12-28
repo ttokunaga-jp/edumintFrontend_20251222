@@ -41,7 +41,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <div>
             <h3 className="text-xl font-bold text-gray-900">演習問題から生成</h3>
             <p className="text-sm text-gray-500">
@@ -69,11 +69,11 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
 
         <div style={{
       gap: "0.75rem"
-    }}>
+    }>
           <label style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Checkbox
               checked={options.useDiagrams}
               onCheckedChange={() => handleCommonToggle('useDiagrams')}
@@ -88,7 +88,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
           <label style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Checkbox
               checked={options.confirmStructure}
               onCheckedChange={() => handleCommonToggle('confirmStructure')}
@@ -103,7 +103,7 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
           <label style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
             <Checkbox
               checked={options.isPublic}
               onCheckedChange={() => handleCommonToggle('isPublic')}

@@ -1,5 +1,7 @@
+import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+import AppThemeProvider from "./theme/ThemeProvider";
 import "./index.css";
 
 const enableMocking = async () => {
@@ -19,7 +21,13 @@ const bootstrap = async () => {
   await enableMocking();
   const container = document.getElementById("root");
   if (!container) return;
-  createRoot(container).render(<App />);
+  createRoot(container).render(
+    <React.StrictMode>
+      <AppThemeProvider>
+        <App />
+      </AppThemeProvider>
+    </React.StrictMode>
+  );
 };
 
 bootstrap();

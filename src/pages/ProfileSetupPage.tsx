@@ -26,7 +26,7 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
       justifyContent: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
       <form
         onSubmit={submit}
         className="w-full max-w-md space-y-4 rounded-xl bg-white p-6 shadow-sm border border-gray-100"
@@ -45,7 +45,7 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
       borderRadius: "0.375rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="edumint_user"
@@ -59,7 +59,7 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
       borderRadius: "0.375rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
             value={university}
             onChange={(e) => setUniversity(e.target.value)}
             placeholder="EduMint大学"
@@ -73,7 +73,7 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
       borderRadius: "0.375rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
             placeholder="情報学部"

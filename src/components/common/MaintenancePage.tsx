@@ -18,7 +18,7 @@ const MaintenancePage: React.FC<MaintenancePageProps> = ({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }}>
+    }>
           <span className="text-xl">🛠️</span>
         </div>
         <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>

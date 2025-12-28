@@ -52,13 +52,13 @@ export const GenerationTimeline: React.FC<Props> = ({ current }) => {
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    } data-testid="generation-timeline">
+    }} data-testid="generation-timeline">
       {stages.map((stage, idx) => {
         const isActive = idx <= currentStageIndex;
         const isCurrent = stage === currentStage;
         
         return (
-          <React.Fragment key={stage}}>
+          <React.Fragment key={stage}>
             <div
               className={`flex items-center gap-1 px-3 py-1.5 rounded-full border transition-colors ${
                 isCurrent

@@ -115,7 +115,7 @@ export default function ProblemMetaBlock({
           <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
             <Badge className={getDifficultyColor(0)}>
               {getDifficultyLabel(0)}
             </Badge>
@@ -134,11 +134,11 @@ export default function ProblemMetaBlock({
         {/* メタ情報 */}
         <div style={{
       gap: "0.75rem"
-    }}>
+    }>
           {metaItems.map((item, index) => (
             <div key={index} style={{
       display: "flex"
-    }}>
+    }>
               <item.icon className="size-4 text-gray-500 mt-0.5 flex-shrink-0" />
               <div className="min-w-0 flex-1">
                 <div className="text-xs text-gray-500">{item.label}</div>
@@ -150,7 +150,7 @@ export default function ProblemMetaBlock({
           ))}
           <div style={{
       display: "flex"
-    }}>
+    }>
             <UserIcon className="size-4 text-gray-500 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
               <div className="text-xs text-gray-500">投稿者</div>
@@ -161,7 +161,7 @@ export default function ProblemMetaBlock({
           </div>
           <div style={{
       display: "flex"
-    }}>
+    }>
             <Calendar className="size-4 text-gray-500 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
               <div className="text-xs text-gray-500">投稿日</div>
@@ -188,7 +188,7 @@ export default function ProblemMetaBlock({
           {/* インタラクションボタン */}
           <div style={{
       gap: "0.5rem"
-    }}>
+    }>
             <Button
               variant={exam.userLiked ? 'default' : 'outline'}
               size="sm"
@@ -222,7 +222,7 @@ export default function ProblemMetaBlock({
           {/* ユーティリティボタン */}
           <div style={{
       gap: "0.5rem"
-    }}>
+    }>
             <Button
               variant={isBookmarked ? 'default' : 'outline'}
               size="sm"
@@ -256,7 +256,7 @@ export default function ProblemMetaBlock({
           {/* エクスポート・通報ボタン */}
           <div style={{
       gap: "0.5rem"
-    }}>
+    }>
             <Button
               variant="outline"
               size="sm"

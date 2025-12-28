@@ -25,7 +25,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       {action && <div style={{
       display: "flex",
       justifyContent: "center"
-    }}>{action}</div>}
+    }>{action}</div>}
     </div>
   );
 };

@@ -20,7 +20,7 @@
 - タスク:
   - Tailwind クラスの全利用箇所をスキャンして優先度リストを作成
   - `cn` / `tailwind-merge` の依存箇所を特定し置換方針を決定（clsx + MUI sx 等へ移行）
-  - 低リスク箇所は codemod で自動変換、高リスクは手動で移行
+  - 低リスク箇所は codemod で自動変換、高リスクは手動で移行 (例: ProgressBar, TopMenuBar など特定のコンポーネントも置き換えの対象とする)
   - Tailwind config / PostCSS / global import (`src/index.css`) の除去
   - Storybook / Unit / E2E で見た目・動作を検証
 - 成果物: Tailwind 除去 PR、影響範囲レポート

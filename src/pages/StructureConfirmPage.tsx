@@ -20,7 +20,7 @@ export function StructureConfirmPage({ user, onNavigate, onLogout, mode }: Struc
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
         <header className="space-y-1">
           <p className="text-sm text-gray-500">構造確認モード: {mode}</p>
           <h1 className="text-2xl font-semibold text-gray-900">StructureConfirmPage</h1>
@@ -38,7 +38,7 @@ export function StructureConfirmPage({ user, onNavigate, onLogout, mode }: Struc
         <div style={{
       display: "flex",
       gap: "0.75rem"
-    }}>
+    }>
           <button
             type="button"
             onClick={proceedToGenerating}

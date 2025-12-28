@@ -151,17 +151,17 @@ export function JobStatusRibbon({
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}> {/* 16px gap (grid) */}
+    }> {/* 16px gap (grid) */}
           {/* Left: Icon + Status + Job ID */}
           <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }}> {/* 12px gap (grid) */}
+    }> {/* 12px gap (grid) */}
             <Icon
               className={cn(
                 'w-5 h-5',
@@ -185,7 +185,7 @@ export function JobStatusRibbon({
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}> {/* 8px gap (grid) */}
+    }> {/* 8px gap (grid) */}
             {status === 'processing' && onPause && (
               <Button variant="outline" size="sm" onClick={onPause}>
                 一時停止
@@ -227,8 +227,7 @@ export function JobStatusRibbon({
                 role="progressbar"
                 aria-valuenow={progress}
                 aria-valuemin={0}
-                aria-valuemax={100}
-              />
+                aria-valuemax={100} />
             </div>
             {estimatedTimeRemaining && (
               <p className="text-xs text-gray-600 mt-2">

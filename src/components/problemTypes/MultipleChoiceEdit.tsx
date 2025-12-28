@@ -91,8 +91,8 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
-          placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
+    }}
+          placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'} />
         />
       </div>
 
@@ -126,7 +126,7 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
                 type="button"
                 onClick={() => handleOptionChange(idx, { isCorrect: !opt.isCorrect })}
                 className="mt-0.5 text-indigo-600 font-semibold text-sm"
-                aria-label={opt.isCorrect ? '正解に設定済み' : '正解としてマーク'}}
+                aria-label={opt.isCorrect ? '正解に設定済み' : '正解としてマーク'}
               >
                 {opt.isCorrect ? '✔' : '□'}
               </button>
@@ -137,8 +137,8 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
       borderRadius: "0.375rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
-                placeholder={`選択肢 ${String.fromCharCode(65 + idx)}`}
+    }}
+                placeholder={`選択肢 ${String.fromCharCode(65 + idx)}`} />
               />
               <button
                 type="button"
@@ -198,8 +198,8 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
-          placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
+    }}
+          placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'} />
         />
 
         <div className="mt-3 rounded-lg border border-gray-100 bg-blue-50 p-3 text-sm">

@@ -15,7 +15,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ title, description, chil
       justifyContent: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
       <Card className="w-full max-w-3xl p-8 shadow-lg border border-gray-100">
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
