@@ -101,7 +101,7 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
                 "fixed top-16 left-0 z-app-bar h-[calc(100vh-4rem)] w-64 bg-white shadow-2xl transition-all duration-300 ease-in-out transform",
                 isOpen ? "translate-x-0 opacity-100 visible" : "-translate-x-full opacity-0 invisible pointer-events-none"
             )}
-            style={{ visibility: isOpen ? 'visible' : 'hidden' }
+            style={{ visibility: isOpen ? 'visible' : 'hidden' }}
             onClick={(e) => e.stopPropagation()}
             aria-label="メインメニュー"
         >

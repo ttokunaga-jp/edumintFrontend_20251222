@@ -108,7 +108,7 @@ export default function NotificationPopover({ isOpen, onClose }: NotificationPop
                 popover="auto"
                 data-notifications="true"
                 className={undefined}
-                style={{ top: '4rem', right: '1rem', left: 'auto' }
+                style={{ top: '4rem', right: '1rem', left: 'auto' }}
                 onClick={(e) => e.stopPropagation()}
                 role="dialog"
                 aria-label="通知ポップオーバー"
@@ -144,7 +144,7 @@ export default function NotificationPopover({ isOpen, onClose }: NotificationPop
             id={popoverId}
             data-notifications="true"
             className={undefined}
-            style={{ visibility: isOpen ? 'visible' : 'hidden' }
+            style={{ visibility: isOpen ? 'visible' : 'hidden' }}
             onClick={(e) => e.stopPropagation()}>
             <div style={{
       display: "flex",
