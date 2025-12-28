@@ -26,20 +26,20 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
       justifyContent: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
       <form
         onSubmit={submit}
-        className="w-full max-w-md space-y-4 rounded-xl bg-white p-6 shadow-sm border border-gray-100"
+        className={undefined}
       >
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">プロフィール設定</h1>
-          <p className="text-sm text-gray-600">
+          <h1 className={undefined}>プロフィール設定</h1>
+          <p className={undefined}>
             本実装は暫定版です。最低限の情報を入力して完了してください。
           </p>
         </div>
 
-        <label className="space-y-1 block">
-          <span className="text-sm text-gray-700">ユーザー名</span>
+        <label className={undefined}>
+          <span className={undefined}>ユーザー名</span>
           <input
             style={{
       borderRadius: "0.375rem",
@@ -52,8 +52,8 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
           />
         </label>
 
-        <label className="space-y-1 block">
-          <span className="text-sm text-gray-700">大学</span>
+        <label className={undefined}>
+          <span className={undefined}>大学</span>
           <input
             style={{
       borderRadius: "0.375rem",
@@ -66,8 +66,8 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
           />
         </label>
 
-        <label className="space-y-1 block">
-          <span className="text-sm text-gray-700">学部</span>
+        <label className={undefined}>
+          <span className={undefined}>学部</span>
           <input
             style={{
       borderRadius: "0.375rem",
@@ -89,8 +89,7 @@ export function ProfileSetupPage({ onComplete, initialEmail }: ProfileSetupPageP
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}
-        >
+    }}>
           設定を完了する
         </button>
       </form>

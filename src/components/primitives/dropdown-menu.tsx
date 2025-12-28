@@ -103,9 +103,9 @@ function DropdownMenuCheckboxItem({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
         <DropdownMenuPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <CheckIcon className={undefined} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -119,8 +119,7 @@ function DropdownMenuRadioGroup({
   return (
     <DropdownMenuPrimitive.RadioGroup
       data-slot="dropdown-menu-radio-group"
-      {...props}
-    />
+      {...props} />
   );
 }
 
@@ -142,9 +141,9 @@ function DropdownMenuRadioItem({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
         <DropdownMenuPrimitive.ItemIndicator>
-          <CircleIcon className="size-2 fill-current" />
+          <CircleIcon className={undefined} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -163,12 +162,8 @@ function DropdownMenuLabel({
     <DropdownMenuPrimitive.Label
       data-slot="dropdown-menu-label"
       data-inset={inset}
-      className={cn(
-        "px-2 py-1.5 text-sm font-medium data-[inset]:pl-8",
-        className,
-      )}
-      {...props}
-    />
+      className={undefined}
+      {...props} />
   );
 }
 
@@ -179,7 +174,7 @@ function DropdownMenuSeparator({
   return (
     <DropdownMenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
-      className={cn("bg-border -mx-1 my-1 h-px", className)}
+      className={undefined}
       {...props}
     />
   );
@@ -192,10 +187,7 @@ function DropdownMenuShortcut({
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className,
-      )}
+      className={undefined}
       {...props}
     />
   );
@@ -219,14 +211,11 @@ function DropdownMenuSubTrigger({
     <DropdownMenuPrimitive.SubTrigger
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
-      className={cn(
-        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8",
-        className,
-      )}
+      className={undefined}
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto size-4" />
+      <ChevronRightIcon className={undefined} />
     </DropdownMenuPrimitive.SubTrigger>
   );
 }

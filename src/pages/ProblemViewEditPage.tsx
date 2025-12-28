@@ -68,16 +68,16 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className={undefined}>
 
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
         <div style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
           <PreviewEditToggle
             isEditMode={isEditMode}
             setIsEditMode={setIsEditMode}
@@ -86,16 +86,15 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
+        <div className={undefined}>
+          <div className={undefined}>
             {isEditMode ? (
               <ProblemEditor
                 exam={editedExam}
                 onChange={setEditedExam}
-                canEdit={hasEditPermission}
-              />
+                canEdit={hasEditPermission} />
             ) : (
-              <div className="space-y-8">
+              <div className={undefined}>
                 {exam.questions.map((q: any) => (
                   <QuestionSectionView key={q.id} question={q} />
                 ))}
@@ -103,7 +102,7 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
             )}
           </div>
 
-          <div className="lg:col-span-1 space-y-4">
+          <div className={undefined}>
             {(health.community === 'degraded' || health.community === 'outage' || health.community === 'maintenance') && (
               <ContextHealthAlert
                 category="コミュニティ機能"
@@ -122,12 +121,12 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
             <ProblemMetaBlock
               exam={editedExam || exam}
               isOwner={true}
-              onLike={() => { }}
-              onDislike={() => { }}
-              onBookmark={() => { }}
-              onShare={() => { }}
-              onReport={() => { }}
-              onExportPDF={() => { }}
+              onLike={() => {}}
+              onDislike={() => {}}
+              onBookmark={() => {}}
+              onShare={() => {}}
+              onReport={() => {}}
+              onExportPDF={() => {}}
               disableCommunityActions={isCommunityDisabled}
               disableShareAction={isShareDisabled}
             />

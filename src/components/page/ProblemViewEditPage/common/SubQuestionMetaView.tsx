@@ -9,7 +9,7 @@ export const SubQuestionMetaView: React.FC<SubQuestionMetaViewProps> = ({
   keywords = [],
 }) => {
   return (
-    <div className="space-y-1 mb-4">
+    <div className={undefined}>
       <KeywordEditor keywords={keywords} canEdit={false} />
     </div>
   );

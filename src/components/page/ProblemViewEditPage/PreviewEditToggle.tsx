@@ -13,7 +13,7 @@ export function PreviewEditToggle({ isEditMode, setIsEditMode, disabled = false,
   return (
     <div style={{
       display: "flex"
-    }>
+    }}>
       <Button
         variant={!isEditMode ? 'default' : 'ghost'}
         size="sm"
@@ -22,9 +22,8 @@ export function PreviewEditToggle({ isEditMode, setIsEditMode, disabled = false,
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }}
-      >
-        <Eye className="w-4 h-4" />
+    }}>
+        <Eye className={undefined} />
         プレビュー
       </Button>
       <Button
@@ -37,8 +36,8 @@ export function PreviewEditToggle({ isEditMode, setIsEditMode, disabled = false,
       alignItems: "center",
       gap: "0.5rem"
     }}
-        title={disabled ? disabledReason || '編集権限が必要です' : undefined}>
-        <Edit className="w-4 h-4" />
+        title={disabled ? disabledReason || '編集権限が必要です' : undefined}}>
+        <Edit className={undefined} />
         編集モード
       </Button>
     </div>

@@ -103,7 +103,7 @@ export function MultilingualAutocomplete({
       <>
         {parts.map((part, index) =>
           regex.test(part) ? (
-            <span key={index} className="bg-yellow-200 font-medium">
+            <span key={index} className={undefined}>
               {part}
             </span>
           ) : (
@@ -116,13 +116,13 @@ export function MultilingualAutocomplete({
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
-      <div className="relative">
+      <div className={undefined}>
         {icon ? (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className={undefined}>
             {icon}
           </div>
         ) : (
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className={undefined} />
         )}
         <input
           type="text"
@@ -133,20 +133,19 @@ export function MultilingualAutocomplete({
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}
-        />
+    } />
         {isLoading && (
-          <Loader className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 animate-spin" />
+          <Loader className={undefined} />
         )}
       </div>
 
       {showSuggestions && (suggestions.length > 0 || isLoading) && (
-        <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-80 overflow-y-auto">
+        <div className={undefined}>
           {isLoading && suggestions.length === 0 ? (
             <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
               検索中...
             </div>
           ) : (
@@ -155,7 +154,7 @@ export function MultilingualAutocomplete({
                 <div style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }>
+    }}>
                   {suggestions.length}件の候補
                 </div>
               )}
@@ -166,15 +165,14 @@ export function MultilingualAutocomplete({
                   style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}
-                >
+    }}>
                   <div style={{
       display: "flex",
       gap: "0.5rem"
-    }>
-                    <div className="flex-1 min-w-0">
+    }}>
+                    <div className={undefined}>
                       {/* メイン名称 */}
-                      <div className="text-sm text-gray-900 font-medium mb-0.5">
+                      <div className={undefined}>
                         {highlightMatch(suggestion.name, inputValue)}
                       </div>
 
@@ -183,19 +181,19 @@ export function MultilingualAutocomplete({
                         <div style={{
       display: "flex",
       gap: "0.5rem"
-    }>
+    }}>
                           {suggestion.nameKana && (
-                            <span className="bg-gray-100 px-2 py-0.5 rounded">
+                            <span className={undefined}>
                               かな: {highlightMatch(suggestion.nameKana, inputValue)}
                             </span>
                           )}
                           {suggestion.nameRomaji && (
-                            <span className="bg-gray-100 px-2 py-0.5 rounded">
+                            <span className={undefined}>
                               英字: {highlightMatch(suggestion.nameRomaji, inputValue)}
                             </span>
                           )}
                           {suggestion.nameEn && (
-                            <span className="bg-gray-100 px-2 py-0.5 rounded">
+                            <span className={undefined}>
                               EN: {highlightMatch(suggestion.nameEn, inputValue)}
                             </span>
                           )}
@@ -205,7 +203,7 @@ export function MultilingualAutocomplete({
 
                     {/* カテゴリバッジ */}
                     {suggestion.category && (
-                      <span className="flex-shrink-0 px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded text-xs">
+                      <span className={undefined}>
                         {suggestion.category}
                       </span>
                     )}
@@ -218,11 +216,11 @@ export function MultilingualAutocomplete({
       )}
 
       {showSuggestions && !isLoading && inputValue.length >= minChars && suggestions.length === 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+        <div className={undefined}>
           <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
             候補が見つかりませんでした
           </div>
         </div>

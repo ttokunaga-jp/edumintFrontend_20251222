@@ -40,22 +40,22 @@ export function QuestionForm({
   if (readOnly) {
     return (
       <div className={`space-y-3 ${className}`}>
-        {label && <div className="text-sm font-medium text-gray-800">{label}</div>}
+        {label && <div className={undefined}>{label}</div>}
         <div style={{
       display: "flex",
       alignItems: "center"
-    }>
-          <span className="text-sm font-medium text-gray-700">{textareaLabel}</span>
+    }}>
+          <span className={undefined}>{textareaLabel}</span>
           {/* 非対話で表示のみ */}
-          <span className="rounded border border-gray-200 px-2 py-1 text-xs text-gray-500" aria-label="問題文フォーマット表示">
+          <span className={undefined} aria-label="問題文フォーマット表示">
             {currentFormat === 0 ? 'MD' : 'LaTeX'}
           </span>
         </div>
-        <div className="rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm" aria-label="問題文プレビュー">
+        <div className={undefined} aria-label="問題文プレビュー">
           {currentFormat === 0 ? (
-            <MarkdownBlock content={content} className="prose prose-sm max-w-none" />
+            <MarkdownBlock content={content} className={undefined} />
           ) : (
-            <LatexBlock content={content} displayMode={false} className="text-gray-900" aria-label="latex-preview" />
+            <LatexBlock content={content} displayMode={false} className={undefined} aria-label="latex-preview" />
           )}
         </div>
       </div>
@@ -64,12 +64,12 @@ export function QuestionForm({
 
   return (
     <div className={`space-y-3 ${className}`}>
-      {label && <div className="text-sm font-medium text-gray-800">{label}</div>}
+      {label && <div className={undefined}>{label}</div>}
       <div style={{
       display: "flex",
       alignItems: "center"
-    }>
-        <label className="text-sm font-medium text-gray-700" aria-label={`${textareaLabel}-label`}>
+    }}>
+        <label className={undefined} aria-label={`${textareaLabel}-label`}>
           {textareaLabel}
         </label>
         <button
@@ -77,7 +77,7 @@ export function QuestionForm({
           onClick={toggleFormat}
           aria-label="問題文フォーマット切替"
           disabled={readOnly && !onFormatChange}
-          className="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-60 disabled:cursor-not-allowed"
+          className={undefined}
         >
           {currentFormat === 0 ? 'MD' : 'LaTeX'}
         </button>
@@ -89,19 +89,19 @@ export function QuestionForm({
           if (readOnly) return;
           setContent(e.target.value);
           onChange?.(e.target.value);
-        }}
+        }
         readOnly={readOnly}
         style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
     }}
         placeholder={currentFormat === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'} />
-      <div className="rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
-        <div className="mb-2 text-xs font-semibold text-gray-600">{previewLabel}</div>
+      <div className={undefined}>
+        <div className={undefined}>{previewLabel}</div>
         {currentFormat === 0 ? (
-          <MarkdownBlock content={content} className="prose prose-sm max-w-none" />
+          <MarkdownBlock content={content} className={undefined} />
         ) : (
-          <LatexBlock content={content} displayMode={false} className="text-gray-900" aria-label="latex-preview" />
+          <LatexBlock content={content} displayMode={false} className={undefined} aria-label="latex-preview" />
         )}
       </div>
     </div>

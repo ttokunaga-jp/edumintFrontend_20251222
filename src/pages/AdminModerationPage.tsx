@@ -11,18 +11,18 @@ export function AdminModerationPage({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }>
-      <div className="bg-white shadow rounded-lg p-8 text-center space-y-4">
-        <h1 className="text-2xl font-semibold text-gray-900">
+    }}>
+      <div className={undefined}>
+        <h1 className={undefined}>
           Admin Moderation
         </h1>
-        <p className="text-gray-600">
+        <p className={undefined}>
           Coming Soon. This page will handle content moderation and
           admin workflows.
         </p>
         {onNavigate && (
           <button
-            className="text-indigo-600 hover:underline"
+            className={undefined}
             onClick={() => onNavigate("home")}
           >
             Return to Home

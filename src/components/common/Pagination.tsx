@@ -28,11 +28,10 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         style={{
       borderRadius: "0.375rem"
-    }}
-      >
+    }}>
         Prev
       </button>
-      <span className="text-sm text-gray-700">
+      <span className={undefined}>
         {currentPage} / {totalPages}
       </span>
       <button
@@ -41,8 +40,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         style={{
       borderRadius: "0.375rem"
-    }}
-      >
+    }}>
         Next
       </button>
     </div>

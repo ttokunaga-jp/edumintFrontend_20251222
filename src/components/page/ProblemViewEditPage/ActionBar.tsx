@@ -20,30 +20,30 @@ export function ActionBar({
     if (!isEditing) return null;
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-app-bar bg-white border-t border-gray-200 p-4 shadow-lg">
+        <div className={undefined}>
             <div style={{
       display: "flex",
       alignItems: "center"
-    }>
-                <div className="text-sm text-gray-500">
+    }}>
+                <div className={undefined}>
                     編集モード：変更内容は「保存」するまで反映されません。
                 </div>
                 <div style={{
       display: "flex",
       gap: "0.75rem"
-    }>
+    }}>
                     {onReset && (
                         <Button variant="outline" onClick={onReset} disabled={isSaving}>
-                            <RotateCcw className="w-4 h-4 mr-2" />
+                            <RotateCcw className={undefined} />
                             元に戻す
                         </Button>
                     )}
                     <Button variant="outline" onClick={onCancel} disabled={isSaving}>
-                        <X className="w-4 h-4 mr-2" />
+                        <X className={undefined} />
                         キャンセル
                     </Button>
                     <Button onClick={onSave} disabled={isSaving}>
-                        <Save className="w-4 h-4 mr-2" />
+                        <Save className={undefined} />
                         {isSaving ? '保存中...' : '変更を保存'}
                     </Button>
                 </div>

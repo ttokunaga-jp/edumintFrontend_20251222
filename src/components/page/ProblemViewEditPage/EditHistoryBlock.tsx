@@ -42,17 +42,17 @@ export default function EditHistoryBlock({
 
   return (
     <Card className={className}>
-      <CardHeader className="pb-3">
+      <CardHeader className={undefined}>
         <div style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
           <div style={{
       display: "flex",
       alignItems: "center"
-    }>
-            <Clock className="size-5 text-gray-500" />
-            <CardTitle className="text-lg">編集履歴</CardTitle>
+    }}>
+            <Clock className={undefined} />
+            <CardTitle className={undefined}>編集履歴</CardTitle>
             <Badge variant="outline">v{currentVersion}</Badge>
           </div>
           <Button
@@ -62,18 +62,17 @@ export default function EditHistoryBlock({
             style={{
       display: "flex",
       alignItems: "center"
-    }}
-          >
+    }}>
             <span>{isExpanded ? '閉じる' : '表示'}</span>
-            {isExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+            {isExpanded ? <ChevronUp className={undefined} /> : <ChevronDown className={undefined} />}
           </Button>
         </div>
       </CardHeader>
 
       {isExpanded && (
-        <CardContent className="space-y-3">
+        <CardContent className={undefined}>
           {displayedHistory.length === 0 ? (
-            <div className="text-center py-6 text-gray-500">
+            <div className={undefined}>
               編集履歴はありません
             </div>
           ) : (
@@ -86,11 +85,11 @@ export default function EditHistoryBlock({
                 >
                   <div style={{
       display: "flex"
-    }>
+    }}>
                     <div style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
                       <Badge variant={item.version === currentVersion ? 'default' : 'secondary'}>
                         v{item.version}
                       </Badge>
@@ -106,22 +105,21 @@ export default function EditHistoryBlock({
                         style={{
       display: "flex",
       alignItems: "center"
-    }}
-                      >
-                        <RotateCcw className="size-3" />
+    }}>
+                        <RotateCcw className={undefined} />
                         <span>復元</span>
                       </Button>
                     )}
                   </div>
 
-                  <div className="space-y-1">
-                    <div className="text-sm font-medium text-gray-900">
+                  <div className={undefined}>
+                    <div className={undefined}>
                       {item.description || getChangeDescription(item.changes)}
                     </div>
                     <div style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
                       <span>編集者: {item.changedBy}</span>
                       <span>•</span>
                       <span>{formatDate(item.changedAt)}</span>
@@ -130,20 +128,20 @@ export default function EditHistoryBlock({
 
                   {/* 変更の詳細 */}
                   {Object.keys(item.changes).length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-gray-200">
-                      <div className="text-xs text-gray-600 space-y-1">
+                    <div className={undefined}>
+                      <div className={undefined}>
                         {Object.entries(item.changes).slice(0, 3).map(([key, value]) => (
                           <div key={key} style={{
       display: "flex"
-    }>
-                            <span className="font-medium min-w-[80px]">{key}:</span>
-                            <span className="flex-1 truncate">
+    }}>
+                            <span className={undefined}>{key}:</span>
+                            <span className={undefined}>
                               {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                             </span>
                           </div>
                         ))}
                         {Object.keys(item.changes).length > 3 && (
-                          <div className="text-gray-400 italic">
+                          <div className={undefined}>
                             他 {Object.keys(item.changes).length - 3} 件の変更...
                           </div>
                         )}
@@ -155,7 +153,7 @@ export default function EditHistoryBlock({
 
               {/* もっと見るボタン */}
               {history.length > 5 && (
-                <div className="text-center pt-2">
+                <div className={undefined}>
                   <Button
                     variant="ghost"
                     size="sm"

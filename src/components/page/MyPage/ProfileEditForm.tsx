@@ -64,18 +64,18 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
 
   return (
     <form onSubmit={handleSubmit} className={`bg-white rounded-xl shadow-sm border border-gray-100 p-6 ${className}`}>
-      <h2 className="text-gray-900 mb-6">プロフィール編集</h2>
+      <h2 className={undefined}>プロフィール編集</h2>
 
-      <div className="space-y-6">
+      <div className={undefined}>
         {/* ユーザー名 */}
         <div>
           <label style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }>
-            <UserIcon className="w-4 h-4" />
-            <span>ユーザー名 <span className="text-red-500">*</span></span>
+    }}>
+            <UserIcon className={undefined} />
+            <span>ユーザー名 <span className={undefined}>*</span></span>
           </label>
           <input
             type="text"
@@ -84,10 +84,9 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${errors.username ? 'border-red-500' : 'border-gray-300'
               }`}
             placeholder="田中太郎"
-            maxLength={50}
-          />
+            maxLength={50} />
           {errors.username && (
-            <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+            <p className={undefined}>{errors.username}</p>
           )}
         </div>
 
@@ -97,8 +96,8 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }>
-            <Mail className="w-4 h-4" />
+    }}>
+            <Mail className={undefined} />
             <span>メールアドレス</span>
           </label>
           <input
@@ -110,9 +109,8 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}
-          />
-          <p className="mt-1 text-xs text-gray-500">
+    } />
+          <p className={undefined}>
             メールアドレスは変更できません
           </p>
         </div>
@@ -123,8 +121,8 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }>
-            <Building2 className="w-4 h-4" />
+    }}>
+            <Building2 className={undefined} />
             <span>所属学部</span>
           </label>
           <input
@@ -147,8 +145,8 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }>
-            <BookOpen className="w-4 h-4" />
+    }}>
+            <BookOpen className={undefined} />
             <span>学問分野</span>
           </label>
           <select
@@ -159,8 +157,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}
-          >
+    }}>
             <option value="science">理系</option>
             <option value="humanities">文系</option>
             <option value="interdisciplinary">学際</option>
@@ -172,9 +169,9 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
           <label style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
             <span>自己紹介</span>
-            <span className="text-xs text-gray-500">
+            <span className={undefined}>
               {formData.bio.length}/500文字
             </span>
           </label>
@@ -184,10 +181,9 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 min-h-[100px] ${errors.bio ? 'border-red-500' : 'border-gray-300'
               }`}
             placeholder="自己紹介を入力してください..."
-            maxLength={500}
-          />
+            maxLength={500} />
           {errors.bio && (
-            <p className="mt-1 text-sm text-red-600">{errors.bio}</p>
+            <p className={undefined}>{errors.bio}</p>
           )}
         </div>
       </div>
@@ -196,7 +192,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       <div style={{
       display: "flex",
       gap: "0.75rem"
-    }>
+    }}>
         <button
           type="submit"
           disabled={isLoading}
@@ -209,9 +205,8 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}
-        >
-          <Save className="w-4 h-4" />
+    }}>
+          <Save className={undefined} />
           <span>{isLoading ? '保存中...' : '変更を保存'}</span>
         </button>
         <button
@@ -223,9 +218,8 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }}
-        >
-          <X className="w-4 h-4" />
+    }}>
+          <X className={undefined} />
         </button>
       </div>
     </form>

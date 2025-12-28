@@ -48,8 +48,8 @@ function SelectTrigger({
       {...props}
     >
       {children}
-      <SelectPrimitive.Icon asChild className="absolute right-2">
-        <ChevronDownIcon className="size-4 opacity-50" />
+      <SelectPrimitive.Icon asChild className={undefined}>
+        <ChevronDownIcon className={undefined} />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
@@ -97,7 +97,7 @@ function SelectLabel({
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn("text-muted-foreground px-2 py-1.5 text-xs", className)}
+      className={undefined}
       {...props}
     />
   );
@@ -121,9 +121,9 @@ function SelectItem({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
         <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <CheckIcon className={undefined} />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
@@ -138,9 +138,8 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
-      {...props}
-    />
+      className={undefined}
+      {...props} />
   );
 }
 
@@ -151,13 +150,10 @@ function SelectScrollUpButton({
   return (
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
-      className={cn(
-        "flex cursor-default items-center justify-center py-1",
-        className,
-      )}
+      className={undefined}
       {...props}
     >
-      <ChevronUpIcon className="size-4" />
+      <ChevronUpIcon className={undefined} />
     </SelectPrimitive.ScrollUpButton>
   );
 }
@@ -169,13 +165,10 @@ function SelectScrollDownButton({
   return (
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
-      className={cn(
-        "flex cursor-default items-center justify-center py-1",
-        className,
-      )}
+      className={undefined}
       {...props}
     >
-      <ChevronDownIcon className="size-4" />
+      <ChevronDownIcon className={undefined} />
     </SelectPrimitive.ScrollDownButton>
   );
 }

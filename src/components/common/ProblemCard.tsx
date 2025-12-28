@@ -14,15 +14,12 @@ interface ProblemCardProps {
 export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
     return (
         <Card
-            className={cn(
-                "p-6 h-48 hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between",
-                className
-            )}
+            className={undefined}
             onClick={() => onClick?.(problem.id)}
         >
             <div>
                 {/* Title */}
-                <h3 className="text-gray-900 mb-2 line-clamp-2 font-medium leading-snug">
+                <h3 className={undefined}>
                     {problem.title || problem.examName}
                 </h3>
 
@@ -30,14 +27,14 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
                 <div style={{
       display: "flex",
       gap: "0.5rem"
-    }>
+    }}>
                     {problem.subjectName && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className={undefined}>
                             {problem.subjectName}
                         </Badge>
                     )}
                     {problem.universityName && (
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant="secondary" className={undefined}>
                             {problem.universityName}
                         </Badge>
                     )}
@@ -48,29 +45,29 @@ export function ProblemCard({ problem, onClick, className }: ProblemCardProps) {
             <div style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
                 <span style={{
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }>
-                    <Eye className="w-3 h-3" />
+    }}>
+                    <Eye className={undefined} />
                     {(problem.viewCount || 0).toLocaleString()}
                 </span>
                 <span style={{
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }>
-                    <ThumbsUp className="w-3 h-3" />
+    }}>
+                    <ThumbsUp className={undefined} />
                     {(problem.goodCount || 0).toLocaleString()}
                 </span>
                 <span style={{
       display: "flex",
       alignItems: "center",
       gap: "0.25rem"
-    }>
-                    <MessageSquare className="w-3 h-3" />
+    }}>
+                    <MessageSquare className={undefined} />
                     {(problem.commentCount || 0).toLocaleString()}
                 </span>
             </div>

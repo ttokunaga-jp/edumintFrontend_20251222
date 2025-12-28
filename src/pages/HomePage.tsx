@@ -68,7 +68,7 @@ export interface HomePageProps {
  * @example
  * <HomePage
  *   initialQuery="微分積分"
- *   currentUser={{ universityName: "東京大学", facultyName: "工学部" }}
+ *   currentUser={{ universityName: "東京大学", facultyName: "工学部" }
  * />
  */
 export function HomePage({
@@ -171,14 +171,14 @@ export function HomePage({
   const facultyName = currentUser?.facultyName || currentUser?.department;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={undefined}>
       {/* TopMenuBar would be here in full app */}
 
       {/* 📍 Alert Insertion Point A: Search Status */}
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
         {(health.search === "degraded" ||
           health.search === "outage" ||
           health.search === "maintenance") && (
@@ -193,41 +193,40 @@ export function HomePage({
                     ? "検索機能が一時的にご利用いただけません。システム復旧後に再度お試しください。"
                     : "検索機能がメンテナンス中です。まもなく復旧します。"
               }
-              className="mb-4"
+              className={undefined}
             />
           )}
       </div>
 
       {/* AdvancedSearchPanel */}
-      <div className="py-6 lg:py-8">
+      <div className={undefined}>
         <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
           <AdvancedSearchPanel
             filters={filters}
             onFiltersChange={handleFiltersChange}
             searchStatus={health.search}
-            initialExpanded={false}
-          />
+            initialExpanded={false} />
         </div>
       </div>
 
       {/* Sort Toggles & Count */}
-      <div className="py-4 bg-gray-50 border-y border-gray-200">
+      <div className={undefined}>
         <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
           <div style={{
       display: "flex"
-    }>
+    }}>
             <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }>
-              <span className="text-sm text-gray-600">
+    }}>
+              <span className={undefined}>
                 並び替え:
               </span>
               {(
@@ -247,14 +246,7 @@ export function HomePage({
                     })
                   }
                   disabled={health.search !== "operational"}
-                  className={cn(
-                    "h-9 px-4 rounded-full border text-sm transition-colors",
-                    filters.sortBy === sortOption
-                      ? "bg-indigo-600 text-white border-indigo-600"
-                      : "bg-white text-gray-700 border-gray-200 hover:bg-gray-100",
-                    health.search !== "operational" &&
-                    "opacity-50 cursor-not-allowed",
-                    )}
+                  className={undefined}
                 >
                   {sortOption === "recommended" && "おすすめ"}
                   {sortOption === "newest" && "最新"}
@@ -263,7 +255,7 @@ export function HomePage({
                 </button>
               ))}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className={undefined}>
               {totalItems.toLocaleString()} 件の演習問題から探す
             </div>
           </div>
@@ -271,11 +263,11 @@ export function HomePage({
       </div>
 
       {/* ContentSection */}
-      <div className="py-6 lg:py-8">
+      <div className={undefined}>
         <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
           {/* 📍 Alert Insertion Point B: Content Status */}
           {(health.content === "outage" ||
             health.content === "maintenance") && (
@@ -295,15 +287,15 @@ export function HomePage({
                     }
                     : undefined
                 }
-                className="mb-6"
+                className={undefined}
               />
             )}
 
           {/* Loading State */}
           {isLoading && (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-              <p className="text-sm text-gray-600 mt-4">
+            <div className={undefined}>
+              <div className={undefined}></div>
+              <p className={undefined}>
                 読み込み中...
               </p>
             </div>
@@ -311,12 +303,12 @@ export function HomePage({
 
           {/* Empty State */}
           {!isLoading && problems.length === 0 && (
-            <div className="text-center py-12 max-w-md mx-auto">
-              <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-gray-900 mb-2">
+            <div className={undefined}>
+              <FileText className={undefined} />
+              <h3 className={undefined}>
                 検索結果が見つかりませんでした
               </h3>
-              <p className="text-sm text-gray-600 mb-6">
+              <p className={undefined}>
                 別のキーワードで検索してみてください
               </p>
             </div>
@@ -324,13 +316,12 @@ export function HomePage({
 
           {/* Problem Cards Grid */}
           {!isLoading && problems.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={undefined}>
               {problems.map((problem) => (
                 <ProblemCard
                   key={problem.id}
                   problem={problem}
-                  onClick={handleProblemClick}
-                />
+                  onClick={handleProblemClick} />
               ))}
             </div>
           )}
@@ -340,26 +331,22 @@ export function HomePage({
             <div style={{
       display: "flex",
       justifyContent: "center"
-    }>
+    }}>
               <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }>
+    }}>
                 <button
                   onClick={() =>
                     setCurrentPage(Math.max(1, currentPage - 1))
-                  }
+                  }}
                   disabled={currentPage === 1}
-                  className={cn(
-                    "h-9 px-4 rounded-lg border",
-                    "hover:bg-gray-50 transition-colors",
-                    "disabled:opacity-50 disabled:cursor-not-allowed",
-                  )}
+                  className={undefined}
                 >
                   ←
                 </button>
-                <span className="text-sm text-gray-600">
+                <span className={undefined}>
                   {currentPage} / {totalPages}
                 </span>
                 <button
@@ -369,11 +356,7 @@ export function HomePage({
                     )
                   }
                   disabled={currentPage === totalPages}
-                  className={cn(
-                    "h-9 px-4 rounded-lg border",
-                    "hover:bg-gray-50 transition-colors",
-                    "disabled:opacity-50 disabled:cursor-not-allowed",
-                  )}
+                  className={undefined}
                 >
                   →
                 </button>

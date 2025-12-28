@@ -71,7 +71,7 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
                 aria-label="メインメニュー"
                 onClick={(e) => e.stopPropagation()}
             >
-                <nav className="p-4 space-y-2">
+                <nav className={undefined}>
                     {menuItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = currentPage === item.id;
@@ -80,15 +80,10 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
                             <button
                                 key={item.id}
                                 onClick={() => handleNavigate(item.id as Page)}
-                                className={cn(
-                                    "flex items-center w-full gap-4 px-4 py-3 rounded-xl transition-all duration-200",
-                                    isActive
-                                        ? "bg-indigo-50 text-indigo-700 font-medium"
-                                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                                )}
+                                className={undefined}
                                 aria-current={isActive ? "page" : undefined}
                             >
-                                <Icon className={cn("h-5 w-5", isActive ? "text-indigo-600" : "text-gray-400")} />
+                                <Icon className={undefined} />
                                 <span>{item.label}</span>
                             </button>
                         );
@@ -106,13 +101,13 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
                 "fixed top-16 left-0 z-app-bar h-[calc(100vh-4rem)] w-64 bg-white shadow-2xl transition-all duration-300 ease-in-out transform",
                 isOpen ? "translate-x-0 opacity-100 visible" : "-translate-x-full opacity-0 invisible pointer-events-none"
             )}
-            style={{ visibility: isOpen ? 'visible' : 'hidden' }}
+            style={{ visibility: isOpen ? 'visible' : 'hidden' }
             onClick={(e) => e.stopPropagation()}
             aria-label="メインメニュー"
         >
 
 
-            <nav className="p-4 space-y-2">
+            <nav className={undefined}>
                 {menuItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = currentPage === item.id;
@@ -121,14 +116,9 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
                         <button
                             key={item.id}
                             onClick={() => handleNavigate(item.id as Page)}
-                            className={cn(
-                                "flex items-center w-full gap-4 px-4 py-3 rounded-xl transition-all duration-200",
-                                isActive
-                                    ? "bg-indigo-50 text-indigo-700 font-medium"
-                                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                            )}
+                            className={undefined}
                             aria-current={isActive ? "page" : undefined}>
-                            <Icon className={cn("h-5 w-5", isActive ? "text-indigo-600" : "text-gray-400")} />
+                            <Icon className={undefined} />
                             <span>{item.label}</span>
                         </button>
                     );

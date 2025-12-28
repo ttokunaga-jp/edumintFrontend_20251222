@@ -223,7 +223,7 @@ export const C5_S4_Notification_Outage: Story = {
 export const MultipleAlerts: Story = {
   name: '複数アラート同時表示',
   render: () => (
-    <div className="space-y-4 max-w-2xl">
+    <div className={undefined}>
       <ContextHealthAlert
         id="alert-1"
         category="コミュニティ機能"
@@ -239,8 +239,7 @@ export const MultipleAlerts: Story = {
         action={{
           label: '詳細を見る',
           onClick: () => console.log('View details'),
-        }}
-      />
+        }} />
     </div>
   ),
 };

@@ -73,7 +73,7 @@ function ContextMenuSubTrigger({
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto" />
+      <ChevronRightIcon className={undefined} />
     </ContextMenuPrimitive.SubTrigger>
   );
 }
@@ -155,9 +155,9 @@ function ContextMenuCheckboxItem({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
         <ContextMenuPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <CheckIcon className={undefined} />
         </ContextMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -183,9 +183,9 @@ function ContextMenuRadioItem({
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }>
+    }}>
         <ContextMenuPrimitive.ItemIndicator>
-          <CircleIcon className="size-2 fill-current" />
+          <CircleIcon className={undefined} />
         </ContextMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -204,12 +204,8 @@ function ContextMenuLabel({
     <ContextMenuPrimitive.Label
       data-slot="context-menu-label"
       data-inset={inset}
-      className={cn(
-        "text-foreground px-2 py-1.5 text-sm font-medium data-[inset]:pl-8",
-        className,
-      )}
-      {...props}
-    />
+      className={undefined}
+      {...props} />
   );
 }
 
@@ -220,7 +216,7 @@ function ContextMenuSeparator({
   return (
     <ContextMenuPrimitive.Separator
       data-slot="context-menu-separator"
-      className={cn("bg-border -mx-1 my-1 h-px", className)}
+      className={undefined}
       {...props}
     />
   );
@@ -233,10 +229,7 @@ function ContextMenuShortcut({
   return (
     <span
       data-slot="context-menu-shortcut"
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className,
-      )}
+      className={undefined}
       {...props}
     />
   );

@@ -41,13 +41,13 @@ export interface FileUploadQueueProps {
 function getStatusIcon(status: UploadFile['status']) {
   switch (status) {
     case 'success':
-      return <CheckCircle className="w-5 h-5 text-green-600" />;
+      return <CheckCircle className={undefined} />;
     case 'error':
-      return <XCircle className="w-5 h-5 text-red-600" />;
+      return <XCircle className={undefined} />;
     case 'uploading':
-      return <Loader2 className="w-5 h-5 text-indigo-600 animate-spin" />;
+      return <Loader2 className={undefined} />;
     case 'pending':
-      return <FileIcon className="w-5 h-5 text-gray-400" />;
+      return <FileIcon className={undefined} />;
   }
 }
 
@@ -98,7 +98,7 @@ export function FileUploadQueue({
   className,
 }: FileUploadQueueProps) {
   return (
-    <div className={cn('space-y-2', className)}> {/* 8px spacing (grid) */}
+    <div className={undefined}> {/* 8px spacing (grid) */}
       {files.map((file) => (
         <div
           key={file.id}
@@ -114,14 +114,14 @@ export function FileUploadQueue({
           <div style={{
       display: "flex",
       alignItems: "center"
-    }>
+    }}>
             <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }> {/* 12px gap (grid) */}
+    }}> {/* 12px gap (grid) */}
               {getStatusIcon(file.status)}
-              <span className="text-sm font-medium truncate">
+              <span className={undefined}>
                 {file.file.name}
               </span>
             </div>
@@ -129,32 +129,27 @@ export function FileUploadQueue({
       display: "flex",
       alignItems: "center",
       gap: "0.75rem"
-    }> {/* 12px gap (grid) */}
-              <span className="text-xs text-gray-500">
+    }}> {/* 12px gap (grid) */}
+              <span className={undefined}>
                 {(file.file.size / 1024 / 1024).toFixed(1)} MB
               </span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => onRemove(file.id)}
-                className="h-8 w-8 p-0"
+                className={undefined}
                 aria-label={`${file.file.name}を削除`}
               >
-                <X className="w-4 h-4" />
+                <X className={undefined} />
               </Button>
             </div>
           </div>
 
           {/* Progress Bar */}
           {(file.status === 'uploading' || file.status === 'pending' || file.status === 'success') && (
-            <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className={undefined}>
               <div
-                className={cn(
-                  'absolute inset-y-0 left-0 rounded-full transition-all duration-300',
-                  file.status === 'success' && 'bg-green-500',
-                  file.status === 'uploading' && 'bg-indigo-600',
-                  file.status === 'pending' && 'bg-gray-200'
-                )}
+                className={undefined}
                 style={{ width: `${file.progress}%` }}
                 role="progressbar"
                 aria-valuenow={file.progress}
@@ -166,20 +161,20 @@ export function FileUploadQueue({
           {/* Error Message + Retry */}
           {file.status === 'error' && (
             <>
-              <p className="text-sm text-red-700 mt-2 mb-3">
+              <p className={undefined}>
                 ⚠️ {file.errorMessage || 'アップロードに失敗しました'}
               </p>
               <div style={{
       display: "flex",
       gap: "0.5rem"
-    }> {/* 8px gap (grid) */}
+    }}> {/* 8px gap (grid) */}
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => onRetry(file.id)}
-                  className="h-9" // 36px height
+                  className={undefined} // 36px height
                 >
-                  <RotateCw className="w-4 h-4 mr-2" />
+                  <RotateCw className={undefined} />
                   再試行
                 </Button>
               </div>
@@ -190,7 +185,7 @@ export function FileUploadQueue({
 
       {/* Info footer */}
       {files.length > 0 && (
-        <div className="text-xs text-gray-500 mt-2">
+        <div className={undefined}>
           {files.length} / {maxFiles} ファイル •
           対応形式: {acceptedExtensions.join(', ')} •
           最大 {maxFileSize}MB

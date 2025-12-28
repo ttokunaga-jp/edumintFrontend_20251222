@@ -19,17 +19,12 @@ export const SourceToggle = React.memo(function SourceToggle({
   return (
     <div style={{
       display: "flex"
-    }>
+    }}>
       {options.map((option) => (
         <button
           key={option.id}
           onClick={() => onChange(option.id)}
-          className={cn(
-            'px-6 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 whitespace-nowrap',
-            value === option.id
-              ? 'bg-indigo-600 text-white shadow-md ring-1 ring-indigo-300'
-              : 'text-gray-500 hover:text-gray-900',
-          )}
+          className={undefined}
           aria-pressed={value === option.id}
           type="button"
         >

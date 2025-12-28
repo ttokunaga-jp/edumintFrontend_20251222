@@ -54,16 +54,16 @@ export function MyPage({
     <div style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }>
+    }}>
       <div style={{
       display: "flex",
       alignItems: "center"
-    }>
-        <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+    }}>
+        <h3 className={undefined}>{title}</h3>
         <Button
           variant="outline"
           size="sm"
-          className="rounded-full text-xs font-medium"
+          className={undefined}
           onClick={() => onNavigate('home', viewAllFilter)}
         >
           View all
@@ -74,55 +74,55 @@ export function MyPage({
       display: "flex",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
           {problems.map(p => (
-            <div key={p.id} className="min-w-[280px] w-[280px] flex-shrink-0 snap-start">
+            <div key={p.id} className={undefined}>
               <ProblemCard
                 problem={p}
                 onClick={(id) => onNavigate('problem-view', id)}
-                className="h-full border-0 shadow-lg hover:translate-y-[-2px] transition-transform"
+                className={undefined}
               />
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-sm text-gray-500 px-1">履歴はありません。</p>
+        <p className={undefined}>履歴はありません。</p>
       )}
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className={undefined}>
       <div style={{
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }>
+    }}>
 
         {/* Profile Header (YouTube Style) */}
         <div style={{
       display: "flex",
       alignItems: "center"
-    }>
-          <Avatar className="w-20 h-20 border-2 border-white shadow-sm">
+    }}>
+          <Avatar className={undefined}>
             <AvatarImage src={undefined} />
-            <AvatarFallback className="bg-indigo-600 text-white text-2xl">
+            <AvatarFallback className={undefined}>
               {profile.username?.[0]?.toUpperCase() || 'U'}
             </AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{profile.displayName || profile.username}</h1>
+            <h1 className={undefined}>{profile.displayName || profile.username}</h1>
             <div style={{
       display: "flex",
       alignItems: "center",
       gap: "0.5rem"
-    }>
+    }}>
               <span>@{profile.username}</span>
             </div>
           </div>
         </div>
 
         {/* History / Lists */}
-        <div className="space-y-8">
+        <div className={undefined}>
           <ProblemSection title="履歴" problems={viewedProblems} viewAllFilter="history" />
           <ProblemSection title="高評価した問題" problems={ratedProblems} viewAllFilter="likes" />
           <ProblemSection title="コメントした問題" problems={commentedProblems} viewAllFilter="comments" />
@@ -130,40 +130,39 @@ export function MyPage({
         </div>
 
         {/* Settings Accordion */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="settings" className="border-b-0">
-              <AccordionTrigger className="px-6 py-4 hover:bg-gray-50">
-                <span className="text-lg font-semibold text-gray-900">アカウント設定 & ステータス</span>
+        <div className={undefined}>
+          <Accordion type="single" collapsible className={undefined}>
+            <AccordionItem value="settings" className={undefined}>
+              <AccordionTrigger className={undefined}>
+                <span className={undefined}>アカウント設定 & ステータス</span>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6 pt-2 space-y-8 transition-all duration-300">
+              <AccordionContent className={undefined}>
                 {/* Stats & Wallet inside accordion */}
                 <section>
-                  <h4 className="text-sm font-bold text-gray-500 uppercase mb-4">ステータス</h4>
-                  <div className="p-6 bg-gray-50 rounded-xl border border-dashed border-gray-200 text-center">
-                    <p className="text-sm font-medium text-gray-500">
+                  <h4 className={undefined}>ステータス</h4>
+                  <div className={undefined}>
+                    <p className={undefined}>
                       ステータス機能は現在開発中です (Coming Soon)
                     </p>
                   </div>
                 </section>
 
                 <section>
-                  <h4 className="text-sm font-bold text-gray-500 uppercase mb-4">ウォレット</h4>
-                  <div className="p-6 bg-gray-50 rounded-xl border border-dashed border-gray-200 text-center">
-                    <p className="text-sm font-medium text-gray-500">
+                  <h4 className={undefined}>ウォレット</h4>
+                  <div className={undefined}>
+                    <p className={undefined}>
                       ウォレット機能は現在開発中です (Coming Soon)
                     </p>
                   </div>
                 </section>
 
                 <section>
-                  <h4 className="text-sm font-bold text-gray-500 uppercase mb-4">プロフィール編集</h4>
+                  <h4 className={undefined}>プロフィール編集</h4>
                   <ProfileEditForm
                     key={profileVersion}
                     user={profile}
                     onSave={handleProfileSave}
-                    onCancel={handleProfileCancel}
-                  />
+                    onCancel={handleProfileCancel} />
                 </section>
               </AccordionContent>
             </AccordionItem>
