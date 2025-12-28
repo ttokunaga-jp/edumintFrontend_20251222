@@ -139,8 +139,7 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
                   health.notifications === 'outage'
                     ? '通知機能が停止しているため、通知が送信されません。'
                     : '通知機能のメンテナンスを実施しています。'
-                }
-              />
+                }} />
             )}
           </div>
         </div>

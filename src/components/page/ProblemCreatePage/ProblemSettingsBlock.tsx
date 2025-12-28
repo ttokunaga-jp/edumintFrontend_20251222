@@ -140,7 +140,7 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                   style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    } />
+    }} />
                 <p className={undefined}>1〜20問の範囲で指定できます</p>
               </div>
             )}

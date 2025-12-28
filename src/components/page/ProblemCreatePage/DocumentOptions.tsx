@@ -137,7 +137,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
                 onChange={(e) => {
                   const val = parseInt(e.target.value);
                   if (!isNaN(val)) handleQuestionCountChange([val]);
-                } />
+                }} />
               <div style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"

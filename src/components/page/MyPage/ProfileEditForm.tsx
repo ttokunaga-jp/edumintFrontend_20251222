@@ -109,7 +109,7 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       paddingRight: "1rem",
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    } />
+    }} />
           <p className={undefined}>
             メールアドレスは変更できません
           </p>

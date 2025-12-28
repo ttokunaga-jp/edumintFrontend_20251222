@@ -133,7 +133,7 @@ export function MultilingualAutocomplete({
           style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    } />
+    }} />
         {isLoading && (
           <Loader className={undefined} />
         )}
