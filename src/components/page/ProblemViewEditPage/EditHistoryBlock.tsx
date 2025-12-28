@@ -80,8 +80,6 @@ export default function EditHistoryBlock({
               {displayedHistory.map((item) => (
                 <div
                   key={item.id}
-                  className={`border border-gray-200 rounded-lg p-4 ${item.version === currentVersion ? 'bg-indigo-50 border-indigo-300' : 'bg-white'
-                    }`}
                 >
                   <div style={{
       display: "flex"
