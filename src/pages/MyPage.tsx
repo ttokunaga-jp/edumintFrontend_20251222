@@ -51,20 +51,30 @@ export function MyPage({
   const [postedProblems] = useState(mockExams.slice(1, 4));
 
   const ProblemSection = ({ title, problems, viewAllFilter }: { title: string, problems: any[], viewAllFilter: string }) => (
-    <div className="space-y-4 py-2">
-      <div className="flex items-center justify-between px-1">
+    <div style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}>
+      <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
         <h3 className="text-xl font-bold text-gray-900">{title}</h3>
         <Button
           variant="outline"
           size="sm"
           className="rounded-full text-xs font-medium"
-          onClick={() => onNavigate('home', viewAllFilter)}
+          onClick={() => onNavigate('home', viewAllFilter)}}
         >
           View all
         </Button>
       </div>
       {problems.length > 0 ? (
-        <div className="flex overflow-x-auto space-x-4 pb-4 scrollbar-hide snap-x snap-mandatory scroll-smooth -mx-4 px-4 md:mx-0 md:px-0">
+        <div style={{
+      display: "flex",
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
           {problems.map(p => (
             <div key={p.id} className="min-w-[280px] w-[280px] flex-shrink-0 snap-start">
               <ProblemCard
@@ -83,10 +93,16 @@ export function MyPage({
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
 
         {/* Profile Header (YouTube Style) */}
-        <div className="flex items-center gap-4">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <Avatar className="w-20 h-20 border-2 border-white shadow-sm">
             <AvatarImage src={undefined} />
             <AvatarFallback className="bg-indigo-600 text-white text-2xl">
@@ -95,7 +111,11 @@ export function MyPage({
           </Avatar>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{profile.displayName || profile.username}</h1>
-            <div className="text-sm text-gray-500 flex items-center gap-2">
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
               <span>@{profile.username}</span>
             </div>
           </div>

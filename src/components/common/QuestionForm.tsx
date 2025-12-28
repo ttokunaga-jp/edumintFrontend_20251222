@@ -41,7 +41,10 @@ export function QuestionForm({
     return (
       <div className={`space-y-3 ${className}`}>
         {label && <div className="text-sm font-medium text-gray-800">{label}</div>}
-        <div className="flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <span className="text-sm font-medium text-gray-700">{textareaLabel}</span>
           {/* 非対話で表示のみ */}
           <span className="rounded border border-gray-200 px-2 py-1 text-xs text-gray-500" aria-label="問題文フォーマット表示">
@@ -62,7 +65,10 @@ export function QuestionForm({
   return (
     <div className={`space-y-3 ${className}`}>
       {label && <div className="text-sm font-medium text-gray-800">{label}</div>}
-      <div className="flex items-center justify-between">
+      <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
         <label className="text-sm font-medium text-gray-700" aria-label={`${textareaLabel}-label`}>
           {textareaLabel}
         </label>
@@ -85,7 +91,10 @@ export function QuestionForm({
           onChange?.(e.target.value);
         }}
         readOnly={readOnly}
-        className="w-full min-h-[160px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+        style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
         placeholder={currentFormat === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
       />
       <div className="rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">

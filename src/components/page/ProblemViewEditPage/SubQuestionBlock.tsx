@@ -96,13 +96,27 @@ export function SubQuestionBlock({
   return (
     <div className={`border-b border-gray-100 last:border-b-0 ${className}`}>
       <div className="p-4 sm:p-6">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-start gap-3 sm:gap-4 flex-1">
-            <div className="flex-shrink-0 w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">
+        <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
+          <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
               ({subQuestionNumber})
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                 <span className="text-gray-900 text-sm font-medium">小問{subQuestionNumber}</span>
                 <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs">
                   {questionTypeLabels[questionTypeId] || '記述式'}
@@ -132,7 +146,10 @@ export function SubQuestionBlock({
 
           {/* 編集/削除ボタン */}
           {canEdit && (
-            <div className="flex gap-2">
+            <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
               {!isEditingQuestion && (
                 <button
                   onClick={() => setIsEditingQuestion(true)}
@@ -165,10 +182,18 @@ export function SubQuestionBlock({
                 className="w-full min-h-[150px] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder={currentQuestionFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
               />
-              <div className="flex gap-2">
+              <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                 <button
                   onClick={handleQuestionSave}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                  style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                 >
                   保存
                 </button>
@@ -177,7 +202,12 @@ export function SubQuestionBlock({
                     setEditQuestionContent(questionContent);
                     setIsEditingQuestion(false);
                   }}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                  style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                 >
                   キャンセル
                 </button>
@@ -188,7 +218,11 @@ export function SubQuestionBlock({
               {canSwitchFormat && (
                 <button
                   onClick={handleQuestionFormatToggle}
-                  className="absolute top-0 right-0 flex items-center gap-2 px-2 py-1 bg-white hover:bg-gray-50 rounded text-xs text-gray-700 transition-colors border border-gray-200"
+                  style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}
                 >
                   {currentQuestionFormat === 0 ? (
                     <>
@@ -246,7 +280,11 @@ export function SubQuestionBlock({
           <div className="mt-4 border-t border-gray-200 pt-4">
             <button
               onClick={() => setAnswerExpanded(!answerExpanded)}
-              className="flex items-center gap-2 w-full text-left text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors mb-3"
+              style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}
             >
               {answerExpanded ? (
                 <ChevronUp className="w-4 h-4" />
@@ -266,10 +304,18 @@ export function SubQuestionBlock({
                       className="w-full min-h-[150px] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       placeholder={currentAnswerFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
                     />
-                    <div className="flex gap-2">
+                    <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                       <button
                         onClick={handleAnswerSave}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                        style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                       >
                         保存
                       </button>
@@ -278,7 +324,12 @@ export function SubQuestionBlock({
                           setEditAnswerContent(answerContent);
                           setIsEditingAnswer(false);
                         }}
-                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                        style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                       >
                         キャンセル
                       </button>
@@ -286,13 +337,23 @@ export function SubQuestionBlock({
                   </div>
                 ) : (
                   <>
-                    <div className="flex items-center justify-between mb-2">
+                    <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                       <span className="text-sm font-medium text-blue-900">解答</span>
-                      <div className="flex gap-2">
+                      <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                         {canSwitchFormat && (
                           <button
                             onClick={handleAnswerFormatToggle}
-                            className="flex items-center gap-1 px-2 py-1 bg-white hover:bg-gray-50 rounded text-xs text-gray-700 transition-colors border border-gray-200"
+                            style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.25rem"
+    }}
                           >
                             {currentAnswerFormat === 0 ? (
                               <>

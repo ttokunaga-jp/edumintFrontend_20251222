@@ -118,8 +118,16 @@ export default function AdvancedSearchPanel({
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
       {/* ヘッダー */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-        <div className="flex items-center space-x-2">
+      <div style={{
+      display: "flex",
+      alignItems: "center",
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <h3 className="font-medium">検索条件</h3>
           {activeFilterCount > 0 && (
             <Badge variant="secondary">{activeFilterCount}件の条件</Badge>
@@ -128,7 +136,10 @@ export default function AdvancedSearchPanel({
             <Badge variant="error">検索機能停止中</Badge>
           )}
         </div>
-        <div className="flex items-center space-x-2">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           {activeFilterCount > 0 && (
             <Button
               variant="ghost"
@@ -144,7 +155,10 @@ export default function AdvancedSearchPanel({
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center space-x-1"
+            style={{
+      display: "flex",
+      alignItems: "center"
+    }}
           >
             <span>{isExpanded ? '検索条件を隠す' : '検索条件を表示'}</span>
             {isExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
@@ -304,13 +318,16 @@ export default function AdvancedSearchPanel({
                   disabled={isDisabled}
                   className="w-full"
                 />
-                <div className="flex flex-wrap gap-2">
+                <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                   {recentYears.map(year => (
                     <Badge
                       key={year}
                       variant={filters.examYear === year ? 'default' : 'outline'}
                       className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
-                      onClick={() => !isDisabled && updateFilter('examYear', year)}
+                      onClick={() => !isDisabled && updateFilter('examYear', year)}}
                     >
                       {year}
                     </Badge>
@@ -357,7 +374,9 @@ export default function AdvancedSearchPanel({
           {/* Row 5: Problem Format (問題形式) */}
           <div className="space-y-2">
             <Label>問題形式</Label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div style={{
+      gap: "0.5rem"
+    }}>
               {problemFormats.map(format => (
                 <label
                   key={format.id}
@@ -399,7 +418,9 @@ export default function AdvancedSearchPanel({
             />
             {/* Custom date picker (only show when 'custom' is selected) */}
             {filters.period === 'custom' && (
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <div style={{
+      gap: "0.5rem"
+    }}>
                 <div className="space-y-1">
                   <Label className="text-xs">開始日</Label>
                   <Input
@@ -445,7 +466,10 @@ export default function AdvancedSearchPanel({
 
           {/* アクティブなフィルターのチップ表示 */}
           {activeFilterCount > 0 && (
-            <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-200">
+            <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
               <span className="text-sm text-gray-500">適用中:</span>
               {Object.entries(filters).map(([key, value]) => {
                 if (key === 'sortBy' || key === 'page' || key === 'limit' || value === undefined) return null;
@@ -459,12 +483,15 @@ export default function AdvancedSearchPanel({
                 if (key === 'formats') displayValue = `${(value as number[]).length}種類`;
 
                 return (
-                  <Badge key={key} variant="secondary" className="flex items-center space-x-1">
+                  <Badge key={key} variant="secondary" style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                     <span className="text-xs">{displayValue}</span>
                     <button
                       onClick={() => clearFilter(key as keyof SearchFilters)}
                       className="ml-1 hover:text-red-600"
-                      disabled={isDisabled}
+                      disabled={isDisabled}}
                     >
                       <X className="size-3" />
                     </button>

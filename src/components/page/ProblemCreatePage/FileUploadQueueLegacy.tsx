@@ -111,14 +111,25 @@ export function FileUploadQueue({
           aria-label={`${file.file.name} - ${file.status}`}
         >
           {/* Header: Icon + Name + Size + Remove */}
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-3 flex-1 min-w-0"> {/* 12px gap (grid) */}
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}> {/* 12px gap (grid) */}
               {getStatusIcon(file.status)}
               <span className="text-sm font-medium truncate">
                 {file.file.name}
               </span>
             </div>
-            <div className="flex items-center gap-3 flex-shrink-0"> {/* 12px gap (grid) */}
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}> {/* 12px gap (grid) */}
               <span className="text-xs text-gray-500">
                 {(file.file.size / 1024 / 1024).toFixed(1)} MB
               </span>
@@ -159,7 +170,10 @@ export function FileUploadQueue({
               <p className="text-sm text-red-700 mt-2 mb-3">
                 ⚠️ {file.errorMessage || 'アップロードに失敗しました'}
               </p>
-              <div className="flex gap-2"> {/* 8px gap (grid) */}
+              <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}> {/* 8px gap (grid) */}
                 <Button
                   variant="outline"
                   size="sm"

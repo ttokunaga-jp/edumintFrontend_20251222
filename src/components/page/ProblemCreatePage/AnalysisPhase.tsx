@@ -14,12 +14,18 @@ type AnalysisPhaseProps = {
 export function AnalysisPhase({ exam, onChange, onBack, onNext }: AnalysisPhaseProps) {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-      <div className="flex items-center justify-between">
+      <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
         <div>
           <h2 className="text-2xl font-bold text-gray-900">構造の確認と編集</h2>
           <p className="text-gray-600 font-medium">解析された問題構造を確認し、必要に応じて大問・小問の構成を調整してください。</p>
         </div>
-        <div className="flex gap-3">
+        <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
           <Button variant="outline" onClick={onBack} className="rounded-xl px-6">
             戻る
           </Button>

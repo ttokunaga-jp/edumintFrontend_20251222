@@ -91,7 +91,10 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
     <Card className="p-8 border-none shadow-xl bg-white/80 backdrop-blur-sm overflow-hidden relative">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-500" />
       <div className="space-y-8">
-        <div className="flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <div>
             <h3 className="text-xl font-bold text-gray-900">資料から生成</h3>
             <p className="text-sm text-gray-500">
@@ -125,14 +128,21 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
                 type="number"
                 min={5}
                 max={20}
-                className="w-full text-left py-2 px-3 border border-gray-200 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                style={{
+      borderRadius: "0.375rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
                 value={options.questionCount}
                 onChange={(e) => {
                   const val = parseInt(e.target.value);
                   if (!isNaN(val)) handleQuestionCountChange([val]);
                 }}
               />
-              <div className="py-2">
+              <div style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}>
                 <Slider
                   min={5}
                   max={20}
@@ -147,9 +157,16 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
         </div>
 
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <Label className="text-sm text-gray-700">問題形式</Label>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-900 cursor-pointer">
+            <label style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
               <Checkbox
                 checked={options.formatConfig.isAuto}
                 onCheckedChange={(checked) => handleFormatAutoToggle(Boolean(checked))}
@@ -159,14 +176,19 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           </div>
 
           <Accordion type="single" collapsible disabled={options.formatConfig.isAuto} defaultValue="formats">
-            <AccordionItem value="formats" className="border border-gray-200 rounded-lg px-4">
+            <AccordionItem value="formats" style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
               <AccordionTrigger className="py-3 hover:no-underline">
                 <span className={cn('text-sm font-semibold', options.formatConfig.isAuto && 'text-gray-400')}>
                   個別指定（複数選択可）
                 </span>
               </AccordionTrigger>
               <AccordionContent className="pb-4 pt-1">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div style={{
+      gap: "0.5rem"
+    }}>
                   {formatOptions.map((format) => {
                     const isChecked = options.formatConfig.selectedFormats.includes(format.id);
                     return (
@@ -176,7 +198,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
                           'flex items-center gap-2 rounded-lg border p-3 cursor-pointer transition-colors',
                           isChecked ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-gray-300',
                           options.formatConfig.isAuto && 'opacity-50 cursor-not-allowed',
-                        )}
+                        )}}
                       >
                         <input
                           type="checkbox"
@@ -195,8 +217,13 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
           </Accordion>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-indigo-200 transition-colors cursor-pointer">
+        <div style={{
+      gap: "0.75rem"
+    }}>
+          <label style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Checkbox
               checked={options.useDiagrams}
               onCheckedChange={() => handleCommonToggle('useDiagrams')}
@@ -208,7 +235,10 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
             </div>
           </label>
 
-          <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-indigo-200 transition-colors cursor-pointer">
+          <label style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Checkbox
               checked={options.confirmStructure}
               onCheckedChange={() => handleCommonToggle('confirmStructure')}
@@ -220,7 +250,10 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
             </div>
           </label>
 
-          <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-indigo-200 transition-colors cursor-pointer">
+          <label style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Checkbox
               checked={options.isPublic}
               onCheckedChange={() => handleCommonToggle('isPublic')}

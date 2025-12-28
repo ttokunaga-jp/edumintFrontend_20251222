@@ -41,11 +41,17 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      <div className="flex flex-wrap gap-2">
+      <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
         {normalized.map((kw) => (
           <span
             key={kw.id}
-            className="inline-flex items-center gap-1 rounded bg-indigo-100 px-2 py-1 text-xs text-indigo-700"
+            style={{
+      alignItems: "center",
+      gap: "0.25rem"
+    }}
           >
             {kw.keyword}
             {canEdit && onRemove && (
@@ -62,7 +68,10 @@ export const KeywordEditor: React.FC<KeywordEditorProps> = ({
       </div>
 
       {canEdit && onAdd && (
-        <div className="flex gap-2">
+        <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
           <input
             aria-label={ariaLabelInput ?? 'キーワード入力'}
             type="text"

@@ -80,15 +80,29 @@ export function QuestionBlock({
     <div className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden ${className}`}>
       {/* ヘッダー */}
       <div className="p-4 sm:p-6 bg-gray-50 border-b border-gray-100">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-start gap-3 sm:gap-4 flex-1">
+        <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
+          <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             {/* 問題番号 */}
-            <div className="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-lg flex items-center justify-center">
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
               {derivedNumber}
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                 <h3 className="text-gray-900">大問{derivedNumber}</h3>
               </div>
 
@@ -134,7 +148,10 @@ export function QuestionBlock({
 
           {/* 編集/削除ボタン */}
           {canEdit && (
-            <div className="flex gap-2">
+            <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
               {onDelete && (
                 <button
                   onClick={onDelete}

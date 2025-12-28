@@ -35,8 +35,16 @@ function StructureStatusCard({
 }) {
   return (
     <Card className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4" aria-busy={!isPaused && !isError}>
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+      <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
           {isError ? (
             <AlertTriangle className="w-5 h-5 text-red-500" />
           ) : isPaused ? (
@@ -47,7 +55,10 @@ function StructureStatusCard({
           <div className="text-sm font-semibold text-gray-900">
             Structure_{currentStep}
             {!shouldConfirmStructure && (
-              <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-indigo-50 text-indigo-700 px-2 py-0.5 text-[11px] font-semibold">
+              <span style={{
+      alignItems: "center",
+      gap: "0.25rem"
+    }}>
                 構造確認スキップ
               </span>
             )}
@@ -79,8 +90,16 @@ function GenerationStatusCard({
 }) {
   return (
     <Card className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4" aria-busy={!isPaused && !isError}>
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+      <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
           {isError ? (
             <AlertTriangle className="w-5 h-5 text-red-500" />
           ) : isPaused ? (
@@ -91,7 +110,10 @@ function GenerationStatusCard({
           <div className="text-sm font-semibold text-gray-900">
             Generation_{currentStep}
             {!shouldConfirmStructure && (
-              <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-indigo-50 text-indigo-700 px-2 py-0.5 text-[11px] font-semibold">
+              <span style={{
+      alignItems: "center",
+      gap: "0.25rem"
+    }}>
                 構造確認スキップ
               </span>
             )}
@@ -291,7 +313,10 @@ export function GenerationPhase({
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500 relative isolation:isolate">
-      <div className="flex items-center justify-between">
+      <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
         <div>
           {isComplete ? (
             <>
@@ -306,14 +331,20 @@ export function GenerationPhase({
           )}
         </div>
         {!isComplete && (
-          <div className="flex gap-3">
+          <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Button variant="outline" onClick={onBack} className="rounded-xl px-6">
               キャンセル
             </Button>
           </div>
         )}
         {isComplete && (
-          <div className="flex gap-3">
+          <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Button variant="outline" onClick={onBack} className="rounded-xl px-6">
               戻る
             </Button>

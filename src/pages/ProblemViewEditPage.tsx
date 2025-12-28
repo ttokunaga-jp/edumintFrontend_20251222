@@ -70,8 +70,14 @@ export default function ProblemViewEditPage(props: ProblemViewEditPageProps) {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-6">
+      <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <PreviewEditToggle
             isEditMode={isEditMode}
             setIsEditMode={setIsEditMode}

@@ -62,7 +62,11 @@ export function GenerationStatusTimeline({
       {/* 現在の状態表示 */}
       {!isError && !isComplete && (
         <div className="mb-4">
-          <div className="flex items-center gap-2 text-gray-700">
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <Loader className="w-4 h-4 animate-spin text-indigo-600" />
             <span className="text-sm font-medium">{displayLabel}</span>
           </div>
@@ -77,7 +81,11 @@ export function GenerationStatusTimeline({
       {/* 一時停止表示 */}
       {isPaused && (
         <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="flex items-center gap-2">
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <Clock className="w-4 h-4 text-yellow-600" />
             <span className="text-sm font-medium text-yellow-800">一時停止中</span>
           </div>
@@ -87,7 +95,9 @@ export function GenerationStatusTimeline({
       {/* プログレスバー */}
       {!isError && !isComplete && (
         <div className="mt-4">
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <div style={{
+      display: "flex"
+    }}>
             <span>進行状況</span>
             <span>{progress}%</span>
           </div>
@@ -103,7 +113,11 @@ export function GenerationStatusTimeline({
       {/* 完了表示 */}
       {isComplete && (
         <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-          <div className="flex items-center gap-3">
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}>
             <Check className="w-5 h-5 text-green-600" />
             <span className="text-sm font-medium text-green-800">生成が完了しました</span>
           </div>
@@ -113,7 +127,10 @@ export function GenerationStatusTimeline({
       {/* エラーメッセージ */}
       {isError && errorMessage && (
         <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <div className="flex items-start gap-3">
+          <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
             <div className="flex-1">
               {errorCode && (

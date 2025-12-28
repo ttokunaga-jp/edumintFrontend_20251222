@@ -79,9 +79,10 @@ export const ProblemCreateView: React.FC<Props> = ({
   return (
     <div className="min-h-screen">
       <main
-        className="max-w-6xl mx-auto w-full px-4 pb-8 space-y-8"
         style={{
           // Ensure L0 starts below the fixed TopMenuBar (4rem) + ProgressHeader (~5-6rem) with a bit of breathing room
+          paddingLeft: "1rem",
+          paddingRight: "1rem",
           paddingTop: 'clamp(9rem, 8vw + 6rem, 12rem)',
         }}
       >

@@ -22,7 +22,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
       {description && <p className="text-sm text-gray-600">{description}</p>}
       {children}
-      {action && <div className="pt-2 flex justify-center">{action}</div>}
+      {action && <div style={{
+      display: "flex",
+      justifyContent: "center"
+    }}>{action}</div>}
     </div>
   );
 };

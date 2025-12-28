@@ -7,7 +7,10 @@ export default function TrueFalseView(props: ProblemTypeViewProps) {
   return (
     <div>
       <MarkdownBlock content={questionContent} />
-      <div className="mt-2 flex gap-2">
+      <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
         <div className="px-3 py-1 bg-white border rounded">True</div>
         <div className="px-3 py-1 bg-white border rounded">False</div>
       </div>

@@ -43,8 +43,14 @@ export default function EditHistoryBlock({
   return (
     <Card className={className}>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <Clock className="size-5 text-gray-500" />
             <CardTitle className="text-lg">編集履歴</CardTitle>
             <Badge variant="outline">v{currentVersion}</Badge>
@@ -53,7 +59,10 @@ export default function EditHistoryBlock({
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center space-x-1"
+            style={{
+      display: "flex",
+      alignItems: "center"
+    }}
           >
             <span>{isExpanded ? '閉じる' : '表示'}</span>
             {isExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
@@ -75,8 +84,13 @@ export default function EditHistoryBlock({
                   className={`border border-gray-200 rounded-lg p-4 ${item.version === currentVersion ? 'bg-indigo-50 border-indigo-300' : 'bg-white'
                     }`}
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center space-x-2">
+                  <div style={{
+      display: "flex"
+    }}>
+                    <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                       <Badge variant={item.version === currentVersion ? 'default' : 'secondary'}>
                         v{item.version}
                       </Badge>
@@ -89,7 +103,10 @@ export default function EditHistoryBlock({
                         variant="outline"
                         size="sm"
                         onClick={() => onRollback(item.version)}
-                        className="flex items-center space-x-1"
+                        style={{
+      display: "flex",
+      alignItems: "center"
+    }}
                       >
                         <RotateCcw className="size-3" />
                         <span>復元</span>
@@ -101,7 +118,10 @@ export default function EditHistoryBlock({
                     <div className="text-sm font-medium text-gray-900">
                       {item.description || getChangeDescription(item.changes)}
                     </div>
-                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                    <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                       <span>編集者: {item.changedBy}</span>
                       <span>•</span>
                       <span>{formatDate(item.changedAt)}</span>
@@ -113,7 +133,9 @@ export default function EditHistoryBlock({
                     <div className="mt-3 pt-3 border-t border-gray-200">
                       <div className="text-xs text-gray-600 space-y-1">
                         {Object.entries(item.changes).slice(0, 3).map(([key, value]) => (
-                          <div key={key} className="flex items-start space-x-2">
+                          <div key={key} style={{
+      display: "flex"
+    }}>
                             <span className="font-medium min-w-[80px]">{key}:</span>
                             <span className="flex-1 truncate">
                               {typeof value === 'object' ? JSON.stringify(value) : String(value)}
@@ -137,7 +159,7 @@ export default function EditHistoryBlock({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setShowAll(!showAll)}
+                    onClick={() => setShowAll(!showAll)}}
                   >
                     {showAll ? '一部を表示' : `すべて表示 (${history.length}件)`}
                   </Button>

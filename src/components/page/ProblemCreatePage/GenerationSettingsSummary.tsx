@@ -48,8 +48,17 @@ export function GenerationSettingsSummary({
   return (
     <div className={`bg-white rounded-lg border border-gray-200 overflow-hidden ${className}`}>
       {/* ヘッダー */}
-      <div className="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div style={{
+      display: "flex",
+      alignItems: "center",
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
           <Settings className="w-4 h-4 text-gray-600" />
           <h3 className="text-sm text-gray-900">生成設定</h3>
         </div>
@@ -64,12 +73,19 @@ export function GenerationSettingsSummary({
       <div className="p-4 space-y-4">
         {/* AI生成設定 */}
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <Sparkles className="w-4 h-4 text-indigo-600" />
             <h4 className="text-xs text-gray-700">AI生成</h4>
           </div>
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs">
+            <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <span className="text-gray-600">自動問題生成</span>
               <Badge variant={settings.autoGenerateQuestions ? 'default' : 'secondary'} className="text-xs">
                 {settings.autoGenerateQuestions ? 'ON' : 'OFF'}
@@ -77,11 +93,17 @@ export function GenerationSettingsSummary({
             </div>
             {settings.autoGenerateQuestions && (
               <>
-                <div className="flex items-center justify-between text-xs">
+                <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                   <span className="text-gray-600">生成数</span>
                   <span className="text-gray-900">{settings.questionCount || 5}問</span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
+                <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                   <span className="text-gray-600">難易度</span>
                   <Badge variant="outline" className="text-xs">
                     {difficultyLabels[settings.difficultyLevel] || '標準'}
@@ -95,11 +117,18 @@ export function GenerationSettingsSummary({
         {/* 問題形式 */}
         {settings.questionTypes.length > 0 && (
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
               <FileText className="w-4 h-4 text-blue-600" />
               <h4 className="text-xs text-gray-700">問題形式</h4>
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div style={{
+      display: "flex",
+      gap: "0.25rem"
+    }}>
               {settings.questionTypes.map(typeId => (
                 <Badge key={typeId} variant="secondary" className="text-xs">
                   {questionTypeLabels[typeId] || `Type ${typeId}`}
@@ -114,19 +143,31 @@ export function GenerationSettingsSummary({
           <h4 className="text-xs text-gray-700 mb-2">コンテンツ</h4>
           <div className="space-y-1.5">
             {settings.includeAnswers && (
-              <div className="flex items-center gap-2 text-xs text-gray-600">
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                 <span>解答を含む</span>
               </div>
             )}
             {settings.includeSolutions && (
-              <div className="flex items-center gap-2 text-xs text-gray-600">
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                 <span>解説を含む</span>
               </div>
             )}
             {settings.extractKeywords && (
-              <div className="flex items-center gap-2 text-xs text-gray-600">
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                 <span>キーワード自動抽出</span>
               </div>
@@ -140,31 +181,51 @@ export function GenerationSettingsSummary({
             <h4 className="text-xs text-gray-700 mb-2">高度な設定</h4>
             <div className="space-y-1.5">
               {settings.useAdvancedAI && (
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                   <div className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                   <span>高度なAIモデル使用</span>
                 </div>
               )}
               {settings.preserveFormatting && (
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                   <div className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                   <span>書式保持</span>
                 </div>
               )}
               {settings.detectDiagrams && (
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                   <div className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                   <span>図表検出</span>
                 </div>
               )}
               {settings.splitBySection && (
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                   <div className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                   <span>セクション分割</span>
                 </div>
               )}
               {settings.optimizeForMobile && (
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                   <div className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                   <span>モバイル最適化</span>
                 </div>
@@ -175,8 +236,15 @@ export function GenerationSettingsSummary({
 
         {/* 公開設定 */}
         <div className="pt-3 border-t border-gray-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
               {settings.isPublic ? (
                 <Unlock className="w-4 h-4 text-green-600" />
               ) : (
@@ -193,8 +261,14 @@ export function GenerationSettingsSummary({
 
       {/* 処理時間見積もり（オプション） */}
       {settings.autoGenerateQuestions && (
-        <div className="px-4 py-3 bg-blue-50 border-t border-blue-100">
-          <div className="flex items-start gap-2">
+        <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
+          <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
             <div className="flex-shrink-0">
               <div className="w-1 h-1 mt-1.5 bg-blue-500 rounded-full" />
             </div>

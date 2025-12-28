@@ -14,7 +14,9 @@ export const AuthProviderButtons: React.FC<AuthProviderButtonsProps> = ({
   onUniversity,
 }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <div style={{
+      gap: "0.75rem"
+    }}>
       <Button variant="outline" onClick={onAuth}>
         Google で続行
       </Button>

@@ -31,7 +31,10 @@ const SearchInput = ({
             type="text"
             value={value}
             placeholder="問題を検索..."
-            className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700 transition-all"
+            style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
             onChange={onChange}
             onKeyDown={onKeyDown}
         />
@@ -69,11 +72,21 @@ export default function TopMenuBar({
 
     return (
         <nav className="sticky top-0 z-app-bar w-full border-b border-gray-200 bg-white">
-            <div className="px-4 sm:px-6 lg:px-8">
+            <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
                 {/* Main Nav Row */}
-                <div className="flex h-16 items-center justify-between gap-4">
+                <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                     {/* Left Section: Hamburger & Logo */}
-                    <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+                    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                         <Button variant="ghost" size="icon" className="text-gray-500" title="メニュー" data-trigger="menu-button" onClick={onMenuClick}>
                             <Menu className="h-5 w-5" />
                         </Button>
@@ -85,7 +98,9 @@ export default function TopMenuBar({
                     </div>
 
                     {/* Center Section: Search (Desktop only) */}
-                    <div className="hidden md:flex flex-1 justify-center max-w-xl">
+                    <div style={{
+      justifyContent: "center"
+    }}>
                         <SearchInput
                             className="w-full"
                             value={localQuery}
@@ -95,7 +110,11 @@ export default function TopMenuBar({
                     </div>
 
                     {/* Right Section: Actions */}
-                    <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
+                    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.25rem"
+    }}>
                         <Button
                             variant="ghost"
                             size="icon"
@@ -110,7 +129,11 @@ export default function TopMenuBar({
                             <Bell className="h-5 w-5" />
                         </Button>
 
-                        <div className="flex items-center gap-2 ml-1">
+                        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                             <div className="hidden lg:block text-right mr-1">
                                 <div className="text-sm font-medium text-gray-900 truncate max-w-[120px]">
                                     {user?.username || 'ゲストユーザー'}

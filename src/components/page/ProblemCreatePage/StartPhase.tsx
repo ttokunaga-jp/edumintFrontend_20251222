@@ -46,14 +46,20 @@ export function StartPhase({
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex justify-center">
+      <div style={{
+      display: "flex",
+      justifyContent: "center"
+    }}>
         <SourceToggle value={sourceType} onChange={onSourceTypeChange} />
       </div>
 
       <div className="space-y-6">
         <Card className="p-8 border-none shadow-xl bg-white/80 backdrop-blur-sm overflow-hidden relative">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-700 to-blue-900" />
-          <div className="flex items-center justify-between mb-6">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <div>
               <h3 className="text-xl font-bold text-gray-900">
                 {sourceType === 'exercise' ? '過去問・既存問題のアップロード' : '学習資料のアップロード'}
@@ -68,7 +74,11 @@ export function StartPhase({
           </div>
 
           <div
-            className="flex flex-col items-center justify-center border-2 border-dashed border-indigo-100 rounded-2xl py-12 bg-indigo-50/30 hover:bg-indigo-50/50 transition-colors cursor-pointer group"
+            style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
             onClick={onFileInputClick}
             onDragOver={(e) => {
               e.preventDefault();
@@ -91,7 +101,7 @@ export function StartPhase({
                   fileInputRef.current.dispatchEvent(event);
                 }
               }
-            }}
+            }}}
           >
             <input
               ref={fileInputRef}
@@ -101,7 +111,11 @@ export function StartPhase({
               className="hidden"
               onChange={onFileSelect}
             />
-            <div className="w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
               <Upload className="w-8 h-8 text-indigo-600" />
             </div>
             <p className="font-bold text-indigo-900">ファイルを選択またはドラッグ＆ドロップ</p>
@@ -125,7 +139,7 @@ export function StartPhase({
             !canProceed && 'opacity-60 cursor-not-allowed hover:translate-y-0',
           )}
           disabled={!canProceed}
-          onClick={onProceed}
+          onClick={onProceed}}
         >
           問題生成を開始する
         </Button>

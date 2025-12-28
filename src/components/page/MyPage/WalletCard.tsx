@@ -34,7 +34,11 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
   if (!balance) {
     return (
       <div className={`bg-gradient-to-r from-gray-400 to-gray-500 rounded-xl shadow-lg p-6 text-white ${className}`}>
-        <div className="flex items-center gap-2 mb-4">
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
           <Wallet className="w-5 h-5" />
           <h3 className="font-medium">ウォレット</h3>
         </div>
@@ -50,8 +54,15 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
 
   return (
     <div className={`bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg p-6 text-white ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
+      <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
           <Wallet className="w-5 h-5" />
           <h3 className="font-medium">ウォレット残高</h3>
         </div>
@@ -74,15 +85,24 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
 
       {showDetails && (
         <div className="space-y-3 mb-6 p-4 bg-white/10 rounded-lg">
-          <div className="flex items-center justify-between text-sm">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <span className="text-white/80">保留中の収益</span>
             <span className="font-medium">¥{balance.pendingEarnings.toLocaleString()}</span>
           </div>
-          <div className="flex items-center justify-between text-sm">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <span className="text-white/80">累計収益</span>
             <span className="font-medium">¥{balance.totalEarnings.toLocaleString()}</span>
           </div>
-          <div className="flex items-center justify-between text-sm">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <span className="text-white/80">最終更新</span>
             <span className="font-medium">
               {new Date(balance.lastUpdated).toLocaleDateString('ja-JP')}
@@ -91,16 +111,36 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-3">
+      <div style={{
+      gap: "0.75rem"
+    }}>
         <button
           onClick={onWithdraw}
           disabled={balance.balance < 1000 || disableWithdrawal}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "0.5rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
         >
           <Download className="w-4 h-4" />
           <span className="text-sm font-medium">出金</span>
         </button>
-        <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors">
+        <button style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "0.5rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}>
           <TrendingUp className="w-4 h-4" />
           <span className="text-sm font-medium">統計</span>
         </button>
@@ -114,7 +154,12 @@ export function WalletCard({ balance, isLoading = false, onWithdraw, className =
 
       <a
         href="#"
-        className="flex items-center justify-center gap-1 mt-4 text-xs text-white/80 hover:text-white transition-colors"
+        style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "0.25rem"
+    }}
       >
         <span>収益について詳しく</span>
         <ExternalLink className="w-3 h-3" />

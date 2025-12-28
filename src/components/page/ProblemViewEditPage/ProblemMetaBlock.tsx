@@ -112,7 +112,10 @@ export default function ProblemMetaBlock({
         {/* タイトルとバッジ */}
         <div className="space-y-3">
           <h1 className="text-2xl font-bold text-gray-900">{exam.examName}</h1>
-          <div className="flex flex-wrap gap-2">
+          <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
             <Badge className={getDifficultyColor(0)}>
               {getDifficultyLabel(0)}
             </Badge>
@@ -129,9 +132,13 @@ export default function ProblemMetaBlock({
         </div>
 
         {/* メタ情報 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-gray-200">
+        <div style={{
+      gap: "0.75rem"
+    }}>
           {metaItems.map((item, index) => (
-            <div key={index} className="flex items-start space-x-2">
+            <div key={index} style={{
+      display: "flex"
+    }}>
               <item.icon className="size-4 text-gray-500 mt-0.5 flex-shrink-0" />
               <div className="min-w-0 flex-1">
                 <div className="text-xs text-gray-500">{item.label}</div>
@@ -141,7 +148,9 @@ export default function ProblemMetaBlock({
               </div>
             </div>
           ))}
-          <div className="flex items-start space-x-2">
+          <div style={{
+      display: "flex"
+    }}>
             <UserIcon className="size-4 text-gray-500 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
               <div className="text-xs text-gray-500">投稿者</div>
@@ -150,7 +159,9 @@ export default function ProblemMetaBlock({
               </div>
             </div>
           </div>
-          <div className="flex items-start space-x-2">
+          <div style={{
+      display: "flex"
+    }}>
             <Calendar className="size-4 text-gray-500 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
               <div className="text-xs text-gray-500">投稿日</div>
@@ -175,13 +186,19 @@ export default function ProblemMetaBlock({
         {/* アクションボタン */}
         <div className="pt-4 border-t border-gray-200 space-y-3">
           {/* インタラクションボタン */}
-          <div className="grid grid-cols-2 gap-2">
+          <div style={{
+      gap: "0.5rem"
+    }}>
             <Button
               variant={exam.userLiked ? 'default' : 'outline'}
               size="sm"
               onClick={onLike}
               disabled={disableCommunityActions}
-              className="flex items-center justify-center space-x-2"
+              style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}
             >
               <ThumbsUp className="size-4" />
               <span>{exam.userLiked ? 'いいね済み' : 'いいね'}</span>
@@ -191,7 +208,11 @@ export default function ProblemMetaBlock({
               size="sm"
               onClick={onDislike}
               disabled={disableCommunityActions}
-              className="flex items-center justify-center space-x-2"
+              style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}
             >
               <ThumbsDown className="size-4" />
               <span>{exam.userDisliked ? 'バッド済み' : 'バッド'}</span>
@@ -199,13 +220,19 @@ export default function ProblemMetaBlock({
           </div>
 
           {/* ユーティリティボタン */}
-          <div className="grid grid-cols-2 gap-2">
+          <div style={{
+      gap: "0.5rem"
+    }}>
             <Button
               variant={isBookmarked ? 'default' : 'outline'}
               size="sm"
               onClick={onBookmark}
               disabled={disableCommunityActions}
-              className="flex items-center justify-center space-x-2"
+              style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}
             >
               <Bookmark className="size-4" />
               <span>{isBookmarked ? 'ブックマーク済み' : 'ブックマーク'}</span>
@@ -215,7 +242,11 @@ export default function ProblemMetaBlock({
               size="sm"
               onClick={onShare}
               disabled={disableCommunityActions || disableShareAction}
-              className="flex items-center justify-center space-x-2"
+              style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}
             >
               <Share2 className="size-4" />
               <span>共有</span>
@@ -223,12 +254,18 @@ export default function ProblemMetaBlock({
           </div>
 
           {/* エクスポート・通報ボタン */}
-          <div className="grid grid-cols-2 gap-2">
+          <div style={{
+      gap: "0.5rem"
+    }}>
             <Button
               variant="outline"
               size="sm"
               onClick={onExportPDF}
-              className="flex items-center justify-center space-x-2"
+              style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}
             >
               <FileText className="size-4" />
               <span>PDF出力</span>
@@ -238,7 +275,11 @@ export default function ProblemMetaBlock({
                 variant="outline"
                 size="sm"
                 onClick={onReport}
-                className="flex items-center justify-center space-x-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}
               >
                 <Flag className="size-4" />
                 <span>報告</span>

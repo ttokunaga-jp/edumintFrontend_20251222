@@ -32,7 +32,7 @@ function ToggleGroup({
         "group/toggle-group flex w-fit items-center rounded-md data-[variant=outline]:shadow-xs",
         className,
       )}
-      {...props}
+      {...props}}
     >
       <ToggleGroupContext.Provider value={{ variant, size }}>
         {children}
@@ -64,7 +64,7 @@ function ToggleGroupItem({
         "min-w-0 flex-1 shrink-0 rounded-none shadow-none first:rounded-l-md last:rounded-r-md data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l",
         className,
       )}
-      {...props}
+      {...props}}
     >
       {children}
     </ToggleGroupPrimitive.Item>

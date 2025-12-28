@@ -42,14 +42,20 @@ const FallbackEdit = ({ questionContent, answerContent, onQuestionChange, onAnsw
         <textarea
             value={questionContent}
             onChange={(e) => onQuestionChange?.(e.target.value)}
-            className="w-full rounded border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
             placeholder="小問の問題文を入力..."
         />
         <label className="block text-xs font-medium text-gray-700">解答</label>
         <textarea
             value={answerContent ?? ''}
             onChange={(e) => onAnswerChange?.(e.target.value)}
-            className="w-full rounded border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
             placeholder="解答やメモを入力..."
         />
     </div>
@@ -148,7 +154,7 @@ export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorP
     const handleSubQuestionOptionsChange = (
         qIdx: number,
         sqIdx: number,
-        options: Array<{ id: string; content: string; isCorrect: boolean }>,
+        options: Array<{ id: string; content: string; isCorrect: boolean }}>,
     ) => {
         updateSubQuestion(qIdx, sqIdx, (sub) => {
             sub.options = options;
@@ -233,7 +239,7 @@ export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorP
                                 variant="outline"
                                 size="sm"
                                 className="mt-2 border-dashed ml-8"
-                                onClick={() => addSubQuestion(qIdx)}
+                                onClick={() => addSubQuestion(qIdx)}}
                             >
                                 <Plus className="mr-2 h-4 w-4" />
                                 小問を追加
@@ -249,7 +255,7 @@ export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorP
                 <Button
                     variant="ghost"
                     className="w-full rounded-xl border-2 border-dashed border-gray-200 py-8 text-gray-500 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
-                    onClick={addQuestion}
+                    onClick={addQuestion}}
                 >
                     <Plus className="mr-2 h-6 w-6" />
                     大問を追加

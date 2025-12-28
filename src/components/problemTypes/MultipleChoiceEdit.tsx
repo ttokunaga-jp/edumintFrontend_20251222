@@ -67,7 +67,10 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
   return (
     <div className="space-y-4">
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <label className="block text-sm font-medium text-gray-700">問題文</label>
           <button
             type="button"
@@ -85,18 +88,28 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
             onQuestionChange?.(e.target.value);
           }}
           aria-label="問題文入力"
-          className="w-full min-h-[140px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
           placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
         />
       </div>
 
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <label className="text-sm font-medium text-gray-700">選択肢</label>
           <button
             type="button"
             onClick={handleAddOption}
-            className="inline-flex items-center gap-1 rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 hover:bg-indigo-100"
+            style={{
+      alignItems: "center",
+      gap: "0.25rem",
+      borderRadius: "0.375rem"
+    }}
           >
             <Plus className="h-3.5 w-3.5" />
             追加
@@ -105,19 +118,26 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
 
         <div className="space-y-2">
           {localOptions.map((opt, idx) => (
-            <div key={opt.id || idx} className="flex items-start gap-2 rounded-lg border border-gray-200 bg-white p-3">
+            <div key={opt.id || idx} style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
               <button
                 type="button"
                 onClick={() => handleOptionChange(idx, { isCorrect: !opt.isCorrect })}
                 className="mt-0.5 text-indigo-600 font-semibold text-sm"
-                aria-label={opt.isCorrect ? '正解に設定済み' : '正解としてマーク'}
+                aria-label={opt.isCorrect ? '正解に設定済み' : '正解としてマーク'}}
               >
                 {opt.isCorrect ? '✔' : '□'}
               </button>
               <input
                 value={opt.content}
                 onChange={(e) => handleOptionChange(idx, { content: e.target.value })}
-                className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                style={{
+      borderRadius: "0.375rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
                 placeholder={`選択肢 ${String.fromCharCode(65 + idx)}`}
               />
               <button
@@ -132,7 +152,11 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
           ))}
 
           {localOptions.length === 0 && (
-            <div className="rounded-md border border-dashed border-gray-300 px-3 py-2 text-sm text-gray-500">
+            <div style={{
+      borderRadius: "0.375rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}>
               まだ選択肢がありません。追加してください。
             </div>
           )}
@@ -149,7 +173,10 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
       </div>
 
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <label className="block text-sm font-medium text-gray-700">解説 / 答え</label>
           <button
             type="button"
@@ -168,7 +195,10 @@ export default function MultipleChoiceEdit(props: ProblemTypeEditProps) {
             onAnswerChange?.(next);
           }}
           aria-label="解答入力"
-          className="w-full min-h-[120px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
           placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
         />
 

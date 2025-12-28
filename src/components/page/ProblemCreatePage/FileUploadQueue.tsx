@@ -106,7 +106,10 @@ export function FileUploadQueue({
   return (
     <div className={`space-y-3 ${className}`}>
       {/* ヘッダー */}
-      <div className="flex items-center justify-between">
+      <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
         <h3 className="text-sm text-gray-700">
           アップロード待機列 ({files.length})
         </h3>
@@ -129,7 +132,10 @@ export function FileUploadQueue({
                 ${uploadFile.status === 'success' ? 'bg-green-50 border-green-200' : ''}
               `}
             >
-              <div className="flex items-start gap-3">
+              <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
                 {/* アイコン */}
                 <div className="flex-shrink-0 mt-0.5">
                   {getStatusIcon(uploadFile)}
@@ -137,7 +143,10 @@ export function FileUploadQueue({
 
                 {/* ファイル情報 */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2">
+                  <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-900 truncate">
                         {uploadFile.file.name}
@@ -146,7 +155,11 @@ export function FileUploadQueue({
                         {getStatusText(uploadFile)}
                       </p>
                       {!validation.valid && uploadFile.status === 'pending' && (
-                        <div className="flex items-center gap-1 mt-1">
+                        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.25rem"
+    }}>
                           <AlertTriangle className="w-3 h-3 text-amber-500" />
                           <p className="text-xs text-amber-600">{validation.error}</p>
                         </div>
@@ -154,7 +167,11 @@ export function FileUploadQueue({
                     </div>
 
                     {/* アクションボタン */}
-                    <div className="flex items-center gap-1 flex-shrink-0">
+                    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.25rem"
+    }}>
                       {uploadFile.status === 'error' && onRetry && (
                         <Button
                           variant="ghost"
@@ -201,7 +218,10 @@ export function FileUploadQueue({
 
       {/* サマリー */}
       <div className="pt-2 border-t border-gray-200">
-        <div className="flex items-center justify-between text-xs text-gray-600">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <span>
             成功: {files.filter(f => f.status === 'success').length} /
             エラー: {files.filter(f => f.status === 'error').length}

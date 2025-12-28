@@ -70,8 +70,15 @@ export function AnswerBlock({
   if (isLocked) {
     return (
       <div className={`bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg p-6 border border-amber-200 ${className}`}>
-        <div className="flex flex-col items-center text-center space-y-4">
-          <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
             <Lock className="w-6 h-6 text-amber-600" />
           </div>
           <div>
@@ -98,9 +105,18 @@ export function AnswerBlock({
       {/* ヘッダー */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-4 py-3 flex items-center justify-between hover:bg-blue-100 transition-colors"
+        style={{
+      display: "flex",
+      alignItems: "center",
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}
       >
-        <div className="flex items-center gap-2">
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
           {isExpanded ? (
             <ChevronUp className="w-4 h-4 text-blue-700" />
           ) : (
@@ -117,16 +133,29 @@ export function AnswerBlock({
 
       {/* 解答コンテンツ */}
       {isExpanded && (
-        <div className="px-4 pb-4 space-y-4">
+        <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
           {/* 解答 */}
           <div>
-            <div className="flex items-center justify-between mb-2">
+            <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <span className="text-sm font-medium text-blue-900">解答</span>
-              <div className="flex gap-2">
+              <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                 {canSwitchFormat && (
                   <button
                     onClick={handleAnswerFormatToggle}
-                    className="flex items-center gap-1 px-2 py-1 bg-white hover:bg-gray-50 rounded text-xs text-gray-700 transition-colors border border-gray-200"
+                    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.25rem"
+    }}
                   >
                     {currentAnswerFormat === 0 ? (
                       <>
@@ -161,10 +190,18 @@ export function AnswerBlock({
                   className="w-full min-h-[150px] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder={currentAnswerFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
                 />
-                <div className="flex gap-2">
+                <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                   <button
                     onClick={handleAnswerSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                   >
                     保存
                   </button>
@@ -173,7 +210,12 @@ export function AnswerBlock({
                       setEditAnswerContent(answerContent);
                       setIsEditingAnswer(false);
                     }}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                    style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                   >
                     キャンセル
                   </button>
@@ -193,13 +235,23 @@ export function AnswerBlock({
           {/* 解説 */}
           {explanation && (
             <div>
-              <div className="flex items-center justify-between mb-2">
+              <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                 <span className="text-sm font-medium text-blue-900">解説</span>
-                <div className="flex gap-2">
+                <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                   {canSwitchFormat && (
                     <button
                       onClick={handleExplanationFormatToggle}
-                      className="flex items-center gap-1 px-2 py-1 bg-white hover:bg-gray-50 rounded text-xs text-gray-700 transition-colors border border-gray-200"
+                      style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.25rem"
+    }}
                     >
                       {currentExplanationFormat === 0 ? (
                         <>
@@ -234,10 +286,18 @@ export function AnswerBlock({
                     className="w-full min-h-[150px] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={currentExplanationFormat === 0 ? 'Markdown形式で入力...' : 'LaTeX形式で入力...'}
                   />
-                  <div className="flex gap-2">
+                  <div style={{
+      display: "flex",
+      gap: "0.5rem"
+    }}>
                     <button
                       onClick={handleExplanationSave}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                      style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                     >
                       保存
                     </button>
@@ -246,7 +306,12 @@ export function AnswerBlock({
                         setEditExplanationContent(explanation);
                         setIsEditingExplanation(false);
                       }}
-                      className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                      style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
                     >
                       キャンセル
                     </button>

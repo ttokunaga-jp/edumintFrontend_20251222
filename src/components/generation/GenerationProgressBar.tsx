@@ -13,7 +13,9 @@ export const GenerationProgressBar: React.FC<Props> = ({ progress, phase, label 
 
   return (
     <div className="space-y-1">
-      <div className="flex justify-between text-xs text-gray-600">
+      <div style={{
+      display: "flex"
+    }}>
         <span>{text}</span>
         <span>{safeProgress}%</span>
       </div>

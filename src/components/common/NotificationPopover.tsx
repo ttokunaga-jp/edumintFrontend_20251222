@@ -113,12 +113,19 @@ export default function NotificationPopover({ isOpen, onClose }: NotificationPop
                 role="dialog"
                 aria-label="通知ポップオーバー"
             >
-                <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-white">
+                <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                     <h3 className="font-bold text-gray-900">通知</h3>
                 </div>
 
                 <div className="p-8 text-center bg-gray-50/50">
-                    <div className="mx-auto w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center mb-3 shadow-sm">
+                    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
                         <Bell className="h-6 w-6 text-gray-400" />
                     </div>
                     <h3 className="font-bold text-gray-900 mb-1">Coming Soon</h3>
@@ -141,14 +148,21 @@ export default function NotificationPopover({ isOpen, onClose }: NotificationPop
                 isOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible pointer-events-none"
             )}
             style={{ visibility: isOpen ? 'visible' : 'hidden' }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}}
         >
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+            <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                 <h3 className="font-bold text-gray-900">通知</h3>
             </div>
 
             <div className="p-8 text-center bg-gray-50/50">
-                <div className="mx-auto w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center mb-3 shadow-sm">
+                <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
                     <Bell className="h-6 w-6 text-gray-400" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-1">Coming Soon</h3>

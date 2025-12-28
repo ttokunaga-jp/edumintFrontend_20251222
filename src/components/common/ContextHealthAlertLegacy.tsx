@@ -57,7 +57,10 @@ export function ContextHealthAlert({
   return (
     <Alert className={`${config.className} ${className} mb-4`}>
       <Icon className={`size-4 ${config.iconClassName}`} />
-      <AlertTitle className="flex items-center justify-between">
+      <AlertTitle style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
         <span>{category}</span>
         {disableCTA && (
           <span className="text-xs font-normal opacity-75">
@@ -102,7 +105,10 @@ export function ServiceHealthSummary({ services, className = '' }: ServiceHealth
   if (alertServices.length === 0) {
     return (
       <div className={`border border-green-200 bg-green-50 rounded-xl p-6 ${className}`}>
-        <div className="flex items-center space-x-3">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <CheckCircle className="size-6 text-green-600" />
           <div>
             <h3 className="text-green-900">すべてのサービスが正常に稼働中</h3>
@@ -129,7 +135,9 @@ export function ServiceHealthSummary({ services, className = '' }: ServiceHealth
               className={`border rounded-xl p-4 ${service.status === 'operational' ? 'border-gray-200 bg-gray-50' : config.className
                 }`}
             >
-              <div className="flex items-start space-x-3">
+              <div style={{
+      display: "flex"
+    }}>
                 <Icon
                   className={`size-5 flex-shrink-0 mt-0.5 ${service.status === 'operational' ? 'text-gray-500' : config.iconClassName
                     }`}

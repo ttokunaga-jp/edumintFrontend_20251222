@@ -68,9 +68,18 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
       {/* ヘッダー */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-4 sm:px-6 py-4 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors border-b border-gray-100"
+        style={{
+      display: "flex",
+      alignItems: "center",
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}
       >
-        <div className="flex items-center gap-3">
+        <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}>
           <Settings className="w-5 h-5 text-indigo-600" />
           <div className="text-left">
             <h3 className="font-medium text-gray-900">問題設定</h3>
@@ -89,13 +98,20 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
         <div className="p-4 sm:p-6 space-y-6">
           {/* AI生成設定 */}
           <div className="space-y-4">
-            <h4 className="font-medium text-gray-900 flex items-center gap-2">
+            <h4 style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
               <span>AI生成設定</span>
               <Info className="w-4 h-4 text-gray-400" title="AIによる問題自動生成の設定" />
             </h4>
 
             {/* 自動生成オン/オフ */}
-            <label className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+            <label style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">自動問題生成</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -122,7 +138,10 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                   max="20"
                   value={settings.questionCount || 5}
                   onChange={(e) => handleNumberChange('questionCount', parseInt(e.target.value) || 5)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
                 />
                 <p className="text-xs text-gray-500">1〜20問の範囲で指定できます</p>
               </div>
@@ -134,7 +153,9 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                 <label className="block text-sm font-medium text-gray-700">
                   難易度レベル
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div style={{
+      gap: "0.75rem"
+    }}>
                   {difficultyOptions.map((option) => (
                     <label
                       key={option.value}
@@ -166,7 +187,9 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
                 <label className="block text-sm font-medium text-gray-700">
                   問題形式（複数選択可）
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div style={{
+      gap: "0.5rem"
+    }}>
                   {questionTypeOptions.map((type) => (
                     <label
                       key={type.id}
@@ -194,7 +217,10 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
           <div className="space-y-4 pt-6 border-t border-gray-200">
             <h4 className="font-medium text-gray-900">コンテンツ設定</h4>
 
-            <label className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+            <label style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">解答を含める</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -209,7 +235,10 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+            <label style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">解説を含める</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -225,7 +254,10 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+            <label style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">キーワード自動抽出</div>
                 <div className="text-xs text-gray-600 mt-0.5">
@@ -245,7 +277,10 @@ export function ProblemSettingsBlock({ settings, onChange, className = '' }: Pro
           <div className="space-y-4 pt-6 border-t border-gray-200">
             <h4 className="font-medium text-gray-900">公開設定</h4>
 
-            <label className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+            <label style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
               <div className="flex-1">
                 <div className="font-medium text-sm text-gray-900">公開する</div>
                 <div className="text-xs text-gray-600 mt-0.5">

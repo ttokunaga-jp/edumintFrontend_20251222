@@ -7,7 +7,11 @@ export function AdminModerationPage({
   onNavigate,
 }: AdminModerationPageProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
       <div className="bg-white shadow rounded-lg p-8 text-center space-y-4">
         <h1 className="text-2xl font-semibold text-gray-900">
           Admin Moderation
@@ -19,7 +23,7 @@ export function AdminModerationPage({
         {onNavigate && (
           <button
             className="text-indigo-600 hover:underline"
-            onClick={() => onNavigate("home")}
+            onClick={() => onNavigate("home")}}
           >
             Return to Home
           </button>

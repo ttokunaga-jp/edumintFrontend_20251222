@@ -17,7 +17,10 @@ export function StructureConfirmPage({ user, onNavigate, onLogout, mode }: Struc
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
+      <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
         <header className="space-y-1">
           <p className="text-sm text-gray-500">構造確認モード: {mode}</p>
           <h1 className="text-2xl font-semibold text-gray-900">StructureConfirmPage</h1>
@@ -32,32 +35,59 @@ export function StructureConfirmPage({ user, onNavigate, onLogout, mode }: Struc
           <p>学部: {user.facultyName || user.department || '未設定'}</p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
           <button
             type="button"
             onClick={proceedToGenerating}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-white shadow-sm transition-colors hover:bg-indigo-700"
+            style={{
+      borderRadius: "0.375rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
           >
             生成へ進む
           </button>
           <button
             type="button"
             onClick={goProblemView}
-            className="rounded-md border border-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-50"
+            style={{
+      borderRadius: "0.375rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
           >
             問題閲覧へ戻る
           </button>
           <button
             type="button"
             onClick={goHome}
-            className="rounded-md border border-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-50"
+            style={{
+      borderRadius: "0.375rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
           >
             ホームへ戻る
           </button>
           <button
             type="button"
             onClick={logout}
-            className="rounded-md border border-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-50"
+            style={{
+      borderRadius: "0.375rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
           >
             ログアウト
           </button>

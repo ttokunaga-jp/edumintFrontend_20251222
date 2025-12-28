@@ -21,11 +21,17 @@ export function ActionBar({
 
     return (
         <div className="fixed bottom-0 left-0 right-0 z-app-bar bg-white border-t border-gray-200 p-4 shadow-lg">
-            <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
                 <div className="text-sm text-gray-500">
                     編集モード：変更内容は「保存」するまで反映されません。
                 </div>
-                <div className="flex gap-3">
+                <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
                     {onReset && (
                         <Button variant="outline" onClick={onReset} disabled={isSaving}>
                             <RotateCcw className="w-4 h-4 mr-2" />

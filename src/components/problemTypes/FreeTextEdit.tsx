@@ -42,7 +42,10 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
   return (
     <div className="space-y-4">
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <label className="block text-sm font-medium text-gray-700">問題文</label>
           <button
             type="button"
@@ -60,7 +63,10 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
             onQuestionChange?.(e.target.value);
           }}
           aria-label="問題文入力"
-          className="w-full min-h-[160px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
           placeholder={questionFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
         />
         <div className="mt-3 rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm">
@@ -74,7 +80,10 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
       </div>
 
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <label className="block text-sm font-medium text-gray-700">解答 / メモ</label>
           <button
             type="button"
@@ -93,7 +102,10 @@ export default function FreeTextEdit(props: ProblemTypeEditProps) {
             onAnswerChange?.(next);
           }}
           aria-label="解答入力"
-          className="w-full min-h-[120px] rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          style={{
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
           placeholder={answerFmt === 0 ? 'Markdown 形式で入力...' : 'LaTeX 形式で入力...'}
         />
         <div className="mt-3 rounded-lg border border-gray-100 bg-blue-50 p-3 text-sm">

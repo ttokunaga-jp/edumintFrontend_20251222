@@ -175,7 +175,10 @@ export function HomePage({
       {/* TopMenuBar would be here in full app */}
 
       {/* 📍 Alert Insertion Point A: Search Status */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
         {(health.search === "degraded" ||
           health.search === "outage" ||
           health.search === "maintenance") && (
@@ -197,7 +200,10 @@ export function HomePage({
 
       {/* AdvancedSearchPanel */}
       <div className="py-6 lg:py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
           <AdvancedSearchPanel
             filters={filters}
             onFiltersChange={handleFiltersChange}
@@ -209,9 +215,18 @@ export function HomePage({
 
       {/* Sort Toggles & Count */}
       <div className="py-4 bg-gray-50 border-y border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-3">
+        <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
+          <div style={{
+      display: "flex"
+    }}>
+            <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}>
               <span className="text-sm text-gray-600">
                 並び替え:
               </span>
@@ -239,7 +254,7 @@ export function HomePage({
                       : "bg-white text-gray-700 border-gray-200 hover:bg-gray-100",
                     health.search !== "operational" &&
                     "opacity-50 cursor-not-allowed",
-                  )}
+                  )}}
                 >
                   {sortOption === "recommended" && "おすすめ"}
                   {sortOption === "newest" && "最新"}
@@ -257,7 +272,10 @@ export function HomePage({
 
       {/* ContentSection */}
       <div className="py-6 lg:py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
           {/* 📍 Alert Insertion Point B: Content Status */}
           {(health.content === "outage" ||
             health.content === "maintenance") && (
@@ -319,8 +337,15 @@ export function HomePage({
 
           {/* Pagination */}
           {!isLoading && problems.length > 0 && (
-            <div className="mt-6 flex justify-center">
-              <div className="flex items-center gap-2">
+            <div style={{
+      display: "flex",
+      justifyContent: "center"
+    }}>
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
                 <button
                   onClick={() =>
                     setCurrentPage(Math.max(1, currentPage - 1))
@@ -330,7 +355,7 @@ export function HomePage({
                     "h-9 px-4 rounded-lg border",
                     "hover:bg-gray-50 transition-colors",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
-                  )}
+                  )}}
                 >
                   ←
                 </button>
@@ -348,7 +373,7 @@ export function HomePage({
                     "h-9 px-4 rounded-lg border",
                     "hover:bg-gray-50 transition-colors",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
-                  )}
+                  )}}
                 >
                   →
                 </button>

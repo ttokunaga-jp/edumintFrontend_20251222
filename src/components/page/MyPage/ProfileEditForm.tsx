@@ -69,7 +69,11 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       <div className="space-y-6">
         {/* ユーザー名 */}
         <div>
-          <label className="flex items-center gap-2 text-gray-700 mb-2">
+          <label style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <UserIcon className="w-4 h-4" />
             <span>ユーザー名 <span className="text-red-500">*</span></span>
           </label>
@@ -89,7 +93,11 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
 
         {/* メールアドレス（表示のみ） */}
         <div>
-          <label className="flex items-center gap-2 text-gray-700 mb-2">
+          <label style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <Mail className="w-4 h-4" />
             <span>メールアドレス</span>
           </label>
@@ -97,7 +105,12 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
             type="email"
             value={user.email}
             disabled
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
+            style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
           />
           <p className="mt-1 text-xs text-gray-500">
             メールアドレスは変更できません
@@ -106,7 +119,11 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
 
         {/* 所属学部 */}
         <div>
-          <label className="flex items-center gap-2 text-gray-700 mb-2">
+          <label style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <Building2 className="w-4 h-4" />
             <span>所属学部</span>
           </label>
@@ -114,21 +131,35 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
             type="text"
             value={formData.department}
             onChange={(e) => handleChange('department', e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }
             placeholder="工学部"
           />
         </div>
 
         {/* 学問分野 */}
         <div>
-          <label className="flex items-center gap-2 text-gray-700 mb-2">
+          <label style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}>
             <BookOpen className="w-4 h-4" />
             <span>学問分野</span>
           </label>
           <select
             value={formData.academicField}
             onChange={(e) => handleChange('academicField', e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
           >
             <option value="science">理系</option>
             <option value="humanities">文系</option>
@@ -138,7 +169,10 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
 
         {/* 自己紹介 */}
         <div>
-          <label className="flex items-center justify-between text-gray-700 mb-2">
+          <label style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
             <span>自己紹介</span>
             <span className="text-xs text-gray-500">
               {formData.bio.length}/500文字
@@ -159,11 +193,23 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
       </div>
 
       {/* アクションボタン */}
-      <div className="flex gap-3 mt-6 pt-6 border-t border-gray-200">
+      <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
         <button
           type="submit"
           disabled={isLoading}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "0.5rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
         >
           <Save className="w-4 h-4" />
           <span>{isLoading ? '保存中...' : '変更を保存'}</span>
@@ -172,7 +218,12 @@ export function ProfileEditForm({ user, onSave, onCancel, className = '' }: Prof
           type="button"
           onClick={onCancel}
           disabled={isLoading}
-          className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem"
+    }}
         >
           <X className="w-4 h-4" />
         </button>

@@ -9,7 +9,13 @@ interface AuthLayoutProps {
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ title, description, children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4">
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
       <Card className="w-full max-w-3xl p-8 shadow-lg border border-gray-100">
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>

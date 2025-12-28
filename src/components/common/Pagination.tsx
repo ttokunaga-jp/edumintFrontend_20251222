@@ -26,7 +26,9 @@ const Pagination: React.FC<PaginationProps> = ({
         type="button"
         onClick={() => goTo(currentPage - 1)}
         disabled={currentPage === 1}
-        className="rounded-md border px-3 py-1 text-sm disabled:opacity-50"
+        style={{
+      borderRadius: "0.375rem"
+    }}
       >
         Prev
       </button>
@@ -37,7 +39,9 @@ const Pagination: React.FC<PaginationProps> = ({
         type="button"
         onClick={() => goTo(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="rounded-md border px-3 py-1 text-sm disabled:opacity-50"
+        style={{
+      borderRadius: "0.375rem"
+    }}
       >
         Next
       </button>

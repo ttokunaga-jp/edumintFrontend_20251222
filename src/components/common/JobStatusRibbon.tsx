@@ -148,10 +148,20 @@ export function JobStatusRibbon({
       role="status"
       aria-live="polite"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4"> {/* 16px gap (grid) */}
+      <div style={{
+      paddingLeft: "1rem",
+      paddingRight: "1rem"
+    }}>
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}> {/* 16px gap (grid) */}
           {/* Left: Icon + Status + Job ID */}
-          <div className="flex items-center gap-3"> {/* 12px gap (grid) */}
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem"
+    }}> {/* 12px gap (grid) */}
             <Icon
               className={cn(
                 'w-5 h-5',
@@ -171,7 +181,11 @@ export function JobStatusRibbon({
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-2"> {/* 8px gap (grid) */}
+          <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem"
+    }}> {/* 8px gap (grid) */}
             {status === 'processing' && onPause && (
               <Button variant="outline" size="sm" onClick={onPause}>
                 一時停止

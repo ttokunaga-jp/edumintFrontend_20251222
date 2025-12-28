@@ -30,8 +30,15 @@ export default function MultipleChoiceView(props: ProblemTypeViewProps) {
               showAnswer && opt.isCorrect ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-white'
             }`}
           >
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center text-xs">
+            <div style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
+              <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
                 {String.fromCharCode(65 + idx)}
               </div>
               <div className="flex-1 min-w-0">

@@ -38,7 +38,10 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
     <Card className="p-8 border-none shadow-xl bg-white/80 backdrop-blur-sm overflow-hidden relative">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-500" />
       <div className="space-y-8">
-        <div className="flex items-center justify-between">
+        <div style={{
+      display: "flex",
+      alignItems: "center"
+    }}>
           <div>
             <h3 className="text-xl font-bold text-gray-900">演習問題から生成</h3>
             <p className="text-sm text-gray-500">
@@ -64,8 +67,13 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
           </Select>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-indigo-200 transition-colors cursor-pointer">
+        <div style={{
+      gap: "0.75rem"
+    }}>
+          <label style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Checkbox
               checked={options.useDiagrams}
               onCheckedChange={() => handleCommonToggle('useDiagrams')}
@@ -77,7 +85,10 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
             </div>
           </label>
 
-          <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-indigo-200 transition-colors cursor-pointer">
+          <label style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Checkbox
               checked={options.confirmStructure}
               onCheckedChange={() => handleCommonToggle('confirmStructure')}
@@ -89,7 +100,10 @@ export function ExerciseOptions({ options, onChange }: ExerciseOptionsProps) {
             </div>
           </label>
 
-          <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 hover:border-indigo-200 transition-colors cursor-pointer">
+          <label style={{
+      display: "flex",
+      gap: "0.75rem"
+    }}>
             <Checkbox
               checked={options.isPublic}
               onCheckedChange={() => handleCommonToggle('isPublic')}
