@@ -34,7 +34,7 @@ const SearchInput = ({
             style={{
       paddingTop: "0.5rem",
       paddingBottom: "0.5rem"
-    }
+    }}
             onChange={onChange}
             onKeyDown={onKeyDown}
         />
