@@ -1,7 +1,7 @@
 // ========================================
 // EduMint - Service Health Store
 // Centralized service health monitoring with polling
-// Grid: 16/24/32px
+// : 16/24/32px
 // ======================================== import { useState, useEffect, useCallback, useRef } from 'react';
 import type { HealthStatus } from '@/types/health';
 import { getHealthContent, getHealthCommunity, getHealthNotifications, getHealthSearch, getHealthWallet, getHealthSummary, type HealthResponse, type HealthSummaryResponse } from '@/services/api/gateway/health'; /** * Service health state */

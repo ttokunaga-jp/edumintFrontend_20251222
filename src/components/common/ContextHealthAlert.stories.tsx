@@ -29,7 +29,7 @@ type Story = StoryObj<typeof ContextHealthAlert>; // ===========================
 }; export const C5_S4_Notification_Outage: Story = { name: 'C5-S4: 通知 - Outage', args: { id: 'alert-c5-s4', category: '通知・お知らせ', status: 'outage', message: '現在、通知機能が停止しているため、共有リンクの通知が送信されません。システム復旧後に自動的に送信されます。', action: { label: 'ステータスページを見る', onClick: () => window.open('https://status.edumint.example.com', '_blank'), }, },
 }; // ========================================
 // Multiple Alerts Demo
-// ======================================== export const MultipleAlerts: Story = { name: '複数アラート同時表示', render: () => ( <div > <ContextHealthAlert id="alert-1" category="コミュニティ機能" status="degraded" message="現在、いいね・コメント機能に遅延が発生しています。" disableCTA={true} /> <ContextHealthAlert id="alert-2" category="通知・お知らせ" status="outage" message="通知機能が停止しています。" action={{ label: '詳細を見る', onClick: () => console.log('View details'), }} /> </div> ),
+// ======================================== export const MultipleAlerts: Story = { name: '複数アラート同時表示', render: () => ( <div> <ContextHealthAlert id="alert-1" category="コミュニティ機能" status="degraded" message="現在、いいね・コメント機能に遅延が発生しています。" disableCTA={true} /> <ContextHealthAlert id="alert-2" category="通知・お知らせ" status="outage" message="通知機能が停止しています。" action={{ label: '詳細を見る', onClick: () => console.log('View details'), }} /> </div> ),
 }; // ========================================
 // With Close Button
 // ======================================== export const WithCloseButton: Story = { name: 'クローズボタン付き', args: { id: 'alert-closable', category: 'AI生成エンジン', status: 'degraded', message: 'AI生成に遅延が発生しています。', onClose: () => console.log('Alert closed'), },
