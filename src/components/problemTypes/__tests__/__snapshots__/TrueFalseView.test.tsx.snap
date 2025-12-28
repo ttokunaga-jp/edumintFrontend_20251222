@@ -9,7 +9,7 @@ exports[`TrueFalseView > renders question prompt 1`] = `
       </p>
     </div>
     <div
-      class="mt-2 flex gap-2"
+      style="display: flex; gap: 0.5rem;"
     >
       <div
         class="px-3 py-1 bg-white border rounded"
@@ -35,7 +35,7 @@ exports[`TrueFalseView > renders with answer shown 1`] = `
       </p>
     </div>
     <div
-      class="mt-2 flex gap-2"
+      style="display: flex; gap: 0.5rem;"
     >
       <div
         class="px-3 py-1 bg-white border rounded"

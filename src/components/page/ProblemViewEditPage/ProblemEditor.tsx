@@ -239,7 +239,7 @@ export function ProblemEditor({ exam, onChange, canEdit = true }: ProblemEditorP
                                 variant="outline"
                                 size="sm"
                                 className="mt-2 border-dashed ml-8"
-                                onClick={() => addSubQuestion(qIdx)}}
+                                onClick={() => addSubQuestion(qIdx)}
                             >
                                 <Plus className="mr-2 h-4 w-4" />
                                 小問を追加

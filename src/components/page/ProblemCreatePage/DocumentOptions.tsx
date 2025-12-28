@@ -198,7 +198,7 @@ export function DocumentOptions({ options, onChange }: DocumentOptionsProps) {
                           'flex items-center gap-2 rounded-lg border p-3 cursor-pointer transition-colors',
                           isChecked ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-gray-300',
                           options.formatConfig.isAuto && 'opacity-50 cursor-not-allowed',
-                        )}}
+                        )}
                       >
                         <input
                           type="checkbox"

@@ -23,7 +23,7 @@ export function AdminModerationPage({
         {onNavigate && (
           <button
             className="text-indigo-600 hover:underline"
-            onClick={() => onNavigate("home")}}
+            onClick={() => onNavigate("home")}
           >
             Return to Home
           </button>

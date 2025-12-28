@@ -46,11 +46,11 @@ export default function EditHistoryBlock({
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
             <Clock className="size-5 text-gray-500" />
             <CardTitle className="text-lg">編集履歴</CardTitle>
             <Badge variant="outline">v{currentVersion}</Badge>
@@ -86,11 +86,11 @@ export default function EditHistoryBlock({
                 >
                   <div style={{
       display: "flex"
-    }}>
+    }>
                     <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                       <Badge variant={item.version === currentVersion ? 'default' : 'secondary'}>
                         v{item.version}
                       </Badge>
@@ -121,7 +121,7 @@ export default function EditHistoryBlock({
                     <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                       <span>編集者: {item.changedBy}</span>
                       <span>•</span>
                       <span>{formatDate(item.changedAt)}</span>
@@ -135,7 +135,7 @@ export default function EditHistoryBlock({
                         {Object.entries(item.changes).slice(0, 3).map(([key, value]) => (
                           <div key={key} style={{
       display: "flex"
-    }}>
+    }>
                             <span className="font-medium min-w-[80px]">{key}:</span>
                             <span className="flex-1 truncate">
                               {typeof value === 'object' ? JSON.stringify(value) : String(value)}
@@ -159,7 +159,7 @@ export default function EditHistoryBlock({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setShowAll(!showAll)}}
+                    onClick={() => setShowAll(!showAll)}
                   >
                     {showAll ? '一部を表示' : `すべて表示 (${history.length}件)`}
                   </Button>

@@ -254,7 +254,7 @@ export function HomePage({
                       : "bg-white text-gray-700 border-gray-200 hover:bg-gray-100",
                     health.search !== "operational" &&
                     "opacity-50 cursor-not-allowed",
-                  )}}
+                    )}
                 >
                   {sortOption === "recommended" && "おすすめ"}
                   {sortOption === "newest" && "最新"}
@@ -355,7 +355,7 @@ export function HomePage({
                     "h-9 px-4 rounded-lg border",
                     "hover:bg-gray-50 transition-colors",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
-                  )}}
+                  )}
                 >
                   ←
                 </button>
@@ -373,7 +373,7 @@ export function HomePage({
                     "h-9 px-4 rounded-lg border",
                     "hover:bg-gray-50 transition-colors",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
-                  )}}
+                  )}
                 >
                   →
                 </button>

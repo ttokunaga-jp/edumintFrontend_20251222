@@ -123,11 +123,11 @@ export default function AdvancedSearchPanel({
       alignItems: "center",
       paddingLeft: "1rem",
       paddingRight: "1rem"
-    }}>
+    }>
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           <h3 className="font-medium">検索条件</h3>
           {activeFilterCount > 0 && (
             <Badge variant="secondary">{activeFilterCount}件の条件</Badge>
@@ -139,7 +139,7 @@ export default function AdvancedSearchPanel({
         <div style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
           {activeFilterCount > 0 && (
             <Button
               variant="ghost"
@@ -195,7 +195,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('universityId');
                       clearFilter('universityName');
-                    }}
+                    }}}
                   >
                     <X className="size-4" />
                   </Button>
@@ -227,7 +227,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('facultyId');
                       clearFilter('facultyName');
-                    }}
+                    }}}
                   >
                     <X className="size-4" />
                   </Button>
@@ -259,7 +259,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('subjectId');
                       clearFilter('subjectName');
-                    }}
+                    }}}
                   >
                     <X className="size-4" />
                   </Button>
@@ -294,7 +294,7 @@ export default function AdvancedSearchPanel({
                     onClick={() => {
                       clearFilter('teacherId');
                       clearFilter('teacherName');
-                    }}
+                    }}}
                   >
                     <X className="size-4" />
                   </Button>
@@ -321,13 +321,13 @@ export default function AdvancedSearchPanel({
                 <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
                   {recentYears.map(year => (
                     <Badge
                       key={year}
                       variant={filters.examYear === year ? 'default' : 'outline'}
                       className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
-                      onClick={() => !isDisabled && updateFilter('examYear', year)}}
+                      onClick={() => !isDisabled && updateFilter('examYear', year)}
                     >
                       {year}
                     </Badge>
@@ -376,7 +376,7 @@ export default function AdvancedSearchPanel({
             <Label>問題形式</Label>
             <div style={{
       gap: "0.5rem"
-    }}>
+    }>
               {problemFormats.map(format => (
                 <label
                   key={format.id}
@@ -420,7 +420,7 @@ export default function AdvancedSearchPanel({
             {filters.period === 'custom' && (
               <div style={{
       gap: "0.5rem"
-    }}>
+    }>
                 <div className="space-y-1">
                   <Label className="text-xs">開始日</Label>
                   <Input
@@ -469,7 +469,7 @@ export default function AdvancedSearchPanel({
             <div style={{
       display: "flex",
       gap: "0.5rem"
-    }}>
+    }>
               <span className="text-sm text-gray-500">適用中:</span>
               {Object.entries(filters).map(([key, value]) => {
                 if (key === 'sortBy' || key === 'page' || key === 'limit' || value === undefined) return null;
@@ -486,7 +486,7 @@ export default function AdvancedSearchPanel({
                   <Badge key={key} variant="secondary" style={{
       display: "flex",
       alignItems: "center"
-    }}>
+    }>
                     <span className="text-xs">{displayValue}</span>
                     <button
                       onClick={() => clearFilter(key as keyof SearchFilters)}

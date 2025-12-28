@@ -64,7 +64,7 @@ export function MyPage({
           variant="outline"
           size="sm"
           className="rounded-full text-xs font-medium"
-          onClick={() => onNavigate('home', viewAllFilter)}}
+          onClick={() => onNavigate('home', viewAllFilter)}
         >
           View all
         </Button>

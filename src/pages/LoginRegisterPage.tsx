@@ -39,7 +39,7 @@ export function LoginRegisterPage({ onLogin }: LoginRegisterPageProps) {
             className={cn(
               "flex-1 py-2 text-sm font-medium rounded-lg transition-all",
               activeTab === 'login' ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
-            )}}
+            )}
           >
             ログイン
           </button>
@@ -48,7 +48,7 @@ export function LoginRegisterPage({ onLogin }: LoginRegisterPageProps) {
             className={cn(
               "flex-1 py-2 text-sm font-medium rounded-lg transition-all",
               activeTab === 'register' ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
-            )}}
+            )}
           >
             新規登録
           </button>

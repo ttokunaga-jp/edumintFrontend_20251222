@@ -176,7 +176,7 @@ function ChartTooltipContent({
       className={cn(
         "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
         className,
-      )}}
+      )}
     >
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
@@ -191,7 +191,7 @@ function ChartTooltipContent({
               className={cn(
                 "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                 indicator === "dot" && "items-center",
-              )}}
+              )}
             >
               {formatter && item?.value !== undefined && item.name ? (
                 formatter(item.value, item.name, item, index, item.payload)
@@ -212,7 +212,7 @@ function ChartTooltipContent({
                             "my-0.5": nestLabel && indicator === "dashed",
                           },
                         )}
-                        style={{
+                        style={
                           {
                             "--color-bg": indicatorColor,
                             "--color-border": indicatorColor,
@@ -225,7 +225,7 @@ function ChartTooltipContent({
                     className={cn(
                       "flex flex-1 justify-between leading-none",
                       nestLabel ? "items-end" : "items-center",
-                    )}}
+                    )}
                   >
                     <div className="grid gap-1.5">
                       {nestLabel ? tooltipLabel : null}
