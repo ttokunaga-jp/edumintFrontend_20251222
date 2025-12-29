@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowJs": false
+  },
+  "files": ["src/.typecheck-stub.ts"],
+  "include": ["src/.typecheck-stub.ts"]
+}

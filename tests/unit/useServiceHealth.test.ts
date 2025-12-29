@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 import { useServiceHealth } from '@/hooks/useServiceHealth';
 
 const mockGetHealthContent = vi.fn();
@@ -58,7 +58,10 @@ describe('useServiceHealth', () => {
 
     mockGetHealthSearch.mockResolvedValueOnce({ status: 'operational', message: '', timestamp: '' });
 
-    result.current.refresh();
+    await act(async () => {
+      result.current.refresh();
+    });
+
     await waitFor(() => {
       expect(result.current.health.search).toBe('operational');
     });

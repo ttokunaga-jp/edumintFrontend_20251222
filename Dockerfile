@@ -8,7 +8,8 @@ ENV RUN_TESTS_ON_BUILD=${RUN_TESTS_ON_BUILD}
 
 # 依存をインストール（npm ci はプラットフォーム別 optional deps 差分で失敗するため npm install を使用）
 COPY package*.json ./
-RUN npm install
+# Use legacy-peer-deps to avoid ERESOLVE failures in environments with strict peer deps
+RUN npm install --legacy-peer-deps || npm install --force
 
 # ソースを配置
 COPY . .

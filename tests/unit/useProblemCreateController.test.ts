@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { useProblemCreateController } from '@/pages/ProblemCreatePage/hooks/useProblemCreateController';
 import { mockWebSocket } from '../../../vitest.setup';
 
@@ -40,12 +40,13 @@ describe('useProblemCreateController', () => {
         vi.clearAllMocks();
     });
 
-    it('initializes with correct default phase', () => {
+    it('initializes with correct default phase', async () => {
         const { result } = renderHook(() => useProblemCreateController({
             onNavigate: mockOnNavigate,
             onGenerated: mockOnGenerated
         }));
-        expect(result.current.phase).toBe('input');
+
+        await waitFor(() => expect(result.current.phase).toBe('input'));
     });
 
     it('exposes currentStep and errorCode from useJobStore', () => {
@@ -77,11 +78,7 @@ describe('useProblemCreateController', () => {
             shouldConfirmStructure: false,
         }));
 
-        // Wait enough time for polling to observe the structure_review and call confirm
-        await act(async () => {
-            await new Promise(resolve => setTimeout(resolve, 1200));
-        });
-
-        expect(mockConfirmStructure).toHaveBeenCalledWith('mock-job-id');
+        // Wait for the hook to poll and call confirmStructure
+        await waitFor(() => expect(mockConfirmStructure).toHaveBeenCalledWith('mock-job-id'), { timeout: 2000 });
     });
 });
