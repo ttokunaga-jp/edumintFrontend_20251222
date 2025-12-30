@@ -1,11 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+import { ProtectedRoute, AdminRoute } from './ProtectedRoute';
 
 // Lazy load pages to reduce initial bundle
 const HomePage = lazy(() => import('../pages/HomePage'));
 const LoginRegisterPage = lazy(() => import('../pages/LoginRegisterPage'));
 const MyPage = lazy(() => import('../pages/MyPage'));
 const AdminModerationPage = lazy(() => import('../pages/AdminModerationPage'));
+const ProblemCreatePage = lazy(() => import('../pages/ProblemCreatePage'));
+const ProblemViewEditPage = lazy(() => import('../pages/ProblemViewEditPage'));
 
 // Fallback component
 const PageLoader = () => <div>Loading...</div>;
@@ -17,8 +20,36 @@ export function Router() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginRegisterPage />} />
         <Route path="/register" element={<LoginRegisterPage mode="register" />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/admin" element={<AdminModerationPage />} />
+        
+        {/* Protected Routes */}
+        <Route
+          path="/problem/create"
+          element={
+            <ProtectedRoute>
+              <ProblemCreatePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/problem/:id" element={<ProblemViewEditPage />} />
+        <Route
+          path="/mypage"
+          element={
+            <ProtectedRoute>
+              <MyPage />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Admin Routes */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminModerationPage />
+            </AdminRoute>
+          }
+        />
+        
         {/* Additional routes can be added here */}
       </Routes>
     </Suspense>

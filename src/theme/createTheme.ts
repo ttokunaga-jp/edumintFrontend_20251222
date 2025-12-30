@@ -5,19 +5,24 @@ import { useMemo } from 'react';
 const lightPalette = {
   mode: 'light' as const,
   primary: {
-    main: '#1976d2',
-    light: '#42a5f5',
-    dark: '#1565c0',
+    main: '#00bcd4', // Light Cyan (水色)
+    light: '#4dd0e1',
+    dark: '#0097a7',
   },
   secondary: {
-    main: '#dc004e',
-    light: '#f05545',
-    dark: '#9a0036',
+    main: '#00acc1',
+    light: '#26c6da',
+    dark: '#00838f',
   },
   background: {
-    default: '#fafafa',
+    default: '#ffffff',
     paper: '#ffffff',
   },
+  text: {
+    primary: '#000000', // 黒
+    secondary: 'rgba(0, 0, 0, 0.6)',
+  },
+  divider: '#e0e0e0',
   error: {
     main: '#d32f2f',
   },
@@ -28,26 +33,31 @@ const lightPalette = {
     main: '#388e3c',
   },
   info: {
-    main: '#0288d1',
+    main: '#00bcd4',
   },
 };
 
 const darkPalette = {
   mode: 'dark' as const,
   primary: {
-    main: '#90caf9',
-    light: '#b3e5fc',
-    dark: '#42a5f5',
+    main: '#4dd0e1', // Light Cyan light version
+    light: '#80deea',
+    dark: '#00bcd4',
   },
   secondary: {
-    main: '#f48fb1',
-    light: '#f6a4d3',
-    dark: '#e91e8c',
+    main: '#26c6da',
+    light: '#80deea',
+    dark: '#00acc1',
   },
   background: {
     default: '#121212',
     paper: '#1e1e1e',
   },
+  text: {
+    primary: '#ffffff', // 白
+    secondary: 'rgba(255, 255, 255, 0.6)',
+  },
+  divider: '#303030',
   error: {
     main: '#ef5350',
   },
@@ -58,7 +68,7 @@ const darkPalette = {
     main: '#66bb6a',
   },
   info: {
-    main: '#29b6f6',
+    main: '#4dd0e1',
   },
 };
 
@@ -123,20 +133,48 @@ export function useTheme() {
           },
         },
         shape: {
-          borderRadius: 8,
+          borderRadius: 12,
         },
         components: {
+          MuiCssBaseline: {
+            styleOverrides: {
+              body: {
+                backgroundColor: prefersDarkMode ? '#121212' : '#ffffff',
+                color: prefersDarkMode ? '#ffffff' : '#000000',
+              },
+            },
+          },
+          MuiAppBar: {
+            styleOverrides: {
+              root: {
+                backgroundColor: prefersDarkMode ? '#1e1e1e' : '#ffffff',
+                color: prefersDarkMode ? '#ffffff' : '#000000',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                borderBottom: `1px solid ${prefersDarkMode ? '#303030' : '#e0e0e0'}`,
+              },
+            },
+          },
           MuiButton: {
             styleOverrides: {
               root: {
                 textTransform: 'none',
                 fontWeight: 600,
-                padding: '8px 16px',
+                padding: '10px 20px',
+                borderRadius: '10px',
+                transition: 'all 0.2s ease',
               },
               contained: {
-                boxShadow: 'none',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
                 '&:hover': {
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
+                  transform: 'translateY(-2px)',
+                },
+              },
+              outlined: {
+                borderColor: prefersDarkMode ? '#444' : '#d0d0d0',
+                '&:hover': {
+                  borderColor: prefersDarkMode ? '#555' : '#b0b0b0',
+                  backgroundColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
                 },
               },
             },
@@ -149,8 +187,21 @@ export function useTheme() {
             styleOverrides: {
               root: {
                 '& .MuiOutlinedInput-root': {
-                  backgroundColor:
-                    prefersDarkMode ? 'rgba(255, 255, 255, 0.02)' : 'transparent',
+                  backgroundColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.05)' : '#f8f8f8',
+                  borderRadius: '10px',
+                  transition: 'all 0.2s ease',
+                  '& fieldset': {
+                    borderColor: prefersDarkMode ? '#333' : '#e0e0e0',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: prefersDarkMode ? '#444' : '#c0c0c0',
+                  },
+                  '&.Mui-focused': {
+                    backgroundColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.08)' : '#ffffff',
+                    '& fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                  },
                 },
               },
             },
@@ -158,11 +209,110 @@ export function useTheme() {
           MuiCard: {
             styleOverrides: {
               root: {
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.06)',
+                borderRadius: '16px',
+                border: 'none',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                backgroundColor: prefersDarkMode ? '#1e1e1e' : '#ffffff',
                 '&:hover': {
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                  transition: 'box-shadow 0.3s ease',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+                  transform: 'translateY(-4px)',
                 },
+              },
+            },
+          },
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                backgroundImage: 'none',
+                backgroundColor: prefersDarkMode ? '#1e1e1e' : '#ffffff',
+              },
+              elevation0: {
+                boxShadow: 'none',
+              },
+              elevation1: {
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+              },
+              elevation2: {
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
+              },
+              elevation3: {
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+              },
+            },
+          },
+          MuiChip: {
+            styleOverrides: {
+              root: {
+                borderRadius: '8px',
+                fontWeight: 500,
+              },
+              filled: {
+                backgroundColor: prefersDarkMode ? '#333' : '#f0f0f0',
+                '&.MuiChip-colorPrimary': {
+                  backgroundColor: '#00bcd4',
+                  color: '#ffffff',
+                },
+              },
+              outlined: {
+                borderColor: prefersDarkMode ? '#444' : '#d0d0d0',
+                '&.MuiChip-colorPrimary': {
+                  borderColor: '#00bcd4',
+                  color: '#00bcd4',
+                },
+              },
+            },
+          },
+          MuiLinearProgress: {
+            styleOverrides: {
+              root: {
+                height: 6,
+                borderRadius: '3px',
+                backgroundColor: prefersDarkMode ? '#303030' : '#e0e0e0',
+              },
+              bar: {
+                borderRadius: '3px',
+                backgroundImage: `linear-gradient(90deg, #00bcd4, #4dd0e1)`,
+              },
+            },
+          },
+          MuiTabs: {
+            styleOverrides: {
+              root: {
+                borderBottom: `1px solid ${prefersDarkMode ? '#303030' : '#e0e0e0'}`,
+              },
+              indicator: {
+                backgroundColor: '#00bcd4',
+                height: 3,
+                borderRadius: '3px 3px 0 0',
+              },
+            },
+          },
+          MuiAvatar: {
+            styleOverrides: {
+              root: {
+                backgroundColor: '#00bcd4',
+                color: '#ffffff',
+                fontWeight: 600,
+              },
+            },
+          },
+          MuiIconButton: {
+            styleOverrides: {
+              root: {
+                borderRadius: '8px',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  backgroundColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)',
+                },
+              },
+            },
+          },
+          MuiDrawer: {
+            styleOverrides: {
+              paper: {
+                backgroundColor: prefersDarkMode ? '#1e1e1e' : '#ffffff',
+                borderRight: `1px solid ${prefersDarkMode ? '#303030' : '#e0e0e0'}`,
               },
             },
           },

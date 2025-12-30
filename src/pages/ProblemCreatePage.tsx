@@ -1,75 +1,68 @@
-import { Box, Container, LinearProgress, Stack, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Button } from '@mui/material';
+import { Box, Container, LinearProgress, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useGenerationStore } from '@/features/generation/stores/generationStore';
 import { StartPhase } from '@/components/page/ProblemCreatePage/StartPhase';
-import { AnalysisPhase } from '@/components/page/ProblemCreatePage/AnalysisPhase';
 import { StructureConfirmation } from '@/components/page/ProblemCreatePage/StructureConfirmation';
-import { GenerationPhase } from '@/components/page/ProblemCreatePage/GenerationPhase';
 import { ResultEditor } from '@/components/page/ProblemCreatePage/ResultEditor';
 
 /**
  * 問題作成ページ
- * 5段階のフロー:
- * 1. start - ファイルアップロード、生成モード選択、オプション設定
- * 2. analyzing - AI構造解析（ローディング）
- * 3. structure_confirmed - 解析結果確認
- * 4. generating - 問題生成（ローディング）
- * 5. completed - 結果編集・公開
+ * 3フェーズのシンプルなフロー:
+ * 1. start - ファイルアップロード、生成モード選択、設定
+ * 2. structure_confirmed - 構造解析結果確認
+ * 3. completed - 最終結果編集
  */
 export default function ProblemCreatePage() {
   const navigate = useNavigate();
+  const theme = useTheme();
   const { phase, reset } = useGenerationStore();
 
-  const phaseLabels = {
-    start: '1. ファイル・テキスト入力',
-    analyzing: '2. 構造解析中',
-    structure_confirmed: '3. 構造確認',
-    generating: '4. 問題生成中',
-    completed: '5. 結果編集',
-  };
+  // 3フェーズに統合
+  const displayPhase = 
+    phase === 'analyzing' ? 'start' :
+    phase === 'generating' ? 'structure_confirmed' :
+    phase;
 
-  const phaseOrder = ['start', 'analyzing', 'structure_confirmed', 'generating', 'completed'] as const;
-  const currentPhaseIndex = phaseOrder.indexOf(phase as any);
-  const progress = ((currentPhaseIndex + 1) / phaseOrder.length) * 100;
-
-  const handleClose = () => {
-    reset();
-    navigate('/');
-  };
+  const phaseOrder = ['start', 'structure_confirmed', 'completed'] as const;
+  const displayPhaseIndex = phaseOrder.indexOf(displayPhase as any);
+  const progress = ((displayPhaseIndex + 1) / phaseOrder.length) * 100;
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ py: 4 }}>
-        {/* ヘッダー */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
-          <Button startIcon={<ArrowBackIcon />} onClick={handleClose} variant="text">
-            戻る
-          </Button>
-          <Typography variant="h3">問題を生成</Typography>
-        </Box>
-
-        {/* 進捗バー */}
-        <Box sx={{ mb: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="subtitle2">{phaseLabels[phase]}</Typography>
-            <Typography variant="caption" color="text.secondary">
-              {currentPhaseIndex + 1} / {phaseOrder.length}
-            </Typography>
-          </Box>
-          <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 1 }} />
-        </Box>
-
-        {/* フェーズコンテンツ */}
-        <Stack sx={{ mb: 4 }}>
-          {phase === 'start' && <StartPhase />}
-          {phase === 'analyzing' && <AnalysisPhase />}
-          {phase === 'structure_confirmed' && <StructureConfirmation />}
-          {phase === 'generating' && <GenerationPhase />}
-          {phase === 'completed' && <ResultEditor />}
-        </Stack>
+    <>
+      {/* 固定プログレスバー */}
+      <Box sx={{ 
+        position: 'sticky', 
+        top: 64, // TopMenuBar の高さ
+        zIndex: 99, 
+        backgroundColor: 'background.paper', 
+        borderBottom: `1px solid ${theme.palette.divider}` 
+      }}>
+        <LinearProgress 
+          variant="determinate" 
+          value={progress} 
+          sx={{ 
+            height: 6,
+            background: theme.palette.mode === 'dark' ? '#303030' : '#e0e0e0',
+            '& .MuiLinearProgress-bar': {
+              backgroundImage: `linear-gradient(90deg, #00bcd4, #4dd0e1)`,
+              borderRadius: '3px',
+            },
+          }} 
+        />
       </Box>
-    </Container>
+
+      <Container maxWidth="md">
+        <Box sx={{ py: 2 }}>
+          {/* フェーズコンテンツ */}
+          <Stack sx={{ mb: 4 }}>
+            {phase === 'start' && <StartPhase />}
+            {phase === 'analyzing' && <StartPhase />}
+            {phase === 'structure_confirmed' && <StructureConfirmation />}
+            {phase === 'generating' && <StructureConfirmation />}
+            {phase === 'completed' && <ResultEditor />}
+          </Stack>
+        </Box>
+      </Container>
+    </>
   );
 }

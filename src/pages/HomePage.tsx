@@ -2,7 +2,6 @@ import {
   Container,
   Box,
   Typography,
-  TextField,
   Button,
   CircularProgress,
   Card,
@@ -20,12 +19,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useSearch } from '@/features/content/hooks/useContent';
-import { SearchSection } from '@/components/page/HomePage/SearchSection';
 import { AdvancedSearchPanel, SearchFilters } from '@/components/page/HomePage/AdvancedSearchPanel';
 
 export function HomePage() {
   const [keyword, setKeyword] = useState('');
-  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'recommended' | 'views'>('newest');
+  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'recommended' | 'views'>('recommended');
   const [filters, setFilters] = useState<SearchFilters>({});
   const [page, setPage] = useState(1);
   
@@ -37,47 +35,27 @@ export function HomePage() {
     limit: 12,
   });
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPage(1);
-  };
-
   const handleFiltersChange = (newFilters: SearchFilters) => {
     setFilters(newFilters);
     setPage(1);
   };
 
   return (
-    <Box>
-      {/* ヒーロー/検索セクション */}
-      <SearchSection />
-
+    <Box sx={{ width: '100%' }}>
       <Container maxWidth="lg">
         <Box sx={{ py: 4 }}>
-          {/* 検索フォーム */}
-          <Box component="form" onSubmit={handleSearch} sx={{ mb: 4 }}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 3 }}>
-              <TextField
-                fullWidth
-                placeholder="キーワードで検索 (例: 微分積分、線形代数)"
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                disabled={isLoading}
-              />
-              <Button
-                variant="contained"
-                endIcon={<SearchIcon />}
-                type="submit"
-                disabled={isLoading}
-                sx={{ minWidth: 120 }}
-              >
-                検索
-              </Button>
-            </Stack>
+          {/* 詳細検索パネル */}
+          <Box sx={{ mb: 3 }}>
+            <AdvancedSearchPanel
+              filters={filters}
+              onFiltersChange={handleFiltersChange}
+              isOpen={Object.keys(filters).length > 0}
+            />
+          </Box>
 
-            {/* ソート選択 */}
-            <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-              {(['recommended', 'newest', 'popular', 'views'] as const).map((sort) => (
+          {/* ソート選択 */}
+          <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
+            {(['recommended', 'newest', 'popular', 'views'] as const).map((sort) => (
                 <Chip
                   key={sort}
                   label={
@@ -98,14 +76,6 @@ export function HomePage() {
                 />
               ))}
             </Stack>
-
-            {/* 詳細検索パネル */}
-            <AdvancedSearchPanel
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
-              isOpen={Object.keys(filters).length > 0}
-            />
-          </Box>
 
           {/* エラー表示 */}
           {error && (

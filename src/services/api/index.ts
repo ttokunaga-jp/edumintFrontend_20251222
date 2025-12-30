@@ -1,2 +1,3 @@
-// API Service exports
-export * from './gateway';
+// API Service exports - features handle API calls directly
+export { default as axios } from '@/lib/axios';
+export * from './httpClient';

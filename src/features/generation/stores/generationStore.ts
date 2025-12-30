@@ -1,14 +1,12 @@
 import { create } from 'zustand';
 
 /**
- * 生成フェーズの状態遷移:
+ * 生成フェーズの状態遷移（3フェーズに統合）:
  * - start: 生成開始（ファイルアップロード・オプション設定）
- * - analyzing: 問題構造を解析中
  * - structure_confirmed: 構造解析完了・確認ページ
- * - generating: 演習問題を生成中
  * - completed: 生成完了・編集可能
  */
-export type GenerationPhase = 'start' | 'analyzing' | 'structure_confirmed' | 'generating' | 'completed';
+export type GenerationPhase = 'start' | 'structure_confirmed' | 'completed';
 
 export type GenerationMode = 'exercise' | 'document';
 

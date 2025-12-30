@@ -10,6 +10,7 @@ import {
   Alert,
   CircularProgress,
   Stack,
+  Divider,
 } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -121,6 +122,52 @@ export function LoginRegisterPage({ mode = 'login' }: LoginRegisterPageProps) {
             <Alert severity="error" sx={{ mb: 2 }}>
               {error}
             </Alert>
+          )}
+
+          {/* ソーシャルログイン（ログインモード時のみ） */}
+          {activeTab === 'login' && (
+            <>
+              <Stack spacing={2} sx={{ mb: 3 }}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="large"
+                  disabled={isLoading}
+                  onClick={() => {
+                    addNotification('Google ログインは現在実装中です', 'info', 3000);
+                  }}
+                >
+                  Google でログイン
+                </Button>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="large"
+                  disabled={isLoading}
+                  onClick={() => {
+                    addNotification('Microsoft ログインは現在実装中です', 'info', 3000);
+                  }}
+                >
+                  Microsoft でログイン
+                </Button>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="large"
+                  disabled={isLoading}
+                  onClick={() => {
+                    addNotification('大学メールログインは現在実装中です', 'info', 3000);
+                  }}
+                >
+                  大学メール (.ac.jp) でログイン
+                </Button>
+              </Stack>
+              <Divider sx={{ my: 2 }}>
+                <Typography variant="body2" color="textSecondary">
+                  または
+                </Typography>
+              </Divider>
+            </>
           )}
 
           <Box component="form" onSubmit={handleSubmit}>

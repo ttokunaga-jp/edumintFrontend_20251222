@@ -9,6 +9,8 @@ import { queryClient } from '../lib/query-client';
 import '../lib/i18n';
 import { NotificationProvider } from '@/contexts/NotificationContext';
 import { NotificationCenter } from '@/components/common/NotificationCenter';
+import { AppLayout } from './AppLayout';
+import { Router } from './router';
 
 const lightTheme = createTheme({
   palette: {
@@ -40,7 +42,9 @@ export function AppProviders({ children }: PropsWithChildren) {
         <BrowserRouter>
           <NotificationProvider>
             <NotificationCenter />
-            {children}
+            <AppLayout>
+              <Router />
+            </AppLayout>
           </NotificationProvider>
         </BrowserRouter>
       </QueryClientProvider>
