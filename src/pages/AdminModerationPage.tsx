@@ -1,15 +1,16 @@
 import { Container, Box, Typography } from '@mui/material';
 
-export default function AdminModerationPage() {
+export function AdminModerationPage() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
-        <Typography variant="h2">Admin Moderation</Typography>
+        <Typography variant="h4">管理画面 - モデレーション</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
-          Admin dashboard placeholder
+          このページは開発中です。
         </Typography>
       </Box>
     </Container>
   );
 }
 
+export default AdminModerationPage;

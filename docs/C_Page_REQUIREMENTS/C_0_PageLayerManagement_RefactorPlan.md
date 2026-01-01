@@ -31,7 +31,7 @@
 - フェーズ B: コアコンポーネントの置換（段階的） — 期間目安: 1–2週
   - `Dialog`, `AlertDialog`, `CommandDialog` の順で `NativeDialog` へ移行。最初は UI/見た目の互換性を保つ。
   - Backdrop スタイリングを `::backdrop` に移行し、`z-index` クラスを削除。
-  - 各ページ（`ProblemCreatePage`, `ProblemViewEditPage`, `LoginRegisterPage`, `AdminModerationPage`, `MyPage`, `HomePage` 等）でモーダル起点の箇所を確認し、1ページずつ切替・検証を行う。
+  - 各ページ（`ProblemCreatePage`, `ProblemViewEditPage`, `LoginRegisterPage`, `MyPage`, `HomePage` 等）でモーダル起点の箇所を確認し、1ページずつ切替・検証を行う。
 
 - フェーズ C: Popover/Tooltip の移行と最適化 — 期間目安: 1週
   - Popover API を導入できる箇所は置き換え。CSS Anchor Positioning を使って位置調整を行う。

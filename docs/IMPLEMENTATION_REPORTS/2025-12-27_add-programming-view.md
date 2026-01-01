@@ -15,6 +15,9 @@ file_count_delta: 2
 time_spent_hours: 0.7
 ---
 
+> NOTE: As of 2025-12-31 the per-type View components were consolidated into `NormalSubQuestionView`. The original `ProgrammingView` file has been removed and its functionality unified. This implementation report is kept for historical record.
+
+
 ## 概要
 プログラミング問題の表示コンポーネントに Storybook ストーリーと snapshot テストを追加しました。
 

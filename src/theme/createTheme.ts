@@ -139,86 +139,56 @@ export function useTheme() {
           MuiCssBaseline: {
             styleOverrides: {
               '@global': {
-                '@keyframes slide-in': {
-                  from: {
-                    opacity: 0,
-                    transform: 'translateX(100%)',
-                  },
-                  to: {
-                    opacity: 1,
-                    transform: 'translateX(0)',
-                  },
-                },
-                '@keyframes slide-out': {
-                  from: {
-                    opacity: 1,
-                    transform: 'translateX(0)',
-                  },
-                  to: {
-                    opacity: 0,
-                    transform: 'translateX(100%)',
-                  },
-                },
-                '@keyframes scale-in': {
-                  from: {
-                    opacity: 0,
-                    transform: 'scale(0.95)',
-                  },
-                  to: {
-                    opacity: 1,
-                    transform: 'scale(1)',
-                  },
-                },
-                '*': {
+                html: {
                   margin: 0,
                   padding: 0,
-                  boxSizing: 'border-box',
+                  colorScheme: prefersDarkMode ? 'dark' : 'light',
                 },
-                'html, body, #root': {
-                  height: '100%',
-                  fontFamily: [
-                    '-apple-system',
-                    'BlinkMacSystemFont',
-                    '"Segoe UI"',
-                    '"Roboto"',
-                    '"Oxygen"',
-                    '"Ubuntu"',
-                    '"Cantarell"',
-                    '"Fira Sans"',
-                    '"Droid Sans"',
-                    '"Helvetica Neue"',
-                    'sans-serif',
-                  ].join(','),
-                  WebkitFontSmoothing: 'antialiased',
-                  MozOsxFontSmoothing: 'grayscale',
+                '@keyframes slide-in': {
+                  from: { opacity: 0, transform: 'translateX(100%)' },
+                  to: { opacity: 1, transform: 'translateX(0)' },
                 },
-                code: {
-                  fontFamily: 'source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace',
+                '@keyframes slide-out': {
+                  from: { opacity: 1, transform: 'translateX(0)' },
+                  to: { opacity: 0, transform: 'translateX(100%)' },
                 },
-                'img, svg, video, canvas': {
-                  maxWidth: '100%',
-                  height: 'auto',
-                  display: 'block',
-                },
-                'button, input, select, textarea': {
-                  font: 'inherit',
-                },
-                'iframe[src*="/mockServiceWorker.js"]': {
-                  display: 'none !important',
+                '@keyframes scale-in': {
+                  from: { opacity: 0, transform: 'scale(0.95)' },
+                  to: { opacity: 1, transform: 'scale(1)' },
                 },
               },
               body: {
+                margin: 0,
+                padding: 0,
                 backgroundColor: prefersDarkMode ? '#121212' : '#ffffff',
                 color: prefersDarkMode ? '#ffffff' : '#000000',
+                fontFamily: [
+                  '-apple-system',
+                  'BlinkMacSystemFont',
+                  '"Segoe UI"',
+                  '"Roboto"',
+                  '"Oxygen"',
+                  '"Ubuntu"',
+                  '"Cantarell"',
+                  '"Fira Sans"',
+                  '"Droid Sans"',
+                  '"Helvetica Neue"',
+                  'sans-serif',
+                ].join(','),
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
               },
             },
           },
           MuiAppBar: {
             styleOverrides: {
               root: {
+                margin: 0,
+                padding: 0,
+                width: '100%',
                 backgroundColor: prefersDarkMode ? '#1e1e1e' : '#ffffff',
                 color: prefersDarkMode ? '#ffffff' : '#000000',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                boxShadow: 'none',
                 borderBottom: `1px solid ${prefersDarkMode ? '#303030' : '#e0e0e0'}`,
               },
             },
@@ -228,23 +198,30 @@ export function useTheme() {
               root: {
                 textTransform: 'none',
                 fontWeight: 600,
-                padding: '10px 20px',
-                borderRadius: '12px',
                 transition: 'all 0.2s ease',
               },
               contained: {
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+                boxShadow: 'none',
                 '&:hover': {
-                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
-                  transform: 'translateY(-2px)',
+                  boxShadow: 'none',
                 },
               },
               outlined: {
-                borderColor: prefersDarkMode ? '#444' : '#d0d0d0',
+                borderColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)',
                 '&:hover': {
-                  borderColor: prefersDarkMode ? '#555' : '#b0b0b0',
+                  borderColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.4)',
                   backgroundColor: prefersDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
                 },
+              },
+            },
+          },
+          MuiToolbar: {
+            styleOverrides: {
+              root: {
+                margin: 0,
+                padding: 0,
+                minHeight: 64,
+                height: 64,
               },
             },
           },

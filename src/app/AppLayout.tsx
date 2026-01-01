@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { TopMenuBar } from '@/components/common/TopMenuBar';
 
@@ -7,41 +6,23 @@ interface AppLayoutProps {
 }
 
 /**
- * AppLayout Component
- * グローバルレイアウト
- * - TopMenuBar（ログイン/登録ページを除く）
- * - ページコンテンツ
+ * AppLayout - Global responsive layout container
+ * Uses Flexbox for reliable height and scroll management
+ * Fully responsive - no hardcoded pixel values
  */
 export function AppLayout({ children }: AppLayoutProps) {
   const location = useLocation();
-
-  // TopMenuBar を非表示にするパス
-  const hideTopMenuBarPaths = ['/login', '/register'];
-  const shouldShowTopMenuBar = !hideTopMenuBarPaths.includes(location.pathname);
+  const shouldShowTopMenuBar = !['/login', '/register'].includes(location.pathname);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-      }}
-    >
-      {/* TopMenuBar */}
-      {shouldShowTopMenuBar && <TopMenuBar />}
-
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flex: 1,
-          width: '100%',
-        }}
-      >
-        {children}
-      </Box>
-    </Box>
+    <div className="app-layout">
+      {shouldShowTopMenuBar && (
+        <div className="app-topbar">
+          <TopMenuBar />
+        </div>
+      )}
+      <main className="app-main">{children}</main>
+    </div>
   );
 }
 

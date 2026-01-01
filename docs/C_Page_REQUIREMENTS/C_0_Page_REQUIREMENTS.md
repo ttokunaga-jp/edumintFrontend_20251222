@@ -191,13 +191,59 @@ NFR-OPS-001:
 ```
 
 ## ページ/コンポーネント別要件ドキュメントへの分割
-- ページ: `C_1_HomePage_REQUIREMENTS.md`, `C_2_ProblemCreatePage_REQUIREMENTS.md`（ProblemCreate: Submit+StructureConfirm+Generating 統合）, `C_3_ProblemViewEditPage_REQUIREMENTS.md`（編集機能は現在非動作→必須修正を明記）, `C_4_MyPage_REQUIREMENTS.md`, `C_5_LoginRegisterPage_REQUIREMENTS.md`。提案追加: `C_6_AdminModerationPage_REQUIREMENTS.md`, `C_7_GeneratingPage_REQUIREMENTS.md`（ProblemCreate の統合ステップ要件）。
-- コンポーネント: `D_0_CommonComponent_REQUIREMENTS.md`, `D_1_HomeSearchComponent_REQUIREMENTS.md`, `D_2_ProblemSubmitComponent_REQUIREMENTS.md`（ProblemCreate）, `D_3_ProblemViewEditComponent_REQUIREMENTS.md`, `D_4_MyPageComponent_REQUIREMENTS.md`, `D_5_LoginRegisterComponent_REQUIREMENTS.md`, `D_6_AdminModerationComponent_REQUIREMENTS.md`.
+- ページ: `C_1_HomePage_REQUIREMENTS.md`, `C_2_ProblemCreatePage_REQUIREMENTS.md`（ProblemCreate: Submit+StructureConfirm+Generating 統合）, `C_3_ProblemViewEditPage_REQUIREMENTS.md`（編集機能は現在非動作→必須修正を明記）, `C_4_MyPage_REQUIREMENTS.md`, `C_5_LoginRegisterPage_REQUIREMENTS.md`。提案追加: `C_7_GeneratingPage_REQUIREMENTS.md`（ProblemCreate の統合ステップ要件）。
+- コンポーネント: `D_0_CommonComponent_REQUIREMENTS.md`, `D_1_HomeSearchComponent_REQUIREMENTS.md`, `D_2_ProblemSubmitComponent_REQUIREMENTS.md`（ProblemCreate）, `D_3_ProblemViewEditComponent_REQUIREMENTS.md`, `D_4_MyPageComponent_REQUIREMENTS.md`, `D_5_LoginRegisterComponent_REQUIREMENTS.md`.
 - 編集機能の現状: ProblemView の編集が動作していないため、`C_3_ProblemViewEditPage_REQUIREMENTS.md` / `D_3_ProblemViewEditComponent_REQUIREMENTS.md` に修正要件を必須で記載。
 - 実装指針: 各ページごとに tsx を作成し、内部ブロックは「共通コンポーネント vs 画面専用コンポーネント」を分離。再利用が確認できたら共通側にファイル移動で複数画面へ展開。
 
 ## レイヤー規格（z-indexと重なり順の統一ルール）
 - 目的: トップバーより前面に通常コンテンツがかぶる等の不具合を防ぎ、全ページで一貫した重なり順を維持する。
+
+## トップメニューのレスポンシブ表示（`更新閲覧編集` ボタンの有無による振る舞い）
+以下はトップメニュー（ハンバーガー / ロゴ / 検索 / 更新閲覧編集 / ＋ / 通知 / アバター）の表示・非表示ルールを、ページが「編集可能（編集・プレビュー切替 / 内容を更新ボタンが存在）」か「閲覧専用（これらのボタンがない）」かで分岐して整理したものです。UIは MUI v6 のコンポーネントと `sx` によるテーマ参照で実装し、カスタムCSSや Tailwind は使わないものとします。
+
+### 概要
+- 編集ボタン等がある場合、これらは優先度が高く、横幅が狭くなると他の要素（＋ / 通知 / アバター / ロゴ 等）が先に非表示になります。
+- ボタン群はMUIの`Hidden`/`useMediaQuery`もしくは`sx`のレスポンシブ指定で切り替えます。
+
+### 1. 編集・プレビュー切り替え / 内容を更新ボタンが「ない」場合（閲覧モード想定）
+
+| 幅 | ハンバーガー | ロゴ | 検索 | 更新閲覧編集 | ＋ | 通知 | アバター |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **640px+** | 64px | 196px | 196px以上 | ✗ | 64px | 64px | 64px |
+| **576-640px** | 64px | 196px | 196px | ✗ | ✗ | 64px | 64px |
+| **512-576px** | 64px | 196px | 196px | ✗ | ✗ | ✗ | 64px |
+| **448-512px** | 64px | 196px | 196px | ✗ | ✗ | ✗ | ✗ |
+| **256-448px** | 64px | ✗ | 196px | ✗ | ✗ | ✗ | ✗ |
+| **<256px** | 64px | ✗ | 196px | ✗ | ✗ | ✗ | ✗ |
+
+説明:
+- 検索幅は常に一定の最小幅（例: 196px）を確保し、その他要素の表示は利用可能幅に応じて段階的に隠す。閲覧モードでは `更新閲覧編集` は表示しないため、右側の操作群は比較的多く残せます。
+
+### 2. 編集・プレビュー切り替え / 内容を更新ボタンが「ある」場合（作成/編集モード想定）
+（これらのボタンは優先度が高いため、幅が狭まると他の要素が先に非表示になります）
+
+| 幅 | ハンバーガー | ロゴ | 検索 | 保存閲覧編集 | ＋ | 通知 | アバター |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **832px+** | 64px | 196px | 196px以上 | 196px | 64px | 64px | 64px |
+| **768-832px** | 64px | 196px | 196px | 196px | ✗ | 64px | 64px |
+| **704-768px** | 64px | 196px | 196px | 196px | ✗ | ✗ | 64px |
+| **640-704px** | 64px | 196px | 196px | 196px | ✗ | ✗ | ✗ |
+| **448-640px** | 64px | ✗ | 196px | 196px | ✗ | ✗ | ✗ |
+| **256-448px** | 64px | ✗ | ✗ | 196px | ✗ | ✗ | ✗ |
+| **<256px** | 64px | ✗ | ✗ | 196px | ✗ | ✗ | ✗ |
+
+説明:
+
+実装メモ:
+- 優先度の高いボタン群（編集・プレビュー切替、内容を更新）は、MUIの`Stack`と`ButtonGroup`でまとめて配置し、`useMediaQuery`で表示制御を行うのが簡潔です。
+- ロゴや補助アイコン（＋/通知/アバター）は MUI の `IconButton` や `Avatar` を用い、表示判定はテーマのブレークポイント (`theme.breakpoints.up/down`) を利用してください。
+- 検索フィールドは MUI の `TextField`（`InputProps` に `startAdornment`）で実装し、最小幅を `sx={{ minWidth: 196 }}` で担保します。
+- レスポンシブ優先度ルールはユニットテスト（Snapshot）および E2E（Playwright）で確認してください。
+
+---
+
+この節はトップバー実装方針の一部です。具体的なTopMenu実装は `src/components/common/TopMenuBar.tsx` にて MUI コンポーネントと `sx` を用いて実装してください。
 - スケール定義:
   - 900台: グローバルオーバーレイ層（999: モーダル最前面、950: ドロワー/全画面メニュー、930: Toast/ポップアップ）
   - 800台: ナビ層（899: TopMenuBar、850: サブナビ/固定タブ）

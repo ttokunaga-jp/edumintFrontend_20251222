@@ -1,6 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import api from '@/lib/axios';
+import { login, register, getMe, logout } from '@/services/api/gateway/auth';
 
 interface LoginRequest {
   email: string;
@@ -25,11 +24,8 @@ interface AuthResponse {
 }
 
 export function useLogin() {
-  return useMutation<AuthResponse, AxiosError, LoginRequest>({
-    mutationFn: async (data) => {
-      const response = await api.post<AuthResponse>('/auth/login', data);
-      return response.data;
-    },
+  return useMutation<AuthResponse, Error, LoginRequest>({
+    mutationFn: login,
     onSuccess: (data) => {
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem('authToken', data.token);
@@ -39,12 +35,11 @@ export function useLogin() {
 }
 
 export function useRegister() {
-  return useMutation<AuthResponse, AxiosError, RegisterRequest>({
-    mutationFn: async (data) => {
+  return useMutation<AuthResponse, Error, RegisterRequest>({
+    mutationFn: (data) => {
       // confirmPasswordはバックエンドに送信しない
       const { confirmPassword, ...registerData } = data;
-      const response = await api.post<AuthResponse>('/auth/register', registerData);
-      return response.data;
+      return register(registerData);
     },
     onSuccess: (data) => {
       if (typeof localStorage !== 'undefined') {
@@ -56,9 +51,7 @@ export function useRegister() {
 
 export function useLogout() {
   return useMutation({
-    mutationFn: async () => {
-      await api.post('/auth/logout');
-    },
+    mutationFn: logout,
     onSuccess: () => {
       if (typeof localStorage !== 'undefined') {
         localStorage.removeItem('authToken');
@@ -76,12 +69,11 @@ interface User {
 }
 
 export function useAuth() {
-  const query = useQuery<User | null, AxiosError>({
+  const query = useQuery<User | null, Error>({
     queryKey: ['auth'],
     queryFn: async () => {
       try {
-        const response = await api.get<User>('/auth/me');
-        return response.data;
+        return await getMe();
       } catch (error) {
         return null;
       }

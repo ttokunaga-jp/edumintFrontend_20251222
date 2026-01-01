@@ -15,6 +15,9 @@ file_count_delta: 2
 time_spent_hours: 0.8
 ---
 
+> NOTE: As of 2025-12-31 the per-type View components were consolidated into `NormalSubQuestionView`. The original `ClozeView` file has been removed and its functionality unified. This implementation report is kept for historical record.
+
+
 ## 概要
 Cloze の表示コンポーネントに対して Storybook ストーリーと snapshot テストを追加しました。空欄表示と解答表示の両ケースを確認します。
 

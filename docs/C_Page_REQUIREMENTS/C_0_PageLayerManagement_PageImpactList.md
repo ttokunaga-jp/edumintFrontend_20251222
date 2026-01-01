@@ -41,9 +41,6 @@
   - 直接参照: `AuthLayout`, `AuthProviderButtons`, `LoginForm`, `RegisterForm`
   - 影響: 低。主にフォーム要素。`AuthProviderButtons` がポップアップ認証を呼ぶ実装（OAuthフロー）で独自ポップオーバーを持つかは要確認。
 
-- **AdminModerationPage**: [src/pages/AdminModerationPage.tsx](src/pages/AdminModerationPage.tsx)
-  - 影響: 低（プレースホルダ実装）。将来的にモーダルや詳細ビューを追加する場合は再評価。
-
 - **StructureConfirmPage / ProfileSetupPage**
   - 影響: 低。現在の実装はフォームとボタン中心でモーダル依存は見られません。
 

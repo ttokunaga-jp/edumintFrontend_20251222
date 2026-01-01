@@ -64,22 +64,20 @@
       "path": "src/components/problemTypes",
       "file_count": 35,
       "entry_points": [
-        "src/components/problemTypes/ClozeEdit.tsx",
-        "src/components/problemTypes/ClozeView.stories.tsx",
-        "src/components/problemTypes/ClozeView.tsx",
-        "src/components/problemTypes/CodeReadingEdit.tsx",
-        "src/components/problemTypes/CodeReadingView.stories.tsx",
-        "src/components/problemTypes/CodeReadingView.tsx"
+        "src/components/problemTypes/NormalSubQuestionView.tsx",
+        "src/components/problemTypes/NormalSubQuestionView.stories.tsx",
+        "src/components/problemTypes/MultipleChoiceView.tsx",
+        "src/components/problemTypes/MultipleChoiceEdit.tsx",
+        "src/components/problemTypes/ProblemTypeRegistry.tsx"
       ],
-      "last_updated": "2025-12-30"
+      "last_updated": "2025-12-31"
     },
     {
       "id": "src_pages",
       "name": "src/pages",
       "path": "src/pages",
-      "file_count": 7,
+      "file_count": 6,
       "entry_points": [
-        "src/pages/AdminModerationPage.tsx",
         "src/pages/HomePage.tsx",
         "src/pages/LoginRegisterPage.tsx",
         "src/pages/MyPage.tsx",

@@ -15,6 +15,9 @@ file_count_delta: 2
 time_spent_hours: 0.6
 ---
 
+> NOTE: As of 2025-12-31 the per-type View components were consolidated into `NormalSubQuestionView`. The original `TrueFalseView` file has been removed and its functionality unified. This implementation report is kept for historical record.
+
+
 ## 概要
 True/False の表示コンポーネントに Storybook ストーリーと snapshot テストを追加しました。
 

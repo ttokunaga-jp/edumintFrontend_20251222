@@ -38,7 +38,6 @@ MUI コンポーネントを使用し、旧 `primitives` 依存を排除して�
 - [ ] **MyPage**: `useUser` フックと表示コンポーネントの結合。
 - [ ] **ProblemCreatePage**: `Controller` パターンの適用と Generating フローの統合。
 - [ ] **ProblemViewEditPage**: URLパラメータによるデータ取得と `ProblemTypes` 表示の統合。
-- [ ] **AdminModerationPage**: スタブ実装（または基本機能の実装）。
 
 ## Phase 5: Final Cleanup & Verification
 - [ ] 未使用ファイル、空ディレクトリの削除。

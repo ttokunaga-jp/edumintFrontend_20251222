@@ -11,7 +11,6 @@
   - C_3: Problem View/Edit 画面 `C_3_ProblemViewEditPage_REQUIREMENTS.md`
   - C_4: MyPage 画面 `C_4_MyPage_REQUIREMENTS.md`
   - C_5: Login/Register 画面 `C_5_LoginRegisterPage_REQUIREMENTS.md`
-  - C_6: Admin/Moderation 画面（提案）`C_6_AdminModerationPage_REQUIREMENTS.md`
   - C_7: Generating UI（ProblemCreate 統合ステップ）`C_7_GeneratingPage_REQUIREMENTS.md`
 - D: インターフェース仕様（API/Event）`D_INTERFACE_SPEC.md`
   - D_0: 共通コンポーネント `D_0_CommonComponent_REQUIREMENTS.md`
@@ -20,7 +19,6 @@
   - D_3: Problem View/Edit コンポーネント `D_3_ProblemViewEditComponent_REQUIREMENTS.md`
   - D_4: MyPage コンポーネント `D_4_MyPageComponent_REQUIREMENTS.md`
   - D_5: Login/Register コンポーネント `D_5_LoginRegisterComponent_REQUIREMENTS.md`
-  - D_6: Admin/Moderation コンポーネント `D_6_AdminModerationComponent_REQUIREMENTS.md`
 - E: データモデル `E_DATA_MODEL.md`
 - F: ディレクトリ構造・アーキ原則 `F_ARCHITECTURE.md`
 - G: 技術スタック制約 `G_TECH_STACK_CONSTRAINTS.md`

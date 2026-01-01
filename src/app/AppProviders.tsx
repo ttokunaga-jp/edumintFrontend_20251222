@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -10,8 +10,13 @@ import { AppBarActionProvider } from '@/contexts/AppBarActionContext';
 import { NotificationCenter } from '@/components/common/NotificationCenter';
 import { AppLayout } from './AppLayout';
 import { Router } from './router';
+import { ServiceHealthProvider } from '@/contexts/ServiceHealthContext';
 import { useTheme } from '@/theme/createTheme';
 
+/**
+ * AppProviders - Root application providers
+ * Wraps the app with theme, routing, and context providers
+ */
 export function AppProviders({ children }: PropsWithChildren) {
   const theme = useTheme();
 
@@ -22,10 +27,12 @@ export function AppProviders({ children }: PropsWithChildren) {
         <BrowserRouter>
           <NotificationProvider>
             <AppBarActionProvider>
-              <NotificationCenter />
-              <AppLayout>
-                <Router />
-              </AppLayout>
+              <ServiceHealthProvider>
+                <NotificationCenter />
+                <AppLayout>
+                  <Router />
+                </AppLayout>
+              </ServiceHealthProvider>
             </AppBarActionProvider>
           </NotificationProvider>
         </BrowserRouter>
@@ -33,3 +40,5 @@ export function AppProviders({ children }: PropsWithChildren) {
     </ThemeProvider>
   );
 }
+
+export default AppProviders;

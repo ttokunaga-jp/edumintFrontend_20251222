@@ -9,7 +9,19 @@ interface SearchParams {
   sortBy?: 'newest' | 'popular' | 'recommended' | 'views';
   subjects?: string[];
   universities?: string[];
+  faculties?: string[];
+  professor?: string;
+  year?: string;
+  fieldType?: string;
   level?: string;
+  formats?: string[];
+  duration?: string;
+  period?: string;
+  isLearned?: boolean;
+  isHighRating?: boolean;
+  isCommented?: boolean;
+  isPosted?: boolean;
+  language?: string;
 }
 
 interface Problem {

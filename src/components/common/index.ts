@@ -7,3 +7,4 @@ export { default as MaintenancePage } from './MaintenancePage';
 export { ContextHealthAlert, ServiceHealthSummary } from './ContextHealthAlert';
 export type { HealthStatus, HealthAlertProps, ServiceHealthSummaryProps } from './ContextHealthAlert';
 export { LatexBlock } from './LatexBlock';
+export { PreviewEditToggle } from './PreviewEditToggle';

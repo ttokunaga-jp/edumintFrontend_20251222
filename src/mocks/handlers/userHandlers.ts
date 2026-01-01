@@ -2,7 +2,7 @@ import { http, HttpResponse } from "msw";
 import { mockExams } from "../mockData/search";
 import { mockUser, mockUserStats, mockWalletBalance } from "../mockData/user";
 
-const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
+const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? 'http://localhost:3000/api';
 const withBase = (path: string) => `${apiBase}${path}`;
 
 const paginate = <T,>(items: T[], page: number, limit: number) => {
@@ -18,12 +18,21 @@ export const userHandlers = [
   // Add handler for /users/:userId to match useUser.ts
   http.get(withBase('/users/:userId'), ({ params }) => HttpResponse.json({ ...mockUser, id: params.userId })),
 
+  // Also register relative-path handlers (no api base) to support varied client usages and test environment
+  http.get('*/users/:userId', ({ params }) => HttpResponse.json({ ...mockUser, id: params.userId })),
+  http.get('*/user/profile/:userId', ({ params }) => HttpResponse.json({ ...mockUser, id: params.userId })),
+
   http.patch(withBase('/user/profile'), async ({ request }) => {
     const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
     return HttpResponse.json({ ...mockUser, ...body });
   }),
   // Add handler for PUT /users/:userId to match useUser.ts
   http.put(withBase('/users/:userId'), async ({ request, params }) => {
+    const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
+    return HttpResponse.json({ ...mockUser, ...body, id: params.userId });
+  }),
+  // Also support relative PUT
+  http.put('*/users/:userId', async ({ request, params }) => {
     const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
     return HttpResponse.json({ ...mockUser, ...body, id: params.userId });
   }),

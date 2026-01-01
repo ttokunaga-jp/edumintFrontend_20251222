@@ -20,6 +20,8 @@ author: GitHub Copilot
 - `FreeTextEdit` is already used as a shared edit component for other problem types (TrueFalse, Proof, Numeric, etc.).
 - Next: consider adding more targeted tests for edge cases (long content, LaTeX rendering in previews).
 
+> NOTE: As of 2025-12-31 the per-type Edit/View components were consolidated into `NormalSubQuestionView` for most types; the originally added `FreeTextEdit`/`FreeTextView` files were superseded and removed. This implementation report remains for record.
+
 ## 5. Next Steps
 - Run full test suite and fix any regressions (done in PR branch).
 - Open a PR for review and include this implementation report.

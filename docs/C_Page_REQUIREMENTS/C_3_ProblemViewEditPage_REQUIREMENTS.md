@@ -106,16 +106,87 @@
   - 編集履歴リスト / ロールバック操作
 ```
 
-## ブロック → コンポーネント分割（案）
-- Header: `Common/TopMenuBar.tsx`, `Common/Breadcrumbs.tsx`
-- Meta: `Common/ProblemMetaHeader.tsx`, `ProblemViewEditPage/ActionBar.tsx`
-- Alerts: `Common/ContextHealthAlert.tsx`
-- Owner toggle: `Common/PreviewEditToggle.tsx`
-- Tabs: `ProblemViewEditPage/ContentTabs.tsx`
-- Content blocks (shared): `Common/QuestionBlock.tsx`, `Common/SubQuestionBlock.tsx`, `Common/AnswerBlock.tsx`, `Common/MarkdownLatexRenderer.tsx`
-- Ads: `Common/AdGate.tsx`, `Common/AdModal.tsx`
-- Comments: `ProblemViewEditPage/CommentSection.tsx`, `ProblemViewEditPage/CommentCard.tsx`
-- History: `Common/EditHistoryBlock.tsx`
+## ブロック → コンポーネント分割（改訂版 - アーキテクチャ準拠）
+
+### ページレイヤー
+- `src/pages/ProblemViewEditPage.tsx` : ページエントリーポイント（Preview/Edit 切り替えのみ）
+
+### ページ固有コンポーネント
+- `src/components/page/ProblemViewEditPage/`
+  - `PreviewView.tsx` : Preview 表示エリア
+  - `EditView.tsx` : Edit 表示エリア（= ProblemEditor）
+  - `MetaSection.tsx` : 試験メタ情報
+  - `ActionSection.tsx` : 保存/キャンセル/プレビュー切り替えバー
+  - `QuestionSection/` : 大問セクション
+    - `QuestionBlock.tsx` : 大問コンテナ
+    - `Header.tsx` : 大問番号・削除ボタン
+    - `Meta.tsx` : 難易度・キーワード
+    - `Content.tsx` : 大問本文
+  - `SubQuestionSection/` : 小問セクション（形式別分離）
+    - `SubQuestionBlock.tsx` : 小問親コンポーネント（形式振り分け）
+    - `common/` : 全形式共通
+      - `Header.tsx` : 小問番号・タイプ・アクション
+      - `Meta.tsx` : キーワード・タイプ選択
+    - `Selection/`, `Matching/`, `Ordering/`, `Essay/` : 形式別実装
+
+### 共通コンポーネント
+- `src/components/common/`
+  - `TopMenuBar.tsx` : トップメニューバー
+  - `ContextHealthAlert.tsx` : サービスヘルスアラート
+  - `PreviewEditToggle.tsx` : Preview/Edit トグル
+  - `editors/` : 再利用可能なエディタコンポーネント
+    - `QuestionEditorPreview.tsx` : LaTeX/Markdown 対応テキスト編集（Undo/Redo付き）
+    - `EditorPreviewPanel.tsx` : エディタ + プレビュー パネル
+    - `FormEditor.tsx` : テキスト入力フォーム
+    - `LaTeXPreview.tsx` : LaTeX/Markdown レンダリング
+
+### その他（Phase 2 以降）
+- `src/components/page/ProblemViewEditPage/`
+  - `CommentSection.tsx` : コメント機能
+  - `EditHistoryBlock.tsx` : 編集履歴・ロールバック
+
+### Features レイヤー
+- `src/features/content/`
+  - `hooks/` : 状態管理フック
+    - `useProblemState.ts` : 試験全体の状態管理
+    - `useQuestionState.ts` : 大問単位の状態管理
+    - `useSubQuestionState.ts` : 小問単位の状態管理
+    - `useUnsavedChanges.ts` : 未保存状態追跡
+  - `types/` : ドメイン型定義
+    - `problem.ts` : Problem, Question, SubQuestion の型
+    - `question.ts` : Question 関連の拡張型
+    - `subQuestion.ts` : SubQuestion 関連の拡張型
+    - `selection.ts` : Selection 形式の型
+    - `matching.ts` : Matching 形式の型
+    - `ordering.ts` : Ordering 形式の型
+    - `essay.ts` : Essay 形式の型
+  - `config/` : 設定・定数
+    - `questionTypeConfig.ts` : 問題形式の定義（ID、名前、アイコン）
+    - `difficultiesConfig.ts` : 難易度の定義
+    - `keywordsConfig.ts` : キーワードのプリセット
+  - `utils/` : 共通ユーティリティ
+    - `normalizeQuestion.ts` : Question データの正規化
+    - `validateQuestion.ts` : Question バリデーション
+    - `normalizationSubQuestion.ts` : SubQuestion データの正規化
+    - `validateSubQuestion.ts` : SubQuestion バリデーション
+  - `repositories/` : API 層（実装は Phase 2）
+    - `problemRepository.ts` : Problem API
+    - `questionRepository.ts` : Question API
+    - `subQuestionRepository.ts` : SubQuestion API
+
+### Services レイヤー
+- `src/services/api/`
+  - `gateway.ts` : API ゲートウェイ（既存）
+  - `problem.ts` : Problem エンドポイント
+  - `question.ts` : Question エンドポイント
+  - `subQuestion.ts` : SubQuestion エンドポイント
+  - `health.ts` : ServiceHealth エンドポイント
+
+### Hooks レイヤー（再利用可能）
+- `src/hooks/`
+  - `useEditorHooks.ts` : useUndo, useDebouncedCallback, useKeyboardShortcut（既存）
+  - `useAsync.ts` : 非同期処理のラッパー
+  - `useDebounce.ts` : デバウンス処理
 
 ## 理想要件 vs 現状差分
 - 理想: 編集トグル→フォーム編集→保存/取消が正常に動作し、履歴ロールバックが成功すること。Social もヘルス/フラグで制御し、API スキーマに同期。
@@ -128,5 +199,246 @@
 - `../overview/requirements.md`, `../overview/use-cases.md`, `../overview/current_implementation.md`
 - `../implementation/service-health/README.md`
 - `src/src/services/api/gateway.ts`
+
+## 完全なディレクトリ構造ツリー
+
+```
+src/
+├── pages/
+│   └── ProblemViewEditPage.tsx          ┌─ ページエントリー
+│
+├── components/
+│   ├── page/
+│   │   └── ProblemViewEditPage/
+│   │       ├── PreviewView.tsx
+│   │       ├── EditView.tsx
+│   │       ├── MetaSection.tsx
+│   │       ├── ActionSection.tsx
+│   │       ├── QuestionSection/
+│   │       │   ├── QuestionBlock.tsx
+│   │       │   ├── Header.tsx
+│   │       │   ├── Meta.tsx
+│   │       │   └── Content.tsx
+│   │       ├── SubQuestionSection/
+│   │       │   ├── SubQuestionBlock.tsx
+│   │       │   ├── common/
+│   │       │   │   ├── Header.tsx
+│   │       │   │   └── Meta.tsx
+│   │       │   ├── Selection/           ┌─ ID: 1,2,3
+│   │       │   │   ├── SelectionEditor.tsx
+│   │       │   │   ├── OptionBlock.tsx   │ (QuestionEditorPreview)
+│   │       │   │   └── Content.tsx       │
+│   │       │   ├── Matching/            ├─ ID: 4
+│   │       │   │   ├── MatchingEditor.tsx
+│   │       │   │   ├── PairBlock.tsx     │ (QuestionEditorPreview x2)
+│   │       │   │   └── Content.tsx       │
+│   │       │   ├── Ordering/            ├─ ID: 5
+│   │       │   │   ├── OrderingEditor.tsx
+│   │       │   │   ├── ItemBlock.tsx     │ (QuestionEditorPreview)
+│   │       │   │   └── Content.tsx       │
+│   │       │   └── Essay/               ├─ ID: 10-14
+│   │       │       ├── EssayEditor.tsx
+│   │       │       ├── AnswerBlock.tsx   │ (QuestionEditorPreview x2)
+│   │       │       └── Content.tsx       │
+│   │       ├── CommentSection.tsx
+│   │       ├── EditHistoryBlock.tsx
+│   │       ├── AdGateModal.tsx
+│   │       └── ReportModal.tsx
+│   │
+│   └── common/
+│       ├── TopMenuBar.tsx
+│       ├── ContextHealthAlert.tsx
+│       ├── PreviewEditToggle.tsx
+│       ├── editors/
+│       │   ├── QuestionEditorPreview.tsx ┌─ 統一エディタ
+│       │   ├── EditorPreviewPanel.tsx    │  (全形式で使用)
+│       │   ├── FormEditor.tsx            │
+│       │   ├── LaTeXPreview.tsx          │
+│       │   ├── types.ts                  │
+│       │   └── index.ts                  └─
+│       └── (other common components)
+│
+├── features/
+│   └── content/
+│       ├── hooks/
+│       │   ├── useProblemState.ts
+│       │   ├── useQuestionState.ts
+│       │   ├── useSubQuestionState.ts
+│       │   └── useUnsavedChanges.ts
+│       ├── types/
+│       │   ├── problem.ts
+│       │   ├── question.ts
+│       │   ├── subQuestion.ts
+│       │   ├── selection.ts
+│       │   ├── matching.ts
+│       │   ├── ordering.ts
+│       │   └── essay.ts
+│       ├── config/
+│       │   ├── questionTypeConfig.ts
+│       │   ├── difficultiesConfig.ts
+│       │   └── keywordsConfig.ts
+│       ├── utils/
+│       │   ├── normalizeQuestion.ts
+│       │   ├── validateQuestion.ts
+│       │   ├── normalizeSubQuestion.ts
+│       │   └── validateSubQuestion.ts
+│       └── repositories/
+│           ├── problemRepository.ts
+│           ├── questionRepository.ts
+│           └── subQuestionRepository.ts
+│
+├── services/
+│   └── api/
+│       ├── gateway.ts
+│       ├── problem.ts
+│       ├── question.ts
+│       ├── subQuestion.ts
+│       └── health.ts
+│
+└── hooks/
+    ├── useEditorHooks.ts
+    ├── useAsync.ts
+    └── useDebounce.ts
+```
+
+## QuestionEditorPreview 統合パターン
+
+### 実装ガイド
+すべての問題形式（選択肢、組み合わせ、順序、記述）において、LaTeX/Markdown の編集・表示は `src/components/common/editors/QuestionEditorPreview.tsx` で統一します。
+
+#### パターン A: 大問本文編集
+**ファイル**: `src/components/page/ProblemViewEditPage/QuestionSection/Content.tsx`
+
+```tsx
+<QuestionEditorPreview
+  value={question.content}
+  mode={mode}  // 'preview' | 'edit'
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+```
+
+**用途**: Question.content（大問本文）の LaTeX/Markdown 編集
+
+#### パターン B: 小問本文編集
+**ファイル**: `src/components/page/ProblemViewEditPage/SubQuestionSection/*/Content.tsx`
+
+```tsx
+<QuestionEditorPreview
+  value={subQuestion.content}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+```
+
+**用途**: SubQuestion.content（小問本文）の LaTeX/Markdown 編集
+
+#### パターン C: 選択肢編集（Selection 形式）
+**ファイル**: `src/components/page/ProblemViewEditPage/SubQuestionSection/Selection/OptionBlock.tsx`
+
+```tsx
+<QuestionEditorPreview
+  value={option.text}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+```
+
+**用途**: Selection 形式の選択肢テキストの LaTeX/Markdown 編集
+
+#### パターン D: ペア編集（Matching 形式）
+**ファイル**: `src/components/page/ProblemViewEditPage/SubQuestionSection/Matching/PairBlock.tsx`
+
+```tsx
+{/* 質問テキスト */}
+<QuestionEditorPreview
+  value={pair.question}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+
+{/* 回答テキスト */}
+<QuestionEditorPreview
+  value={pair.answer}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+```
+
+**用途**: Matching 形式のペア質問・回答テキストの LaTeX/Markdown 編集
+
+#### パターン E: アイテム編集（Ordering 形式）
+**ファイル**: `src/components/page/ProblemViewEditPage/SubQuestionSection/Ordering/ItemBlock.tsx`
+
+```tsx
+<QuestionEditorPreview
+  value={item.text}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+```
+
+**用途**: Ordering 形式のアイテムテキストの LaTeX/Markdown 編集
+
+#### パターン F: 記述解答編集（Essay 形式）
+**ファイル**: `src/components/page/ProblemViewEditPage/SubQuestionSection/Essay/AnswerBlock.tsx`
+
+```tsx
+{/* 模範解答 */}
+<QuestionEditorPreview
+  value={answer.sampleAnswer}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+
+{/* 採点基準 */}
+<QuestionEditorPreview
+  value={answer.gradingCriteria}
+  mode={mode}
+  onUnsavedChange={(hasUnsaved) => setHasUnsaved(hasUnsaved)}
+/>
+```
+
+**用途**: Essay 形式の模範解答・採点基準の LaTeX/Markdown 編集
+
+### コンポーネント仕様
+
+#### QuestionEditorPreview.tsx
+- **Props**:
+  - `value: string` : 編集対象テキスト
+  - `mode?: 'preview' | 'edit'` : 表示モード（デフォルト: 'preview'）
+  - `onUnsavedChange?: (hasUnsaved: boolean) => void` : 未保存状態変更コールバック
+- **動作**:
+  - `mode='preview'` :読み取り専用プレビュー表示（LaTeXPreview のみ）
+  - `mode='edit'` : 左にフォーム、右にプレビュー表示（リサイズ可能）
+  - `onUnsavedChange` : 初期値との差分を追跡し、変更があれば true をコール
+
+#### EditorPreviewPanel.tsx
+- **Props**:
+  - `value: string` : エディタ内容
+  - `onChange: (value: string) => void` : 入力変更コールバック
+  - `mode?: 'preview' | 'edit'` : 表示モード
+  - その他プロパティはドキュメント参照
+- **動作**:
+  - `mode='preview'` : LaTeXPreview のみ表示（読み取り専用）
+  - `mode='edit'` : FormEditor（左）+ 垂直リサイズバー + LaTeXPreview（右）
+
+#### FormEditor.tsx
+- **Props**:
+  - `value: string` : フォーム値
+  - `onChange: (value: string) => void` : 入力イベント
+  - その他プロパティはドキュメント参照
+- **機能**:
+  - 等幅フォント、行番号表示
+  - LaTeX デリミタ（$, $$）の自動ペアリング
+  - シンタックスハイライト（$ 囲み部分の色分け）
+
+#### LaTeXPreview.tsx
+- **Props**:
+  - `content: string` : レンダリング対象テキスト
+  - その他プロパティはドキュメント参照
+- **機能**:
+  - LaTeX（$ $, $$ $$）と Markdown の自動認識・レンダリング
+  - KaTeX + MathJax でブラウザレンダリング
+  - エラーハンドリング：不完全数式は直前の正しい状態を維持
 
 

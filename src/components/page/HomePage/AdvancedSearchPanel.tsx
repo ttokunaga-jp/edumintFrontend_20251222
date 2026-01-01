@@ -1,31 +1,29 @@
 import {
-  Collapse,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Box,
-  Card,
-  CardContent,
   Stack,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
   Button,
   Typography,
   Chip,
   Grid,
-  Autocomplete,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import {
+  AutocompleteFilterField,
+  SelectFilterField,
+  CheckboxGroupField,
+  YearInputField,
+} from '../../common/SearchFilterFields';
 
 export interface SearchFilters {
   keyword?: string;
   universities?: string[];
   faculties?: string[];
-  subjects?: string[];
+  academicField?: string;
   professor?: string;
   year?: string;
   fieldType?: string;
@@ -33,13 +31,26 @@ export interface SearchFilters {
   formats?: string[];
   duration?: string;
   period?: string;
+  academicSystem?: 'liberal-arts' | 'science';
   sortBy?: 'recommended' | 'newest' | 'popular' | 'views';
+  isLearned?: boolean;
+  isHighRating?: boolean;
+  isCommented?: boolean;
+  isPosted?: boolean;
+  language?: string;
 }
 
 export interface AdvancedSearchPanelProps {
   filters: SearchFilters;
   onFiltersChange: (filters: SearchFilters) => void;
   isOpen?: boolean;
+  userProfile?: {
+    university?: string;
+    faculty?: string;
+    academicField?: string;
+    academicSystem?: 'liberal-arts' | 'science';
+    language?: 'ja' | 'en' | 'zh' | 'ko' | 'other';
+  };
 }
 
 // マスターデータ
@@ -64,6 +75,19 @@ const FACULTIES = [
   '教育学部',
   '農学部',
 ];
+
+const ACADEMIC_FIELDS = [
+  { value: 'liberal-arts', label: '文系' },
+  { value: 'science', label: '理系' },
+  { value: 'all', label: 'すべて' },
+];
+
+const ACADEMIC_SYSTEMS = [
+  { value: 'liberal-arts', label: '文系' },
+  { value: 'science', label: '理系' },
+];
+
+const CUSTOM_SEARCH_OPTIONS = ['学習済', '高評価', 'コメント', '投稿'];
 
 const SUBJECTS = [
   '数学',
@@ -95,15 +119,22 @@ const LEVELS = [
   { value: 'expert', label: '難関' },
 ];
 
+// 新規問題形式（ID 1-5, 10-14）
+// パターンA：選択・構造化データ系 (ID 1-5)
+// パターンB：自由記述・テキスト系 (ID 10-14)
 const PROBLEM_FORMATS = [
-  '記述式',
-  '選択式',
-  '穴埋め式',
+  // パターンA：選択系
+  '単一選択',
+  '複数選択',
   '正誤判定',
-  '数値計算式',
+  '組み合わせ',
+  '順序並べ替え',
+  // パターンB：記述系
+  '記述式',
   '証明問題',
-  'プログラミング',
-  'コード読解',
+  'コード記述',
+  '翻訳',
+  '数値計算',
 ];
 
 const DURATIONS = [
@@ -113,11 +144,20 @@ const DURATIONS = [
 ];
 
 const PERIODS = [
-  { value: '2025', label: '2025年度' },
-  { value: '2024', label: '2024年度' },
-  { value: '2023', label: '2023年度' },
-  { value: '2022', label: '2022年度' },
-  { value: '2021', label: '2021年度' },
+  { value: 'none', label: '指定なし' },
+  { value: '1day', label: '1日以内' },
+  { value: '1week', label: '1週間以内' },
+  { value: '1month', label: '1ヶ月以内' },
+  { value: '1year', label: '1年以内' },
+  { value: 'custom', label: '期間指定' },
+];
+
+const LANGUAGES = [
+  { value: 'ja', label: '日本語' },
+  { value: 'en', label: '英語' },
+  { value: 'zh', label: '中国語' },
+  { value: 'ko', label: '韓国語' },
+  { value: 'other', label: 'その他' },
 ];
 
 const CURRENT_YEARS = ['2025', '2024', '2023', '2022', '2021'];
@@ -130,14 +170,47 @@ export function AdvancedSearchPanel({
   filters,
   onFiltersChange,
   isOpen = false,
+  userProfile,
 }: AdvancedSearchPanelProps) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(isOpen);
 
-  // ローカル状態管理
-  const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
+  // デフォルト値を決定する関数
+  const getDefaultYear = (): string => {
+    return (new Date().getFullYear() - 1).toString();
+  };
+
+  // ローカル状態管理（プロフィール値がある場合はデフォルトに設定）
+  const [localFilters, setLocalFilters] = useState<SearchFilters>(() => {
+    // プロフィール値を優先的に使用（ユーザーが明示的に変更しない限り）
+    return {
+      ...filters,
+      universities: filters.universities && filters.universities.length > 0 
+        ? filters.universities 
+        : (userProfile?.university ? [userProfile.university] : []),
+      faculties: filters.faculties && filters.faculties.length > 0 
+        ? filters.faculties 
+        : (userProfile?.faculty ? [userProfile.faculty] : []),
+      academicField: filters.academicField || userProfile?.academicField || '',
+      year: filters.year || getDefaultYear(),
+      level: filters.level || '',
+      formats: filters.formats || [],
+      period: filters.period || '',
+      duration: filters.duration || '',
+      academicSystem: filters.academicSystem || userProfile?.academicSystem || '',
+      language: filters.language || userProfile?.language || '',
+      professor: filters.professor || '',
+      fieldType: filters.fieldType || '',
+      sortBy: filters.sortBy,
+      isLearned: filters.isLearned || false,
+      isHighRating: filters.isHighRating || false,
+      isCommented: filters.isCommented || false,
+      isPosted: filters.isPosted || false,
+    };
+  });
 
   const handleFilterChange = useCallback(
-    (key: keyof SearchFilters, value: string | string[]) => {
+    (key: keyof SearchFilters, value: string | string[] | boolean) => {
       const updated = {
         ...localFilters,
         [key]: value,
@@ -161,7 +234,11 @@ export function AdvancedSearchPanel({
   };
 
   // 適用中のフィルターを取得
-  const getActiveFilters = (): { label: string; key: keyof SearchFilters; value: string | string[] }[] => {
+  const getActiveFilters = (): {
+    label: string;
+    key: keyof SearchFilters;
+    value: string | string[] | boolean;
+  }[] => {
     const active = [];
 
     if (filters.universities && filters.universities.length > 0) {
@@ -180,11 +257,12 @@ export function AdvancedSearchPanel({
       });
     }
 
-    if (filters.subjects && filters.subjects.length > 0) {
+    if (filters.academicField) {
+      const fieldLabel = ACADEMIC_FIELDS.find((f) => f.value === filters.academicField)?.label || filters.academicField;
       active.push({
-        label: `科目: ${filters.subjects.join(', ')}`,
-        key: 'subjects',
-        value: filters.subjects,
+        label: `学問系統: ${fieldLabel}`,
+        key: 'academicField',
+        value: filters.academicField,
       });
     }
 
@@ -213,12 +291,20 @@ export function AdvancedSearchPanel({
     }
 
     if (filters.level) {
-      const levelLabel =
-        LEVELS.find((l) => l.value === filters.level)?.label || filters.level;
+      const levelLabel = LEVELS.find((l) => l.value === filters.level)?.label || filters.level;
       active.push({
         label: `レベル: ${levelLabel}`,
         key: 'level',
         value: filters.level,
+      });
+    }
+
+    if (filters.academicSystem) {
+      const systemLabel = ACADEMIC_SYSTEMS.find((s) => s.value === filters.academicSystem)?.label || filters.academicSystem;
+      active.push({
+        label: `学問系統: ${systemLabel}`,
+        key: 'academicSystem',
+        value: filters.academicSystem,
       });
     }
 
@@ -231,8 +317,9 @@ export function AdvancedSearchPanel({
     }
 
     if (filters.period) {
+      const periodLabel = PERIODS.find((p) => p.value === filters.period)?.label || filters.period;
       active.push({
-        label: `期間: ${filters.period}`,
+        label: `期間: ${periodLabel}`,
         key: 'period',
         value: filters.period,
       });
@@ -245,6 +332,47 @@ export function AdvancedSearchPanel({
         label: `所要時間: ${durationLabel}`,
         key: 'duration',
         value: filters.duration,
+      });
+    }
+
+    if (filters.isLearned) {
+      active.push({
+        label: '学習済',
+        key: 'isLearned',
+        value: true,
+      });
+    }
+
+    if (filters.isHighRating) {
+      active.push({
+        label: '高評価',
+        key: 'isHighRating',
+        value: true,
+      });
+    }
+
+    if (filters.isCommented) {
+      active.push({
+        label: 'コメント',
+        key: 'isCommented',
+        value: true,
+      });
+    }
+
+    if (filters.isPosted) {
+      active.push({
+        label: '投稿',
+        key: 'isPosted',
+        value: true,
+      });
+    }
+
+    if (filters.language) {
+      const langLabel = LANGUAGES.find((l) => l.value === filters.language)?.label || filters.language;
+      active.push({
+        label: `言語: ${langLabel}`,
+        key: 'language',
+        value: filters.language,
       });
     }
 
@@ -261,237 +389,180 @@ export function AdvancedSearchPanel({
 
   return (
     <Box sx={{ mb: 3 }}>
-      {/* トグルボタン */}
-      <Button
-        fullWidth
-        onClick={() => setExpanded(!expanded)}
+      {/* 詳細検索アコーディオン */}
+      <Accordion
+        expanded={expanded}
+        onChange={() => setExpanded(!expanded)}
         sx={{
-          justifyContent: 'space-between',
-          textAlign: 'left',
           mb: 2,
-          py: 1.5,
-          backgroundColor: expanded ? 'action.hover' : 'transparent',
+          '&:before': { display: 'none' },
+          boxShadow: 'none',
+          border: (theme) => `1px solid ${theme.palette.divider}`,
+          borderRadius: '8px !important',
         }}
-        endIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       >
-        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          詳細検索
-        </Typography>
-      </Button>
-
-      {/* 詳細フィルターパネル */}
-      <Collapse in={expanded}>
-        <Card sx={{ mb: 2 }}>
-          <CardContent>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          sx={{
+            backgroundColor: expanded ? 'action.hover' : 'transparent',
+            borderRadius: '8px',
+          }}
+        >
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+            {t('search.advanced_search')}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ p: 0 }}>
+          <Box
+            sx={{
+              p: 3,
+              maxHeight: '50vh',
+              overflowY: 'auto',
+            }}
+          >
             <Stack spacing={3}>
-              {/* 大学・学部セクション */}
-              <Box>
-                <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  大学・学部
-                </Typography>
-                <Grid container spacing={2}>
-                  {/* 大学 */}
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      multiple
-                      options={UNIVERSITIES}
-                      value={localFilters.universities || []}
-                      onChange={(e, newValue) => handleFilterChange('universities', newValue)}
-                      renderInput={(params) => (
-                        <TextField {...params} label="大学" placeholder="選択または入力" />
-                      )}
-                    />
-                  </Grid>
-
-                  {/* 学部 */}
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      multiple
-                      options={FACULTIES}
-                      value={localFilters.faculties || []}
-                      onChange={(e, newValue) => handleFilterChange('faculties', newValue)}
-                      renderInput={(params) => (
-                        <TextField {...params} label="学部" placeholder="選択または入力" />
-                      )}
-                    />
-                  </Grid>
+              {/* Row 1: 大学 | 学部 */}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <AutocompleteFilterField
+                    label="大学"
+                    options={UNIVERSITIES}
+                    value={localFilters.universities || []}
+                    multiple={true}
+                    onChange={(value) => handleFilterChange('universities', value)}
+                    placeholder="選択または入力"
+                  />
                 </Grid>
-              </Box>
-
-              {/* 科目・教授セクション */}
-              <Box>
-                <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  科目・教授
-                </Typography>
-                <Grid container spacing={2}>
-                  {/* 科目 */}
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="科目"
-                      placeholder="例: 微分積分, 力学"
-                      value={localFilters.subjects?.join(', ') || ''}
-                      onChange={(e) => {
-                        const subjects = e.target.value
-                          .split(',')
-                          .map((s) => s.trim())
-                          .filter((s) => s);
-                        handleFilterChange('subjects', subjects);
-                      }}
-                    />
-                  </Grid>
-
-                  {/* 教授 */}
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="教授"
-                      placeholder="教授名を入力"
-                      value={localFilters.professor || ''}
-                      onChange={(e) => handleFilterChange('professor', e.target.value)}
-                    />
-                  </Grid>
+                <Grid item xs={12} sm={6}>
+                  <AutocompleteFilterField
+                    label="学部"
+                    options={FACULTIES}
+                    value={localFilters.faculties || []}
+                    multiple={true}
+                    onChange={(value) => handleFilterChange('faculties', value)}
+                    placeholder="選択または入力"
+                  />
                 </Grid>
-              </Box>
+              </Grid>
 
-              {/* 試験年度セクション */}
-              <Box>
-                <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  試験年度
-                </Typography>
-                <TextField
-                  fullWidth
-                  label="年度を入力"
-                  type="text"
-                  placeholder="例: 2025"
-                  value={localFilters.year || ''}
-                  onChange={(e) => handleFilterChange('year', e.target.value)}
-                  sx={{ mb: 1.5 }}
-                />
-                {/* 年度チップ */}
-                <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
-                  {CURRENT_YEARS.map((year) => (
-                    <Chip
-                      key={year}
-                      label={year}
-                      onClick={() => handleFilterChange('year', year)}
-                      variant={localFilters.year === year ? 'filled' : 'outlined'}
-                      color={localFilters.year === year ? 'primary' : 'default'}
-                    />
-                  ))}
-                </Stack>
-              </Box>
-
-              {/* 分野・レベルセクション */}
-              <Box>
-                <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  分野・レベル
-                </Typography>
-                <Grid container spacing={2}>
-                  {/* 分野 */}
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      options={FIELDS}
-                      value={localFilters.fieldType || ''}
-                      onChange={(e, newValue) => handleFilterChange('fieldType', newValue || '')}
-                      renderInput={(params) => (
-                        <TextField {...params} label="分野" placeholder="選択または入力" />
-                      )}
-                    />
-                  </Grid>
-
-                  {/* レベル */}
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <InputLabel>レベル</InputLabel>
-                      <Select
-                        label="レベル"
-                        value={localFilters.level || ''}
-                        onChange={(e) => handleFilterChange('level', e.target.value)}
-                      >
-                        <MenuItem value="">全て</MenuItem>
-                        {LEVELS.map((level) => (
-                          <MenuItem key={level.value} value={level.value}>
-                            {level.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
+              {/* Row 2: 学問分野 | 教授 */}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <AutocompleteFilterField
+                    label="学問分野"
+                    options={FIELDS}
+                    value={localFilters.academicField || ''}
+                    multiple={false}
+                    onChange={(value) => handleFilterChange('academicField', value)}
+                    placeholder="選択または入力"
+                  />
                 </Grid>
-              </Box>
+                <Grid item xs={12} sm={6}>
+                  <AutocompleteFilterField
+                    label="教授"
+                    options={[]}
+                    value={localFilters.professor || ''}
+                    multiple={false}
+                    onChange={(value) => handleFilterChange('professor', typeof value === 'string' ? value : value[0] || '')}
+                    placeholder="教授名を入力"
+                  />
+                </Grid>
+              </Grid>
 
-              {/* 問題形式セクション */}
+              {/* Row 3: 試験年度 | 難易度 */}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <YearInputField
+                    label="試験年度"
+                    value={localFilters.year || ''}
+                    defaultValue={getDefaultYear()}
+                    onChange={(value) => handleFilterChange('year', value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <SelectFilterField
+                    label="難易度"
+                    options={LEVELS}
+                    value={localFilters.level || ''}
+                    onChange={(value) => handleFilterChange('level', value)}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* Row 4: 問題形式 (Full width, checkbox format) */}
               <Box>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
                   問題形式
                 </Typography>
-                <Grid container spacing={1}>
-                  {PROBLEM_FORMATS.map((format) => (
-                    <Grid item xs={12} sm={6} md={4} key={format}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={localFilters.formats?.includes(format) || false}
-                            onChange={(e) => {
-                              const newFormats = e.target.checked
-                                ? [...(localFilters.formats || []), format]
-                                : (localFilters.formats || []).filter((f) => f !== format);
-                              handleFilterChange('formats', newFormats);
-                            }}
-                          />
-                        }
-                        label={format}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
+                <CheckboxGroupField
+                  options={PROBLEM_FORMATS}
+                  value={localFilters.formats || []}
+                  onChange={(value) => handleFilterChange('formats', value)}
+                  columns={{ xs: 12, sm: 6, md: 4 }}
+                />
               </Box>
 
-              {/* 期間・所要時間セクション */}
+              {/* Row 5: 更新日時 | 所要時間 */}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <SelectFilterField
+                    label="更新日時"
+                    options={PERIODS}
+                    value={localFilters.period || ''}
+                    onChange={(value) => handleFilterChange('period', value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <SelectFilterField
+                    label="所要時間"
+                    options={DURATIONS}
+                    value={localFilters.duration || ''}
+                    onChange={(value) => handleFilterChange('duration', value)}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* Row 6: 学問系統（文系・理系） | 言語 */}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <SelectFilterField
+                    label="学問系統（文系・理系）"
+                    options={ACADEMIC_SYSTEMS}
+                    value={localFilters.academicSystem || ''}
+                    onChange={(value) => handleFilterChange('academicSystem', value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <SelectFilterField
+                    label="言語"
+                    options={LANGUAGES}
+                    value={localFilters.language || ''}
+                    onChange={(value) => handleFilterChange('language', value)}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* Row 7: Custom Search (Full width, checkbox format) */}
               <Box>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  期間・所要時間
+                  Custom Search
                 </Typography>
-                <Grid container spacing={2}>
-                  {/* 期間 */}
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <InputLabel>期間</InputLabel>
-                      <Select
-                        label="期間"
-                        value={localFilters.period || ''}
-                        onChange={(e) => handleFilterChange('period', e.target.value)}
-                      >
-                        <MenuItem value="">全て</MenuItem>
-                        {PERIODS.map((period) => (
-                          <MenuItem key={period.value} value={period.value}>
-                            {period.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-
-                  {/* 所要時間 */}
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <InputLabel>所要時間</InputLabel>
-                      <Select
-                        label="所要時間"
-                        value={localFilters.duration || ''}
-                        onChange={(e) => handleFilterChange('duration', e.target.value)}
-                      >
-                        <MenuItem value="">全て</MenuItem>
-                        {DURATIONS.map((duration) => (
-                          <MenuItem key={duration.value} value={duration.value}>
-                            {duration.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
+                <CheckboxGroupField
+                  options={CUSTOM_SEARCH_OPTIONS}
+                  value={[
+                    ...(localFilters.isLearned ? ['学習済'] : []),
+                    ...(localFilters.isHighRating ? ['高評価'] : []),
+                    ...(localFilters.isCommented ? ['コメント'] : []),
+                    ...(localFilters.isPosted ? ['投稿'] : []),
+                  ]}
+                  onChange={(values) => {
+                    handleFilterChange('isLearned', values.includes('学習済'));
+                    handleFilterChange('isHighRating', values.includes('高評価'));
+                    handleFilterChange('isCommented', values.includes('コメント'));
+                    handleFilterChange('isPosted', values.includes('投稿'));
+                  }}
+                  columns={{ xs: 6, sm: 3, md: 3 }}
+                />
               </Box>
 
               {/* ボタンセクション */}
@@ -502,7 +573,7 @@ export function AdvancedSearchPanel({
                   onClick={handleApplyFilters}
                   sx={{ minWidth: 120 }}
                 >
-                  検索
+                  {t('common.search')}
                 </Button>
                 <Button
                   variant="outlined"
@@ -513,9 +584,9 @@ export function AdvancedSearchPanel({
                 </Button>
               </Stack>
             </Stack>
-          </CardContent>
-        </Card>
-      </Collapse>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
 
       {/* 適用中のフィルター表示エリア */}
       {activeFilters.length > 0 && (

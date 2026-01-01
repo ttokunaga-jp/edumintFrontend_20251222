@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { uploadJob } from '../mockData/files';
 
-const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
+const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? 'http://localhost:3000/api';
 const withBase = (path: string) => `${apiBase}${path}`;
 
 export const filesHandlers = [

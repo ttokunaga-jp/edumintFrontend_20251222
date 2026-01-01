@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 
 type Option = { value: number; label: string };
 
@@ -12,16 +13,29 @@ type MetaSelectProps = {
 };
 
 export const MetaSelect: React.FC<MetaSelectProps> = ({ label, value, options, onChange, disabled = false, ariaLabel }) => {
+  const handleChange = (event: SelectChangeEvent<number>) => {
+    onChange?.(Number(event.target.value));
+  };
+
   return (
-    <div style={{ alignItems: 'center', gap: '0.75rem' }}>
-      <label>{label}</label>
-      <select label={ariaLabel ?? label} value={value} disabled={disabled} onChange={(e) => onChange?.(Number(e.target.value))}>
+    <FormControl size="small" sx={{ minWidth: 120, my: 1 }}>
+      <InputLabel id={`meta-select-label-${label}`}>{label}</InputLabel>
+      <Select
+        labelId={`meta-select-label-${label}`}
+        id={`meta-select-${label}`}
+        name={`meta-select-${label}`}
+        value={value}
+        label={label}
+        disabled={disabled}
+        onChange={handleChange}
+        aria-label={ariaLabel ?? label}
+      >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <MenuItem key={opt.value} value={opt.value}>
             {opt.label}
-          </option>
+          </MenuItem>
         ))}
-      </select>
-    </div>
+      </Select>
+    </FormControl>
   );
 };

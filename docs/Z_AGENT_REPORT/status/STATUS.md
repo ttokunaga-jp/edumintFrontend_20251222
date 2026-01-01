@@ -14,7 +14,6 @@
 | Problem View/Edit | `docs/requirements/C_3_ProblemViewEditPage_REQUIREMENTS.md` | TODO | - |
 | MyPage | `docs/requirements/C_4_MyPage_REQUIREMENTS.md` | TODO | - |
 | Login/Register | `docs/requirements/C_5_LoginRegisterPage_REQUIREMENTS.md` | TODO | - |
-| Admin/Moderation | `docs/requirements/C_6_AdminModerationPage_REQUIREMENTS.md` | TODO | 提案 |
 | Generating UI | `docs/requirements/C_7_GeneratingPage_REQUIREMENTS.md` | TODO | - |
 
 ## 既知のTODO（例）

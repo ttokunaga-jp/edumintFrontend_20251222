@@ -1,167 +1,258 @@
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  CircularProgress,
-  Alert,
-  Stack,
-  Chip,
-  Divider,
-  Rating,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useNotification } from '@/contexts/NotificationContext';
-import { useProblemDetail, useUpdateProblem } from '@/features/content/hooks/useContent';
-import { useAppBarAction } from '@/contexts/AppBarActionContext';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Container, Box, CircularProgress, Alert, Button, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 
-/**
- * 問題詳細表示・編集ページ
- * 問題IDからデータを取得し、ViewモードとEditモードを切り替える
- */
+import { useExamDetail } from '@/features/content/hooks/useExamDetail';
+import { useExamEditor } from '@/features/content/hooks/useExamEditor';
+import { useAppBarAction } from '@/contexts/AppBarActionContext';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { ProblemMetaBlock } from '@/components/page/ProblemViewEditPage/ProblemMetaBlock';
+import { ProblemEditor } from '@/components/page/ProblemViewEditPage/ProblemEditor';
+import { QuestionBlock } from '@/components/page/ProblemViewEditPage/QuestionBlock';
+import { SubQuestionBlock } from '@/components/page/ProblemViewEditPage/SubQuestionBlock';
+import { SubQuestionSectionHandle } from '@/components/page/ProblemViewEditPage/SubQuestionSection/SubQuestionSection';
+import { ContextHealthAlert } from '@/components/common/ContextHealthAlert';
+
 export default function ProblemViewEditPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addNotification } = useNotification();
+  const {
+    setEnableAppBarActions,
+    isEditMode,
+    setIsEditMode,
+    setHasUnsavedChanges,
+    setOnSave,
+    setIsSaving,
+    setOnNavigateWithCheck,
+  } = useAppBarAction();
+  const { user } = useAuth();
 
-  // API呼び出し
-  const { data: problem, isLoading, error } = useProblemDetail(id || '');
-  const updateMutation = useUpdateProblem(id || '');
+  const { data: exam, isLoading, isFetching, error } = useExamDetail(id || '');
+  const { updateExam, isSaving: mutationSaving } = useExamEditor();
 
-  const { setActions } = useAppBarAction();
+  const [isEditModeLocal, setIsEditModeLocal] = useState(false);
+  const [editedExam, setEditedExam] = useState<any>(null);
 
-  // UI状態
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [rating, setRating] = useState(0);
+  // Phase 6: SubQuestionSection refs (複数の subQuestions を保存するため Map を使用)
+  const subQuestionRefsMapRef = useRef<Map<string, SubQuestionSectionHandle>>(new Map());
 
-
-
-
-
-  // UI状態
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-  // 編集用フォームデータ
-  const [editData, setEditData] = useState({
-    title: '',
-    content: '',
-    tags: [] as string[],
+  // Ref to track previous values to prevent unnecessary context updates
+  const prevValuesRef = useRef({
+    isAuthor: false,
+    hasChanges: false,
+    isEditMode: false,
+    isSaving: false,
   });
 
-  // problemが取得されたら編集フォームを初期化
+  // 初回ロード時のみ更新（無限ループ防止）
   useEffect(() => {
-    if (problem) {
-      setEditData({
-        title: problem.title || '',
-        content: problem.content || '',
-        tags: problem.tags ? [...problem.tags] : [],
+    if (exam && (!editedExam || editedExam.id !== exam.id)) {
+      setEditedExam(exam);
+    }
+  }, [exam, editedExam]);
+
+  // TopMenuBar の Edit 切り替えと同期
+  // TopMenuBar で Edit/View ボタンが押されたときに isEditMode が更新される
+  // これを isEditModeLocal に同期することで UI が更新される
+  useEffect(() => {
+    setIsEditModeLocal(isEditMode);
+  }, [isEditMode]);
+
+  // 変更があるかどうかを判定
+  // NOTE: MyPage では詳細フィールドの比較を行っていますが、
+  // ここではメタデータの変更とSubQuestion の内容変更を検出します
+  // isEditModeLocal が false の場合は、変更があっても hasChanges を false にします
+  // これはView モードでは保存ボタンが有効化されないようにするためです
+  const hasChanges = useMemo(() => {
+    if (!exam || !editedExam || !isEditModeLocal) return false;
+    
+    // JSON.stringify で全体を比較（最も確実）
+    // ただしフォーム表示時のみ（isEditModeLocal === true）
+    return JSON.stringify(editedExam) !== JSON.stringify(exam);
+  }, [exam, editedExam, isEditModeLocal]);
+
+  // Phase 6: Save handler stored in ref for stability
+  // SubQuestionSection refs に対して save() を呼び出す
+  const handleSaveRef = useRef<(() => Promise<void>) | undefined>(undefined);
+  handleSaveRef.current = async () => {
+    if (!id || !editedExam) return;
+    try {
+      // Step 1: すべての SubQuestionSection に save() を呼び出す
+      const savePromises: Promise<void>[] = [];
+      subQuestionRefsMapRef.current.forEach((handle) => {
+        if (handle && handle.save) {
+          savePromises.push(handle.save());
+        }
       });
-      setRating(problem.rating || 0);
-    }
-  }, [problem]);
 
-  const handleSaveEdit = async () => {
-    if (!id) return;
-
-    updateMutation.mutate(
-      {
-        id,
-        ...editData,
-      },
-      {
-        onSuccess: () => {
-          setIsEditMode(false);
-          addNotification('問題を更新しました', 'success', 3000);
-        },
-        onError: (err) => {
-          console.error('Update failed:', err);
-          addNotification('更新に失敗しました', 'error', 5000);
-        },
+      // すべての SubQuestion 保存を待機
+      if (savePromises.length > 0) {
+        await Promise.all(savePromises);
       }
-    );
+
+      // Step 2: Exam メタデータの保存（必要な場合）
+      // 注：SubQuestion の保存が完了したので、Exam 全体の保存は不要な場合が多い
+      // ただし Exam メタデータに変更がある場合は以下で保存
+      await updateExam(id, editedExam);
+      setIsEditModeLocal(false);
+    } catch (e) {
+      console.error('Failed to save', e);
+      // エラーは各 SubQuestionSection で Alert で表示されている
+    }
   };
 
-  // App Bar Actions
-  useEffect(() => {
-    if (isLoading || !problem) {
-      setActions(null);
-      return;
-    }
+  // Stable save callback that uses ref
+  const stableSave = useCallback(async () => {
+    await handleSaveRef.current?.();
+  }, []);
 
-    if (isEditMode) {
-      setActions(
-        <Stack direction="row" spacing={1}>
-          <Button
-            variant="outlined"
-            onClick={() => setIsEditMode(false)}
-            disabled={updateMutation.isPending}
-            size="small"
-            sx={{ color: 'white', borderColor: 'rgba(255,255,255,0.5)' }}
-          >
-            キャンセル
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={updateMutation.isPending ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
-            onClick={handleSaveEdit}
-            disabled={updateMutation.isPending}
-            size="small"
-            color="secondary"
-          >
-            保存
-          </Button>
-        </Stack>
-      );
+  // Navigate with check handler stored in ref
+  const handleNavigateWithCheckRef = useRef<((path: string) => void) | undefined>(undefined);
+  handleNavigateWithCheckRef.current = (path: string) => {
+    if (hasChanges) {
+      if (window.confirm('未保存の変更があります。移動しますか？')) {
+        navigate(path);
+      }
     } else {
-      setActions(
-        <Stack direction="row" spacing={1}>
-          <IconButton
-            size="large"
-            onClick={() => setIsFavorite(!isFavorite)}
-            color="inherit"
-          >
-            {isFavorite ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
-          </IconButton>
-          <Button
-            variant="outlined"
-            startIcon={<EditIcon />}
-            onClick={() => setIsEditMode(true)}
-            size="small"
-            sx={{ color: 'inherit', borderColor: 'currentColor' }}
-          >
-            編集
-          </Button>
-        </Stack>
-      );
+      navigate(path);
     }
-
-    return () => setActions(null);
-  }, [isEditMode, problem, isFavorite, updateMutation.isPending, setActions, isLoading]);
-
-  const handleDeleteConfirm = async () => {
-    // 削除API呼び出し（後で実装）
-    console.log('Deleting problem:', id);
-    setDeleteDialogOpen(false);
-    addNotification('問題を削除しました', 'success', 3000);
-    // 削除後はホームへ
-    navigate('/');
   };
+
+  // Stable navigate callback
+  const stableNavigateWithCheck = useCallback((path: string) => {
+    handleNavigateWithCheckRef.current?.(path);
+  }, []);
+
+  // Calculate derived values
+  const isAuthor = !!(user && exam && user.id === exam.userId);
+
+  // Single effect for all context sync - only update when values actually change
+  useEffect(() => {
+    const prev = prevValuesRef.current;
+    
+    // Only update if values have changed
+    if (prev.isAuthor !== isAuthor) {
+      setEnableAppBarActions(isAuthor);
+      prev.isAuthor = isAuthor;
+    }
+    
+    if (prev.hasChanges !== hasChanges) {
+      setHasUnsavedChanges(hasChanges);
+      prev.hasChanges = hasChanges;
+    }
+    
+    if (prev.isEditMode !== isEditModeLocal) {
+      setIsEditMode(isEditModeLocal);
+      prev.isEditMode = isEditModeLocal;
+    }
+    
+    if (prev.isSaving !== mutationSaving) {
+      setIsSaving(mutationSaving);
+      prev.isSaving = mutationSaving;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthor, hasChanges, isEditModeLocal, mutationSaving]);
+
+  // Set save callback only once on mount
+  useEffect(() => {
+    setOnSave(stableSave);
+    return () => {
+      setOnSave(null);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stableSave]);
+
+  // Set navigate callback based on edit mode
+  useEffect(() => {
+    if (isEditModeLocal && hasChanges) {
+      setOnNavigateWithCheck(stableNavigateWithCheck);
+    } else {
+      setOnNavigateWithCheck(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditModeLocal, hasChanges, stableNavigateWithCheck]);
+
+  // データがあるなら即座に表示（Loading中であっても）
+  if (exam) {
+    return (
+      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', pb: 10 }}>
+        <Container maxWidth='xl' sx={{ py: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
+            <Button startIcon={<ArrowBackIcon />} onClick={() => stableNavigateWithCheck('/')}>
+              戻る
+            </Button>
+            {isFetching && <CircularProgress size={20} />}
+          </Box>
+
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 12, lg: 8 }}>
+              {isEditModeLocal ? (
+                <ProblemEditor
+                  exam={editedExam || exam}
+                  onChange={setEditedExam}
+                />
+              ) : (
+                <Box>
+                  {exam.questions?.map((question: any) => (
+                    <QuestionBlock
+                      key={question.id}
+                      id={question.id}
+                      questionNumber={question.questionNumber}
+                      content={question.questionContent}
+                      format={question.questionFormat}
+                      difficulty={question.difficulty}
+                      keywords={question.keywords}
+                      viewMode='full'
+                      mode={isEditModeLocal ? 'edit' : 'preview'}
+                    >
+                      <Box sx={{ mt: 2 }}>
+                        {question.subQuestions?.map((subQ: any) => (
+                          <SubQuestionBlock
+                            ref={(ref) => {
+                              // Phase 6: SubQuestionSection の ref を Map に登録
+                              if (ref) {
+                                subQuestionRefsMapRef.current.set(subQ.id, ref);
+                              } else {
+                                subQuestionRefsMapRef.current.delete(subQ.id);
+                              }
+                            }}
+                            key={subQ.id}
+                            id={subQ.id}
+                            subQuestionNumber={subQ.subQuestionNumber}
+                            questionTypeId={subQ.questionTypeId}
+                            questionContent={subQ.questionContent || ''}
+                            answerContent={subQ.answerContent || ''}
+                            keywords={subQ.keywords || []}
+                            options={subQ.options || []}
+                            pairs={subQ.pairs || []}
+                            items={subQ.items || []}
+                            answers={subQ.answers || []}
+                            showAnswer={false}
+                            mode="preview"
+                          />
+                        ))}
+                      </Box>
+                    </QuestionBlock>
+                  ))}
+                </Box>
+              )}
+            </Grid>
+
+            <Grid size={{ xs: 12, lg: 4 }}>
+              <Box sx={{ position: 'sticky', top: 24 }}>
+                <Box sx={{ mb: 2 }}>
+                  <ContextHealthAlert />
+                </Box>
+                <ProblemMetaBlock exam={exam} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -173,233 +264,25 @@ export default function ProblemViewEditPage() {
     );
   }
 
-  if (error || !problem) {
+  if (error) {
     return (
-      <Container maxWidth="md">
+      <Container maxWidth='md'>
         <Box sx={{ py: 4 }}>
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={() => navigate('/')}
-            sx={{ mb: 3 }}
-          >
+          <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ mb: 3 }}>
             戻る
           </Button>
-          <Alert severity="error">
-            {error
-              ? 'データの取得に失敗しました'
-              : '問題が見つかりません'}
-          </Alert>
+          <Alert severity='error'>データの取得に失敗しました</Alert>
         </Box>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ py: 4 }}>
-        {/* ヘッダー */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={() => navigate('/')}
-            variant="text"
-          >
-            戻る
-          </Button>
-          <Typography variant="h3" sx={{ flexGrow: 1 }}>
-            {isEditMode ? '問題を編集' : '問題詳細'}
-          </Typography>
-        </Box>
-
-        {/* メインカード */}
-        <Card sx={{ mb: 3 }}>
-          <CardContent>
-            {isEditMode ? (
-              // 編集モード
-              <Stack spacing={3}>
-                <TextField
-                  fullWidth
-                  label="タイトル"
-                  value={editData.title}
-                  onChange={(e) =>
-                    setEditData((prev) => ({
-                      ...prev,
-                      title: e.target.value,
-                    }))
-                  }
-                />
-
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={6}
-                  label="問題内容"
-                  value={editData.content}
-                  onChange={(e) =>
-                    setEditData((prev) => ({
-                      ...prev,
-                      content: e.target.value,
-                    }))
-                  }
-                />
-
-                <Divider />
-
-                <Box>
-                  <Typography variant="body2" sx={{ mb: 2, fontWeight: 600 }}>
-                    タグ
-                  </Typography>
-                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                    {editData.tags.map((tag) => (
-                      <Chip
-                        key={tag}
-                        label={tag}
-                        onDelete={() => {
-                          setEditData((prev) => ({
-                            ...prev,
-                            tags: prev.tags.filter((t) => t !== tag),
-                          }));
-                        }}
-                      />
-                    ))}
-                  </Box>
-                </Box>
-
-
-              </Stack>
-            ) : (
-              // 表示モード
-              <Stack spacing={3}>
-                {/* タイトル & アクション */}
-                <Box>
-                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant="h5" sx={{ mb: 1 }}>
-                        {problem.title}
-                      </Typography>
-                      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                        {problem.examName && (
-                          <Chip label={`試験: ${problem.examName}`} size="small" />
-                        )}
-                        {problem.subjectName && (
-                          <Chip label={problem.subjectName} size="small" />
-                        )}
-                      </Box>
-                    </Box>
-
-                  </Box>
-                </Box>
-
-                <Divider />
-
-                {/* メタデータ */}
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 2 }}>
-                  {problem.rating && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        評価
-                      </Typography>
-                      <Rating value={rating} readOnly size="small" />
-                    </Box>
-                  )}
-                  {problem.views && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        閲覧数
-                      </Typography>
-                      <Typography variant="body1">
-                        {problem.views.toLocaleString()}
-                      </Typography>
-                    </Box>
-                  )}
-                  {problem.likes && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        いいね
-                      </Typography>
-                      <Typography variant="body1">
-                        {problem.likes.toLocaleString()}
-                      </Typography>
-                    </Box>
-                  )}
-                  {problem.comments && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        コメント
-                      </Typography>
-                      <Typography variant="body1">
-                        {problem.comments.toLocaleString()}
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-
-                <Divider />
-
-                {/* 問題内容 */}
-                <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                    問題内容
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      whiteSpace: 'pre-wrap',
-                      p: 2,
-                      bgcolor: 'background.default',
-                      borderRadius: 1,
-                    }}
-                  >
-                    {problem.content}
-                  </Typography>
-                </Box>
-
-                {/* タグ */}
-                {problem.tags && problem.tags.length > 0 && (
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-                      タグ
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                      {problem.tags.map((tag) => (
-                        <Chip key={tag} label={tag} variant="outlined" size="small" />
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-
-                {/* 削除ボタン */}
-                <Box sx={{ pt: 2 }}>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => setDeleteDialogOpen(true)}
-                  >
-                    削除
-                  </Button>
-                </Box>
-              </Stack>
-            )}
-          </CardContent>
-        </Card>
+    <Container maxWidth='md'>
+      <Box sx={{ py: 8, textAlign: 'center' }}>
+        <Typography>問題が見つかりません</Typography>
+        <Button onClick={() => navigate('/')} sx={{ mt: 2 }}>ホームへ戻る</Button>
       </Box>
-
-      {/* 削除確認ダイアログ */}
-      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-        <DialogTitle>問題を削除しますか？</DialogTitle>
-        <DialogContent>
-          <Typography>
-            「{problem.title}」を削除します。この操作は取り消せません。
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteDialogOpen(false)}>キャンセル</Button>
-          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
-            削除
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 }

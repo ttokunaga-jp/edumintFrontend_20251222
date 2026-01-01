@@ -9,7 +9,7 @@ status: "Completed"
 affected_paths:
   - "src/components/problemTypes/ProblemTypeRegistry.tsx"
   - "src/components/problemTypes/__tests__/ProblemTypeRegistry.test.tsx"
-  - "src/components/problemTypes/FreeTextView.tsx"
+  - "src/components/problemTypes/NormalSubQuestionView.tsx"
   - "src/components/problemTypes/MultipleChoiceView.tsx"
 index_updates:
   updated: true
@@ -18,6 +18,9 @@ index_updates:
 file_count_delta: 2
 time_spent_hours: 1
 ---
+
+> NOTE: As of 2025-12-31 the registry was simplified: many per-type `View` components were consolidated into `NormalSubQuestionView`. Registry now maps types 1,4,5,6,7,8,9 to `NormalSubQuestionView` for both view and edit behavior. This report is kept for history.
+
 
 ## 概要
 ProblemType の登録基盤に対する最小実装を追加し、`registerProblemType` / `getProblemTypeView` / `getProblemTypeEdit` の基本動作を確かめるユニットテストを追加しました。

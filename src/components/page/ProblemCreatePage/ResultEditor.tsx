@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useGenerationStore } from '@/features/generation/stores/generationStore';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,6 +33,7 @@ interface GeneratedProblem {
 
 export function ResultEditor() {
   const { setPhase, options, generatedProblems, reset } = useGenerationStore();
+  const { t } = useTranslation();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editData, setEditData] = useState<Partial<GeneratedProblem>>({});
 
@@ -125,7 +127,7 @@ export function ResultEditor() {
                       startIcon={<DeleteIcon />}
                       onClick={() => handleDelete(problem.id)}
                     >
-                      削除
+                      {t('common.delete')}
                     </Button>
                   </Stack>
                 </Stack>
@@ -154,12 +156,14 @@ export function ResultEditor() {
         <DialogTitle>問題を編集</DialogTitle>
         <DialogContent sx={{ py: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
           <TextField
+            id="edit-title-input"
             label="タイトル"
             fullWidth
             value={editData.title || ''}
             onChange={(e) => setEditData({ ...editData, title: e.target.value })}
           />
           <TextField
+            id="edit-content-input"
             label="問題文"
             fullWidth
             multiline
@@ -168,6 +172,7 @@ export function ResultEditor() {
             onChange={(e) => setEditData({ ...editData, content: e.target.value })}
           />
           <TextField
+            id="edit-answer-input"
             label="解答"
             fullWidth
             multiline
@@ -176,6 +181,7 @@ export function ResultEditor() {
             onChange={(e) => setEditData({ ...editData, answer: e.target.value })}
           />
           <TextField
+            id="edit-explanation-input"
             label="解説"
             fullWidth
             multiline
@@ -185,9 +191,9 @@ export function ResultEditor() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setEditingId(null)}>キャンセル</Button>
+          <Button onClick={() => setEditingId(null)}>{t('common.cancel')}</Button>
           <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSaveEdit}>
-            保存
+            {t('common.save')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -3,7 +3,9 @@
 // Shared service health state across all pages
 // Polling interval: 60s
 // CTA sync: 0-200ms
-// ======================================== import React, { createContext, useContext, ReactNode } from 'react';
+// ========================================
+
+import React, { createContext, useContext, ReactNode } from 'react';
 import { useServiceHealth, type ServiceHealthState } from '../hooks/useServiceHealth'; interface ServiceHealthContextValue { health: ServiceHealthState; refresh: () => void; fetchHealthSummary: () => Promise<any>; isServiceOperational: (service: keyof Omit<ServiceHealthState, 'lastUpdated' | 'isLoading' | 'error'>) => boolean; shouldDisableCTA: (requiredServices: Array<keyof Omit<ServiceHealthState, 'lastUpdated' | 'isLoading' | 'error'>>) => boolean; isLoading: boolean; error: string | null;
 } const ServiceHealthContext = createContext<ServiceHealthContextValue | undefined>(undefined); interface ServiceHealthProviderProps { children: ReactNode;
 } /** * ServiceHealthProvider * * Provides centralized service health state to all components * - Polls health status every 60 seconds * - Syncs CTA disable state within 0-200ms * - Shared across HomePage, ProblemViewEditPage, ProblemCreatePage, GeneratingPage, MyPage * * @example * // In App.tsx * <ServiceHealthProvider> * <YourApp /> * </ServiceHealthProvider> * * // In any component * const { health, shouldDisableCTA } = useServiceHealthContext(); */

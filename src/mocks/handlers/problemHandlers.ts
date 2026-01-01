@@ -1,12 +1,12 @@
 import { http, HttpResponse } from 'msw';
 
-const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
+const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? 'http://localhost:3000/api';
 const withBase = (path: string) => `${apiBase}${path}`;
 
 // Mock database for problems
 const problems = [
   {
-    id: 'p1',
+    id: 'exam-1',
     title: '微分積分学 - 第3章 演習問題',
     subject: '数学',
     university: '東京大学',
@@ -34,7 +34,7 @@ const problems = [
     ],
   },
   {
-    id: 'p2',
+    id: 'exam-2',
     title: '線形代数 - 固有値と固有ベクトル',
     subject: '数学',
     university: '京都大学',
@@ -62,7 +62,7 @@ const problems = [
     ],
   },
   {
-    id: 'p3',
+    id: 'exam-3',
     title: '力学 - 剛体の運動',
     subject: '物理学',
     university: '東京理科大学',
@@ -90,7 +90,7 @@ const problems = [
     ],
   },
   {
-    id: 'p4',
+    id: 'exam-4',
     title: '有機化学 - 反応機構',
     subject: '化学',
     university: '早稲田大学',
@@ -136,7 +136,19 @@ export const problemHandlers = [
     // Additional filters
     const subjects = url.searchParams.getAll('subjects[]');
     const universities = url.searchParams.getAll('universities[]');
-    const difficulty = url.searchParams.get('level'); // AdvancedSearchPanel uses 'level'
+    const faculties = url.searchParams.getAll('faculties[]');
+    const formats = url.searchParams.getAll('formats[]');
+    const difficulty = url.searchParams.get('level');
+    const professor = url.searchParams.get('professor');
+    const year = url.searchParams.get('year');
+    const fieldType = url.searchParams.get('fieldType');
+    const duration = url.searchParams.get('duration');
+    const period = url.searchParams.get('period');
+    const isLearned = url.searchParams.get('isLearned') === 'true';
+    const isHighRating = url.searchParams.get('isHighRating') === 'true';
+    const isCommented = url.searchParams.get('isCommented') === 'true';
+    const isPosted = url.searchParams.get('isPosted') === 'true';
+    const language = url.searchParams.get('language');
 
     // キーワードでフィルター
     let filtered = problems;
@@ -150,9 +162,6 @@ export const problemHandlers = [
 
     // Apply advanced filters
     if (subjects.length > 0) {
-      // Mock data uses lowercase keys or mapped values? Mock has '数学', '物理学'. 
-      // Panel uses 'math', 'physics'. 
-      // Simple mapping for demo:
       const subjectMap: Record<string, string> = {
         math: '数学', physics: '物理学', chemistry: '化学', biology: '生物',
         english: '英語', history: '歴史', geography: '地理', japanese: '国語'
@@ -162,7 +171,6 @@ export const problemHandlers = [
     }
 
     if (universities.length > 0) {
-      // Mock 'tokyo' -> '東京大学' etc.
       const uniMap: Record<string, string> = {
         tokyo: '東京大学', kyoto: '京都大学', osaka: '大阪大学',
         tohoku: '東北大学', keio: '慶應義塾大学', waseda: '早稲田大学'
@@ -171,15 +179,80 @@ export const problemHandlers = [
       filtered = filtered.filter(p => targetUnis.some(u => p.university.includes(u)));
     }
 
+    if (faculties.length > 0) {
+      filtered = filtered.filter(p => faculties.some(f => p.description?.includes(f)));
+    }
+
+    if (professor) {
+      filtered = filtered.filter(p => p.author.name.includes(professor));
+    }
+
+    if (year) {
+      filtered = filtered.filter(p => p.createdAt.includes(year));
+    }
+
+    if (fieldType) {
+      filtered = filtered.filter(p => p.tags?.includes(fieldType));
+    }
+
     if (difficulty) {
-      // Map 'basic', 'standard', 'advanced', 'expert' to mock difficulties
-      // Mock has 'standard', 'difficult', 'applied'.
-      // Mapping 'advanced' -> 'difficult' | 'applied'.
       if (difficulty === 'advanced') {
         filtered = filtered.filter(p => p.difficulty === 'difficult' || p.difficulty === 'applied');
       } else {
         filtered = filtered.filter(p => p.difficulty === difficulty);
       }
+    }
+
+    if (formats.length > 0) {
+      // Mock logic: check if any question matches the format
+      filtered = filtered.filter(p => p.questions?.some(q => formats.includes(q.type)));
+    }
+
+    if (duration) {
+      // Mock logic: filter by views as a proxy for duration
+      if (duration === 'short') filtered = filtered.filter(p => (p.views || 0) < 100);
+      else if (duration === 'medium') filtered = filtered.filter(p => (p.views || 0) >= 100 && (p.views || 0) < 300);
+      else if (duration === 'long') filtered = filtered.filter(p => (p.views || 0) >= 300);
+    }
+
+    if (period && period !== 'none') {
+      const now = new Date();
+      let cutoff = new Date(0);
+      if (period === '1day') cutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      else if (period === '1week') cutoff = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      else if (period === '1month') {
+        const d = new Date();
+        d.setMonth(d.getMonth() - 1);
+        cutoff = d;
+      }
+      else if (period === '1year') {
+        const d = new Date();
+        d.setFullYear(d.getFullYear() - 1);
+        cutoff = d;
+      }
+      
+      if (period !== 'custom') {
+        filtered = filtered.filter(p => new Date(p.createdAt) >= cutoff);
+      }
+    }
+
+    if (isLearned) {
+      // Mock: even IDs are learned
+      filtered = filtered.filter(p => parseInt(p.id.replace('exam-', '')) % 2 === 0);
+    }
+    if (isHighRating) {
+      filtered = filtered.filter(p => (p.rating || 0) >= 4.5);
+    }
+    if (isCommented) {
+      filtered = filtered.filter(p => (p.comments || 0) > 0);
+    }
+    if (isPosted) {
+      // Mock: odd IDs are posted
+      filtered = filtered.filter(p => parseInt(p.id.replace('exam-', '')) % 2 !== 0);
+    }
+    if (language) {
+      // Mock: assume all are 'ja' for now
+      if (language !== 'ja') filtered = [];
     }
 
     // ソート
@@ -229,7 +302,7 @@ export const problemHandlers = [
   // Create new problem (mock)
   http.post(withBase('/problems'), async ({ request }) => {
     const newProblem = (await request.json()) as any;
-    newProblem.id = `p${problems.length + 1}`;
+    newProblem.id = `exam-${problems.length + 1}`;
     newProblem.createdAt = new Date().toISOString();
     problems.push(newProblem);
     return HttpResponse.json(newProblem, { status: 201 });

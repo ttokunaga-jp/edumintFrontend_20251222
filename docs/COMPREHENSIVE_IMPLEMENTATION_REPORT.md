@@ -143,7 +143,7 @@ src/features/generation/hooks/useProblemCreateController.ts
 - ✅ Deleted: `src/pages/StructureConfirmPage.tsx`
 - ✅ Deleted: `src/pages/ProfileSetupPage.tsx`
 - ✅ Modified: `src/pages/index.ts` - exports削除
-- ✅ Kept: HomePage, ProblemViewEditPage, LoginRegisterPage, ProblemCreatePage, MyPage, AdminModerationPage
+- ✅ Kept: HomePage, ProblemViewEditPage, LoginRegisterPage, ProblemCreatePage, MyPage
 
 **メリット**:
 - Pages は routing entry points のみ

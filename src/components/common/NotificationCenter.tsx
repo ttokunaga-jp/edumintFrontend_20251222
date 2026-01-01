@@ -1,4 +1,5 @@
 import { Box, Snackbar, Alert, Stack } from '@mui/material';
+import { zIndex } from '@/theme/zIndex';
 import { useNotification } from '@/contexts/NotificationContext';
 
 /**
@@ -15,7 +16,7 @@ export function NotificationCenter() {
         position: 'fixed',
         top: 20,
         right: 20,
-        zIndex: 9999,
+        zIndex: zIndex.notification,
         maxWidth: 400,
         pointerEvents: 'none',
       }}

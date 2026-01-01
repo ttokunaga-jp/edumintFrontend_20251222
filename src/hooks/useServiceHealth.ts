@@ -3,7 +3,8 @@
 // Centralized service health monitoring with polling
 // ========================================
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { HealthStatus } from '@/types/health';
 import {
   getHealthContent,
@@ -12,9 +13,15 @@ import {
   getHealthSearch,
   getHealthWallet,
   getHealthSummary,
-  type HealthResponse,
-  type HealthSummaryResponse,
 } from '@/services/api/gateway/health';
+
+/**
+ * Health summary response type
+ */
+interface HealthSummaryResponse {
+  overall: HealthStatus;
+  services: Record<string, HealthStatus>;
+}
 
 /**
  * Service health state
@@ -42,64 +49,51 @@ export interface ServiceHealthState {
  * - CTA disable/enable sync (0-200ms)
  */
 export function useServiceHealth() {
-  const [health, setHealth] = useState<ServiceHealthState>({
-    content: 'operational',
-    community: 'operational',
-    notifications: 'operational',
-    search: 'operational',
-    wallet: 'operational',
-    aiGenerator: 'operational',
-    lastUpdated: null,
-    isLoading: true,
-    error: null,
+  const queryClient = useQueryClient();
+
+  // Individual service health queries
+  const contentQuery = useQuery({
+    queryKey: ['health', 'content'],
+    queryFn: getHealthContent,
+    refetchInterval: 60000, // 60 seconds
   });
 
-  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const isPollingRef = useRef(false);
+  const communityQuery = useQuery({
+    queryKey: ['health', 'community'],
+    queryFn: getHealthCommunity,
+    refetchInterval: 60000,
+  });
 
-  /**
-   * Fetch all service health statuses
-   * Uses parallel requests for optimal performance (0-200ms response time)
-   */
-  const fetchHealthStatus = useCallback(async () => {
-    // Prevent concurrent polling
-    if (isPollingRef.current) return;
-    isPollingRef.current = true;
+  const notificationsQuery = useQuery({
+    queryKey: ['health', 'notifications'],
+    queryFn: getHealthNotifications,
+    refetchInterval: 60000,
+  });
 
-    try {
-      // Parallel health checks for fast response
-      const [contentRes, communityRes, notificationsRes, searchRes, walletRes] = await Promise.all([
-        getHealthContent(),
-        getHealthCommunity(),
-        getHealthNotifications(),
-        getHealthSearch(),
-        getHealthWallet(),
-      ]);
+  const searchQuery = useQuery({
+    queryKey: ['health', 'search'],
+    queryFn: getHealthSearch,
+    refetchInterval: 60000,
+  });
 
-      setHealth((prev) => ({
-        ...prev,
-        content: contentRes.status,
-        community: communityRes.status,
-        notifications: notificationsRes.status,
-        search: searchRes.status,
-        wallet: walletRes.status,
-        // AI Generator health derived from content service
-        aiGenerator: contentRes.status,
-        lastUpdated: new Date(),
-        isLoading: false,
-        error: null,
-      }));
-    } catch (error) {
-      console.error('Failed to fetch service health:', error);
-      setHealth((prev) => ({
-        ...prev,
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
-      }));
-    } finally {
-      isPollingRef.current = false;
-    }
-  }, []);
+  const walletQuery = useQuery({
+    queryKey: ['health', 'wallet'],
+    queryFn: getHealthWallet,
+    refetchInterval: 60000,
+  });
+
+  // Aggregate health state
+  const health: ServiceHealthState = {
+    content: contentQuery.data?.status || 'operational',
+    community: communityQuery.data?.status || 'operational',
+    notifications: notificationsQuery.data?.status || 'operational',
+    search: searchQuery.data?.status || 'operational',
+    wallet: walletQuery.data?.status || 'operational',
+    aiGenerator: contentQuery.data?.status || 'operational', // Derived from content
+    lastUpdated: new Date(), // Simplified
+    isLoading: contentQuery.isLoading || communityQuery.isLoading || notificationsQuery.isLoading || searchQuery.isLoading || walletQuery.isLoading,
+    error: contentQuery.error?.message || communityQuery.error?.message || notificationsQuery.error?.message || searchQuery.error?.message || walletQuery.error?.message || null,
+  };
 
   /**
    * Fetch health summary (for MyPage)
@@ -117,30 +111,8 @@ export function useServiceHealth() {
    * Manual refresh
    */
   const refresh = useCallback(() => {
-    setHealth((prev) => ({ ...prev, isLoading: true }));
-    fetchHealthStatus();
-  }, [fetchHealthStatus]);
-
-  /**
-   * Initialize polling on mount
-   */
-  useEffect(() => {
-    // Initial fetch
-    fetchHealthStatus();
-
-    // Set up 60-second polling interval
-    pollingIntervalRef.current = setInterval(() => {
-      fetchHealthStatus();
-    }, 60000); // 60 seconds
-
-    // Cleanup on unmount
-    return () => {
-      if (pollingIntervalRef.current) {
-        clearInterval(pollingIntervalRef.current);
-        pollingIntervalRef.current = null;
-      }
-    };
-  }, [fetchHealthStatus]);
+    queryClient.invalidateQueries({ queryKey: ['health'] });
+  }, [queryClient]);
 
   /**
    * Check if a specific service is operational

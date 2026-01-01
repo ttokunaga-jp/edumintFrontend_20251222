@@ -22,6 +22,7 @@ import {
   Chip,
 } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -38,6 +39,7 @@ import { useGenerationStore, GenerationMode, UploadedFile } from '@/features/gen
 export function StartPhase() {
   const { mode, setMode, files, setFiles, addFiles, removeFile, inputText, setInputText, options, setOptions, setPhase } =
     useGenerationStore();
+  const { t } = useTranslation();
 
   const [error, setError] = useState<string>('');
   const [fileErrors, setFileErrors] = useState<string[]>([]);
@@ -166,9 +168,6 @@ export function StartPhase() {
       {/* モード選択 */}
       <Card>
         <CardContent>
-          <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-            生成元を選択
-          </Typography>
           <ToggleButtonGroup
             value={mode}
             exclusive
@@ -186,10 +185,6 @@ export function StartPhase() {
       {/* ファイルアップロード & テキスト入力 */}
       <Card>
         <CardContent>
-          <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-            生成元を入力
-          </Typography>
-
           {/* ドラッグ＆ドロップエリア */}
           <Box
             {...getRootProps()}
@@ -249,7 +244,7 @@ export function StartPhase() {
                       startIcon={<DeleteIcon />}
                       onClick={() => removeFile(file.name)}
                     >
-                      削除
+                      {t('common.delete')}
                     </Button>
                   </Box>
                 ))}
@@ -280,6 +275,7 @@ export function StartPhase() {
           {/* テキスト直接入力 */}
           <Box>
             <TextField
+              id="generation-input-text"
               fullWidth
               multiline
               rows={5}
@@ -325,7 +321,7 @@ export function StartPhase() {
                   onChange={(e) => setOptions({ checkStructure: e.target.checked })}
                 />
               }
-              label="問題構造を確認（確認画面を表示）"
+              label={t('problem.confirm_structure')}
             />
 
             <FormControlLabel
@@ -391,7 +387,20 @@ export function StartPhase() {
                       </AccordionSummary>
                       <AccordionDetails>
                         <Stack spacing={1}>
-                          {['記述式', '選択式', '穴埋め式', '正誤判定', '数値計算式', '証明問題'].map(
+                          {[
+                            // パターンA：選択系
+                            '単一選択',
+                            '複数選択',
+                            '正誤判定',
+                            '組み合わせ',
+                            '順序並べ替え',
+                            // パターンB：記述系
+                            '記述式',
+                            '証明問題',
+                            'コード記述',
+                            '翻訳',
+                            '数値計算',
+                          ].map(
                             (format) => (
                               <FormControlLabel
                                 key={format}

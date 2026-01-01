@@ -1,3 +1,23 @@
-import { useState } from 'react';
-import { updateExam as updateExamApi } from '@/services/api/gateway/content'; export function useExamEditor() { const [isSaving, setIsSaving] = useState(false); async function updateExam(id: string, updates: any) { setIsSaving(true); try { return await updateExamApi(id, updates); } finally { setIsSaving(false); } } return { updateExam, isSaving };
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateExam as updateExamApi } from '@/services/api/gateway/content';
+import type { Exam } from '../models';
+
+export function useExamEditor() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<Exam> }) =>
+      updateExamApi(id, updates),
+    onSuccess: (data, variables) => {
+      // Invalidate and refetch exam data
+      queryClient.invalidateQueries({ queryKey: ['exam', variables.id] });
+    },
+  });
+
+  return {
+    updateExam: (id: string, updates: Partial<Exam>) =>
+      mutation.mutateAsync({ id, updates }),
+    isSaving: mutation.isPending,
+    error: mutation.error,
+  };
 }

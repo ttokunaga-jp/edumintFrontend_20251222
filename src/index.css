@@ -1,5 +1,8 @@
-/* Global baseline for MUI + Emotion */
 @import url("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css");
+
+/* ============================================
+   GLOBAL RESET & RESPONSIVE FOUNDATION
+   ============================================ */
 
 * {
   margin: 0;
@@ -7,29 +10,71 @@
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+html {
+  width: 100%;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  overflow: hidden;
+  overflow-x: hidden;
 }
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   APP LAYOUT (FLEXBOX - RESPONSIVE)
+   ============================================ */
+
+.app-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-topbar {
+  flex-shrink: 0;
+  width: 100%;
+  position: relative;
+  z-index: 1200;
+  margin: 0;
+  padding: 0;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ============================================
+   TYPOGRAPHY & UTILITIES
+   ============================================ */
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-img,
-svg,
-video,
-canvas {
-  max-width: 100%;
-  height: auto;
-  display: block;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 button,
@@ -39,13 +84,28 @@ textarea {
   font: inherit;
 }
 
-/* Animation utilities */
+/* ============================================
+   MEDIA ELEMENTS
+   ============================================ */
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 @keyframes slide-in {
   from {
     opacity: 0;
     transform: translateX(100%);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -57,7 +117,6 @@ textarea {
     opacity: 1;
     transform: translateX(0);
   }
-
   to {
     opacity: 0;
     transform: translateX(100%);
@@ -69,19 +128,91 @@ textarea {
     opacity: 0;
     transform: scale(0.95);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-/* MSW overlay message */
+/* ============================================
+   DEBUG & UTILITIES
+   ============================================ */
+
+/* Hide MSW overlay */
 iframe[src*="/mockServiceWorker.js"] {
   display: none !important;
 }
 
-/* 
-  NOTE: Removed conflicting Tailwind CSS definitions and Houdini syntax 
-  to ensure MUI CssBaseline correctly handles theming (Light/Dark mode).
-*/
+/* ============================================
+   TYPOGRAPHY & UTILITIES
+   ============================================ */
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* ============================================
+   MEDIA ELEMENTS
+   ============================================ */
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   DEBUG & UTILITIES
+   ============================================ */
+
+/* Hide MSW overlay */
+iframe[src*="/mockServiceWorker.js"] {
+  display: none !important;
+}

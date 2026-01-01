@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Trash2, Plus } from 'lucide-react'; export type Keyword = { id?: string; keyword: string };
+import { Delete as DeleteIcon, Add as AddIcon } from '@mui/icons-material';
+import { Box, IconButton, TextField, Chip } from '@mui/material'; export type Keyword = { id?: string; keyword: string };
 
 type KeywordLike = Keyword | string;
 
@@ -10,7 +11,8 @@ type KeywordEditorProps = {
   placeholder?: string;
   ariaLabelInput?: string;
   canEdit?: boolean;
-}; export const KeywordEditor: React.FC<KeywordEditorProps> = ({ keywords = [], onAdd, onRemove, placeholder = 'キーワードを追加...', ariaLabelInput, canEdit = false,
+  inputId?: string;
+}; export const KeywordEditor: React.FC<KeywordEditorProps> = ({ keywords = [], onAdd, onRemove, placeholder = 'キーワードを追加...', ariaLabelInput, canEdit = false, inputId = 'keyword-input',
 }) => {
   const [newKeyword, setNewKeyword] = useState('');
 
@@ -29,23 +31,24 @@ type KeywordEditorProps = {
   };
 
   return (
-    <div>
-      <div style={{ gap: '0.5rem' }}>
+    <Box>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1 }}>
         {normalized.map((kw) => (
-          <span key={kw.id} style={{ alignItems: 'center', gap: '0.25rem' }}>
-            {kw.keyword}
-            {canEdit && onRemove && (
-              <button onClick={() => onRemove(kw.id)} aria-label="キーワード削除">
-                <Trash2 />
-              </button>
-            )}
-          </span>
+          <Chip
+            key={kw.id}
+            label={kw.keyword}
+            onDelete={canEdit && onRemove ? () => onRemove(kw.id) : undefined}
+            deleteIcon={<DeleteIcon />}
+            size="small"
+          />
         ))}
-      </div>
+      </Box>
 
       {canEdit && onAdd && (
-        <div style={{ gap: '0.5rem' }}>
-          <input
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <TextField
+            id={inputId}
+            name={inputId}
             aria-label={ariaLabelInput ?? 'キーワード入力'}
             type="text"
             value={newKeyword}
@@ -57,12 +60,14 @@ type KeywordEditorProps = {
               }
             }}
             placeholder={placeholder}
+            size="small"
+            fullWidth
           />
-          <button onClick={handleAdd} aria-label="キーワード追加">
-            <Plus />
-          </button>
-        </div>
+          <IconButton onClick={handleAdd} aria-label="キーワード追加">
+            <AddIcon />
+          </IconButton>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };

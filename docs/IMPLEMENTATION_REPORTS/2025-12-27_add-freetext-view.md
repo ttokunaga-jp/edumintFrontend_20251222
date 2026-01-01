@@ -16,6 +16,8 @@ file_count_delta: 3
 time_spent_hours: 1
 ---
 
+> NOTE: As of 2025-12-31 the per-type View components were consolidated into `NormalSubQuestionView`. The original `FreeTextView` file has been removed and its functionality unified. This implementation report is kept for historical record.
+
 ## 概要
 FreeText の表示コンポーネントに対して Storybook ストーリーと snapshot テストを追加しました。既存の `FreeTextView` をベースに、Markdown と LaTeX の双方の表示確認を自動化しました。
 

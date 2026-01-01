@@ -1,6 +1,7 @@
 import { Box, Container, Stepper, Step, StepLabel, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useGenerationStore } from '@/features/generation/stores/generationStore';
+import { zIndex } from '@/theme/zIndex';
 import { StartPhase } from '@/components/page/ProblemCreatePage/StartPhase';
 import { StructureConfirmation } from '@/components/page/ProblemCreatePage/StructureConfirmation';
 import { ResultEditor } from '@/components/page/ProblemCreatePage/ResultEditor';
@@ -18,10 +19,10 @@ export default function ProblemCreatePage() {
   const { phase, reset } = useGenerationStore();
 
   // 3フェーズに統合
-  const displayPhase = 
+  const displayPhase =
     phase === 'analyzing' ? 'start' :
-    phase === 'generating' ? 'structure_confirmed' :
-    phase;
+      phase === 'generating' ? 'structure_confirmed' :
+        phase;
 
   const phaseOrder = ['start', 'structure_confirmed', 'completed'] as const;
   const phaseLabels = ['1. 生成開始', '2. 構造解析', '3. 生成完了'];
@@ -30,11 +31,11 @@ export default function ProblemCreatePage() {
   return (
     <>
       {/* 固定 Stepper（MUI Stepper） */}
-      <Box sx={{ 
-        position: 'sticky', 
-        top: 64, // TopMenuBar の高さ
-        zIndex: 99, 
-        backgroundColor: 'background.paper', 
+      <Box sx={{
+        position: 'sticky',
+        top: 0, // TopMenuBar の直下に配置（.app-mainがすでにオフセットを持っているため0でOK）
+        zIndex: zIndex.appBar,
+        backgroundColor: 'background.paper',
         borderBottom: `1px solid ${theme.palette.divider}`
       }}>
         <Stepper activeStep={displayPhaseIndex} alternativeLabel sx={{ py: 2, px: { xs: 1, sm: 2 } }}>

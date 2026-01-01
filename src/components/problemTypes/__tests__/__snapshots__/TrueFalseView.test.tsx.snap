@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html exports[`TrueFalseView > renders question prompt 1`] = `
-<div> <div> <div> <p> Is 2 prime? </p> </div> <div style="display: ; gap: 0.5rem;" > <div > True </div> <div > False </div> </div> </div>
-</div>
-`; exports[`TrueFalseView > renders with answer shown 1`] = `
-<div> <div> <div> <p> Answer: True </p> </div> <div style="display: ; gap: 0.5rem;" > <div > True </div> <div > False </div> </div> </div>
-</div>
-`;

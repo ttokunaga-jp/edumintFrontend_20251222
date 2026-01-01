@@ -1,14 +1,10 @@
 import { http, HttpResponse } from 'msw';
+import { mockUser as defaultMockUser } from '../mockData/user';
 
-const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
+const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? 'http://localhost:3000/api';
 const withBase = (path: string) => `${apiBase}${path}`;
 
-const mockUser = {
-  id: 'user-001',
-  email: 'test@example.com',
-  username: 'testuser',
-  displayName: 'Test User',
-};
+const mockUser = defaultMockUser;
 
 export const authHandlers = [
   // ログインエンドポイント

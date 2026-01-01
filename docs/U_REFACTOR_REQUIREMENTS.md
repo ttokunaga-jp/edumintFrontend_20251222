@@ -32,8 +32,6 @@
     - ユーザープロファイル、Wallet、統計情報。
 5.  **`LoginRegisterPage.tsx`**
     - ログイン・新規登録・ソーシャル認証の統合画面。
-6.  **`AdminModerationPage.tsx`**
-    - 管理者用ダッシュボード。
 
 ## 4. ロジックとUIの分離 (Feature Separation)
 - **API通信**: すべて `src/features/<domain>/hooks` 内の `useQuery` / `useMutation` に書き換える。
@@ -63,7 +61,6 @@
 - ✅ **`ProblemViewEditPage.tsx`**: Read/Editモードの切り替え、メタデータ表示、削除機能完備
 - ✅ **`LoginRegisterPage.tsx`**: ログイン + 新規登録（Register）フロー実装完了
 - ✅ **`MyPage.tsx`**: ユーザープロファイル表示とログアウト機能実装
-- ✅ **`AdminModerationPage.tsx`**: 管理者ダッシュボードプレースホルダー
 
 #### 3. ロジックとUIの分離
 - ✅ **API通信**: `src/features/*/hooks` に `useQuery`/`useMutation` を実装

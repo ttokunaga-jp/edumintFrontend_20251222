@@ -188,6 +188,7 @@ export function LoginRegisterPage({ mode = 'login' }: LoginRegisterPageProps) {
             <Stack spacing={2}>
               <Box>
                 <TextField
+                  id="email-input"
                   fullWidth
                   label="メールアドレス"
                   type="email"
@@ -204,6 +205,7 @@ export function LoginRegisterPage({ mode = 'login' }: LoginRegisterPageProps) {
               </Box>
 
               <TextField
+                id="password-input"
                 fullWidth
                 label="パスワード"
                 type="password"
@@ -220,6 +222,7 @@ export function LoginRegisterPage({ mode = 'login' }: LoginRegisterPageProps) {
 
               {activeTab === 'register' && (
                 <TextField
+                  id="confirm-password-input"
                   fullWidth
                   label="パスワード（確認）"
                   type="password"

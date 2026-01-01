@@ -8,7 +8,7 @@ const LoginRegisterPage = lazy(() => import('../pages/LoginRegisterPage'));
 const MyPage = lazy(() => import('../pages/MyPage'));
 const AdminModerationPage = lazy(() => import('../pages/AdminModerationPage'));
 const ProblemCreatePage = lazy(() => import('../pages/ProblemCreatePage'));
-const ProblemViewEditPage = lazy(() => import('../pages/ProblemViewEditPage'));
+import ProblemViewEditPage from '../pages/ProblemViewEditPage';
 
 // Fallback component
 const PageLoader = () => <div>Loading...</div>;
@@ -20,7 +20,7 @@ export function Router() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginRegisterPage />} />
         <Route path="/register" element={<LoginRegisterPage mode="register" />} />
-        
+
         {/* Protected Routes */}
         <Route
           path="/problem/create"
@@ -39,7 +39,7 @@ export function Router() {
             </ProtectedRoute>
           }
         />
-        
+
         {/* Admin Routes */}
         <Route
           path="/admin"
@@ -49,7 +49,7 @@ export function Router() {
             </AdminRoute>
           }
         />
-        
+
         {/* Additional routes can be added here */}
       </Routes>
     </Suspense>

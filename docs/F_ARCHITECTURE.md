@@ -96,7 +96,7 @@ edumintFrontend/
 │   │   │   └── MyPage/
 │   │   │       └── UserStatsCards.tsx
 │   │   └── problemTypes/             # ドメイン固有のUI部品 (問題形式ごとのView/Edit)
-│   │       ├── ClozeView.tsx
+│   │       ├── NormalSubQuestionView.tsx  # 汎用編集/表示コンポーネント（多タイプ共通）
 │   │       ├── MultipleChoiceView.tsx
 │   │       └── ProblemTypeRegistry.tsx
 │   │   # NOTE: `primitives/` (Button, Card等) は廃止。MUIコンポーネントを直接使用。
@@ -140,7 +140,6 @@ edumintFrontend/
 │   │   ├── HomePage.tsx
 │   │   ├── MyPage.tsx
 │   │   ├── LoginRegisterPage.tsx     # ログイン・登録統合ページ
-│   │   ├── AdminModerationPage.tsx
 │   │   ├── ProblemViewEditPage.tsx   # 詳細・編集兼用ページ (/problem/:id)
 │   │   └── ProblemCreatePage.tsx       # 複雑なページはディレクトリ化して責務分離
 │   │
