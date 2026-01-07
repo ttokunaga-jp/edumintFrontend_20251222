@@ -4,8 +4,8 @@ import { AdvancedSearchPanel, SearchFilters } from '@/components/page/HomePage/A
 import i18next from '@/lib/i18n';
 import { PROBLEM_FORMAT_OPTIONS } from '@/features/ui/selectionOptions';
 
-describe('AdvancedSearchPanel - Formats filter', () => {
-  it('renders problem formats and applies selection', () => {
+describe('AdvancedSearchPanel - QuestionType filter', () => {
+  it('renders problem question types and applies selection', () => {
     const onFiltersChange = vi.fn();
     const filters: SearchFilters = {};
 
@@ -17,8 +17,8 @@ describe('AdvancedSearchPanel - Formats filter', () => {
       />
     );
 
-    // Ensure the formats section is present
-    expect(screen.getByText(i18next.t('filters.formats'))).toBeInTheDocument();
+    // Ensure the questionType section is present
+    expect(screen.getByText(i18next.t('filters.questionType'))).toBeInTheDocument();
 
     // Toggle the first format checkbox (localized label)
     const firstFormat = screen.getByLabelText(i18next.t(PROBLEM_FORMAT_OPTIONS[0].labelKey));
@@ -30,11 +30,11 @@ describe('AdvancedSearchPanel - Formats filter', () => {
     const applyButton = buttons[buttons.length - 2];
     fireEvent.click(applyButton);
 
-    // onFiltersChange should be called with formats including the value for the first format option
+    // onFiltersChange should be called with questionType including the value for the first option
     expect(onFiltersChange).toHaveBeenCalled();
     const calledWith = onFiltersChange.mock.calls[0][0];
-    expect(calledWith.formats).toBeDefined();
-    expect(Array.isArray(calledWith.formats)).toBe(true);
-    expect(calledWith.formats).toContain(PROBLEM_FORMAT_OPTIONS[0].value);
+    expect(calledWith.questionType).toBeDefined();
+    expect(Array.isArray(calledWith.questionType)).toBe(true);
+    expect(calledWith.questionType).toContain(PROBLEM_FORMAT_OPTIONS[0].value);
   });
 });

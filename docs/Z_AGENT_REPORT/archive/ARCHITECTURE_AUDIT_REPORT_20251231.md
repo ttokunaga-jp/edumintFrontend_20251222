@@ -28,7 +28,7 @@
 
 **判定根拠:**
 - [HomePage.tsx](src/pages/HomePage.tsx) - 検索ロジックはカスタムフック `useSearch` へ正しく切り出されている。UIレイアウトのみ。
-- [ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx) - ステッパーおよび各フェーズコンポーネント（StartPhase, StructureConfirmation, ResultEditor）への組成のみ。
+- [CreatePage.tsx](src/pages/CreatePage.tsx) - ステッパーおよび各フェーズコンポーネント（StartPhase, StructureConfirmation, ResultEditor）への組成のみ。
 - [ProblemViewEditPage.tsx](src/pages/ProblemViewEditPage.tsx) - フォームロジック（useForm, watch）は適切に`useExamEditor`フックへ分離。
 - 各ページはコンポーネントの呼び出しと基本的なレイアウトのみで、ビジネスロジックの直書きはなし。
 
@@ -50,8 +50,8 @@
 | [src/components/common/PreviewEditToggle.tsx](src/components/common/PreviewEditToggle.tsx#L53) | 53 | `"閲覧"`, `"編集"` | `common.view_mode`, `common.edit_mode` |
 | [src/components/page/HomePage/AdvancedSearchPanel.tsx](src/components/page/HomePage/AdvancedSearchPanel.tsx#L342) | 342, 592, 650 | `"詳細検索"`, `"個別検索"`, `"検索"` | `search.advanced_search`, `search.custom_search`, `common.search` |
 | [src/components/page/ProblemViewEditPage/SubQuestionBlock.tsx](src/components/page/ProblemViewEditPage/SubQuestionBlock.tsx#L165-L169) | 165-169, 229-233 | `"保存"`, `"キャンセル"` | `common.save`, `common.cancel` |
-| [src/components/page/ProblemCreatePage/StartPhase.tsx](src/components/page/ProblemCreatePage/StartPhase.tsx#L252, #L329) | 252, 329 | `"削除"`, `"問題構造を確認..."` | `common.delete`, `problem.confirm_structure` |
-| [src/components/page/ProblemCreatePage/ResultEditor.tsx](src/components/page/ProblemCreatePage/ResultEditor.tsx#L128, #L192, #L194) | 128, 192, 194 | `"削除"`, `"キャンセル"`, `"保存"` | `common.delete`, `common.cancel`, `common.save` |
+| [src/components/page/CreatePage/StartPhase.tsx](src/components/page/CreatePage/StartPhase.tsx#L252, #L329) | 252, 329 | `"削除"`, `"問題構造を確認..."` | `common.delete`, `problem.confirm_structure` |
+| [src/components/page/CreatePage/ResultEditor.tsx](src/components/page/CreatePage/ResultEditor.tsx#L128, #L192, #L194) | 128, 192, 194 | `"削除"`, `"キャンセル"`, `"保存"` | `common.delete`, `common.cancel`, `common.save` |
 | [src/pages/HomePage.tsx](src/pages/HomePage.tsx#L69-L74, #L89, #L104, #L109) | 69-74, 89, 104, 109 | `"最新"`, `"人気"`, `"閲覧数"`, `"おすすめ"`, `"検索中にエラー..."`, `"検索結果"` | `sort.newest`, `sort.popular`, `sort.views`, `sort.recommended`, `home.search_error`, `home.search_results` |
 | [src/pages/ProblemViewEditPage.tsx](src/pages/ProblemViewEditPage.tsx#L145, #L255, #L263, #L277) | 145, 255, 263, 277 | `"保存中..."`, `"保存"`, `"変更が保存されていません..."`, `"保存して続行"`, `"キャンセル"` | `common.saving`, `common.save`, `problem.unsaved_changes`, `problem.save_and_continue`, `common.cancel` |
 
@@ -102,7 +102,7 @@
 
 | ファイル | 行番号 | マジックナンバー | レイヤー分類 | 推奨対応 |
 |:---|:---:|:---|:---|:---|
-| [src/pages/ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx#L36) | 36 | `zIndex: 99` | App Shell (L1) | `z-app-bar` 定数へ統一 |
+| [src/pages/CreatePage.tsx](src/pages/CreatePage.tsx#L36) | 36 | `zIndex: 99` | App Shell (L1) | `z-app-bar` 定数へ統一 |
 | [src/components/common/NotificationCenter.tsx](src/components/common/NotificationCenter.tsx#L18) | 18 | `zIndex: 9999` | Top Layer (L2) | `z-modal` 定数へ統一 |
 | [src/components/page/ProblemViewEditPage/ActionBar.tsx](src/components/page/ProblemViewEditPage/ActionBar.tsx#L32) | 32 | `zIndex: 1000` | App Shell (L1) | `z-app-bar` 定数へ統一 |
 

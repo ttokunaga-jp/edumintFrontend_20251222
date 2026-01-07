@@ -10,7 +10,7 @@ interface UserProblemsResponse {
     university?: string;
     examName?: string;
     subjectName?: string;
-    difficulty?: string;
+    level?: string;
     content?: string;
     views?: number;
     likes?: number;

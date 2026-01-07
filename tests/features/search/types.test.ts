@@ -15,7 +15,7 @@ describe('Search Schemas', () => {
     it('should validate valid search query', () => {
       const query = {
         keyword: 'test',
-        filters: { difficulty: 'easy' },
+        filters: { level: 'easy' },
         page: 1,
         limit: 20,
       };

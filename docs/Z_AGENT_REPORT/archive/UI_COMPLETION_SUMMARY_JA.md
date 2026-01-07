@@ -8,7 +8,7 @@
 
 ## 📋 実施内容
 
-### タスク1: 問題生成ページ (ProblemCreatePage) ✅
+### タスク1: 問題生成ページ (CreatePage) ✅
 **実装内容**:
 - ✅ 複数ファイルの一括アップロード機能 (react-dropzone統合)
 - ✅ クライアントサイドバリデーション
@@ -21,7 +21,7 @@
 - ✅ ファイルサイズ容量メーター表示
 
 **修正ファイル**:
-- `src/components/page/ProblemCreatePage/StartPhase.tsx` (完全改写)
+- `src/components/page/CreatePage/StartPhase.tsx` (完全改写)
 - `src/features/generation/stores/generationStore.ts` (状態管理更新)
 
 ---
@@ -168,10 +168,10 @@ removeFile: (fileName: string) => void
 ### ページ層 (3ファイル)
 - `src/pages/LoginRegisterPage.tsx` - 完全改写 ⭐
 - `src/pages/MyPage.tsx` - 完全改写 ⭐
-- `src/pages/ProblemCreatePage.tsx` - 変更なし (既に要件準拠)
+- `src/pages/CreatePage.tsx` - 変更なし (既に要件準拠)
 
 ### コンポーネント層 (2ファイル)
-- `src/components/page/ProblemCreatePage/StartPhase.tsx` - 完全改写 ⭐
+- `src/components/page/CreatePage/StartPhase.tsx` - 完全改写 ⭐
 - `src/components/common/TopMenuBar.tsx` - ポップオーバー追加 ✏️
 
 ### ストア層 (1ファイル)

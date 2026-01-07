@@ -1,24 +1,43 @@
 import { create } from 'zustand';
 
 /**
- * 生成フェーズの状態遷移（3フェーズに統合）:
- * - start: 生成開始（ファイルアップロード・オプション設定）
- * - analyzing: 解析中（OCR/構造解析）
- * - structure_confirmed: 構造解析完了・確認ページ
- * - generating: 生成中
- * - completed: 生成完了・編集可能
+ * 生成フェーズの状態遷移（数値ID管理）:
+ * Structure Phase (0-9)
+ * - 0: structure_uploading
+ * - 1: structure_queued
+ * - 2: structure_analysing
+ * - 3: structure_confirmed (User Action Required)
+ * - 4: structure_completed
+ * - 8: structure_failed
+ * - 9: structure_retry
+ * 
+ * Generation Phase (10-19)
+ * - 10: generation_preparing
+ * - 11: generation_queued
+ * - 12: generation_creating
+ * - 13: generation_confirmed (User Action Required)
+ * - 14: generation_completed
+ * - 18: generation_failed
+ * - 19: generation_retry
+ * 
+ * Publication Phase (20-29)
+ * - 20: publication_saving
+ * - 21: publication_publishing
  */
-export type GenerationPhase = 'start' | 'analyzing' | 'structure_confirmed' | 'generating' | 'completed';
+export type GenerationPhase = 
+  | 0 | 1 | 2 | 3 | 4 | 8 | 9 
+  | 10 | 11 | 12 | 13 | 14 | 18 | 19 
+  | 20 | 21;
 
 export type GenerationMode = 'exercise' | 'document';
 
 export interface GenerationOptions {
-  difficulty?: 'auto' | 'basic' | 'standard' | 'advanced' | 'expert';
+  level?: 'auto' | 'basic' | 'standard' | 'advanced';
   count?: number; // 問題数（資料から生成時）
   includeCharts?: boolean; // 図表を使用
   checkStructure?: boolean; // 問題構造を確認
   isPublic?: boolean; // 生成問題を公開
-  formats?: string[]; // 問題形式
+  questionType?: (string | number)[]; // 問題形式（数値 ID または文字列）
   autoFormat?: boolean; // 形式を自動設定
 }
 
@@ -30,6 +49,10 @@ export interface UploadedFile {
 }
 
 export interface GenerationState {
+  // ジョブID
+  jobId: string | null;
+  setJobId: (id: string | null) => void;
+
   // フェーズ
   phase: GenerationPhase;
   setPhase: (phase: GenerationPhase) => void;
@@ -59,7 +82,7 @@ export interface GenerationState {
     problems: Array<{
       id: string;
       type: string;
-      difficulty: string;
+      level: string;
     }>;
   };
   setStructureData: (data: any) => void;
@@ -73,23 +96,26 @@ export interface GenerationState {
 }
 
 const initialState = {
-  phase: 'start' as GenerationPhase,
+  jobId: null,
+  phase: 0 as GenerationPhase, // 0: structure_uploading
   mode: 'exercise' as GenerationMode,
   files: [],
   inputText: '',
   options: {
-    difficulty: 'auto' as const,
+    level: 'auto' as const,
     count: 10,
     includeCharts: true,
     checkStructure: false,
     isPublic: true, // デフォルトで自動公開
-    formats: [],
+    questionType: [],
     autoFormat: true,
   },
 };
 
 export const useGenerationStore = create<GenerationState>((set) => ({
   ...initialState,
+
+  setJobId: (jobId) => set({ jobId }),
 
   setPhase: (phase) => set({ phase }),
 

@@ -29,7 +29,7 @@ export interface Problem {
   creatorName: string;
   isPublic: boolean;
   status: 'draft' | 'published' | 'archived';
-  difficulty?: Difficulty;
+  level?: Difficulty;
   keywords: Keyword[];
   questions: Question[];
   createdAt: string;
@@ -44,7 +44,7 @@ export interface Question {
   problemId: string;
   questionNumber: number;
   content: string;
-  difficulty?: Difficulty;
+  level?: Difficulty;
   keywords: Keyword[];
   subQuestions: SubQuestion[];
   createdAt: string;
@@ -61,7 +61,7 @@ export interface SubQuestion {
   questionTypeId: number; // 1-5, 10-14
   content: string;
   format?: 0 | 1; // 0: Markdown, 1: LaTeX (legacy - kept for validators)
-  difficulty?: Difficulty;
+  level?: Difficulty;
   keywords: Keyword[];
   createdAt: string;
   updatedAt: string;

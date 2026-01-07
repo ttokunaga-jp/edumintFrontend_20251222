@@ -21,7 +21,7 @@ import KeywordManager from '@/components/common/inputs/KeywordManager';
 export interface ExamQuestionMetaProps {
     number: number;
     level: 'major' | 'minor';
-    metaType: 'difficulty' | 'questionType';
+    metaType: 'level' | 'questionType';
     metaValue: number | string;
     metaOptions: Array<{ value: number | string; label: string }>;
     keywords: Array<{ id: string; keyword: string }>;
@@ -29,6 +29,7 @@ export interface ExamQuestionMetaProps {
     onMetaChange: (value: string | number) => void;
     onKeywordAdd: (keyword: string) => void;
     onKeywordRemove: (id: string) => void;
+    errorMessage?: string;
 
     // Controls
     onDelete?: () => void;
@@ -50,6 +51,7 @@ export const ExamQuestionMeta: FC<ExamQuestionMetaProps> = ({
     onMetaChange,
     onKeywordAdd,
     onKeywordRemove,
+    errorMessage,
     onDelete,
     canDelete = false,
     onMoveUp,
@@ -92,10 +94,10 @@ export const ExamQuestionMeta: FC<ExamQuestionMetaProps> = ({
                             <Box sx={{ minWidth: 120, flex: 1 }}>
                                 {isEditMode ? (
                                     <FormControl size="small" fullWidth>
-                                        <InputLabel>{metaType === 'difficulty' ? '難易度' : '問題形式'}</InputLabel>
+                                        <InputLabel>{metaType === 'level' ? '難易度' : '問題形式'}</InputLabel>
                                         <Select
                                             value={metaValue}
-                                            label={metaType === 'difficulty' ? '難易度' : '問題形式'}
+                                            label={metaType === 'level' ? '難易度' : '問題形式'}
                                             onChange={(e) => onMetaChange(e.target.value)}
                                             size="small"
                                         >
@@ -190,6 +192,11 @@ export const ExamQuestionMeta: FC<ExamQuestionMetaProps> = ({
                                     />
                                 ))}
                             </Stack>
+                        )}
+                        {errorMessage && (
+                            <Typography color="error" variant="caption">
+                                {errorMessage}
+                            </Typography>
                         )}
                     </Stack>
                 </Grid>

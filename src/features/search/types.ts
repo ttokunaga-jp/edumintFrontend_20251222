@@ -27,7 +27,7 @@ export const SearchProblemSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string().optional(),
-  difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+  level: z.enum(['easy', 'medium', 'hard']).optional(),
   createdAt: z.string().datetime(),
   author: z.object({
     id: z.string(),

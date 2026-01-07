@@ -26,7 +26,7 @@
 - `validateQuestion()` - 基本バリデーション
   - content: 必須、1～10,000文字
   - format: 0（Markdown）または1（LaTeX）
-  - difficulty: 1～5レベル
+  - level: 1～5レベル
   - keywords: 100文字以下、重複チェック
   - subQuestions: 最低1個、最大100個
 

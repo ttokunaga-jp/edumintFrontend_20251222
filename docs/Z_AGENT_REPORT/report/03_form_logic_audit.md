@@ -17,7 +17,7 @@
    - Complexity: **Low–Medium**
 
 3. **Problem Creation (various)**
-   - Files: `src/components/page/ProblemCreatePage/*` (StartPhase, ResultEditor, AnalysisPhase)
+   - Files: `src/components/page/CreatePage/*` (StartPhase, ResultEditor, AnalysisPhase)
    - Current: complex multi-step flows using store + some `useState` local error tracking and a custom generation state machine.
    - Recommendation: Keep the generation flow in the store, but use RHF for dialog-based edits (e.g., `ResultEditor` edit dialog), and ensure forms are RHF-compatible for easier validation and serialization. `StartPhase` could use RHF for text inputs and connect to the generation store for files/options.
    - Complexity: **Medium–High** (multi-step + interplay with store)
@@ -28,7 +28,7 @@
 
 ---
 ## Detection notes
-- Detected controlled inputs using `onChange={(e) => setX(e.target.value)}` and `value={...}` across pages/components such as `LoginRegisterPage`, `TopMenuBar` (search), `ProfileEditForm`, `ProblemCreatePage` components and the result editing dialogs.
+- Detected controlled inputs using `onChange={(e) => setX(e.target.value)}` and `value={...}` across pages/components such as `LoginRegisterPage`, `TopMenuBar` (search), `ProfileEditForm`, `CreatePage` components and the result editing dialogs.
 
 ---
 ## Actionable next steps

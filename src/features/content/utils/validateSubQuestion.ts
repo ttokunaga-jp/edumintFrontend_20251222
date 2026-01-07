@@ -32,8 +32,8 @@ export function validateSubQuestionBase(subQuestion: SubQuestion): ValidationRes
     errors.format = ['形式は0（Markdown）または1（LaTeX）である必要があります'];
   }
 
-  // questionTypeIdの検証
-  const validIds = [1, 2, 3, 4, 5, 10, 11, 12, 13, 14];
+  // questionTypeIdの検証 (0-based for core selection types)
+  const validIds = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14];
   if (!validIds.includes(subQuestion.questionTypeId)) {
     errors.questionTypeId = ['問題形式IDが不正です'];
   }
@@ -262,18 +262,18 @@ export function validateSubQuestion(
 ): ValidationResult {
   const questionTypeId = subQuestion.questionTypeId;
 
-  // 選択問題（ID: 1, 2, 3）
-  if ([1, 2, 3].includes(questionTypeId)) {
+  // 選択問題（ID: 0, 1, 2） (shifted to 0-based)
+  if ([0, 1, 2].includes(questionTypeId)) {
     return validateSelectionSubQuestion(subQuestion as SelectionSubQuestion);
   }
 
-  // マッチング（ID: 4）
-  if (questionTypeId === 4) {
+  // マッチング（ID: 3） (was 4)
+  if (questionTypeId === 3) {
     return validateMatchingSubQuestion(subQuestion as MatchingSubQuestion);
   }
 
-  // 並び替え（ID: 5）
-  if (questionTypeId === 5) {
+  // 並び替え（ID: 4） (was 5)
+  if (questionTypeId === 4) {
     return validateOrderingSubQuestion(subQuestion as OrderingSubQuestion);
   }
 

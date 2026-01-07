@@ -46,8 +46,8 @@ export const contentHandlers = [
               ...sq,
             };
 
-            // ID 1-3: 単一選択、複数選択、正誤判定
-            if ([1, 2, 3].includes(sq.questionTypeId)) {
+            // ID 0-2: 単一選択、複数選択、正誤判定 (shifted to 0-based)
+            if ([0, 1, 2].includes(sq.questionTypeId)) {
               subQData.options = mockSubQuestionSelection
                 .filter((sel) => sel.subQuestionId === sq.id)
                 .map((sel) => ({
@@ -57,8 +57,8 @@ export const contentHandlers = [
                 }));
             }
 
-            // ID 4: マッチング（組み合わせ）
-            if (sq.questionTypeId === 4) {
+            // ID 3: マッチング（組み合わせ） (was 4)
+            if (sq.questionTypeId === 3) {
               subQData.pairs = mockSubQuestionMatching
                 .filter((match) => match.subQuestionId === sq.id)
                 .map((match) => ({
@@ -68,8 +68,8 @@ export const contentHandlers = [
                 }));
             }
 
-            // ID 5: 順序並べ替え
-            if (sq.questionTypeId === 5) {
+            // ID 4: 順序並べ替え (was 5)
+            if (sq.questionTypeId === 4) {
               subQData.items = mockSubQuestionOrdering
                 .filter((ord) => ord.subQuestionId === sq.id)
                 .map((ord) => ({
@@ -116,8 +116,8 @@ export const contentHandlers = [
               ...sq,
             };
 
-            // ID 1-3: 単一選択、複数選択、正誤判定
-            if ([1, 2, 3].includes(sq.questionTypeId)) {
+            // ID 0-2: 単一選択、複数選択、正誤判定 (shifted to 0-based)
+            if ([0, 1, 2].includes(sq.questionTypeId)) {
               subQData.options = mockSubQuestionSelection
                 .filter((sel) => sel.subQuestionId === sq.id)
                 .map((sel) => ({
@@ -127,8 +127,8 @@ export const contentHandlers = [
                 }));
             }
 
-            // ID 4: マッチング（組み合わせ）
-            if (sq.questionTypeId === 4) {
+            // ID 3: マッチング（組み合わせ） (was 4)
+            if (sq.questionTypeId === 3) {
               subQData.pairs = mockSubQuestionMatching
                 .filter((match) => match.subQuestionId === sq.id)
                 .map((match) => ({
@@ -138,8 +138,8 @@ export const contentHandlers = [
                 }));
             }
 
-            // ID 5: 順序並べ替え
-            if (sq.questionTypeId === 5) {
+            // ID 4: 順序並べ替え (was 5)
+            if (sq.questionTypeId === 4) {
               subQData.items = mockSubQuestionOrdering
                 .filter((ord) => ord.subQuestionId === sq.id)
                 .map((ord) => ({

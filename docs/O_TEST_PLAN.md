@@ -12,7 +12,7 @@
 ## 3. テストカテゴリ別の実施内容
 
 ### A. ユニットテスト (`tests/unit`)
-- **対象**: `src/pages/ProblemCreatePage/hooks/useProblemCreateController.ts`
+- **対象**: `src/pages/CreatePage/hooks/useProblemCreateController.ts`
 - **内容**: 
     - 各フェーズ（`analyzing`, `generating`, `complete`）への遷移ロジックの検証。
     - 生成完了時に自動遷移が停止し、IDが正しく保持されることの検証。

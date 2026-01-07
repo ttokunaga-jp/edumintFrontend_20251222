@@ -10,7 +10,7 @@ import { Question, QuestionEditState } from '../types';
 export interface UseQuestionStateReturn {
   state: QuestionEditState;
   updateContent: (content: string) => void;
-  updateDifficulty: (difficultyId: number | undefined) => void;
+  updateDifficulty: (levelId: number | undefined) => void;
   addKeyword: (keyword: string) => void;
   removeKeyword: (keywordId: string) => void;
   markDirty: () => void;
@@ -45,15 +45,15 @@ export function useQuestionState(initialQuestion: Question): UseQuestionStateRet
 
 
 
-  const updateDifficulty = useCallback((difficultyId: number | undefined) => {
+  const updateDifficulty = useCallback((levelId: number | undefined) => {
     setState((prev) => {
       const unsavedFields = new Set(prev.unsavedFields);
-      unsavedFields.add('difficulty');
+      unsavedFields.add('level');
       return {
         question: {
           ...prev.question,
-          difficulty: difficultyId
-            ? { id: difficultyId, label: `難易度${difficultyId}`, level: difficultyId }
+          level: levelId
+            ? { id: levelId, label: `難易度${levelId}`, level: levelId }
             : undefined,
         },
         isDirty: true,

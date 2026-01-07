@@ -52,7 +52,7 @@ const newQuestion = {
 | `question_number` | INT | 採番番号 |
 | `question_content` | TEXT | 問題文 |
 | `question_format` | INT | 形式 (0: MD, 1: LaTeX) |
-| `difficulty` | INT | 難易度ID |
+| `level` | INT | 難易度ID |
 | `keywords` | JSON | キーワード配列 |
 | `sub_questions` | JSON | 小問配列 |
 
@@ -287,7 +287,7 @@ toEditorFormat(data): EditorData
   question_number: 1,
   question_content: '...',
   question_format: 0,
-  difficulty: 1,
+  level: 1,
   keywords: [{ id: 'kw1', keyword: '...' }],
   sub_questions: [...]
 }

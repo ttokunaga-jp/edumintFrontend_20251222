@@ -83,7 +83,7 @@ export function normalizeSubQuestionBase(subQuestion: SubQuestion): SubQuestion 
 }
 
 /**
- * 選択問題の正規化（ID: 1, 2, 3）
+ * 選択問題の正規化（ID: 0, 1, 2） - shifted to 0-based
  *
  * @param subQuestion - 選択問題小問
  * @returns 正規化済み選択問題小問
@@ -171,18 +171,18 @@ export function normalizeSubQuestion(
 ): SubQuestion {
   const questionTypeId = subQuestion.questionTypeId;
 
-  // 選択問題（ID: 1, 2, 3）
-  if ([1, 2, 3].includes(questionTypeId)) {
+  // 選択問題（ID: 0, 1, 2）
+  if ([0, 1, 2].includes(questionTypeId)) {
     return normalizeSelectionSubQuestion(subQuestion as SelectionSubQuestion);
   }
 
-  // マッチング（ID: 4）
-  if (questionTypeId === 4) {
+  // マッチング（ID: 3） (was 4)
+  if (questionTypeId === 3) {
     return normalizeMatchingSubQuestion(subQuestion as MatchingSubQuestion);
   }
 
-  // 並び替え（ID: 5）
-  if (questionTypeId === 5) {
+  // 並び替え（ID: 4） (was 5)
+  if (questionTypeId === 4) {
     return normalizeOrderingSubQuestion(subQuestion as OrderingSubQuestion);
   }
 

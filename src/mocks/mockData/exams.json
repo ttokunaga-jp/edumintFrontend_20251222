@@ -9,7 +9,8 @@
     "teacherName": "佐藤 憲一 教授",
     "subjectName": "量子力学I",
     "durationMinutes": 90,
-    "majorType": 1,
+    "majorType": 0,
+    "academicFieldId": 15,
     "academicFieldName": "物理学",
     "author_id": "usr_A123bcD456",
     "questions": [
@@ -17,19 +18,19 @@
         "id": "q1_v7N2jK8m",
         "questionNumber": 1,
         "content": "シュレディンガー方程式と演算子の基本的性質について述べよ。",
-        "difficulty": { "id": 1, "label": "標準", "level": 2 },
-        "keywords": [ { "id": "kw_p1", "keyword": "演算子" }, { "id": "kw_p2", "keyword": "シュレディンガー方程式" } ],
+        "level": 1,
+        "keywords": [ { "id": "kw_p1", "keyword": "演算子" }, { "id": "kw_p2", "keyword": "シュレディンガー方程式" }, { "id": "kw_p1_3", "keyword": "量子" } ],
         "subQuestions": [
           {
             "id": "sq1_1_v7N2",
             "subQuestionNumber": 1,
-            "questionTypeId": 1,
+            "questionTypeId": 0,
             "content": "位置演算子 $\\hat{x}$ と運動量演算子 $\\hat{p} = -i\\hbar \\frac{\\partial}{\\partial x}$ の交換関係 $[\\hat{x}, \\hat{p}]$ として正しいものを選択せよ。",
             "answer": "opt_p1_1",
             "explanation": "基本演算子の交換関係は $[\\hat{x}, \\hat{p}] = \\hat{x}\\hat{p} - \\hat{p}\\hat{x} = i\\hbar$ です。",
-            "keywords": [ { "id": "kw_p3", "keyword": "交換関係" } ],
+            "keywords": [ { "id": "kw_p3", "keyword": "交換関係" }, { "id": "kw_p3_2", "keyword": "基本演算子" }, { "id": "kw_p3_3", "keyword": "交換則" } ],
             "options": [
-              { "id": "opt_p1_1", "content": "$i\\hbar$,", "isCorrect": true },
+              { "id": "opt_p1_1", "content": "$i\\hbar$", "isCorrect": true },
               { "id": "opt_p1_2", "content": "$-i\\hbar$", "isCorrect": false },
               { "id": "opt_p1_3", "content": "$\\hbar$", "isCorrect": false },
               { "id": "opt_p1_4", "content": "0", "isCorrect": false }
@@ -42,7 +43,7 @@
             "content": "無限に深い1次元の箱（幅 $L$）に閉じ込められた質量 $m$ の粒子の、エネルギー固有値 $E_n$ を求めよ。",
             "answer": "$E_n = \\frac{n^2 \\pi^2 \\hbar^2}{2mL^2}$",
             "explanation": "境界条件 $\\psi(0) = \\psi(L) = 0$ を解くことで得られます。",
-            "keywords": [ { "id": "kw_p4", "keyword": "無限井戸型ポテンシャル" } ],
+            "keywords": [ { "id": "kw_p4", "keyword": "無限井戸型ポテンシャル" }, { "id": "kw_p4_2", "keyword": "境界条件" }, { "id": "kw_p4_3", "keyword": "エネルギー固有値" } ],
             "answers": [ { "id": "ans_p1_2", "sampleAnswer": "$E_n = \\frac{n^2 \\pi^2 \\hbar^2}{2mL^2}$ ($n=1,2,3...$)", "gradingCriteria": "定数の正しさ、およびnの二乗に比例している点を確認。", "pointValue": 15 } ]
           }
         ]
@@ -51,27 +52,27 @@
         "id": "q2_v7N2jK8m",
         "questionNumber": 2,
         "content": "エルミート演算子と測定値に関する次の問いに答えよ。",
-        "difficulty": { "id": 2, "label": "やや難", "level": 3 },
-        "keywords": [ { "id": "kw_p5", "keyword": "エルミート演算子" } ],
+        "level": 2,
+        "keywords": [ { "id": "kw_p5", "keyword": "エルミート演算子" }, { "id": "kw_p5_2", "keyword": "実測値" }, { "id": "kw_p5_3", "keyword": "自己随伴" } ],
         "subQuestions": [
           {
             "id": "sq2_1_v7N2",
             "subQuestionNumber": 1,
-            "questionTypeId": 3,
+            "questionTypeId": 2,
             "content": "「任意の物理量に対応する演算子は、必ずしもエルミート演算子である必要はない」という言説は正しいか。",
             "answer": "opt_p2_1_2",
             "explanation": "物理量は実測値である必要があり、その期待値が常に実数になるためには演算子がエルミートである必要があります。",
-            "keywords": [],
+            "keywords": [ { "id": "kw_p2_1_1", "keyword": "測定" }, { "id": "kw_p2_1_2", "keyword": "期待値" }, { "id": "kw_p2_1_3", "keyword": "実数" } ],
             "options": [ { "id": "opt_p2_1_1", "content": "正", "isCorrect": false }, { "id": "opt_p2_1_2", "content": "誤", "isCorrect": true } ]
           },
           {
             "id": "sq2_2_v7N2",
             "subQuestionNumber": 2,
-            "questionTypeId": 2,
+            "questionTypeId": 1,
             "content": "エルミート演算子の性質として正しいものをすべて選べ。",
             "answer": "opt_p2_2_1, opt_p2_2_3",
             "explanation": "異なる固有値に属する固有関数は直交し、固有値は常に実数です。",
-            "keywords": [ { "id": "kw_p6", "keyword": "固有関数" } ],
+            "keywords": [ { "id": "kw_p6", "keyword": "固有関数" }, { "id": "kw_p6_2", "keyword": "直交" }, { "id": "kw_p6_3", "keyword": "直交性" } ],
             "options": [
               { "id": "opt_p2_2_1", "content": "固有値は常に実数である", "isCorrect": true },
               { "id": "opt_p2_2_2", "content": "固有値は常に正の数である", "isCorrect": false },
@@ -93,7 +94,8 @@
     "teacherName": "Robert Smith",
     "subjectName": "ミクロ経済学基礎",
     "durationMinutes": 60,
-    "majorType": 2,
+    "majorType": 1,
+    "academicFieldId": 3,
     "academicFieldName": "経済学",
     "author_id": "usr_E999xyz",
     "questions": [
@@ -101,17 +103,17 @@
         "id": "q1_G9b5HqR1",
         "questionNumber": 1,
         "content": "消費者の効用最大化問題について、以下のステップと用語を確認せよ。",
-        "difficulty": { "id": 1, "label": "標準", "level": 2 },
-        "keywords": [ { "id": "kw_e1", "keyword": "効用最大化" } ],
+        "level": 1,
+        "keywords": [ { "id": "kw_e1", "keyword": "効用最大化" }, { "id": "kw_e1_2", "keyword": "予算制約" }, { "id": "kw_e1_3", "keyword": "最適化" } ],
         "subQuestions": [
           {
             "id": "sq1_1_G9b5",
             "subQuestionNumber": 1,
-            "questionTypeId": 5,
+            "questionTypeId": 4,
             "content": "消費者が最適な消費束を決定するまでの論理的な順序として適切なものに並べ替えよ。",
             "answer": "item_e1_2, item_e1_1, item_e1_3",
             "explanation": "まず選好（効用関数）が定義され、次に予算制約が考慮され、最終的にその接点で最大化されます。",
-            "keywords": [],
+            "keywords": [ { "id": "kw_e1_1", "keyword": "予算制約" }, { "id": "kw_e1_2", "keyword": "効用" }, { "id": "kw_e1_3", "keyword": "最適化" } ],
             "items": [
               { "id": "item_e1_1", "text": "予算制約線 $p_1 x_1 + p_2 x_2 = I$ の定義", "correctOrder": 2 },
               { "id": "item_e1_2", "text": "効用関数 $U(x_1, x_2)$ の特定", "correctOrder": 1 },
@@ -125,7 +127,7 @@
             "content": "需要の価格弾力性 $e_d$ の定義式を記述せよ。価格を $P$、需要量を $Q$ とする。",
             "answer": "$e_d = -\\frac{dQ}{dP} \\cdot \\frac{P}{Q}$",
             "explanation": "価格の変化率に対する需要の変化率の比率です。",
-            "keywords": [ { "id": "kw_e2", "keyword": "価格弾力性" } ],
+            "keywords": [ { "id": "kw_e2", "keyword": "価格弾力性" }, { "id": "kw_e2_2", "keyword": "需要" }, { "id": "kw_e2_3", "keyword": "価格" } ],
             "answers": [ { "id": "ans_e1_2", "sampleAnswer": "$e_d = -\\frac{\\Delta Q / Q}{\\Delta P / P}$ もしくは $-\\frac{dQ}{dP} \\frac{P}{Q}$", "gradingCriteria": "変化率の比であること、マイナス記号の考慮（慣習的）ができているか。", "pointValue": 10 } ]
           }
         ]
@@ -134,13 +136,13 @@
         "id": "q2_G9b5HqR1",
         "questionNumber": 2,
         "content": "市場の形態と利潤最大化条件に関する理解を問う。",
-        "difficulty": { "id": 2, "label": "やや難", "level": 3 },
-        "keywords": [ { "id": "kw_e3", "keyword": "市場構造" } ],
+        "level": 2,
+        "keywords": [ { "id": "kw_e3", "keyword": "市場構造" }, { "id": "kw_e3_2", "keyword": "完全競争" }, { "id": "kw_e3_3", "keyword": "独占" } ],
         "subQuestions": [
           {
             "id": "sq2_1_G9b5",
             "subQuestionNumber": 1,
-            "questionTypeId": 4,
+            "questionTypeId": 3,
             "content": "次の経済学用語と、その特徴として最も適切な説明を組み合わせよ。",
             "answer": "pair_e1:1, pair_e2:2, pair_e3:3",
             "explanation": "それぞれの市場構造の基本定義です。",
@@ -158,11 +160,11 @@
             "content": "限界費用 $MC$ が一定値 $c$ である独占企業の価格設定 $P$ と、需要の価格弾力性 $\\epsilon$ の関係式（ラーナーの独占度）として正しいものはどれか。",
             "answer": "opt_e2_2_1",
             "explanation": "$\\frac{P-MC}{P} = \\frac{1}{\\epsilon}$ より導かれます。",
-            "keywords": [ { "id": "kw_e4", "keyword": "ラーナーの独占度" } ],
+            "keywords": [ { "id": "kw_e4", "keyword": "ラーナーの独占度" }, { "id": "kw_e4_2", "keyword": "価格設定" }, { "id": "kw_e4_3", "keyword": "需要の弾力性" } ],
             "options": [
               { "id": "opt_e2_2_1", "content": "$P = \\frac{c}{1 - 1/\\epsilon}$", "isCorrect": true },
               { "id": "opt_e2_2_2", "content": "$P = c(1 + \\epsilon)$", "isCorrect": false },
-              { "id": "opt_e2_2_3", "content": "$P = c \\epsilon$,", "isCorrect": false }
+              { "id": "opt_e2_2_3", "content": "$P = c \\epsilon$", "isCorrect": false }
             ]
           }
         ]
@@ -179,7 +181,8 @@
     "teacherName": "中野 昌三 教授",
     "subjectName": "線形代数II",
     "durationMinutes": 100,
-    "majorType": 1,
+    "majorType": 0,
+    "academicFieldId": 15,
     "academicFieldName": "数学",
     "author_id": "usr_Math999",
     "questions": [
@@ -187,8 +190,8 @@
         "id": "q1_X4yZ7kM2",
         "questionNumber": 1,
         "content": "行列の固有値と対角化について。",
-        "difficulty": { "id": 2, "label": "やや難", "level": 3 },
-        "keywords": [ { "id": "kw_m1", "keyword": "固有値" }, { "id": "kw_m2", "keyword": "対角化" } ],
+        "level": 2,
+        "keywords": [ { "id": "kw_m1", "keyword": "固有値" }, { "id": "kw_m2", "keyword": "対角化" }, { "id": "kw_m3", "keyword": "固有ベクトル" } ],
         "subQuestions": [
           {
             "id": "sq1_1_X4yZ",
@@ -225,7 +228,7 @@
         "id": "q2_X4yZ7kM2",
         "questionNumber": 2,
         "content": "線形写像とベクトルの空間に関する問題。",
-        "difficulty": { "id": 3, "label": "難", "level": 4 },
+        "level": 2,
         "keywords": [ { "id": "kw_m3", "keyword": "線形写像" } ],
         "subQuestions": [
           {
@@ -240,7 +243,7 @@
               { "id": "opt_m2_1_1", "content": "$f(\\mathbf{0}) = \\mathbf{0}$", "isCorrect": true },
               { "id": "opt_m2_1_2", "content": "$f$ は必ず全単射である", "isCorrect": false },
               { "id": "opt_m2_1_3", "content": "$\\dim(\\text{Ker } f) = \\dim V$", "isCorrect": false },
-              { "id": "opt_m2_1_4", "content": "$f(a\\mathbf{v} + b\\mathbf{u}) = af(\\mathbf{v}) + bf(\\mathbf{u})$,", "isCorrect": true }
+              { "id": "opt_m2_1_4", "content": "$f(a\\mathbf{v} + b\\mathbf{u}) = af(\\mathbf{v}) + bf(\\mathbf{u})$", "isCorrect": true }
             ]
           },
           {
@@ -267,7 +270,8 @@
     "teacherName": "伊藤 英明",
     "subjectName": "常微分方程式",
     "durationMinutes": 75,
-    "majorType": 1,
+    "majorType": 0,
+    "academicFieldId": 15,
     "academicFieldName": "数学",
     "author_id": "usr_DIFF2025",
     "questions": [
@@ -275,7 +279,7 @@
         "id": "q1_L0a1",
         "questionNumber": 1,
         "content": "1階常微分方程式の基礎",
-        "difficulty": { "id": 1, "label": "標準", "level": 2 },
+        "level": 1,
         "keywords": [ { "id": "kw_d1", "keyword": "微分方程式" } ],
         "subQuestions": [
           {
@@ -303,7 +307,7 @@
         "id": "q2_L0a1",
         "questionNumber": 2,
         "content": "線形微分方程式の解の性質",
-        "difficulty": { "id": 2, "label": "やや難", "level": 3 },
+        "level": 2,
         "keywords": [ { "id": "kw_d2", "keyword": "初期値問題" } ],
         "subQuestions": [
           {
@@ -338,7 +342,8 @@
     "teacherName": "山田 太郎",
     "subjectName": "微分積分学",
     "durationMinutes": 120,
-    "majorType": 1,
+    "majorType": 0,
+    "academicFieldId": 15,
     "academicFieldName": "数学",
     "author_id": "u_k8P3n9L2mR5qW4xZ",
     "questions": []
@@ -353,7 +358,8 @@
     "teacherName": "佐藤 花子",
     "subjectName": "線形代数",
     "durationMinutes": 90,
-    "majorType": 1,
+    "majorType": 0,
+    "academicFieldId": 15,
     "academicFieldName": "数学",
     "author_id": "v_l9Q4o8N3pS6rX5yA",
     "questions": []

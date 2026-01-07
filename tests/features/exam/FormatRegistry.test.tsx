@@ -18,11 +18,25 @@ const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 describe('FormatRegistry - Dynamic Editor Selection', () => {
+  it('should render SelectionEditor for question type 0', () => {
+    render(
+      <TestWrapper>
+        <FormatRegistry
+          questionTypeId={0}
+          basePath="questions.0.subQuestions.0"
+          isEditMode={true}
+        />
+      </TestWrapper>
+    );
+
+    expect(screen.getByText('選択肢を編集')).toBeInTheDocument();
+  });
+
   it('should render SelectionEditor for question type 1', () => {
     render(
       <TestWrapper>
         <FormatRegistry
-          questionTypeId="1"
+          questionTypeId={1}
           basePath="questions.0.subQuestions.0"
           isEditMode={true}
         />
@@ -36,7 +50,7 @@ describe('FormatRegistry - Dynamic Editor Selection', () => {
     render(
       <TestWrapper>
         <FormatRegistry
-          questionTypeId="2"
+          questionTypeId={2}
           basePath="questions.0.subQuestions.0"
           isEditMode={true}
         />
@@ -46,25 +60,11 @@ describe('FormatRegistry - Dynamic Editor Selection', () => {
     expect(screen.getByText('選択肢を編集')).toBeInTheDocument();
   });
 
-  it('should render SelectionEditor for question type 3', () => {
+  it('should render MatchingEditor for question type 3', () => {
     render(
       <TestWrapper>
         <FormatRegistry
-          questionTypeId="3"
-          basePath="questions.0.subQuestions.0"
-          isEditMode={true}
-        />
-      </TestWrapper>
-    );
-
-    expect(screen.getByText('選択肢を編集')).toBeInTheDocument();
-  });
-
-  it('should render MatchingEditor for question type 4', () => {
-    render(
-      <TestWrapper>
-        <FormatRegistry
-          questionTypeId="4"
+          questionTypeId={3}
           basePath="questions.0.subQuestions.0"
           isEditMode={true}
         />
@@ -74,11 +74,11 @@ describe('FormatRegistry - Dynamic Editor Selection', () => {
     expect(screen.getByText('マッチングペアを編集')).toBeInTheDocument();
   });
 
-  it('should render OrderingEditor for question type 5', () => {
+  it('should render OrderingEditor for question type 4', () => {
     render(
       <TestWrapper>
         <FormatRegistry
-          questionTypeId="5"
+          questionTypeId={4}
           basePath="questions.0.subQuestions.0"
           isEditMode={true}
         />
@@ -92,7 +92,7 @@ describe('FormatRegistry - Dynamic Editor Selection', () => {
     render(
       <TestWrapper>
         <FormatRegistry
-          questionTypeId="10"
+          questionTypeId={10}
           basePath="questions.0.subQuestions.0"
           isEditMode={true}
         />

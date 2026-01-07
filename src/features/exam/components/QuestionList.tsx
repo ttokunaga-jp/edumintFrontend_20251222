@@ -15,9 +15,10 @@ import type { ExamFormValues } from '../schema';
  */
 interface QuestionListProps {
   isEditMode: boolean;
+  structureOnly?: boolean;
 }
 
-export const QuestionList: FC<QuestionListProps> = ({ isEditMode }) => {
+export const QuestionList: FC<QuestionListProps> = ({ isEditMode, structureOnly }) => {
   const { control } = useFormContext<ExamFormValues>();
   const { fields, append, remove, move } = useFieldArray({
     control,
@@ -67,6 +68,7 @@ export const QuestionList: FC<QuestionListProps> = ({ isEditMode }) => {
               key={field.id}
               questionIndex={questionIndex}
               isEditMode={isEditMode}
+              structureOnly={structureOnly}
               onDelete={() => handleDeleteQuestion(questionIndex)}
               canDelete={fields.length > 1}
               onMoveUp={() => handleMoveUp(questionIndex)}

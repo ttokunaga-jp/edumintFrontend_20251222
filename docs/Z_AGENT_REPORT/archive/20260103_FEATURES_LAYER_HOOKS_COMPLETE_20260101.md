@@ -45,7 +45,7 @@ Implemented all 4 critical state management hooks for the Features layer. Combin
 **Methods**:
 - `updateContent(content)` - Update question text/content
 - `updateFormat(format)` - Update question format (0=original, 1=new)
-- `updateDifficulty(difficultyId)` - Set difficulty level
+- `updateDifficulty(levelId)` - Set level level
 - `addKeyword(keyword)` - Add keyword tag
 - `removeKeyword(keywordId)` - Remove keyword tag
 - `markDirty()` / `markClean()` - Dirty flag management
@@ -163,7 +163,7 @@ ProblemViewEditPage
   │
   ├─ QuestionEditor (for each question)
   │   ├─ useQuestionState(question)
-  │   │   └─ Tracks: content, format, difficulty, keywords[]
+  │   │   └─ Tracks: content, format, level, keywords[]
   │   │
   │   └─ SubQuestionSection
   │       ├─ useSubQuestionState(subQuestion)

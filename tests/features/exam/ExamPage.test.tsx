@@ -65,7 +65,7 @@ describe('ExamPage - Global Save Only Architecture', () => {
         id: 'q1',
         question_number: 1,
         question_content: 'Test Question',
-        difficulty: { level: 2 },
+        level: { level: 2 },
         keywords: [],
         sub_questions: [
           {

@@ -77,7 +77,7 @@
    - `getQuestionTypesByCategory()`: Group by category
 
 2. **difficultiesConfig.ts** (61 lines)
-   - `DIFFICULTY_LEVELS`: 5 difficulty levels
+   - `DIFFICULTY_LEVELS`: 5 level levels
    - `DIFFICULTY_COLORS`: Color mapping (green → red gradient)
    - `DIFFICULTY_OPTIONS`: Array of all levels
    - `getDifficultyLabel(level)`: Get display label
@@ -126,7 +126,7 @@
    - **Methods**:
      - `updateContent(content)`
      - `updateFormat(format)`
-     - `updateDifficulty(difficultyId)`
+     - `updateDifficulty(levelId)`
      - `addKeyword(keyword)`
      - `removeKeyword(keywordId)`
      - `markDirty() / markClean()`
@@ -213,7 +213,7 @@ ProblemViewEditPage
 │
 ├─ QuestionEditor (for Q1, Q2, ...)
 │   ├─ useQuestionState(question)
-│   │   └─ Manages: content, format, difficulty, keywords[]
+│   │   └─ Manages: content, format, level, keywords[]
 │   │
 │   └─ SubQuestionSection
 │       ├─ useSubQuestionState(subQuestion)

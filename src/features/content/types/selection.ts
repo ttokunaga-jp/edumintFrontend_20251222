@@ -1,9 +1,9 @@
 /**
- * Selection question type (ID: 1, 2, 3)
+ * Selection question type (ID: 0, 1, 2) - shifted to 0-based
  *
- * 1: Single choice
- * 2: Multiple choice
- * 3: True/False
+ * 0: Single choice
+ * 1: Multiple choice
+ * 2: True/False
  */
 
 import { SubQuestion } from './problem';
@@ -16,7 +16,7 @@ export interface SelectionOption {
 }
 
 export interface SelectionSubQuestion extends SubQuestion {
-  questionTypeId: 1 | 2 | 3;
+  questionTypeId: 0 | 1 | 2;
   options: SelectionOption[];
 }
 

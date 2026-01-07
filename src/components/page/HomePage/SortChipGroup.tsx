@@ -1,11 +1,11 @@
-import { Fragment } from 'react';
-import type { FC, ReactNode, SyntheticEvent, FormEvent } from 'react';
+import { FC } from 'react';
 import { Stack, Chip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { SORT_ORDER_ENUM_OPTIONS } from '@/lib/enums/enumHelpers';
 
 export interface SortChipGroupProps {
-  sortBy: 'newest' | 'popular' | 'recommended' | 'views';
-  onSortChange: (sort: 'newest' | 'popular' | 'recommended' | 'views') => void;
+  sortBy: number;
+  onSortChange: (sort: number) => void;
 }
 
 /**
@@ -18,19 +18,12 @@ export const SortChipGroup: FC<SortChipGroupProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const sortOptions = [
-    { value: 'recommended' as const, label: t('search.recommended') },
-    { value: 'newest' as const, label: t('search.latest') },
-    { value: 'popular' as const, label: t('search.popular') },
-    { value: 'views' as const, label: t('search.most_viewed') },
-  ];
-
   return (
     <Stack direction="row" spacing={1} sx={{ mb: 3, flexWrap: 'wrap', gap: 1 }}>
-      {sortOptions.map((option) => (
+      {SORT_ORDER_ENUM_OPTIONS.map((option) => (
         <Chip
           key={option.value}
-          label={option.label}
+          label={t(option.labelKey)}
           onClick={() => onSortChange(option.value)}
           variant={sortBy === option.value ? 'filled' : 'outlined'}
           color={sortBy === option.value ? 'primary' : 'default'}

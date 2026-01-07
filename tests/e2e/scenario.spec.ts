@@ -40,9 +40,9 @@ test.describe('ユーザーシナリオ', () => {
     }
     
     // 難易度を選択
-    const difficultySelect = page.locator('select, [role="combobox"]').nth(1);
-    if (await difficultySelect.isVisible()) {
-      await difficultySelect.click();
+    const levelSelect = page.locator('select, [role="combobox"]').nth(1);
+    if (await levelSelect.isVisible()) {
+      await levelSelect.click();
       await page.locator('text=標準').click();
     }
     

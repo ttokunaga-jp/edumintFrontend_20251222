@@ -141,7 +141,7 @@ edumintFrontend/
 │   │   ├── MyPage.tsx
 │   │   ├── LoginRegisterPage.tsx     # ログイン・登録統合ページ
 │   │   ├── ProblemViewEditPage.tsx   # 詳細・編集兼用ページ (/problem/:id)
-│   │   └── ProblemCreatePage.tsx       # 複雑なページはディレクトリ化して責務分離
+│   │   └── CreatePage.tsx       # 複雑なページはディレクトリ化して責務分離
 │   │
 │   ├── services/                     # 外部連携定義
 │   │   └── api/

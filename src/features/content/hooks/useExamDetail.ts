@@ -13,10 +13,10 @@ function ensureDifficultyDefaults(exam: any): any {
     ...exam,
     questions: exam.questions.map((question: any) => ({
       ...question,
-      difficulty: question.difficulty ?? 1,
+      level: question.level ?? 1,
       sub_questions: question.sub_questions?.map((subQ: any) => ({
         ...subQ,
-        difficulty: subQ.difficulty ?? 1,
+        level: subQ.level ?? 1,
       })) || [],
     })),
   };

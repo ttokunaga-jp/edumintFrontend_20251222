@@ -21,7 +21,7 @@ last_updated: "2025-12-30"
 ## サブディレクトリ（短い一覧）
 - `HomePage/` — `AdvancedSearchPanel` など
 - `ProblemViewEditPage/` — `ProblemEditor`, `QuestionBlock`, `AnswerBlock` など
-- `ProblemCreatePage/` — 生成オプション関連
+- `CreatePage/` — 生成オプション関連
 - `ProblemEditor/` — 編集ユーティリティ
 - `LoginRegisterPage/`, `MyPage/`
 

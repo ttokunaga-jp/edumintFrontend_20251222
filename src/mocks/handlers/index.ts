@@ -7,6 +7,7 @@ import { searchHandlers } from "./searchHandlers";
 import { userHandlers } from "./userHandlers";
 import { problemHandlers } from "./problemHandlers";
 import { authHandlers } from "./authHandlers";
+import { lookupHandlers } from "./lookupHandlers";
 
 export const handlers = [
   ...authHandlers,
@@ -18,4 +19,5 @@ export const handlers = [
   ...filesHandlers,
   ...userHandlers,
   ...problemHandlers,
+  ...lookupHandlers,
 ];

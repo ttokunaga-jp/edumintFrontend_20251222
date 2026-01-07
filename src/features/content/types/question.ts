@@ -19,7 +19,7 @@ export interface QuestionEditState {
 export interface QuestionFormData {
   id: string;
   content: string;
-  difficulty?: Difficulty;
+  level?: Difficulty;
   keywords: Keyword[];
 }
 
@@ -30,7 +30,7 @@ export interface QuestionValidation {
   isValid: boolean;
   errors: {
     content?: string[];
-    difficulty?: string[];
+    level?: string[];
     keywords?: string[];
   };
 }

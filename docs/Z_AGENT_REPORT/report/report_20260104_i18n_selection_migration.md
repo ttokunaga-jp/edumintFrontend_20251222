@@ -39,7 +39,7 @@
 
 ## 5. 備考
 - PR 用の変更ログ: `docs/PR_CHANGELOG_I18N_SELECTIONS.md`
-- 影響範囲（例）: `src/features/ui/selectionOptions.ts`, `src/components/page/ProblemCreatePage/*`, `src/components/page/HomePage/AdvancedSearchPanel.tsx`, `src/components/common/selects/*`, `src/locales/*` 等
+- 影響範囲（例）: `src/features/ui/selectionOptions.ts`, `src/components/page/CreatePage/*`, `src/components/page/HomePage/AdvancedSearchPanel.tsx`, `src/components/common/selects/*`, `src/locales/*` 等
 - テスト状況: ローカルでユニットテストは全通（67 tests passed）
 
 ---

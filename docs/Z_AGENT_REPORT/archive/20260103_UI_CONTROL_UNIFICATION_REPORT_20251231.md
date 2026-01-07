@@ -15,7 +15,7 @@
 | `HomePage.tsx` | ✅ | App.tsx 経由で自動適用 |
 | `MyPage.tsx` | ✅ | App.tsx 経由で自動適用 |
 | `ProblemViewEditPage.tsx` | ✅ | App.tsx 経由で自動適用 |
-| `ProblemCreatePage.tsx` | ✅ | App.tsx 経由で自動適用 |
+| `CreatePage.tsx` | ✅ | App.tsx 経由で自動適用 |
 | `LoginRegisterPage.tsx` | ✅ | App.tsx 経由で自動適用（ログイン中は非表示） |
 
 **TopMenuBar の非表示ロジック**: `/login` と `/register` パスでのみ非表示（`TopMenuBar.tsx` line 97）
@@ -190,7 +190,7 @@ useEffect(() => {
 
 **適用ページ**:
 - ProblemViewEditPage ✅（既実装）
-- ProblemCreatePage ❌（編集フェーズで未実装）
+- CreatePage ❌（編集フェーズで未実装）
 
 ### **パターン B: 条件付き表示（MyPage 方式）**
 
@@ -229,7 +229,7 @@ useEffect(() => {
 | `ProblemViewEditPage.tsx` | コンテンツ表示・編集 | ✅ 純粋 | ✅ useEffect で AppBar 制御 |
 | `MyPage.tsx` | プロフィール表示 | ✅ 純粋 | ✅ useEffect で AppBar 制御 |
 | `HomePage.tsx` | 検索結果表示 | ✅ 純粋 | ✅ ロジックなし |
-| `ProblemCreatePage.tsx` | 作成フロー管理 | ✅ 純粋 | ✅ Zustand + フェーズ管理 |
+| `CreatePage.tsx` | 作成フロー管理 | ✅ 純粋 | ✅ Zustand + フェーズ管理 |
 
 **規約準拠**: ✅ すべてのページがコンポーネント配置のみを行い、ロジックは features/hooks に委譲
 
@@ -262,7 +262,7 @@ useEffect(() => {
 
 ### 推奨される次のステップ
 
-1. **ProblemCreatePage での AppBarAction**: 結果編集フェーズで SAVE ボタン追加
+1. **CreatePage での AppBarAction**: 結果編集フェーズで SAVE ボタン追加
 2. **汎用フックの活用**: 他のページから `useAppBarEditActions` を呼び出し
 3. **SAVE ボタンの動作統一**: isSaving, hasChanges の状態制御パターンの統一
 
@@ -308,7 +308,7 @@ Duration: 109.05s
 
 ### 📋 今後の拡張
 
-1. **ProblemCreatePage**: 結果編集フェーズで SAVE ボタン実装（パターン A）
+1. **CreatePage**: 結果編集フェーズで SAVE ボタン実装（パターン A）
 2. **他のコンテンツ編集ページ**: `useAppBarEditActions` フック活用
 3. **SAVE ボタン動作の完全統一**: `isSaving`, `hasChanges` 状態の標準化
 

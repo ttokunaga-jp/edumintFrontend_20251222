@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 export interface SelectFilterFieldProps {
   label: string;
-  options: Array<{ value: string; label: string }>;
-  value: string;
-  defaultValue?: string;
-  onChange: (value: string) => void;
+  options: Array<{ value: string | number; label: string }>;
+  value: string | number;
+  defaultValue?: string | number;
+  onChange: (value: string | number) => void;
 }
 
 /**

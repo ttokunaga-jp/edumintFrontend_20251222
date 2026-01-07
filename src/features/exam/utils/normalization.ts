@@ -66,13 +66,14 @@ export function transformToForm(apiData: any): ExamFormValues {
     level: apiData.level || '',
     durationMinutes: apiData.duration_minutes || apiData.durationMinutes || 0,
     academicFieldName: apiData.academic_field_name || apiData.academicFieldName || '',
+    academicFieldId: apiData.academic_field_id !== undefined ? apiData.academic_field_id : apiData.academicFieldId,
     majorType: apiData.major_type !== undefined ? apiData.major_type : (apiData.majorType || 0),
 
     questions: (apiData.questions || []).map((q: any, qIdx: number): Question => ({
       id: q.id?.toString() || `temp-q-${qIdx}`,
       questionNumber: q.question_number || q.questionNumber || qIdx + 1,
       questionContent: q.content || q.question_content || q.questionContent || '',
-      difficulty: extractDifficulty(q.difficulty),
+      level: extractDifficulty(q.level),
       keywords: (q.keywords || []).map((kw: any, kwIdx: number) => ({
         id: kw.id?.toString() || `temp-kw-q${qIdx}-${kwIdx}`,
         keyword: kw.keyword || '',
@@ -143,6 +144,7 @@ export function transformToApi(formData: ExamFormValues): any {
     level: formData.level,
     duration_minutes: formData.durationMinutes,
     academic_field_name: formData.academicFieldName,
+    academic_field_id: formData.academicFieldId,
     major_type: formData.majorType,
     // ID based relations (if provided by front-end)
     university_id: formData.universityId !== undefined ? formData.universityId : undefined,
@@ -150,19 +152,19 @@ export function transformToApi(formData: ExamFormValues): any {
     teacher_id: formData.teacherId !== undefined ? formData.teacherId : undefined,
     subject_id: formData.subjectId !== undefined ? formData.subjectId : undefined,
 
-    questions: formData.questions.map((q) => ({
+    questions: formData.questions.map((q: any) => ({
       id: isTemporaryId(q.id) ? undefined : q.id,
       question_number: q.questionNumber,
       question_content: q.questionContent,
-      difficulty: Number(q.difficulty),
+      level: Number(q.level),
       keywords: q.keywords
-        .filter(kw => kw.keyword.trim())
-        .map(kw => ({
+        .filter((kw: any) => kw.keyword.trim())
+        .map((kw: any) => ({
           id: isTemporaryId(kw.id) ? undefined : kw.id,
           keyword: kw.keyword,
         })),
 
-      sub_questions: q.subQuestions.map((sq) => ({
+      sub_questions: q.subQuestions.map((sq: any) => ({
         id: isTemporaryId(sq.id) ? undefined : sq.id,
         sub_question_number: sq.subQuestionNumber,
         question_type_id: Number(sq.questionTypeId),
@@ -170,29 +172,29 @@ export function transformToApi(formData: ExamFormValues): any {
         answer_content: sq.answerContent,
         explanation: sq.explanation,
         keywords: sq.keywords
-          .filter(kw => kw.keyword.trim())
-          .map(kw => ({
+          .filter((kw: any) => kw.keyword.trim())
+          .map((kw: any) => ({
             id: isTemporaryId(kw.id) ? undefined : kw.id,
             keyword: kw.keyword,
           })),
 
         // フォーマット別データ（選択肢など）
-        sub_question_selection: sq.options?.map(opt => ({
+        sub_question_selection: sq.options?.map((opt: any) => ({
           id: isTemporaryId(opt.id) ? undefined : opt.id,
           content: opt.content,
           is_correct: opt.isCorrect,
         })) || [],
-        sub_question_matching: sq.pairs?.map(pair => ({
+        sub_question_matching: sq.pairs?.map((pair: any) => ({
           id: isTemporaryId(pair.id) ? undefined : pair.id,
           question: pair.question,
           answer: pair.answer,
         })) || [],
-        sub_question_ordering: sq.items?.map(item => ({
+        sub_question_ordering: sq.items?.map((item: any) => ({
           id: isTemporaryId(item.id) ? undefined : item.id,
           text: item.text,
           correct_order: item.correctOrder,
         })) || [],
-        sub_question_essay: sq.answers?.map(ans => ({
+        sub_question_essay: sq.answers?.map((ans: any) => ({
           id: isTemporaryId(ans.id) ? undefined : ans.id,
           sample_answer: ans.sampleAnswer,
           grading_criteria: ans.gradingCriteria,

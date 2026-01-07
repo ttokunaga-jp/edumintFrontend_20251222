@@ -20,7 +20,7 @@ last_updated: "2025-12-30"
 ## 主要ファイル
 | Path | Type | Purpose | Note |
 |---|---:|---|---|
-| `src/components/generation/GenerationPanel.tsx` | component | 生成の進行状況表示 | ProblemCreatePage 等で利用 |
+| `src/components/generation/GenerationPanel.tsx` | component | 生成の進行状況表示 | CreatePage 等で利用 |
 
 ## 検索 / 参照方法
 - 全ファイル一覧: `find src/components/generation -type f`

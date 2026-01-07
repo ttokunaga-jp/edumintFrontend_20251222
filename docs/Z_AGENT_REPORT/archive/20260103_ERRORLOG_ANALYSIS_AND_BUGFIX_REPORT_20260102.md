@@ -35,10 +35,10 @@ GET http://localhost:5173/favicon.ico 404 (Not Found)
 
 **QuestionBlockMeta.tsx**:
 ```tsx
-// ❌ 間違い: onDifficultyChange は (difficulty: number) => void を期待
+// ❌ 間違い: onDifficultyChange は (level: number) => void を期待
 // しかし DifficultySelect からは SelectChangeEvent が渡される
 <DifficultySelect
-  value={difficulty}
+  value={level}
   onChange={onDifficultyChange}  // ← 型が合わない！
 />
 ```
@@ -58,7 +58,7 @@ GET http://localhost:5173/favicon.ico 404 (Not Found)
 ```tsx
 // ✅ SelectChangeEvent から値を抽出して渡す
 <DifficultySelect
-  value={difficulty}
+  value={level}
   onChange={(event) => {
     const value = event.target.value as number;
     onDifficultyChange?.(value);
@@ -151,7 +151,7 @@ setRenderKey(prev => prev + 1) で強制再マウント
 **実装例**:
 ```tsx
 // DifficultySelect.tsx
-const actualId = id || `difficulty-select-${generatedId}`;
+const actualId = id || `level-select-${generatedId}`;
 const labelId = `${actualId}-label`;
 
 return (

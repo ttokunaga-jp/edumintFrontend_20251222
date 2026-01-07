@@ -12,8 +12,8 @@ import { ApiResponse, PaginationParams, PaginatedResponse } from './problemRepos
  */
 export interface QuestionFilter {
   problemId?: string;
-  difficultySince?: number;
-  difficultyUpto?: number;
+  levelSince?: number;
+  levelUpto?: number;
   hasKeywords?: string[];
 }
 
@@ -24,7 +24,7 @@ export interface CreateQuestionRequest {
   problemId: string;
   questionNumber: number;
   content: string;
-  difficulty?: number;
+  level?: number;
   keywords?: string[];
 }
 
@@ -34,7 +34,7 @@ export interface CreateQuestionRequest {
 export interface UpdateQuestionRequest {
   questionNumber?: number;
   content?: string;
-  difficulty?: number;
+  level?: number;
   keywords?: string[];
 } 
 
@@ -210,8 +210,8 @@ export class QuestionRepository implements IQuestionRepository {
 
     if (filter) {
       if (filter.problemId) params.append('problemId', filter.problemId);
-      if (filter.difficultySince) params.append('difficultySince', String(filter.difficultySince));
-      if (filter.difficultyUpto) params.append('difficultyUpto', String(filter.difficultyUpto));
+      if (filter.levelSince) params.append('levelSince', String(filter.levelSince));
+      if (filter.levelUpto) params.append('levelUpto', String(filter.levelUpto));
       if (filter.hasKeywords?.length) {
         params.append('keywords', filter.hasKeywords.join(','));
       } 

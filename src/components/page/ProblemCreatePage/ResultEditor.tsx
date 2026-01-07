@@ -1,210 +1,227 @@
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Stack,
-  TextField,
-  Typography,
+  Divider,
+  Button,
+  FormControlLabel,
+  Switch,
+  Container,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
 import { useGenerationStore } from '@/features/generation/stores/generationStore';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
-import PublishIcon from '@mui/icons-material/Publish';
+import { useConfirmJobMutation } from '@/features/generation/hooks/useGeneration';
 
+import {
+  ExamSchema,
+  createDefaultExam,
+  createDefaultQuestion,
+  createDefaultSubQuestion,
+  DifficultyLabels,
+  type ExamFormValues,
+} from '@/features/exam/schema';
+import { ExamMetaSection } from '@/features/exam/components/ExamMetaSection';
+import { QuestionList } from '@/features/exam/components/QuestionList';
+
+// 仮のデータ型定義 (generationStoreやbackendの定義に合わせて調整してください)
 interface GeneratedProblem {
   id: string;
   title: string;
   content: string;
   answer: string;
   explanation: string;
-  difficulty: string;
+  level: string;
   subject: string;
 }
 
 export function ResultEditor() {
-  const { setPhase, options, generatedProblems, reset } = useGenerationStore();
+  const { setPhase, generatedProblems, structureData, reset: resetStore, jobId, phase } = useGenerationStore();
   const { t } = useTranslation();
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editData, setEditData] = useState<Partial<GeneratedProblem>>({});
+  const confirmMutation = useConfirmJobMutation();
+  const navigate = useNavigate();
 
-  const handleEdit = (problem: GeneratedProblem) => {
-    setEditingId(problem.id);
-    setEditData(problem);
-  };
+  // Local state for Edit/Preview mode
+  const [isEditMode, setIsEditMode] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSaveEdit = () => {
-    // TODO: Save edited problem to store
-    setEditingId(null);
-  };
+  // フォーム初期化
+  const methods = useForm<ExamFormValues>({
+    resolver: zodResolver(ExamSchema),
+    defaultValues: createDefaultExam(),
+    mode: 'onBlur',
+  });
+  const { reset, handleSubmit, getValues, trigger } = methods;
 
-  const handleDelete = (id: string) => {
-    // TODO: Remove problem from store
-  };
+  // generatedProblems / structureData をフォーム初期値に変換 (初回のみ)
+  const initialFormValues = useMemo(() => {
+    // データがない場合はデフォルト
+    if (!generatedProblems || generatedProblems.length === 0) {
+      // 構造データがあればそれを使う、なければ完全デフォルト
+      if (structureData) {
+        const defaultExam = createDefaultExam();
+        defaultExam.examName = structureData.title || '';
+        if (structureData.subjects && structureData.subjects.length > 0) {
+          defaultExam.subjectName = structureData.subjects[0];
+        }
+        return defaultExam;
+      }
+      return createDefaultExam();
+    }
 
+    const defaultExam = createDefaultExam();
+
+    // 基本情報（structureDataがあれば優先、なければ推論）
+    if (structureData) {
+      defaultExam.examName = structureData.title || '';
+      if (structureData.subjects && structureData.subjects.length > 0) {
+        defaultExam.subjectName = structureData.subjects[0];
+      }
+    } else {
+      defaultExam.examName = '生成された試験';
+    }
+
+    // 問題のマッピング
+    // generatedProblems は GeneratedProblem[] と仮定
+    defaultExam.questions = generatedProblems.map((p: any, idx: number) => {
+      const q = createDefaultQuestion(idx);
+
+      // 大問レベルのマッピング
+      // 難易度: ラベル('basic'等)からEnum値を逆引き、なければデフォルト
+      const levelEntry = Object.entries(DifficultyLabels).find(([_, label]) => label === p.level || label.toLowerCase() === p.level?.toLowerCase());
+      if (levelEntry) {
+        q.level = levelEntry[0] as any;
+      }
+
+      // キーワードなどはあればマッピング (大問)
+      if (Array.isArray(p.keywords)) {
+        q.keywords = p.keywords.map((kw: any, kidx: number) => ({ id: kw.id ?? `gk-${idx}-${kidx}`, keyword: kw.keyword }));
+      }
+
+      // 小問の作成 (1つの問題を1つの小問として扱う簡易マッピング)
+      const sq = createDefaultSubQuestion(0);
+      sq.questionContent = p.content || p.question || '';
+      sq.answerContent = p.answer || '';
+
+      // explanation and answer combining
+      if (p.answer && p.explanation) {
+        sq.answerContent = `【解答】\n${p.answer}\n\n【解説】\n${p.explanation}`;
+      } else if (p.explanation) {
+        sq.answerContent = p.explanation;
+      } else {
+        sq.answerContent = p.answer || '';
+      }
+
+      // 小問キーワードのマッピング
+      if (Array.isArray(p.subQuestions) && Array.isArray(p.subQuestions[0]?.keywords)) {
+        sq.keywords = p.subQuestions[0].keywords.map((kw: any, kidx: number) => ({ id: kw.id ?? `gsk-${idx}-${kidx}`, keyword: kw.keyword }));
+        // Also map content if subquestions exist specifically in the generation output?
+        // Current mock handlers seem to return flat list of problems or problems with subquestions.
+        // If p has subQuestions array, we should probably map them instead of creating one default subQuestion.
+        // For now, retaining existing logic where 1 generated problem = 1 question with 1 subquestion.
+      }
+
+      q.subQuestions = [sq];
+      return q;
+    });
+
+    return defaultExam;
+  }, [generatedProblems, structureData]);
+
+  // 初期値反映
+  useEffect(() => {
+    if (initialFormValues) {
+      reset(initialFormValues);
+    }
+  }, [initialFormValues, reset]);
+
+
+  // 保存（公開）ハンドラ
   const handlePublish = async () => {
-    // TODO: Call API to save generated problems
-    console.log('Publishing problems...', generatedProblems);
-    reset();
-    setPhase('start');
+    try {
+      setIsSaving(true);
+      const isValid = await trigger();
+      if (!isValid) {
+        console.warn('Form validation failed');
+        // Optionally show a snackbar or alert here
+        return;
+      }
+
+      const formData = getValues();
+      await confirmMutation.mutateAsync({ jobId: jobId!, structureData: formData as any });
+
+      resetStore();
+      navigate('/mypage');
+
+    } catch (e) {
+      console.error('Failed to publish', e);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
-    <Stack spacing={3}>
-      {/* ヘッダー */}
-      <Box>
-        <Typography variant="h6">{t('problemCreate.resultEditor.title')}</Typography>
-        <Typography variant="body2" color="text.secondary">
-          {t('problemCreate.resultEditor.summary', { count: generatedProblems?.length || 0 })}
-        </Typography>
-      </Box>
-
-      {/* 問題リスト */}
-      <Stack spacing={2}>
-        {generatedProblems && generatedProblems.length > 0 ? (
-          generatedProblems.map((problem: GeneratedProblem, index: number) => (
-            <Card key={problem.id || index}>
-              <CardHeader
-                title={`問題 ${index + 1}: ${problem.title}`}
-                subheader={
-                  <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-                    <Chip label={problem.subject} size="small" />
-                    <Chip
-                      label={(() => {
-                        const raw = problem.difficulty;
-                        const keys = ['auto','basic','standard','advanced','expert'];
-                        let key = keys.find(k => k === raw);
-                        if (!key) {
-                          key = keys.find(k => t(`enum.difficulty.${k}`) === raw);
-                        }
-                        return key ? t(`enum.difficulty.${key}`) : raw || '';
-                      })()}
-                      size="small"
-                      color={(() => {
-                        const raw = problem.difficulty;
-                        const keys = ['auto','basic','standard','advanced','expert'];
-                        const key = keys.find(k => k === raw) || keys.find(k => t(`enum.difficulty.${k}`) === raw);
-                        if (key === 'advanced' || key === 'expert') return 'error';
-                        if (key === 'standard') return 'warning';
-                        return 'default';
-                      })()}
-                    />
-                  </Stack>
-                }
+    <FormProvider {...methods}>
+      <Container maxWidth="lg" sx={{ pb: 10 }}>
+        {/* Top Controls */}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <FormControlLabel
+            control={
+              <Switch
+                id="mode-switch"
+                name="modeSwitch"
+                checked={isEditMode}
+                onChange={(e: any) => setIsEditMode(e.target.checked)}
               />
-              <CardContent>
-                <Stack spacing={2}>
-                  <Box>
-                    <Typography variant="subtitle2" gutterBottom>
-                      問題文
-                    </Typography>
-                    <Typography variant="body2">{problem.content}</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" gutterBottom>
-                      解答
-                    </Typography>
-                    <Typography variant="body2">{problem.answer}</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" gutterBottom>
-                      解説
-                    </Typography>
-                    <Typography variant="body2">{problem.explanation}</Typography>
-                  </Box>
-                  <Stack direction="row" spacing={1}>
-                    <Button
-                      size="small"
-                      startIcon={<EditIcon />}
-                      onClick={() => handleEdit(problem)}
-                    >
-                      編集
-                    </Button>
-                    <Button
-                      size="small"
-                      color="error"
-                      startIcon={<DeleteIcon />}
-                      onClick={() => handleDelete(problem.id)}
-                    >
-                      {t('common.delete')}
-                    </Button>
-                  </Stack>
-                </Stack>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <Typography variant="body2" color="text.secondary">
-            生成される問題はまだありません。
-          </Typography>
-        )}
-      </Stack>
+            }
+            label={isEditMode ? "編集モード" : "プレビュー"}
+          />
+        </Box>
 
-      {/* アクションボタン */}
-      <Stack direction="row" spacing={2} justifyContent="flex-end">
-        <Button variant="outlined" onClick={() => setPhase('start')}>
-          {t('common.cancel')}
-        </Button>
-        <Button variant="contained" endIcon={<PublishIcon />} onClick={handlePublish}>
-          {t('problemCreate.resultEditor.publish')}
-        </Button>
-      </Stack>
+        <Stack spacing={3}>
+          {/* メタデータ編集/表示 */}
+          <ExamMetaSection isEditMode={isEditMode} />
 
-      {/* 編集ダイアログ */}
-      <Dialog open={editingId !== null} onClose={() => setEditingId(null)} maxWidth="sm" fullWidth>
-        <DialogTitle>問題を編集</DialogTitle>
-        <DialogContent sx={{ py: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <TextField
-            id="edit-title-input"
-            label={t('problemCreate.resultEditor.dialog.title')}
-            fullWidth
-            value={editData.title || ''}
-            onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-          />
-          <TextField
-            id="edit-content-input"
-            label={t('problemCreate.resultEditor.dialog.content')}
-            fullWidth
-            multiline
-            rows={4}
-            value={editData.content || ''}
-            onChange={(e) => setEditData({ ...editData, content: e.target.value })}
-          />
-          <TextField
-            id="edit-answer-input"
-            label={t('problemCreate.resultEditor.dialog.answer')}
-            fullWidth
-            multiline
-            rows={2}
-            value={editData.answer || ''}
-            onChange={(e) => setEditData({ ...editData, answer: e.target.value })}
-          />
-          <TextField
-            id="edit-explanation-input"
-            label={t('problemCreate.resultEditor.dialog.explanation')}
-            fullWidth
-            multiline
-            rows={3}
-            value={editData.explanation || ''}
-            onChange={(e) => setEditData({ ...editData, explanation: e.target.value })}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setEditingId(null)}>{t('common.cancel')}</Button>
-          <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSaveEdit}>
-            {t('common.save')}
+          <Divider />
+
+          {/* 問題リスト編集/表示 */}
+          <QuestionList isEditMode={isEditMode} />
+        </Stack>
+
+        {/* Footer Action Bar */}
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            p: 2,
+            bgcolor: 'background.paper',
+            borderTop: 1,
+            borderColor: 'divider',
+            zIndex: 1100,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 2
+          }}
+        >
+          <Button variant="outlined" onClick={() => setPhase(0)}>
+            キャンセル
           </Button>
-        </DialogActions>
-      </Dialog>
-    </Stack>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePublish}
+            disabled={isSaving}
+            size="large"
+            sx={{ px: 4 }}
+          >
+            {isSaving ? '保存中...' : '試験を作成する'}
+          </Button>
+        </Box>
+      </Container>
+    </FormProvider>
   );
 }

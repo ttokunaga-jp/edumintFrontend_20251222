@@ -22,13 +22,20 @@ import {
   Chip,
 } from '@mui/material';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { DIFFICULTY_OPTIONS, COUNT_OPTIONS, PROBLEM_FORMAT_OPTIONS } from '@/features/ui/selectionOptions';
+import {
+  LEVEL_ENUM_OPTIONS,
+  QUESTION_TYPE_OPTIONS,
+  getEnumLabelKey
+} from '@/lib/enums/enumHelpers';
+import { COUNT_OPTIONS } from '@/features/ui/selectionOptions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDropzone } from 'react-dropzone';
 import { useGenerationStore, GenerationMode, UploadedFile } from '@/features/generation/stores/generationStore';
+import { useTranslation } from 'react-i18next';
+import { useStartGenerationMutation } from '@/features/generation/hooks/useGeneration';
+import { nanoid } from 'nanoid';
 
 /**
  * 生成開始フェーズ (Generation Start)
@@ -38,9 +45,10 @@ import { useGenerationStore, GenerationMode, UploadedFile } from '@/features/gen
  * - クライアント側バリデーション（ファイルサイズ、拡張子、テキスト長）
  */
 export function StartPhase() {
-  const { mode, setMode, files, setFiles, addFiles, removeFile, inputText, setInputText, options, setOptions, setPhase } =
+  const { mode, setMode, files, setFiles, addFiles, removeFile, inputText, setInputText, options, setOptions, setPhase, setJobId, phase } =
     useGenerationStore();
   const { t } = useTranslation();
+  const startMutation = useStartGenerationMutation();
 
   const [error, setError] = useState<string>('');
   const [fileErrors, setFileErrors] = useState<string[]>([]);
@@ -54,7 +62,7 @@ export function StartPhase() {
   const totalFileSize = files.reduce((sum, f) => sum + f.size, 0);
   const totalFileSizeInMB = (totalFileSize / (1024 * 1024)).toFixed(2);
 
-  // react-dropzone hook
+  // react-dropzone hook - 常に呼び出す（Hooksの順序を維持）
   const onDrop = (acceptedFiles: File[]) => {
     setError('');
     setFileErrors([]);
@@ -108,6 +116,21 @@ export function StartPhase() {
     },
   });
 
+  // Show loading state if processing
+  if (phase > 0) {
+    return (
+      <Box sx={{ textAlign: 'center', py: 10 }}>
+        <LinearProgress sx={{ mb: 4, maxWidth: 400, mx: 'auto' }} />
+        <Typography variant="h6" gutterBottom>
+          {phase === 1 ? 'アップロード中...' : '構造解析中...'}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          しばらくお待ちください
+        </Typography>
+      </Box>
+    );
+  }
+
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     if (text.length <= MAX_TEXT_LENGTH) {
@@ -118,7 +141,7 @@ export function StartPhase() {
     }
   };
 
-  const handleStart = () => {
+  const handleStart = async () => {
     setError('');
 
     // どちらも空の場合のみエラー
@@ -137,14 +160,29 @@ export function StartPhase() {
       return;
     }
 
-    // バリデーション成功時は次フェーズへ（実際にはここでAPI呼び出しが必要だが、フェーズ遷移をトリガーとする）
-    setPhase('analyzing');
+    // 1. 一時キーの生成 (16桁)
+    const tempKey = nanoid(16);
 
-    // Mock: Simulate generation process
-    // In a real implementation, this would be handled by a saga or effect reacting to the phase change
-    setTimeout(() => {
-      setPhase('structure_confirmed');
-    }, 2000);
+    startMutation.mutate(
+      {
+        tempKey,
+        mode,
+        // files: files, // File upload handling needed (FormData) but for mock just send metadata or skip
+        text: inputText,
+        options
+      },
+      {
+        onSuccess: (data) => {
+          const { jobId, phase } = data;
+          setJobId(jobId);
+          setPhase(phase); // 0: structure_uploading
+        },
+        onError: (err) => {
+          console.error(err);
+          setError('生成の開始に失敗しました');
+        }
+      }
+    );
   };
 
   return (
@@ -308,6 +346,7 @@ export function StartPhase() {
             <FormControlLabel
               control={
                 <Checkbox
+                  id="include-charts-checkbox"
                   checked={options.includeCharts ?? true}
                   onChange={(e) => setOptions({ includeCharts: e.target.checked })}
                 />
@@ -318,6 +357,7 @@ export function StartPhase() {
             <FormControlLabel
               control={
                 <Checkbox
+                  id="check-structure-checkbox"
                   checked={options.checkStructure ?? false}
                   onChange={(e) => setOptions({ checkStructure: e.target.checked })}
                 />
@@ -328,6 +368,7 @@ export function StartPhase() {
             <FormControlLabel
               control={
                 <Checkbox
+                  id="is-public-checkbox"
                   checked={options.isPublic ?? true}
                   onChange={(e) => setOptions({ isPublic: e.target.checked })}
                 />
@@ -337,13 +378,16 @@ export function StartPhase() {
 
             {/* 難易度選択（共通） */}
             <FormControl fullWidth>
-              <InputLabel>{t('problemCreate.startPhase.labels.difficulty')}</InputLabel>
+              <InputLabel id="level-select-label">{t('problemCreate.startPhase.labels.level')}</InputLabel>
               <Select
-                label={t('problemCreate.startPhase.labels.difficulty')}
-                value={options.difficulty || 'auto'}
-                onChange={(e) => setOptions({ difficulty: e.target.value as any })}
+                labelId="level-select-label"
+                id="level-select"
+                label={t('problemCreate.startPhase.labels.level')}
+                value={options.level ?? 'auto'}
+                onChange={(e) => setOptions({ level: e.target.value as any })}
               >
-                {DIFFICULTY_OPTIONS.map((opt) => (
+                <MenuItem value="auto">{t('enum.level.auto')}</MenuItem>
+                {LEVEL_ENUM_OPTIONS.map((opt) => (
                   <MenuItem key={opt.value} value={opt.value}>
                     {t(opt.labelKey)}
                   </MenuItem>
@@ -355,8 +399,10 @@ export function StartPhase() {
             {mode === 'document' && (
               <>
                 <FormControl fullWidth>
-                  <InputLabel>{t('problemCreate.startPhase.labels.count')}</InputLabel>
+                  <InputLabel id="count-select-label">{t('problemCreate.startPhase.labels.count')}</InputLabel>
                   <Select
+                    labelId="count-select-label"
+                    id="count-select"
                     label={t('problemCreate.startPhase.labels.count')}
                     value={options.count || 10}
                     onChange={(e) => setOptions({ count: parseInt(e.target.value as string) })}
@@ -374,6 +420,7 @@ export function StartPhase() {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        id="auto-format-checkbox"
                         checked={options.autoFormat ?? true}
                         onChange={(e) => setOptions({ autoFormat: e.target.checked })}
                       />
@@ -388,17 +435,18 @@ export function StartPhase() {
                       </AccordionSummary>
                       <AccordionDetails>
                         <Stack spacing={1}>
-{PROBLEM_FORMAT_OPTIONS.map((fmt) => (
+                          {QUESTION_TYPE_OPTIONS.map((fmt) => (
                             <FormControlLabel
                               key={fmt.id}
                               control={
                                 <Checkbox
-                                  checked={options.formats?.includes(fmt.value) ?? false}
+                                  id={`question-type-${fmt.value}-checkbox`}
+                                  checked={options.questionType?.includes(fmt.value) ?? false}
                                   onChange={(e) => {
                                     const newFormats = e.target.checked
-                                      ? [...(options.formats || []), fmt.value]
-                                      : (options.formats || []).filter((f) => f !== fmt.value);
-                                    setOptions({ formats: newFormats });
+                                      ? [...(options.questionType || []), fmt.value]
+                                      : (options.questionType || []).filter((f) => f !== fmt.value);
+                                    setOptions({ questionType: newFormats });
                                   }}
                                 />
                               }

@@ -3,7 +3,10 @@ import type { FC, ReactNode, SyntheticEvent, FormEvent } from 'react';
 import { Card, CardContent, Box, Typography, Chip, Stack, IconButton, useTheme } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import { EXAM_TYPE_COLORS, EXAM_TYPE_LABELS, ACADEMIC_FIELDS } from '@/constants/fixedVariables';
+import { useTranslation } from 'react-i18next';
+import { EXAM_TYPE_COLORS } from '@/constants/fixedVariables';
+import { getEnumLabelKey } from '@/lib/enums/enumHelpers';
+import DEFAULT_ENUM_MAPPINGS from '@/lib/enums/enumMappings';
 
 export interface ExamCompactItem {
   id: string;
@@ -13,8 +16,9 @@ export interface ExamCompactItem {
   examYear?: string | number;
   university?: string;
   faculty?: string;
-  academicFieldType?: string; // 理系 / 文系
+  majorType?: number; // academic_track: 0=science (理系), 1=humanities (文系)
   academicFieldName?: string; // 試験分野
+  academicFieldId?: number; // Numeric ID for localization
   subjectName?: string;
   durationMinutes?: number;
   views?: number;
@@ -26,19 +30,13 @@ export interface ExamCompactItem {
  */
 export const mapProblemToCompactItem = (problem: any): ExamCompactItem => {
   // Infer examTypeLabel if missing
-  const examTypeLabel = problem.examTypeLabel || (problem.examType !== undefined ? EXAM_TYPE_LABELS[problem.examType] : undefined);
+  const examTypeLabel = problem.examTypeLabel;
 
-  // Infer academicFieldType if missing (handle majorType and academicFieldId)
-  let academicFieldType = problem.academicFieldType;
-  if (!academicFieldType) {
-    if (problem.majorType !== undefined) {
-      // Based on exams.json: 1 is Science, 2 is Humanities
-      academicFieldType = problem.majorType === 1 ? '理系' : '文系';
-    } else if (problem.academicFieldId !== undefined) {
-      // Based on fixedVariables: 0 is science, 1 is humanities
-      academicFieldType = ACADEMIC_FIELDS[problem.academicFieldId] === 'science' ? '理系' : '文系';
-    }
-  }
+  // Extract majorType (academic_track) as numeric ID
+  // Priority: problem.majorType > problem.academicFieldId > undefined
+  const majorType = problem.majorType !== undefined
+    ? problem.majorType
+    : problem.academicFieldId;
 
   return {
     id: problem.id,
@@ -48,8 +46,9 @@ export const mapProblemToCompactItem = (problem: any): ExamCompactItem => {
     examYear: problem.examYear,
     university: problem.university || problem.universityName,
     faculty: problem.faculty || problem.facultyName,
-    academicFieldType,
+    majorType, // Numeric ID: 0=science, 1=humanities
     academicFieldName: problem.academicFieldName || problem.academicField,
+    academicFieldId: problem.academicFieldId,
     subjectName: problem.subjectName || problem.subject || '',
     durationMinutes: problem.durationMinutes,
     views: problem.views ?? (problem.viewCount !== undefined ? problem.viewCount : 312), // Fallback for mock data consistency
@@ -64,6 +63,7 @@ export interface ExamCardCompactProps {
 }
 
 export const ExamCardCompact: FC<ExamCardCompactProps> = ({ item, onView, onGood }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const handleView = () => onView?.(item.id);
   const handleGood = () => onGood?.(item.id);
@@ -77,13 +77,9 @@ export const ExamCardCompact: FC<ExamCardCompactProps> = ({ item, onView, onGood
       return EXAM_TYPE_COLORS[item.examType];
     }
 
-    // try to infer from label (Japanese labels from ExamMetaSection)
-    if (item.examTypeLabel) {
-      const found = (Object.entries(EXAM_TYPE_LABELS) as Array<[string, string]>).find(([, label]) => label === item.examTypeLabel);
-      if (found) {
-        const key = Number(found[0]);
-        return EXAM_TYPE_COLORS[key] ?? null;
-      }
+    // try to infer from numeric id using unified enums
+    if (item.examType !== undefined) {
+      return EXAM_TYPE_COLORS[item.examType] ?? null;
     }
 
     return null;
@@ -105,9 +101,9 @@ export const ExamCardCompact: FC<ExamCardCompactProps> = ({ item, onView, onGood
       <CardContent>
         <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-start', alignItems: 'center', mb: 1 }}>
           {/* チップ順: 試験種別, 年, 大学 */}
-          {item.examTypeLabel && (
+          {item.examType !== undefined && (
             <Chip
-              label={item.examTypeLabel}
+              label={t(getEnumLabelKey('examType', item.examType) || '')}
               size="small"
               sx={{
                 ...(examTypeColor && {
@@ -154,17 +150,19 @@ export const ExamCardCompact: FC<ExamCardCompactProps> = ({ item, onView, onGood
 
         {/* 学問系統、学問分野をチップで表示 */}
         <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-start', alignItems: 'center', mt: 0.5 }}>
-          {item.academicFieldType && (
+          {item.majorType !== undefined && (
             <Chip
-              label={item.academicFieldType}
+              label={t(getEnumLabelKey('academic_track', item.majorType) || '')}
               size="small"
               variant="outlined"
               sx={{ backgroundColor: (t) => t.palette.action.hover }}
             />
           )}
-          {item.academicFieldName && (
+          {(item.academicFieldId !== undefined || item.academicFieldName) && (
             <Chip
-              label={item.academicFieldName}
+              label={item.academicFieldId !== undefined
+                ? t(getEnumLabelKey('academic_field', item.academicFieldId) || '')
+                : item.academicFieldName}
               size="small"
               variant="outlined"
               sx={{ backgroundColor: (t) => t.palette.action.hover }}

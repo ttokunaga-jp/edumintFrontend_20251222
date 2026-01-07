@@ -16,7 +16,7 @@ This file summarizes targeted migrations for Markdown rendering, i18n practices,
 - Current: `react-i18next` & `i18next` are present and used in many components (`useTranslation()`), but multiple places contain hard-coded Japanese text.
 - High-impact examples:
   - `src/pages/LoginRegisterPage.tsx` — large hard-coded Terms text inside Dialog (move to `src/locales/{en,ja}/translation.json` and load with i18n keys).
-  - `src/components/page/ProblemCreatePage/ResultEditor.tsx` — titles such as '問題文', '解答', etc. (some are using `t()` but others still are direct literals).
+  - `src/components/page/CreatePage/ResultEditor.tsx` — titles such as '問題文', '解答', etc. (some are using `t()` but others still are direct literals).
   - `src/components/page/MyPage/ProfileEditForm.tsx` — labels like '表示名', 'メールアドレス' — should use `t()`.
 - Recommendation: Create a short lint/check step (or script) to find JSX hard-coded string literals (non-empty, non-keyboard symbols) and produce a TODO list for i18n extraction. Prioritize: Terms dialogs, pages, and user-facing messages.
 - Complexity: **Low–Medium** (many occurrences but mechanical extraction + unit tests)

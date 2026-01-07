@@ -1,24 +1,23 @@
-export const DIFFICULTY_OPTIONS = [
-  { id: 'difficulty.auto', value: 'auto', labelKey: 'enum.difficulty.auto' },
-  { id: 'difficulty.basic', value: 'basic', labelKey: 'enum.difficulty.basic' },
-  { id: 'difficulty.standard', value: 'standard', labelKey: 'enum.difficulty.standard' },
-  { id: 'difficulty.advanced', value: 'advanced', labelKey: 'enum.difficulty.advanced' },
-  { id: 'difficulty.expert', value: 'expert', labelKey: 'enum.difficulty.expert' },
+export const LEVEL_STRING_OPTIONS = [
+  { id: 'level.auto', value: 'auto', labelKey: 'enum.level.auto' },
+  { id: 'level.basic', value: 'basic', labelKey: 'enum.level.basic' },
+  { id: 'level.standard', value: 'standard', labelKey: 'enum.level.standard' },
+  { id: 'level.advanced', value: 'advanced', labelKey: 'enum.level.advanced' },
 ];
 
 export const COUNT_OPTIONS = [5, 10, 15, 20];
 
 export const PROBLEM_FORMAT_OPTIONS = [
-  { id: 'format.single_choice', value: 'single_choice', labelKey: 'enum.format.single_choice' },
-  { id: 'format.multiple_choice', value: 'multiple_choice', labelKey: 'enum.format.multiple_choice' },
-  { id: 'format.true_false', value: 'true_false', labelKey: 'enum.format.true_false' },
-  { id: 'format.matching', value: 'matching', labelKey: 'enum.format.matching' },
-  { id: 'format.ordering', value: 'ordering', labelKey: 'enum.format.ordering' },
-  { id: 'format.free_text', value: 'free_text', labelKey: 'enum.format.free_text' },
-  { id: 'format.proof', value: 'proof', labelKey: 'enum.format.proof' },
-  { id: 'format.code', value: 'code', labelKey: 'enum.format.code' },
-  { id: 'format.translation', value: 'translation', labelKey: 'enum.format.translation' },
-  { id: 'format.numeric', value: 'numeric', labelKey: 'enum.format.numeric' },
+  { id: 'questionType.0', value: 0, labelKey: 'enum.questionType.0' },
+  { id: 'questionType.1', value: 1, labelKey: 'enum.questionType.1' },
+  { id: 'questionType.2', value: 2, labelKey: 'enum.questionType.2' },
+  { id: 'questionType.3', value: 3, labelKey: 'enum.questionType.3' },
+  { id: 'questionType.4', value: 4, labelKey: 'enum.questionType.4' },
+  { id: 'questionType.10', value: 10, labelKey: 'enum.questionType.10' },
+  { id: 'questionType.11', value: 11, labelKey: 'enum.questionType.11' },
+  { id: 'questionType.12', value: 12, labelKey: 'enum.questionType.12' },
+  { id: 'questionType.13', value: 13, labelKey: 'enum.questionType.13' },
+  { id: 'questionType.14', value: 14, labelKey: 'enum.questionType.14' },
 ];
 
 export const LEVEL_OPTIONS = [
@@ -61,4 +60,9 @@ export const CUSTOM_SEARCH_OPTIONS = [
   { id: 'custom.high_rating', value: 'high_rating', labelKey: 'enum.custom.high_rating' },
   { id: 'custom.commented', value: 'commented', labelKey: 'enum.custom.commented' },
   { id: 'custom.posted', value: 'posted', labelKey: 'enum.custom.posted' },
+];
+
+export const ACADEMIC_SYSTEM_OPTIONS = [
+  { id: 'academic.liberal_arts', value: 'liberal-arts', labelKey: 'enum.academic.system.liberal_arts' },
+  { id: 'academic.science', value: 'science', labelKey: 'enum.academic.system.science' },
 ];

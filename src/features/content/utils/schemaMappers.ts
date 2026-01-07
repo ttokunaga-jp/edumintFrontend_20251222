@@ -5,7 +5,7 @@
  * 
  * DB スキーマ:
  * - exams.id
- * - questions: question_id, question_number, question_content, difficulty
+ * - questions: question_id, question_number, question_content, level
  * - sub_questions: sub_question_id, question_id, sub_question_number, sub_question_type_id, question_content, answer_explanation
  * - keywords: keyword_id, keyword (text)
  * - question_keywords: question_id, keyword_id
@@ -21,7 +21,7 @@ export interface LocalQuestion {
   id: string; // question_id (backend)
   question_number: number; // from DB
   question_content: string; // from DB
-  difficulty: number; // from DB
+  level: number; // from DB
   keywords: Array<{ id: string; keyword: string }>; // from question_keywords + keywords
   sub_questions: LocalSubQuestion[];
 }
@@ -52,7 +52,7 @@ export interface LegacyLocalQuestion {
   id: string;
   question_number: number;
   question_content: string;
-  difficulty: number;
+  level: number;
   keywords: Array<{ id: string; keyword: string }>;
   sub_questions: LegacyLocalSubQuestion[];
   // Legacy aliases
@@ -88,7 +88,7 @@ export function fromBackendQuestion(backendQuestion: any): LocalQuestion {
     id: backendQuestion.id || backendQuestion.question_id,
     question_number: backendQuestion.question_number || backendQuestion.questionNumber || 0,
     question_content: backendQuestion.question_content || backendQuestion.questionContent || '',
-    difficulty: backendQuestion.difficulty ?? 1,
+    level: backendQuestion.level ?? 1,
     keywords: backendQuestion.keywords || [],
     sub_questions: (backendQuestion.sub_questions || backendQuestion.subQuestions || []).map(
       fromBackendSubQuestion
@@ -127,7 +127,7 @@ export function toBackendQuestion(localQuestion: LocalQuestion | LegacyLocalQues
     id: q.id,
     question_number: q.question_number || q.questionNumber || 0,
     question_content: q.question_content || q.questionContent || '',
-    difficulty: q.difficulty ?? 1,
+    level: q.level ?? 1,
     keywords: q.keywords || [],
     sub_questions: (q.sub_questions || q.subQuestions || []).map(toBackendSubQuestion),
   };
@@ -168,7 +168,7 @@ export function toLegacyQuestion(localQuestion: LocalQuestion): LegacyLocalQuest
     questionNumber: localQuestion.question_number, // Alias
     question_content: localQuestion.question_content,
     questionContent: localQuestion.question_content, // Alias
-    difficulty: localQuestion.difficulty,
+    level: localQuestion.level,
     keywords: localQuestion.keywords,
     sub_questions: localQuestion.sub_questions.map(toLegacySubQuestion),
     subQuestions: localQuestion.sub_questions.map(toLegacySubQuestion), // Alias
@@ -207,7 +207,7 @@ export function fromLegacyQuestion(legacyQuestion: LegacyLocalQuestion): LocalQu
     id: legacyQuestion.id,
     question_number: legacyQuestion.question_number,
     question_content: legacyQuestion.question_content,
-    difficulty: legacyQuestion.difficulty,
+    level: legacyQuestion.level,
     keywords: legacyQuestion.keywords,
     sub_questions: legacyQuestion.sub_questions.map(fromLegacySubQuestion),
   };

@@ -14,15 +14,24 @@ import {
   FormControl,
   InputLabel,
   Autocomplete,
+  FormControlLabel,
+  Switch,
 } from '@mui/material';
 import type { ExamFormValues } from '../schema';
 import React, { useEffect, useState, useMemo } from 'react';
 import { getLookup, searchLookup, type LookupItem } from '@/services/api/gateway/lookups';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useTranslation } from 'react-i18next';
+import {
+  EXAM_TYPE_ENUM_OPTIONS,
+  ACADEMIC_TRACK_ENUM_OPTIONS,
+  ACADEMIC_FIELD_ENUM_OPTIONS,
+  getEnumLabelKey
+} from '@/lib/enums/enumHelpers';
 
 /**
  * 試験メタデータセクション
- * 
+ *
  * 試験名、実施年など、Exam スキーマのトップレベルメタデータを編集します。
  * ReadOnly フラグで編集/閲覧モードを自動切り替え。
  */
@@ -30,7 +39,7 @@ interface ExamMetaSectionProps {
   isEditMode: boolean;
 }
 
-export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
+export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }: ExamMetaSectionProps) => {
   const { control, watch, setValue, getValues } = useFormContext<ExamFormValues>();
 
   const examName = watch('examName');
@@ -43,6 +52,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
   const examType = watch('examType');
   const majorType = watch('majorType');
   const academicFieldName = watch('academicFieldName');
+  const academicFieldId = watch('academicFieldId');
 
   // --- LookupAutocomplete component (small helper) ---
   const LookupAutocomplete: FC<{ entity: string; nameField: string; idField: string; label: string }> = ({ entity, nameField, idField, label }) => {
@@ -97,13 +107,13 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
       <Controller
         name={nameField as any}
         control={control}
-        render={({ field }) => (
+        render={({ field }: { field: any }) => (
           <Autocomplete
             freeSolo
             options={options}
-            getOptionLabel={(opt) => (typeof opt === 'string' ? opt : opt.name || '')}
+            getOptionLabel={(opt: any) => (typeof opt === 'string' ? opt : opt.name || '')}
             value={(options.find(o => o.name === field.value) as any) || null}
-            onChange={(_, value) => {
+            onChange={(_: any, value: any) => {
               if (typeof value === 'string') {
                 field.onChange(value);
                 setValue(idField as any, undefined);
@@ -116,13 +126,13 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
               }
             }}
             inputValue={inputValue}
-            onInputChange={(_, newInput) => {
+            onInputChange={(_: any, newInput: string) => {
               setInputValue(newInput);
               field.onChange(newInput);
               // clear id when user types
               setValue(idField as any, undefined);
             }}
-            renderInput={(params) => (
+            renderInput={(params: any) => (
               <TextField
                 {...params}
                 label={label}
@@ -139,7 +149,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                 }}
               />
             )}
-            isOptionEqualToValue={(option, value) => option.id === (value as any)?.id}
+            isOptionEqualToValue={(option: any, value: any) => option.id === (value as any)?.id}
           />
         )}
       />
@@ -153,16 +163,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
   const badCount = watch('badCount' as any) || 0;
   const commentCount = watch('commentCount' as any) || 0;
 
-  const examTypeLabels: Record<number, string> = {
-    0: '定期試験',
-    1: '授業内試験',
-    2: '小テスト',
-  };
-
-  const academicSystemLabels: Record<number, string> = {
-    0: '理系',
-    1: '文系',
-  };
+  const { t } = useTranslation();
 
   const MetaField = ({ label, value }: { label: string; value?: string | number | boolean }) => {
     if (!value && value !== 0 && value !== '') return null;
@@ -186,7 +187,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
         mb: 4,
         bgcolor: 'background.paper',
         borderRadius: 1,
-        border: (theme) => `1px solid ${theme.palette.divider}`,
+        border: (theme: any) => `1px solid ${theme.palette.divider}`,
       }}
     >
       <Stack spacing={3}>
@@ -206,17 +207,19 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                   <Controller
                     name="examType"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field }: { field: any }) => (
                       <FormControl size="small" sx={{ minWidth: 140 }}>
-                        <InputLabel>種別</InputLabel>
+                        <InputLabel id="exam-type-label">種別</InputLabel>
                         <Select
                           {...field}
+                          labelId="exam-type-label"
+                          id="exam-type-select"
                           label="種別"
-                          onChange={(e) => field.onChange(Number(e.target.value))}
+                          onChange={(e: any) => field.onChange(Number(e.target.value))}
                         >
-                          {Object.entries(examTypeLabels).map(([val, label]) => (
-                            <MenuItem key={val} value={Number(val)}>
-                              {label}
+                          {EXAM_TYPE_ENUM_OPTIONS.map((opt) => (
+                            <MenuItem key={opt.value} value={opt.value}>
+                              {t(opt.labelKey)}
                             </MenuItem>
                           ))}
                         </Select>
@@ -226,7 +229,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                   <Controller
                     name="examName"
                     control={control}
-                    render={({ field, fieldState: { error } }) => (
+                    render={({ field, fieldState: { error } }: any) => (
                       <TextField
                         {...field}
                         label="試験名"
@@ -264,7 +267,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                       borderRadius: 1,
                       fontWeight: 700,
                     }}>
-                      【{examTypeLabels[examType] || '不明'}】
+                      【{t(getEnumLabelKey('examType', examType) || '') || '不明'}】
                     </Typography>
                   )}
                   <Typography variant="h5" component="h2" sx={{ fontWeight: 600 }}>
@@ -276,20 +279,23 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1, flexWrap: 'wrap' }}>
               {isEditMode ? (
                 <>
+
                   <Controller
                     name="majorType"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field }: { field: any }) => (
                       <FormControl size="small" sx={{ minWidth: 100 }}>
-                        <InputLabel>系統</InputLabel>
+                        <InputLabel id="major-type-label">系統</InputLabel>
                         <Select
                           {...field}
+                          labelId="major-type-label"
+                          id="major-type-select"
                           label="系統"
-                          onChange={(e) => field.onChange(Number(e.target.value))}
+                          onChange={(e: any) => field.onChange(Number(e.target.value))}
                         >
-                          {Object.entries(academicSystemLabels).map(([val, label]) => (
-                            <MenuItem key={val} value={Number(val)}>
-                              {label}
+                          {ACADEMIC_TRACK_ENUM_OPTIONS.map((opt) => (
+                            <MenuItem key={opt.value} value={opt.value}>
+                              {t(opt.labelKey)}
                             </MenuItem>
                           ))}
                         </Select>
@@ -299,17 +305,26 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                   <Controller
                     name="academicFieldName"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field }: { field: any }) => (
                       <Autocomplete
                         freeSolo
-                        options={[
-                          '機械工学', '電気電子', '情報工学', '土木建築', '材料工学',
-                          '経済学', '経営学', '法学', '心理学', '文学'
-                        ]}
+                        options={ACADEMIC_FIELD_ENUM_OPTIONS.map(opt => t(opt.labelKey))}
                         value={field.value || ''}
-                        onChange={(_, newValue) => field.onChange(newValue)}
-                        onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
-                        renderInput={(params) => (
+                        onChange={(_: any, newValue: any) => {
+                          field.onChange(newValue);
+                          if (newValue && typeof newValue === 'string') {
+                            const matchedOption = ACADEMIC_FIELD_ENUM_OPTIONS.find(opt => t(opt.labelKey) === newValue);
+                            if (matchedOption) {
+                              setValue('academicFieldId', matchedOption.value);
+                            } else {
+                              setValue('academicFieldId', undefined);
+                            }
+                          } else {
+                            setValue('academicFieldId', undefined);
+                          }
+                        }}
+                        onInputChange={(_: any, newInputValue: string) => field.onChange(newInputValue)}
+                        renderInput={(params: any) => (
                           <TextField
                             {...params}
                             label="学問分野"
@@ -326,15 +341,19 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                 <>
                   {majorType !== undefined && (
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      {academicSystemLabels[majorType]}
+                      {t(getEnumLabelKey('academic_track', majorType) || '')}
                     </Typography>
                   )}
-                  {majorType !== undefined && academicFieldName && (
+                  {majorType !== undefined && (academicFieldId !== undefined || academicFieldName) && (
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                       :
                     </Typography>
                   )}
-                  {academicFieldName && (
+                  {(academicFieldId !== undefined) ? (
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      {t(getEnumLabelKey('academic_field', academicFieldId) || '')}
+                    </Typography>
+                  ) : academicFieldName && (
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                       {academicFieldName}
                     </Typography>
@@ -343,6 +362,29 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
               )}
             </Box>
           </Box>
+
+          {/* Top Right Action: Publish Toggle */}
+          {isEditMode && (
+            <Box>
+              <Controller
+                name="isPublic"
+                control={control}
+                render={({ field }: { field: any }) => (
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={field.value ?? false}
+                        onChange={(e: any) => field.onChange(e.target.checked)}
+                        color="primary"
+                      />
+                    }
+                    label={field.value ? '公開' : '非公開'}
+                    labelPlacement="start"
+                  />
+                )}
+              />
+            </Box>
+          )}
         </Box>
 
         <Divider />
@@ -380,7 +422,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                 <Controller
                   name="examYear"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field }: { field: any }) => (
                     <TextField
                       {...field}
                       label="試験年度"
@@ -388,7 +430,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                       type="number"
                       variant="outlined"
                       size="small"
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      onChange={(e: any) => field.onChange(Number(e.target.value))}
                     />
                   )}
                 />
@@ -402,7 +444,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                 <Controller
                   name="subjectName"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field }: { field: any }) => (
                     <TextField {...field} label="科目名" fullWidth variant="outlined" size="small" />
                   )}
                 />
@@ -416,7 +458,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                 <Controller
                   name="durationMinutes"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field }: { field: any }) => (
                     <TextField
                       {...field}
                       label="所要時間 (分)"
@@ -424,7 +466,7 @@ export const ExamMetaSection: FC<ExamMetaSectionProps> = ({ isEditMode }) => {
                       type="number"
                       variant="outlined"
                       size="small"
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      onChange={(e: any) => field.onChange(Number(e.target.value))}
                     />
                   )}
                 />

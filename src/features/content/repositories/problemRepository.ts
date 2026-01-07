@@ -61,7 +61,7 @@ export interface CreateProblemRequest {
   year: number;
   university: string;
   isPublic?: boolean;
-  difficulty?: number;
+  level?: number;
   keywords?: string[];
 }
 
@@ -75,7 +75,7 @@ export interface UpdateProblemRequest {
   university?: string;
   status?: 'draft' | 'published' | 'archived';
   isPublic?: boolean;
-  difficulty?: number;
+  level?: number;
   keywords?: string[];
 }
 

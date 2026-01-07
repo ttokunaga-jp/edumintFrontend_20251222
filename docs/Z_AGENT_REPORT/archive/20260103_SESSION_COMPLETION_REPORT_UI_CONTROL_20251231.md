@@ -32,7 +32,7 @@ App.tsx (Router)
      ├─ HomePage
      ├─ MyPage
      ├─ ProblemViewEditPage
-     ├─ ProblemCreatePage
+     ├─ CreatePage
      └─ LoginRegisterPage
 ```
 
@@ -105,7 +105,7 @@ useEffect(() => {
 | ProblemViewEditPage | ✅ | useEffect（AppBar 制御） | ❌ なし |
 | MyPage | ✅ | useEffect（AppBar 制御） | ❌ なし |
 | HomePage | ✅ | useState（ローカル） | ❌ なし |
-| ProblemCreatePage | ✅ | Zustand（状態管理） | ❌ なし |
+| CreatePage | ✅ | Zustand（状態管理） | ❌ なし |
 
 **許容される useEffect の用途**:
 - Context 操作（AppBarAction）
@@ -232,7 +232,7 @@ useEffect(() => {
 ### 将来: フック で統一（他のページでも再利用）
 
 ```tsx
-// ProblemCreatePage
+// CreatePage
 useAppBarEditActions({
   isEnabled: phase === 'completed',
   isEditMode,
@@ -359,7 +359,7 @@ Duration: 109.05s
 ### Phase 2: 他のページへの適用（2-3 日）
 
 ```tsx
-// ProblemCreatePage: 結果編集フェーズで SAVE ボタン追加
+// CreatePage: 結果編集フェーズで SAVE ボタン追加
 const [isEditMode, setIsEditMode] = useState(false);
 const { phase } = useGenerationStore();
 
@@ -500,7 +500,7 @@ useEffect(() => {
 
 すべての要件が完了しました。次フェーズ（他のページへの適用）をご希望の場合は、以下をお知らせください：
 
-1. **優先対象ページ**: ProblemCreatePage など
+1. **優先対象ページ**: CreatePage など
 2. **実装パターン**: パターン A or B or C（汎用フック）
 3. **スケジュール**: いつまでに完了すべきか
 

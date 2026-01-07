@@ -18,7 +18,8 @@
     "create": "Create",
     "saving": "Saving...",
     "view_mode": "View",
-    "edit_mode": "Edit"
+    "edit_mode": "Edit",
+    "all": "All"
   },
   "auth": {
     "login_title": "Login",
@@ -66,10 +67,6 @@
     "paused": "Paused",
     "error": "Error"
   },
-  "common": {
-    "all": "All",
-    "question_count": "{{count}} questions"
-  },
   "problemCreate": {
     "startPhase": {
       "mode": {
@@ -88,36 +85,46 @@
         "customizeFormats": "Choose formats individually"
       },
       "labels": {
-        "difficulty": "Difficulty",
+        "level": "Difficulty",
         "count": "Number of problems"
       },
       "start": "Start generation"
+    },
+    "resultEditor": {
+      "title": "Generated practice problems",
+      "summary": "A total of {{count}} practice problems have been generated.\nPlease review and edit as needed before publishing.",
+      "publish": "Publish",
+      "dialog": {
+        "title": "Title",
+        "content": "Problem statement",
+        "answer": "Answer",
+        "explanation": "Explanation"
+      }
     }
   },
   "enum": {
-    "difficulty": {
+    "level": {
       "auto": "Auto",
       "basic": "Basic",
       "standard": "Standard",
-      "advanced": "Advanced",
-      "expert": "Expert"
+      "advanced": "Advanced"
     },
-    "format": {
-      "single_choice": "Single choice",
-      "multiple_choice": "Multiple choice",
-      "true_false": "True/False",
-      "matching": "Matching",
-      "ordering": "Ordering",
-      "free_text": "Free text",
-      "proof": "Proof",
-      "code": "Code",
-      "translation": "Translation",
-      "numeric": "Numeric"
+    "custom": {
+      "learned": "Learned",
+      "high_rating": "High rating",
+      "commented": "Commented",
+      "posted": "Posted"
     },
     "duration": {
       "short": "Within 5 min",
       "medium": "Within 15 min",
-      "long": "30+ min"
+      "long": "30+ min",
+      "5": "5 min",
+      "10": "10 min",
+      "30": "30 min",
+      "45": "45 min",
+      "60": "60 min",
+      "90": "90 min"
     },
     "period": {
       "none": "Any",
@@ -134,27 +141,159 @@
       "ko": "Korean",
       "other": "Other"
     },
+    "languages": {
+      "ar": {
+        "label": "العربية",
+        "english": "Arabic"
+      },
+      "bn": {
+        "label": "বাংলা",
+        "english": "Bengali"
+      },
+      "de": {
+        "label": "Deutsch",
+        "english": "German"
+      },
+      "en": {
+        "label": "English",
+        "english": "English"
+      },
+      "es": {
+        "label": "Español",
+        "english": "Spanish"
+      },
+      "fr": {
+        "label": "Français",
+        "english": "French"
+      },
+      "hi": {
+        "label": "हिन्दी",
+        "english": "Hindi"
+      },
+      "id": {
+        "label": "Bahasa Indonesia",
+        "english": "Indonesian"
+      },
+      "it": {
+        "label": "Italiano",
+        "english": "Italian"
+      },
+      "ja": {
+        "label": "日本語",
+        "english": "Japanese"
+      },
+      "ko": {
+        "label": "한국어",
+        "english": "Korean"
+      },
+      "mr": {
+        "label": "मराठी",
+        "english": "Marathi"
+      },
+      "pt-BR": {
+        "label": "Português (Brasil)",
+        "english": "Portuguese (Brazil)"
+      },
+      "pt-PT": {
+        "label": "Português (Portugal)",
+        "english": "Portuguese (Portugal)"
+      },
+      "ru": {
+        "label": "Русский",
+        "english": "Russian"
+      },
+      "sw": {
+        "label": "Kiswahili",
+        "english": "Swahili"
+      },
+      "ta": {
+        "label": "தமிழ்",
+        "english": "Tamil"
+      },
+      "tr": {
+        "label": "Türkçe",
+        "english": "Turkish"
+      },
+      "ur": {
+        "label": "اردو",
+        "english": "Urdu"
+      },
+      "vi": {
+        "label": "Tiếng Việt",
+        "english": "Vietnamese"
+      },
+      "zh-CN": {
+        "label": "中文 (简体)",
+        "english": "Chinese (Simplified)"
+      },
+      "zh-TW": {
+        "label": "中文 (繁體)",
+        "english": "Chinese (Traditional)"
+      }
+    },
     "exam": {
       "regular": "Regular exam",
       "class": "In-class exam",
       "quiz": "Quiz"
     },
-    "academic": {
-      "system": {
-        "liberal_arts": "Liberal arts",
-        "science": "Science"
-      }
+    "academic_track": {
+      "science": "Science",
+      "humanities": "Humanities"
+    },
+    "questionType": {
+      "0": "Single choice",
+      "1": "Multiple choice",
+      "2": "True/False",
+      "3": "Matching",
+      "4": "Ordering",
+      "10": "Free text",
+      "11": "Proof",
+      "12": "Code",
+      "13": "Translation",
+      "14": "Numeric"
+    },
+    "sort_order": {
+      "recommended": "Recommended",
+      "latest": "Latest",
+      "popular": "Popular",
+      "most_viewed": "Most Viewed"
+    },
+    "academic_field": {
+      "00": "Literature, Linguistics & Culture",
+      "01": "Psychology, Philosophy & Human Sciences",
+      "02": "Law, Politics & Policy",
+      "03": "Economics, Business & Commerce",
+      "04": "Sociology, Social Welfare & Media",
+      "05": "International Relations & Liberal Arts",
+      "06": "Education & Teacher Training",
+      "10": "Computer Science & Informatics",
+      "11": "Mechanical, Aerospace & Robotics",
+      "12": "Electrical, Electronic & Comm. Eng.",
+      "13": "Architecture, Civil & Env. Eng.",
+      "14": "Chemistry & Materials Science",
+      "15": "Math, Physics & Earth Science",
+      "16": "Biology & Life Sciences",
+      "20": "Agriculture, Fisheries & Veterinary",
+      "21": "Pharmacy & Pharmaceutical Sci.",
+      "22": "Medicine & Dentistry",
+      "23": "Nursing, Health & Medical Tech.",
+      "24": "Home Economics, Fashion & Lifestyle",
+      "25": "Sports & Health Sciences",
+      "26": "Arts, Design & Music"
     }
   },
   "filters": {
     "professor": "Professor",
     "professor_placeholder": "Enter professor name",
     "exam_type": "Exam type",
-    "level": "Difficulty",
-    "formats": "Formats",
-    "period": "Updated",
+    "level": "Level",
+    "questionType": "Question type",
+    "update_period": "Update period",
+    "academic_field": "Academic field",
+    "university": "University",
+    "faculty": "Faculty",
     "duration": "Duration",
-    "academic_system": "Academic system",
+    "academic_track": "Academic system",
     "language": "Language",
     "field": "Field",
     "year": "Exam year",
@@ -164,19 +303,6 @@
       "high_rating": "High rating",
       "commented": "Commented",
       "posted": "Posted"
-    }
-  },
-  "problemCreate": {
-    "resultEditor": {
-      "title": "Generated Practice Problems",
-      "summary": "A total of {{count}} practice problems were generated. Please edit them if needed before publishing.",
-      "publish": "Publish",
-      "dialog": {
-        "title": "Title",
-        "content": "Problem",
-        "answer": "Answer",
-        "explanation": "Explanation"
-      }
     }
   },
   "generation": {

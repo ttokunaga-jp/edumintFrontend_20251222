@@ -22,6 +22,7 @@ import type { ExamFormValues } from '../schema';
 interface QuestionItemProps {
   questionIndex: number;
   isEditMode: boolean;
+  structureOnly?: boolean;
   onDelete?: () => void;
   canDelete: boolean;
   onMoveUp?: () => void;
@@ -30,7 +31,7 @@ interface QuestionItemProps {
   canMoveDown: boolean;
 }
 
-const difficultyOptions = Object.entries(DifficultyLabels).map(([value, label]) => ({
+const levelOptions = Object.entries(DifficultyLabels).map(([value, label]) => ({
   value: Number(value),
   label,
 }));
@@ -38,6 +39,7 @@ const difficultyOptions = Object.entries(DifficultyLabels).map(([value, label]) 
 export const QuestionItem: FC<QuestionItemProps> = ({
   questionIndex,
   isEditMode,
+  structureOnly,
   onDelete,
   canDelete,
   onMoveUp,
@@ -45,10 +47,10 @@ export const QuestionItem: FC<QuestionItemProps> = ({
   onMoveDown,
   canMoveDown,
 }) => {
-  const { control, watch } = useFormContext<ExamFormValues>();
+  const { control, watch, formState: { errors } } = useFormContext<ExamFormValues>();
   const basePath = `questions.${questionIndex}`;
 
-  const difficulty = watch(`${basePath}.difficulty`);
+  const level = watch(`${basePath}.level`);
 
   // キーワード管理
   const { fields: keywordFields, append, remove } = useFieldArray({
@@ -84,20 +86,21 @@ export const QuestionItem: FC<QuestionItemProps> = ({
     >
       <Stack spacing={2}>
         <Controller
-          name={`${basePath}.difficulty`}
+          name={`${basePath}.level`}
           control={control}
           render={({ field }) => (
             <ExamQuestionMeta
               number={questionIndex + 1}
               level="major"
-              metaType="difficulty"
+              metaType="level"
               metaValue={Number(field.value)}
-              metaOptions={difficultyOptions}
+              metaOptions={levelOptions}
               keywords={formattedKeywords}
               isEditMode={isEditMode}
-              onMetaChange={(val) => field.onChange(String(val))}
+              onMetaChange={(val) => field.onChange(Number(val))}
               onKeywordAdd={handleKeywordAdd}
               onKeywordRemove={handleKeywordRemove}
+              errorMessage={errors.questions?.[questionIndex]?.keywords?.message}
               onDelete={onDelete}
               canDelete={canDelete}
               onMoveUp={onMoveUp}
@@ -112,22 +115,24 @@ export const QuestionItem: FC<QuestionItemProps> = ({
         <Divider />
 
         {/* 問題文 */}
-        <Box>
-          <ExamContentField
-            name={`${basePath}.questionContent`}
-            label="問題文（大問の説明など）"
-            isEditMode={isEditMode}
-            placeholder="大問の内容や説明を入力してください"
-          />
-        </Box>
-
-        <Divider />
+        {!structureOnly && (
+          <Box>
+            <ExamContentField
+              name={`${basePath}.questionContent`}
+              label="問題文（大問の説明など）"
+              isEditMode={isEditMode}
+              placeholder="大問の内容や説明を入力してください"
+            />
+          </Box>
+        )}
+        {!structureOnly && <Divider />}
 
         {/* 小問リスト */}
         <Box sx={{ mt: 3 }}>
           <SubQuestionList
             questionIndex={questionIndex}
             isEditMode={isEditMode}
+            structureOnly={structureOnly}
           />
         </Box>
       </Stack>

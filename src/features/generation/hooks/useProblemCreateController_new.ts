@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Page } from '@/types';
 import type { GenerationPhase as GenerationStep } from '@/features/generation/types';
 import { useFileUpload } from '@/features/content/hooks/useFileUpload';
-import type { ProblemSettings } from '@/components/page/ProblemCreatePage/ProblemSettingsBlock';
+import type { ProblemSettings } from '@/components/page/CreatePage/ProblemSettingsBlock';
 import { confirmStructure, getGenerationStatus } from '@/features/generation/api';
 import { useJobStore } from '@/features/generation/stores/jobStore';
 
@@ -11,7 +11,7 @@ const defaultProblemSettings: ProblemSettings = {
   questionCount: 5,
   includeAnswers: true,
   includeSolutions: true,
-  difficultyLevel: 2,
+  levelLevel: 2,
   questionTypes: [1, 2],
   extractKeywords: true,
   isPublic: true,

@@ -41,7 +41,7 @@ export const FILE_ENDPOINTS = {
 // 生成エンドポイント
 // ===============================
 export const GENERATION_ENDPOINTS = {
-  startStructure: '/generation/structure',
+  startStructure: '/generation/start',
   getStatus: (jobId: string) => `/generation/status/${jobId}`,
   confirmStructure: (jobId: string) => `/generation/${jobId}/confirm`,
   cancelJob: (jobId: string) => `/generation/${jobId}/cancel`,
@@ -108,8 +108,8 @@ export const ENDPOINTS = {
  */
 export const getApiBaseUrl = (): string => {
   try {
-    if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) {
-      return import.meta.env.VITE_API_BASE_URL;
+    if (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_BASE_URL) {
+      return (import.meta as any).env.VITE_API_BASE_URL;
     }
   } catch {
     // import.meta が利用できない環境

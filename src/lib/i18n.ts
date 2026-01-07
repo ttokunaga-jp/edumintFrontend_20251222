@@ -14,7 +14,7 @@ i18next
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: 'ja',
     interpolation: {
       escapeValue: false, // React already protects from XSS
     },

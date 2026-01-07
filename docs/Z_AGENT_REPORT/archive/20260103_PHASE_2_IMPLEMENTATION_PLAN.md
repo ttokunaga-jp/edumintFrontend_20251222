@@ -11,7 +11,7 @@ src/components/
 ├── page/
 │   ├── HomePage/
 │   ├── MyPage/
-│   ├── ProblemCreatePage/
+│   ├── CreatePage/
 │   └── ProblemViewEditPage/  ← ここが対象
 │       ├── common/
 │       │   ├── KeywordEditor.tsx

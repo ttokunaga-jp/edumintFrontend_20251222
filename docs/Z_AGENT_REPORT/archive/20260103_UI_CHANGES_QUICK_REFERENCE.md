@@ -2,7 +2,7 @@
 
 ## Task-by-Task Summary
 
-### Task 1: ProblemCreatePage ✅
+### Task 1: CreatePage ✅
 **Status**: Multiple file upload, validation, label change, default isPublic=true
 
 **Key Changes**:
@@ -14,7 +14,7 @@
 - Default: `isPublic: false` → `true`
 
 **Files Modified**: 2
-- src/components/page/ProblemCreatePage/StartPhase.tsx
+- src/components/page/CreatePage/StartPhase.tsx
 - src/features/generation/stores/generationStore.ts
 
 ---

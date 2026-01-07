@@ -17,7 +17,7 @@ import type { ExamFormValues } from '../../schema';
 
 interface SelectionEditorProps {
   basePath: string;
-  questionTypeId: string; // '1' (single), '2' (multiple), '3' (true/false)
+  questionTypeId: number; // 1 (single), 2 (multiple), 3 (true/false)
   isEditMode: boolean;
 }
 
@@ -44,7 +44,7 @@ export const SelectionEditor: FC<SelectionEditorProps> = ({
   });
 
   // 正誤判定（ID 3）の場合、固定の Yes/No オプション
-  const isTrueFalse = questionTypeId === '3';
+  const isTrueFalse = questionTypeId === 3;
 
   // 初期化時に ID3 の場合は Yes/No を自動生成
   useEffect(() => {
@@ -152,9 +152,9 @@ export const SelectionEditor: FC<SelectionEditorProps> = ({
         /* プレビューモード */
         <Box sx={{ p: 1.5, bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
           <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
-            {questionTypeId === '2' ? '複数選択可:' : '単一選択:'}
+            {questionTypeId === 2 ? '複数選択可:' : '単一選択:'}
           </Typography>
-          {questionTypeId === '2' ? (
+          {questionTypeId === 2 ? (
             <SQ2_MultipleChoice options={options} showAnswer={false} mode="preview" />
           ) : (
             <SQ1_SingleChoice options={options} showAnswer={false} mode="preview" />

@@ -7,22 +7,24 @@
     "content": "$f(x) = x^2$ の導関数を求めよ。",
     "answer": "2x",
     "explanation": "べき関数の微分公式より、$x^n$ の導関数は $n x^{n-1}$ である。",
-    "keywords": [],
+    "keywords": [ { "id": "sk1", "keyword": "導関数" }, { "id": "sk2", "keyword": "微分" }, { "id": "sk3", "keyword": "べき関数" } ],
     "createdAt": "2024-01-01T00:00:00Z",
     "updatedAt": "2024-01-01T00:00:00Z"
   },
+
   {
     "id": 2,
     "questionId": 2,
     "subQuestionNumber": 1,
-    "questionTypeId": 1,
+    "questionTypeId": 0,
     "content": "行列 $A = [[1, 2], [3, 4]]$ の固有値は？",
     "answer": "5.372, -0.372",
     "explanation": "特性方程式を解くことで固有値を求める。",
-    "keywords": [],
+    "keywords": [ { "id": "sk4", "keyword": "固有値" }, { "id": "sk5", "keyword": "特性方程式" }, { "id": "sk6", "keyword": "線形代数" } ],
     "createdAt": "2024-01-01T00:00:00Z",
     "updatedAt": "2024-01-01T00:00:00Z"
   },
+
   {
     "id": 3,
     "questionId": 3,
@@ -31,7 +33,7 @@
     "content": "行列 $B = [[2, 1], [1, 1]]$ の逆行列を求めよ。",
     "answer": "[[1, -1], [-1, 2]]",
     "explanation": "逆行列の公式を用いて計算する。",
-    "keywords": [],
+    "keywords": [ { "id": "sk7", "keyword": "逆行列" }, { "id": "sk8", "keyword": "行列式" }, { "id": "sk9", "keyword": "行列計算" } ],
     "createdAt": "2024-01-01T00:00:00Z",
     "updatedAt": "2024-01-01T00:00:00Z"
   }

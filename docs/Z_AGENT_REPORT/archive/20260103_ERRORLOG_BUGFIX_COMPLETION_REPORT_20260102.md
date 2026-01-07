@@ -41,14 +41,14 @@
 
 ```diff
   <DifficultySelect
-    value={difficulty}
+    value={level}
 -   onChange={onDifficultyChange}
 +   onChange={(event) => {
 +     const value = event.target.value as number;
 +     onDifficultyChange?.(value);
 +   }}
-    id={id ? `${id}-difficulty` : undefined}
-    name={id ? `${id}-difficulty` : undefined}
+    id={id ? `${id}-level` : undefined}
+    name={id ? `${id}-level` : undefined}
   />
 ```
 
@@ -157,7 +157,7 @@ No label associated with a form field
 
 DifficultySelect.tsx:
 ```tsx
-const actualId = id || `difficulty-select-${generatedId}`;
+const actualId = id || `level-select-${generatedId}`;
 const labelId = `${actualId}-label`;
 
 return (

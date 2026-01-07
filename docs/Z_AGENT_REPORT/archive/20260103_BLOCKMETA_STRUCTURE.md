@@ -11,7 +11,7 @@ BlockMeta コンポーネントは、大門（難易度）と小門（問題形�
 ```tsx
 interface BlockMetaProps {
   level: 'major' | 'minor';                          // 大門 or 小門
-  metaType: 'difficulty' | 'questionType';          // メタデータタイプ
+  metaType: 'level' | 'questionType';          // メタデータタイプ
   metaValue: number;                                 // 難易度ID or 問題形式ID
   metaOptions: Array<{ value: number; label: string }>; // プルダウンオプション（必須）
   metaLabel?: string;                               // メタラベル（preview時に表示）
@@ -34,16 +34,16 @@ interface BlockMetaProps {
 難易度は種類が限定的なため、コンポーネント内で直打ちで定義します。
 
 ```tsx
-import { getDifficultyOptions, getDifficultyLabel } from './utils/difficultyUtils';
+import { getDifficultyOptions, getDifficultyLabel } from './utils/levelUtils';
 
 // 難易度オプション（ローカル定義）
-const difficultyOptions = [
+const levelOptions = [
   { value: 1, label: '基礎' },
   { value: 2, label: '応用' },
   { value: 3, label: '発展' },
 ];
 
-const difficultyLabels = {
+const levelLabels = {
   1: { label: '基礎', color: 'success' },
   2: { label: '応用', color: 'warning' },
   3: { label: '発展', color: 'error' },
@@ -52,10 +52,10 @@ const difficultyLabels = {
 // BlockMeta に難易度オプションを渡す
 <BlockMeta
   level="major"
-  metaType="difficulty"
-  metaValue={difficulty}
-  metaOptions={difficultyOptions}
-  metaLabels={difficultyLabels}
+  metaType="level"
+  metaValue={level}
+  metaOptions={levelOptions}
+  metaLabels={levelLabels}
   // ... その他のProps
 />
 ```
@@ -82,12 +82,12 @@ const questionTypeOptions = getQuestionTypeOptions();
 
 ## ユーティリティ関数
 
-### difficultyUtils.ts
+### levelUtils.ts
 
 ```tsx
 export const getDifficultyOptions(): Array<{ value: number; label: string }>
-export const getDifficultyLabel(difficultyId): { label: string; color: string }
-export const getDifficultyText(difficultyId): string
+export const getDifficultyLabel(levelId): { label: string; color: string }
+export const getDifficultyText(levelId): string
 ```
 
 ### questionTypeUtils.ts
@@ -101,7 +101,7 @@ export async function getQuestionTypeOptionsFromRegistry() // 将来の拡張用
 ## 実装の進化
 
 ### 現在（Phase 1）
-- 難易度：直打ちで difficultyOptions を定義
+- 難易度：直打ちで levelOptions を定義
 - 問題形式：questionTypeLabels から getQuestionTypeOptions() で生成
 
 ### 将来（Phase 2 以降）

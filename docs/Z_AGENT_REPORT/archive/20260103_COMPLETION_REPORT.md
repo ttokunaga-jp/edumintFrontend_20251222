@@ -11,7 +11,7 @@
 
 ### 1️⃣ 主要ページの実装完了（Priority: High）
 
-#### ✅ ProblemCreatePage - 3段階ウィザード
+#### ✅ CreatePage - 3段階ウィザード
 - **機能**: 基本設定 → 問題入力 → 確認・保存
 - **コンポーネント**:
   - MUI Stepper による段階表示
@@ -24,7 +24,7 @@
   - ステップ検証
   - 成功時に 3 秒後ホームへリダイレクト
   - 通知システム統合（成功/エラー）
-- **ファイル**: [src/pages/ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx)
+- **ファイル**: [src/pages/CreatePage.tsx](src/pages/CreatePage.tsx)
 
 #### ✅ ProblemViewEditPage - Read/Edit モード
 - **機能**: 問題詳細表示と編集
@@ -76,7 +76,7 @@
   - 複数通知のスタック表示（MUI Snackbar）
   - Alert コンポーネントで色分け表示
 - **ページ統合**:
-  - ProblemCreatePage - 作成成功/失敗通知
+  - CreatePage - 作成成功/失敗通知
   - ProblemViewEditPage - 更新成功/失敗通知
   - LoginRegisterPage - ログイン成功/失敗、登録成功/失敗
 - **AppProviders 統合**: NotificationProvider が最上位で全ページをラップ
@@ -237,7 +237,7 @@ Status:     ✅ STRICT MODE OK
 - `src/components/common/NotificationCenter.tsx` - 通知表示コンポーネント
 
 ### 更新ファイル
-- `src/pages/ProblemCreatePage.tsx` - 3 段階ウィザード実装
+- `src/pages/CreatePage.tsx` - 3 段階ウィザード実装
 - `src/pages/ProblemViewEditPage.tsx` - Read/Edit モード実装
 - `src/pages/LoginRegisterPage.tsx` - 登録フロー実装
 - `src/app/AppProviders.tsx` - NotificationProvider 統合

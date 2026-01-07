@@ -68,10 +68,6 @@
     "paused": "一時停止",
     "error": "エラー"
   },
-  "common": {
-    "all": "すべて",
-    "question_count": "{{count}}問"
-  },
   "problemCreate": {
     "startPhase": {
       "mode": {
@@ -90,36 +86,64 @@
         "customizeFormats": "問題形式を個別指定"
       },
       "labels": {
-        "difficulty": "難易度",
+        "level": "難易度",
         "count": "問題数"
       },
       "start": "生成開始"
+    },
+    "resultEditor": {
+      "title": "生成された演習問題",
+      "summary": "合計 {{count}} 問の演習問題が生成されました。\n必要に応じて編集してから公開してください。",
+      "publish": "公開する",
+      "dialog": {
+        "title": "タイトル",
+        "content": "問題文",
+        "answer": "解答",
+        "explanation": "解説"
+      }
     }
   },
   "enum": {
-    "difficulty": {
+    "level": {
       "auto": "自動判別",
       "basic": "基礎",
       "standard": "標準",
-      "advanced": "応用",
-      "expert": "難関"
+      "advanced": "応用"
     },
-    "format": {
-      "single_choice": "単一選択",
-      "multiple_choice": "複数選択",
-      "true_false": "正誤判定",
-      "matching": "組み合わせ",
-      "ordering": "順序並べ替え",
-      "free_text": "記述式",
-      "proof": "証明問題",
-      "code": "コード記述",
-      "translation": "翻訳",
-      "numeric": "数値計算"
+    "custom": {
+      "learned": "学習済",
+      "high_rating": "高評価",
+      "commented": "コメント",
+      "posted": "投稿"
+    },
+    "questionType": {
+      "0": "単一選択",
+      "1": "複数選択",
+      "2": "正誤判定",
+      "3": "組み合わせ",
+      "4": "順序並べ替え",
+      "10": "記述式",
+      "11": "証明問題",
+      "12": "コード記述",
+      "13": "翻訳",
+      "14": "数値計算"
+    },
+    "sort_order": {
+      "recommended": "おすすめ",
+      "latest": "新着",
+      "popular": "人気",
+      "most_viewed": "閲覧数"
     },
     "duration": {
       "short": "5分以内",
       "medium": "15分以内",
-      "long": "30分以上"
+      "long": "30分以上",
+      "5": "5分",
+      "10": "10分",
+      "30": "30分",
+      "45": "45分",
+      "60": "60分",
+      "90": "90分"
     },
     "period": {
       "none": "指定なし",
@@ -136,16 +160,127 @@
       "ko": "韓国語",
       "other": "その他"
     },
+    "languages": {
+      "ar": {
+        "label": "العربية",
+        "english": "Arabic"
+      },
+      "bn": {
+        "label": "বাংলা",
+        "english": "Bengali"
+      },
+      "de": {
+        "label": "Deutsch",
+        "english": "German"
+      },
+      "en": {
+        "label": "English",
+        "english": "English"
+      },
+      "es": {
+        "label": "Español",
+        "english": "Spanish"
+      },
+      "fr": {
+        "label": "Français",
+        "english": "French"
+      },
+      "hi": {
+        "label": "हिन्दी",
+        "english": "Hindi"
+      },
+      "id": {
+        "label": "Bahasa Indonesia",
+        "english": "Indonesian"
+      },
+      "it": {
+        "label": "Italiano",
+        "english": "Italian"
+      },
+      "ja": {
+        "label": "日本語",
+        "english": "Japanese"
+      },
+      "ko": {
+        "label": "한국어",
+        "english": "Korean"
+      },
+      "mr": {
+        "label": "मराठी",
+        "english": "Marathi"
+      },
+      "pt-BR": {
+        "label": "Português (Brasil)",
+        "english": "Portuguese (Brazil)"
+      },
+      "pt-PT": {
+        "label": "Português (Portugal)",
+        "english": "Portuguese (Portugal)"
+      },
+      "ru": {
+        "label": "Русский",
+        "english": "Russian"
+      },
+      "sw": {
+        "label": "Kiswahili",
+        "english": "Swahili"
+      },
+      "ta": {
+        "label": "தமிழ்",
+        "english": "Tamil"
+      },
+      "tr": {
+        "label": "Türkçe",
+        "english": "Turkish"
+      },
+      "ur": {
+        "label": "اردو",
+        "english": "Urdu"
+      },
+      "vi": {
+        "label": "Tiếng Việt",
+        "english": "Vietnamese"
+      },
+      "zh-CN": {
+        "label": "中文 (简体)",
+        "english": "Chinese (Simplified)"
+      },
+      "zh-TW": {
+        "label": "中文 (繁體)",
+        "english": "Chinese (Traditional)"
+      }
+    },
     "exam": {
       "regular": "定期試験",
       "class": "授業内試験",
       "quiz": "小テスト"
     },
-    "academic": {
-      "system": {
-        "liberal_arts": "文系",
-        "science": "理系"
-      }
+    "academic_track": {
+      "science": "理系",
+      "humanities": "文系"
+    },
+    "academic_field": {
+      "00": "文学・語学・文化系",
+      "01": "心理・哲学・人間科学系",
+      "02": "法学・政治・政策系",
+      "03": "経済・経営・商学系",
+      "04": "社会・社会福祉・メディア系",
+      "05": "国際・教養・総合科学系",
+      "06": "教育・教員養成系",
+      "10": "情報・コンピュータ系",
+      "11": "機械・航空・ロボティクス系",
+      "12": "電気・電子・通信系",
+      "13": "土木・建築・環境工学系",
+      "14": "化学・物質・材料系",
+      "15": "数学・物理・地球科学系",
+      "16": "生物・生命科学・バイオ系",
+      "20": "農学・水産・獣医・畜産系",
+      "21": "薬学系",
+      "22": "医学・歯学系",
+      "23": "看護・医療技術・保健系",
+      "24": "生活科学・家政・服飾系",
+      "25": "体育・スポーツ・健康科学系",
+      "26": "芸術・デザイン・音楽系"
     }
   },
   "filters": {
@@ -153,10 +288,14 @@
     "professor_placeholder": "教授名を入力",
     "exam_type": "試験種別",
     "level": "難易度",
-    "formats": "問題形式",
+    "questionType": "問題形式",
+    "update_period": "更新期間",
     "period": "更新日時",
+    "academic_field": "学問分野",
+    "university": "大学",
+    "faculty": "学部",
     "duration": "所要時間",
-    "academic_system": "学問系統",
+    "academic_track": "学問系統",
     "language": "言語",
     "field": "分野",
     "year": "試験年度",
@@ -166,19 +305,6 @@
       "high_rating": "高評価",
       "commented": "コメント",
       "posted": "投稿"
-    }
-  },
-  "problemCreate": {
-    "resultEditor": {
-      "title": "生成された演習問題",
-      "summary": "合計 {{count}} 問の演習問題が生成されました。\n必要に応じて編集してから公開してください。",
-      "publish": "公開する",
-      "dialog": {
-        "title": "タイトル",
-        "content": "問題文",
-        "answer": "解答",
-        "explanation": "解説"
-      }
     }
   },
   "generation": {

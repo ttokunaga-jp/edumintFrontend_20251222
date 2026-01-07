@@ -19,30 +19,36 @@ import {
   YearInputField,
 } from '../../common/SearchFilterFields';
 import {
-  LEVEL_OPTIONS,
-  PROBLEM_FORMAT_OPTIONS,
-  DURATION_OPTIONS,
-  PERIOD_OPTIONS,
-  LANGUAGE_OPTIONS,
-  EXAM_TYPE_OPTIONS,
-  CUSTOM_SEARCH_OPTIONS as CUSTOM_SEARCH_CONST,
+  CUSTOM_SEARCH_OPTIONS,
 } from '@/features/ui/selectionOptions';
+import {
+  LEVEL_ENUM_OPTIONS,
+  QUESTION_TYPE_OPTIONS,
+  DURATION_ENUM_OPTIONS,
+  PERIOD_ENUM_OPTIONS,
+  LANGUAGE_ENUM_OPTIONS,
+  EXAM_TYPE_ENUM_OPTIONS,
+  ACADEMIC_FIELD_ENUM_OPTIONS,
+  ACADEMIC_TRACK_ENUM_OPTIONS,
+  getEnumLabelKey,
+} from '@/lib/enums/enumHelpers';
+import DEFAULT_ENUM_MAPPINGS from '@/lib/enums/enumMappings';
 
 export interface SearchFilters {
   keyword?: string;
   universities?: string[];
   faculties?: string[];
-  academicField?: string;
+  academic_field?: number; // Numeric ID from enums
   professor?: string;
   year?: string;
   fieldType?: string;
   level?: number[];
-  formats?: string[];
-  language?: string;
-  period?: string;
-  duration?: string;
-  examType?: string;
-  academicSystem?: string;
+  questionType?: number[];
+  language?: number;
+  period?: number;
+  duration?: number;
+  examType?: number;
+  academicSystem?: number; // Numeric ID (isCivil etc)
   sortBy?: string;
   isLearned?: boolean;
   isHighRating?: boolean;
@@ -57,7 +63,7 @@ export interface AdvancedSearchPanelProps {
   userProfile?: {
     university?: string;
     faculty?: string;
-    academicField?: string;
+    academic_field?: string;
     academicSystem?: 'liberal-arts' | 'science';
     language?: 'ja' | 'en' | 'zh' | 'ko' | 'other';
   };
@@ -86,16 +92,8 @@ const FACULTIES = [
   '農学部',
 ];
 
-const ACADEMIC_FIELDS = [
-  { value: 'liberal-arts', label: '文系' },
-  { value: 'science', label: '理系' },
-  { value: 'all', label: 'すべて' },
-];
-
-const ACADEMIC_SYSTEMS = [
-  { value: 'liberal-arts', labelKey: 'enum.academic.system.liberal_arts' },
-  { value: 'science', labelKey: 'enum.academic.system.science' },
-];
+const ACADEMIC_SYSTEMS = ACADEMIC_TRACK_ENUM_OPTIONS;
+const ACADEMIC_FIELDS = ACADEMIC_FIELD_ENUM_OPTIONS;
 
 // Custom search options moved to i18n and selectionOptions.ts - use CUSTOM_SEARCH_CONST
 
@@ -122,22 +120,19 @@ const FIELDS = [
   'アルゴリズム',
 ];
 
-// LEVEL_OPTIONS moved to selectionOptions.ts and localized via i18n
+// LEVEL_ENUM_OPTIONS imported from enumHelpers.ts (authoritative source from enumMappings.ts)
 
-// EXAM_TYPE_OPTIONS moved to selectionOptions.ts and localized via i18n
+// EXAM_TYPE_ENUM_OPTIONS imported from enumHelpers.ts (authoritative source from enumMappings.ts)
 
 
 
-// DURATION_OPTIONS moved to selectionOptions.ts and localized via i18n
+// DURATION_ENUM_OPTIONS imported from enumHelpers.ts (authoritative source from enumMappings.ts)
 
-// 新規問題形式（ID 1-5, 10-14）
-// パターンA：選択・構造化データ系 (ID 1-5)
-// パターンB：自由記述・テキスト系 (ID 10-14)
-// PROBLEM_FORMAT_OPTIONS moved to selectionOptions.ts and localized via i18n
+// QUESTION_TYPE_OPTIONS imported from enumHelpers.ts (authoritative source from enumMappings.ts)
 
-// PERIOD_OPTIONS moved to selectionOptions.ts and localized via i18n
+// PERIOD_ENUM_OPTIONS imported from enumHelpers.ts (authoritative source from enumMappings.ts)
 
-// LANGUAGE_OPTIONS moved to selectionOptions.ts and localized via i18n
+// LANGUAGE_ENUM_OPTIONS imported from enumHelpers.ts (authoritative source from enumMappings.ts)
 
 const CURRENT_YEARS = ['2025', '2024', '2023', '2022', '2021'];
 
@@ -164,24 +159,26 @@ export function AdvancedSearchPanel({
     // プロフィール値を優先的に使用（ユーザーが明示的に変更しない限り）
     return {
       ...filters,
-      universities: filters.universities && filters.universities.length > 0 
-        ? filters.universities 
+      universities: filters.universities && filters.universities.length > 0
+        ? filters.universities
         : (userProfile?.university ? [userProfile.university] : []),
-      faculties: filters.faculties && filters.faculties.length > 0 
-        ? filters.faculties 
+      faculties: filters.faculties && filters.faculties.length > 0
+        ? filters.faculties
         : (userProfile?.faculty ? [userProfile.faculty] : []),
-      academicField: filters.academicField || userProfile?.academicField || '',
+      academic_field: typeof filters.academic_field === 'string' ? parseInt(filters.academic_field) : filters.academic_field,
       year: filters.year || getDefaultYear(),
       level: (filters.level && Array.isArray(filters.level) ? filters.level : (filters.level ? [filters.level] : [])) as number[],
 
-      // 問題形式（UIから選択可能にする）
-      formats: Array.isArray(filters.formats) ? filters.formats : (filters.formats ? String(filters.formats).split(',') : []),
+      // 問題形式（UIから選択可能にする）数値型を保持
+      questionType: Array.isArray(filters.questionType)
+        ? filters.questionType.map(q => typeof q === 'string' ? parseInt(q) : q)
+        : (filters.questionType ? [filters.questionType] : []) as number[],
 
-      period: filters.period || '',
-      duration: filters.duration || '',
-      examType: filters.examType || '',
-      academicSystem: filters.academicSystem || userProfile?.academicSystem || '',
-      language: filters.language || userProfile?.language || '',
+      period: typeof filters.period === 'string' ? parseInt(filters.period) : filters.period,
+      duration: typeof filters.duration === 'string' ? parseInt(filters.duration) : filters.duration,
+      examType: typeof filters.examType === 'string' ? parseInt(filters.examType) : filters.examType,
+      academicSystem: typeof filters.academicSystem === 'string' ? parseInt(filters.academicSystem) : filters.academicSystem,
+      language: typeof filters.language === 'string' ? parseInt(filters.language) : filters.language,
       professor: filters.professor || '',
       fieldType: filters.fieldType || '',
       sortBy: filters.sortBy,
@@ -220,9 +217,13 @@ export function AdvancedSearchPanel({
   const getActiveFilters = (): {
     label: string;
     key: keyof SearchFilters;
-    value: string | string[] | number[] | boolean;
+    value: string | string[] | number[] | boolean | number;
   }[] => {
-    const active = [];
+    const active: {
+      label: string;
+      key: keyof SearchFilters;
+      value: string | string[] | number[] | boolean | number;
+    }[] = [];
 
     if (filters.universities && filters.universities.length > 0) {
       active.push({
@@ -240,12 +241,13 @@ export function AdvancedSearchPanel({
       });
     }
 
-    if (filters.academicField) {
-      const fieldLabel = ACADEMIC_FIELDS.find((f) => f.value === filters.academicField)?.label || filters.academicField;
+    if (filters.academic_field !== undefined) {
+      const fieldEntry = DEFAULT_ENUM_MAPPINGS.academic_field.get(filters.academic_field);
+      const fieldLabel = fieldEntry ? t(fieldEntry.i18nKey) : String(filters.academic_field);
       active.push({
         label: `${t('filters.academic_field') || '学問系統'}: ${fieldLabel}`,
-        key: 'academicField' as keyof SearchFilters,
-        value: filters.academicField,
+        key: 'academic_field' as keyof SearchFilters,
+        value: filters.academic_field,
       });
     }
 
@@ -274,7 +276,7 @@ export function AdvancedSearchPanel({
     }
 
     if (filters.level && Array.isArray(filters.level) && filters.level.length > 0) {
-      const levelLabels = filters.level.map(l => t(LEVEL_OPTIONS.find((lv) => lv.value === l)?.labelKey || '') || `ID${l}`).join(', ');
+      const levelLabels = filters.level.map(l => t(LEVEL_ENUM_OPTIONS.find((lv) => lv.value === l)?.labelKey || '') || `ID${l}`).join(', ');
       active.push({
         label: `${t('filters.level')}: ${levelLabels}`,
         key: 'level' as keyof SearchFilters,
@@ -284,42 +286,51 @@ export function AdvancedSearchPanel({
 
     if (filters.examType) {
       active.push({
-        label: `${t('filters.exam_type')}: ${t(EXAM_TYPE_OPTIONS.find(o => o.value === filters.examType)?.labelKey || '')}`,
+        label: `${t('filters.exam_type')}: ${t(EXAM_TYPE_ENUM_OPTIONS.find(o => o.value === filters.examType)?.labelKey || '')}`,
         key: 'examType' as keyof SearchFilters,
         value: filters.examType,
       });
     }
 
-    if (filters.academicSystem) {
-      const systemLabel = t(ACADEMIC_SYSTEMS.find((s) => s.value === filters.academicSystem)?.labelKey || '');
+    if (filters.academicSystem !== undefined) {
+      const systemLabel = t(getEnumLabelKey('academic_track', filters.academicSystem) || '');
       active.push({
-        label: `${t('filters.academic_system')}: ${systemLabel}`,
+        label: `${t('filters.academic_track')}: ${systemLabel}`,
         key: 'academicSystem' as keyof SearchFilters,
         value: filters.academicSystem,
       });
     }
 
-    if (filters.formats && filters.formats.length > 0) {
-      const labels = filters.formats.map(f => t(PROBLEM_FORMAT_OPTIONS.find(p => p.value === f)?.labelKey || '')).join(', ');
+    if (filters.questionType && filters.questionType.length > 0) {
+      const labels = filters.questionType
+        .map(f => {
+          const opt = QUESTION_TYPE_OPTIONS.find(p =>
+            typeof p.value === 'number' && typeof f === 'number'
+              ? p.value === f
+              : String(p.value) === String(f)
+          );
+          return t(opt?.labelKey || '');
+        })
+        .join(', ');
       active.push({
-        label: `${t('filters.formats')}: ${labels}`,
-        key: 'formats' as keyof SearchFilters,
-        value: filters.formats,
+        label: `${t('filters.questionType')}: ${labels}`,
+        key: 'questionType' as keyof SearchFilters,
+        value: filters.questionType,
       });
     }
 
 
     if (filters.period) {
-      const periodLabel = t(PERIOD_OPTIONS.find((p) => p.value === filters.period)?.labelKey || '');
+      const periodLabel = t(PERIOD_ENUM_OPTIONS.find((p) => p.value === filters.period)?.labelKey || '');
       active.push({
-        label: `${t('filters.period')}: ${periodLabel}`,
+        label: `${t('filters.update_period')}: ${periodLabel}`,
         key: 'period' as keyof SearchFilters,
         value: filters.period,
       });
     }
 
     if (filters.duration) {
-      const durationLabel = t(DURATION_OPTIONS.find((d) => d.value === filters.duration)?.labelKey || '');
+      const durationLabel = t(DURATION_ENUM_OPTIONS.find((d) => d.value === filters.duration)?.labelKey || '');
       active.push({
         label: `${t('filters.duration')}: ${durationLabel}`,
         key: 'duration' as keyof SearchFilters,
@@ -359,8 +370,8 @@ export function AdvancedSearchPanel({
       });
     }
 
-    if (filters.language) {
-      const langLabel = t(LANGUAGE_OPTIONS.find((l) => l.value === filters.language)?.labelKey || '');
+    if (filters.language !== undefined) {
+      const langLabel = t(getEnumLabelKey('language', filters.language) || '');
       active.push({
         label: `${t('filters.language') || '言語'}: ${langLabel}`,
         key: 'language' as keyof SearchFilters,
@@ -440,13 +451,11 @@ export function AdvancedSearchPanel({
               {/* Row 2: 学問分野 | 教授 */}
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <AutocompleteFilterField
-                    label="学問分野"
-                    options={FIELDS}
-                    value={localFilters.academicField || ''}
-                    multiple={false}
-                    onChange={(value) => handleFilterChange('academicField', value)}
-                    placeholder="選択または入力"
+                  <SelectFilterField
+                    label={t('filters.academic_field')}
+                    options={ACADEMIC_FIELDS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
+                    value={localFilters.academic_field ?? ''}
+                    onChange={(value) => handleFilterChange('academic_field', Number(value))}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -474,9 +483,9 @@ export function AdvancedSearchPanel({
                 <Grid item xs={12} sm={6}>
                   <SelectFilterField
                     label={t('filters.exam_type')}
-                    options={EXAM_TYPE_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
-                    value={localFilters.examType || ''}
-                    onChange={(value) => handleFilterChange('examType', value)}
+                    options={EXAM_TYPE_ENUM_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
+                    value={localFilters.examType ?? ''}
+                    onChange={(value) => handleFilterChange('examType', Number(value))}
                   />
                 </Grid>
               </Grid>
@@ -487,14 +496,14 @@ export function AdvancedSearchPanel({
                   {t('filters.level')}
                 </Typography>
                 <CheckboxGroupField
-                  options={LEVEL_OPTIONS.map(l => t(l.labelKey))}
+                  options={LEVEL_ENUM_OPTIONS.map(l => t(l.labelKey))}
                   value={
                     localFilters.level && Array.isArray(localFilters.level)
-                      ? localFilters.level.map(lv => t(LEVEL_OPTIONS.find(l => l.value === lv)?.labelKey || '') || `ID${lv}`).filter(Boolean)
+                      ? localFilters.level.map((lv: number) => t(LEVEL_ENUM_OPTIONS.find(l => l.value === lv)?.labelKey || '') || `ID${lv}`).filter(Boolean)
                       : []
                   }
                   onChange={(selectedLabels) => {
-                    const values = selectedLabels.map(label => LEVEL_OPTIONS.find(l => t(l.labelKey) === label)?.value).filter(v => v !== undefined) as number[];
+                    const values = selectedLabels.map(label => LEVEL_ENUM_OPTIONS.find(l => t(l.labelKey) === label)?.value).filter((v): v is number => v !== undefined);
                     handleFilterChange('level', values);
                   }}
                   columns={{ xs: 12, sm: 6, md: 4 }}
@@ -504,15 +513,25 @@ export function AdvancedSearchPanel({
               {/* Row 5: 問題形式 (CheckboxGroup) */}
               <Box>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  {t('filters.formats')}
+                  {t('filters.questionType')}
                 </Typography>
                 <CheckboxGroupField
-                  options={PROBLEM_FORMAT_OPTIONS.map(f => t(f.labelKey))}
-                  value={localFilters.formats || []}
-                  onChange={(selectedFormats) => {
-                    // selectedFormats are labels, map back to values
-                    const values = selectedFormats.map(lbl => PROBLEM_FORMAT_OPTIONS.find(f => t(f.labelKey) === lbl)?.value).filter(Boolean) as string[];
-                    handleFilterChange('formats', values);
+                  options={QUESTION_TYPE_OPTIONS.map(f => t(f.labelKey))}
+                  value={
+                    localFilters.questionType && Array.isArray(localFilters.questionType)
+                      ? localFilters.questionType.map((qType: number) => {
+                        // Convert value (number or string) to label
+                        const option = QUESTION_TYPE_OPTIONS.find(f => f.value === qType);
+                        return option ? t(option.labelKey) : '';
+                      }).filter(Boolean)
+                      : []
+                  }
+                  onChange={(selectedLabels) => {
+                    // selectedLabels are labels, map back to values (which are numbers)
+                    const values = selectedLabels
+                      .map(lbl => QUESTION_TYPE_OPTIONS.find(f => t(f.labelKey) === lbl)?.value)
+                      .filter((v): v is number => v !== undefined);
+                    handleFilterChange('questionType', values);
                   }}
                   columns={{ xs: 12, sm: 6, md: 4 }}
                 />
@@ -523,8 +542,8 @@ export function AdvancedSearchPanel({
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <SelectFilterField
-                    label={t('filters.period')}
-                    options={PERIOD_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
+                    label={t('filters.update_period')}
+                    options={PERIOD_ENUM_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
                     value={localFilters.period || ''}
                     onChange={(value) => handleFilterChange('period', value)}
                   />
@@ -532,7 +551,7 @@ export function AdvancedSearchPanel({
                 <Grid item xs={12} sm={6}>
                   <SelectFilterField
                     label={t('filters.duration')}
-                    options={DURATION_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
+                    options={DURATION_ENUM_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
                     value={localFilters.duration || ''}
                     onChange={(value) => handleFilterChange('duration', value)}
                   />
@@ -543,18 +562,18 @@ export function AdvancedSearchPanel({
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <SelectFilterField
-                    label={t('filters.academic_system')}
-                    options={ACADEMIC_SYSTEMS.map(a => ({ value: a.value, label: t((a as any).labelKey) }))}
-                    value={localFilters.academicSystem || ''}
-                    onChange={(value) => handleFilterChange('academicSystem', value)}
+                    label={t('filters.academic_track')}
+                    options={ACADEMIC_SYSTEMS.map(a => ({ value: a.value, label: t(a.labelKey) }))}
+                    value={localFilters.academicSystem ?? ''}
+                    onChange={(value) => handleFilterChange('academicSystem', Number(value))}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <SelectFilterField
                     label="言語"
-                    options={LANGUAGE_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
-                    value={localFilters.language || ''}
-                    onChange={(value) => handleFilterChange('language', value)}
+                    options={LANGUAGE_ENUM_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
+                    value={localFilters.language ?? ''}
+                    onChange={(value) => handleFilterChange('language', Number(value))}
                   />
                 </Grid>
               </Grid>
@@ -565,14 +584,14 @@ export function AdvancedSearchPanel({
                   {t('filters.custom.title')}
                 </Typography>
                 <CheckboxGroupField
-                  options={CUSTOM_SEARCH_CONST.map(o => t(o.labelKey))}
+                  options={CUSTOM_SEARCH_OPTIONS.map(o => t(o.labelKey))}
                   value={[
                     ...(localFilters.isLearned ? [t('filters.custom.learned')] : []),
                     ...(localFilters.isHighRating ? [t('filters.custom.high_rating')] : []),
                     ...(localFilters.isCommented ? [t('filters.custom.commented')] : []),
                     ...(localFilters.isPosted ? [t('filters.custom.posted')] : []),
                   ]}
-                  onChange={(values) => {
+                  onChange={(values: string[]) => {
                     handleFilterChange('isLearned', values.includes(t('filters.custom.learned')));
                     handleFilterChange('isHighRating', values.includes(t('filters.custom.high_rating')));
                     handleFilterChange('isCommented', values.includes(t('filters.custom.commented')));

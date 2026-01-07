@@ -72,7 +72,7 @@ exams (親)
 | question_number | INT | NOT NULL | 問題番号（1, 2, 3...） |
 | content | TEXT | | 大問の説明・指示文（Markdown形式） |
 | format | INT | DEFAULT 0 | テキスト形式 (0=Markdown, 1=HTML) |
-| difficulty | INT | DEFAULT 2 | 難易度 (1=基礎, 2=標準, 3=応用) |
+| level | INT | DEFAULT 2 | 難易度 (1=基礎, 2=標準, 3=応用) |
 | created_at | TIMESTAMP | DEFAULT now() | 作成日時 |
 | updated_at | TIMESTAMP | DEFAULT now(), ON UPDATE | 更新日時 |
 | **制約** | | | |
@@ -90,7 +90,7 @@ exams (親)
 | question_type_id | INT | NOT NULL | 問題形式 (1..5, 10..14) |
 | content | TEXT | NOT NULL | 問題文（Markdown形式） |
 | format | INT | DEFAULT 0 | テキスト形式 (0=Markdown, 1=HTML) |
-| difficulty | INT | DEFAULT 2 | 難易度 (1..3) |
+| level | INT | DEFAULT 2 | 難易度 (1..3) |
 | created_at | TIMESTAMP | DEFAULT now() | 作成日時 |
 | updated_at | TIMESTAMP | DEFAULT now(), ON UPDATE | 更新日時 |
 | **制約** | | | |
@@ -185,7 +185,7 @@ exams (親)
 | **ユニーク制約** | UNIQUE (exam_id, question_number) | 同一試験内で大問番号の重複を防止 |
 | **楽観的ロック** | version カラム | 競合時に 409 Conflict を返す |
 | **問題形式の値域** | CHECK (question_type_id IN (1,2,3,4,5,10,11,12,13,14)) | 定義済みの形式のみ許可 |
-| **難易度の値域** | CHECK (difficulty IN (1,2,3)) | 1=基礎, 2=標準, 3=応用 |
+| **難易度の値域** | CHECK (level IN (1,2,3)) | 1=基礎, 2=標準, 3=応用 |
 | **ステータスの値域** | ENUM ('active', 'draft', 'archived') | 定義済みのステータスのみ許可 |
 
 ---
@@ -232,7 +232,7 @@ GET /api/exams/exam-1?expand=questions,keywords
         "questionNumber": 1,
         "content": "次の関数の導関数を求めよ。",
         "format": 0,
-        "difficulty": 2,
+        "level": 2,
         "keywords": [
           { "id": "kw-1", "keyword": "微分" }
         ],
@@ -243,7 +243,7 @@ GET /api/exams/exam-1?expand=questions,keywords
             "questionTypeId": "10",
             "content": "f(x) = x^2 \\sin(x) の導関数を求めよ。",
             "format": 0,
-            "difficulty": 2,
+            "level": 2,
             "keywords": [
               { "id": "kw-2", "keyword": "導関数" }
             ],
@@ -286,7 +286,7 @@ GET /api/exams/exam-1?expand=questions,keywords
       "id": "q-1",
       "questionNumber": 1,
       "content": "...",
-      "difficulty": 2,
+      "level": 2,
       "subQuestions": [
         {
           "id": "sq-1",
@@ -319,7 +319,7 @@ GET /api/exams/exam-1?expand=questions,keywords
 ```json
 {
   "content": "修正された問題文",
-  "difficulty": 2,
+  "level": 2,
   "keywords": ["微分", "導関数"]
 }
 ```
@@ -334,7 +334,7 @@ GET /api/exams/exam-1?expand=questions,keywords
     "subQuestionNumber": 1,
     "questionTypeId": "10",
     "content": "修正された問題文",
-    "difficulty": 2,
+    "level": 2,
     "keywords": [
       { "id": "kw-2", "keyword": "微分" },
       { "id": "kw-3", "keyword": "導関数" }
@@ -513,7 +513,7 @@ const SubQuestionSchema = z.object({
 | examName | 1-500文字 | "微分積分学 期末試験" |
 | questionContent | Markdown, 最大10000文字 | "次の関数の..." |
 | questionTypeId | 1\|2\|3\|4\|5\|10-14 | 1 |
-| difficulty | 1\|2\|3 | 2 |
+| level | 1\|2\|3 | 2 |
 | options (form 1) | length >= 2 | [{text, isCorrect}] |
 | options (form 2) | length >= 2, >=1 正解 | [{text, isCorrect}] |
 | options (form 3) | length == 2 (true/false) | [{text: "真", isCorrect}] |
@@ -611,7 +611,7 @@ CREATE TABLE questions (
   exam_id UUID NOT NULL,
   question_number INT NOT NULL,
   content TEXT,
-  difficulty INT DEFAULT 2,
+  level INT DEFAULT 2,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE KEY unique_exam_question (exam_id, question_number),
@@ -626,7 +626,7 @@ CREATE TABLE sub_questions (
   sub_question_number INT NOT NULL,
   question_type_id INT NOT NULL,
   content TEXT NOT NULL,
-  difficulty INT DEFAULT 2,
+  level INT DEFAULT 2,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE KEY unique_question_subquestion (question_id, sub_question_number),

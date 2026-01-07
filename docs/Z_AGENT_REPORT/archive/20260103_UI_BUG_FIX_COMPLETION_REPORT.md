@@ -19,7 +19,7 @@ All four major UI task categories have been completed. The application now meets
 
 ---
 
-## Task 1: ProblemCreatePage Fixes ✅ COMPLETED
+## Task 1: CreatePage Fixes ✅ COMPLETED
 
 ### Overview
 完全な生成フロー実装で、複数ファイルアップロード、クライアント側バリデーション、統合されたテキスト入力を実現。
@@ -66,7 +66,7 @@ removeFile: (fileName: string) => void
 - Added capacity meter for file size visualization
 
 ### Files Modified
-- `src/components/page/ProblemCreatePage/StartPhase.tsx` (complete rewrite)
+- `src/components/page/CreatePage/StartPhase.tsx` (complete rewrite)
 - `src/features/generation/stores/generationStore.ts` (state management update)
 
 ### Validation
@@ -242,7 +242,7 @@ The AdvancedSearchPanel component is **already properly implemented** with:
 #### Verified Features
 ✅ Dynamically populated selectors  
 ✅ Multi-select support for universities and formats  
-✅ Single-select for difficulty  
+✅ Single-select for level  
 ✅ Filter state management via props  
 ✅ Reset functionality  
 
@@ -284,7 +284,7 @@ vite v7.3.0 building client environment for production...
 
 Bundle Analysis:
 ├─ index.js                   636.96 kB (gzip: 204.37 kB)
-├─ ProblemCreatePage-D-pHaw-3 105.17 kB (gzip: 29.91 kB)
+├─ CreatePage-D-pHaw-3 105.17 kB (gzip: 29.91 kB)
 ├─ MyPage-Ccl0774s            23.81 kB (gzip: 7.99 kB)
 ├─ LoginRegisterPage-Dqm4VRfr  3.76 kB (gzip: 1.52 kB)
 └─ [other components]         [various sizes]
@@ -343,7 +343,7 @@ Status: ✅ STRICT MODE COMPLIANT (0 ERRORS)
 ## Files Modified Summary
 
 ### Core Pages (4 files)
-1. **[src/pages/ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx)**
+1. **[src/pages/CreatePage.tsx](src/pages/CreatePage.tsx)**
    - Layout remains stable
    - No changes to overall structure
 
@@ -364,7 +364,7 @@ Status: ✅ STRICT MODE COMPLIANT (0 ERRORS)
    - Already meets requirements
 
 ### Components (2 files)
-1. **[src/components/page/ProblemCreatePage/StartPhase.tsx](src/components/page/ProblemCreatePage/StartPhase.tsx)** ⭐
+1. **[src/components/page/CreatePage/StartPhase.tsx](src/components/page/CreatePage/StartPhase.tsx)** ⭐
    - Complete rewrite
    - Added: react-dropzone integration
    - Added: File validation with error display

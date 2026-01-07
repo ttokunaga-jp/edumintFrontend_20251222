@@ -14,7 +14,7 @@ Successfully enforced strict centralized enumeration management across the mock 
 - Filter `baseExams` to only include exams with recognized exam type names
 - Transform each exam to include numeric fields using fixed variable mappings:
   - `examType`: Numeric ID (0/1/2) - mapped from exam name
-  - `difficulty`: Numeric ID (0/1/2) - mapped from `level` field
+  - `level`: Numeric ID (0/1/2) - mapped from `level` field
   - `format`: Numeric ID (0) - default to single_choice
   - `academicFieldId`: Numeric ID (0/1) - mapped from `fieldType`
   - `languageId`: Numeric ID (0) - default to Japanese
@@ -45,9 +45,9 @@ Successfully enforced strict centralized enumeration management across the mock 
 - Updated `mapExamToProblem` function to:
   - Return `null` for exams with invalid `examType` (not in allowed list)
   - Use `EXAM_TYPE_LABELS[examType]` for the display label (replacing hardcoded mapping with 4 types including invalid "最終試験" and "演習")
-  - Use `DIFFICULTY_LEVELS` for difficulty mapping
+  - Use `DIFFICULTY_LEVELS` for level mapping
   - Use `ACADEMIC_FIELDS` for academic field mapping
-  - Forward numeric IDs to frontend: `examType`, `difficulty`, `academicFieldId`
+  - Forward numeric IDs to frontend: `examType`, `level`, `academicFieldId`
 - Updated `getAllProblems` to filter out null values (invalid exam types)
 
 **Result**: Problem API returns only valid exam types with centrally-managed labels.

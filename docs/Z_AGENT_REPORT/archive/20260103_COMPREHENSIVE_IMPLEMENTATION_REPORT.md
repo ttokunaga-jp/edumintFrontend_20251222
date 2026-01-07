@@ -143,7 +143,7 @@ src/features/generation/hooks/useProblemCreateController.ts
 - ✅ Deleted: `src/pages/StructureConfirmPage.tsx`
 - ✅ Deleted: `src/pages/ProfileSetupPage.tsx`
 - ✅ Modified: `src/pages/index.ts` - exports削除
-- ✅ Kept: HomePage, ProblemViewEditPage, LoginRegisterPage, ProblemCreatePage, MyPage
+- ✅ Kept: HomePage, ProblemViewEditPage, LoginRegisterPage, CreatePage, MyPage
 
 **メリット**:
 - Pages は routing entry points のみ
@@ -420,7 +420,7 @@ deepClone()       // Object deep clone
 ```
 ┌─────────────────────────────────────────┐
 │  Pages (ルーティング定義のみ)            │
-│  - HomePage.tsx, ProblemCreatePage, etc  │
+│  - HomePage.tsx, CreatePage, etc  │
 └────────────┬────────────────────────────┘
              ↓
 ┌─────────────────────────────────────────┐

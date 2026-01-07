@@ -102,7 +102,7 @@ return (
 - ProblemMetaBlock, ProblemEditor, QuestionBlock など明確にコンポーネント分割
 - 構成がPage層の役割（配置決定）に合致
 
-#### ProblemCreatePage.tsx
+#### CreatePage.tsx
 **評価:** ✅ **良好**
 - StartPhase, StructureConfirmation, ResultEditor をコンポーネント化
 - フェーズ切り替えのみ実装
@@ -123,7 +123,7 @@ return (
 {problem.title}                           // タイトル
 {problem.examName}                        // 試験名
 {problem.subjectName}                     // 科目
-{problem.difficulty}                      // 難易度
+{problem.level}                      // 難易度
 {problem.content?.substring(0, 100)}      // プレビュー
 {problem.views}                           // 閲覧数
 {problem.likes}                           // いいね数
@@ -266,7 +266,7 @@ src/components/page/ProblemViewEditPage/
       university?: string;
       examName?: string;
       subjectName?: string;
-      difficulty?: string;
+      level?: string;
       content?: string;
       views?: number;
       likes?: number;

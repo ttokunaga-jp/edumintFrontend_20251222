@@ -84,7 +84,7 @@ const newQuestion = {
   question_number: (safeExam.questions?.length || 0) + 1,
   question_content: '',
   question_format: 0,
-  difficulty: 1,
+  level: 1,
   keywords: [],
   sub_questions: [],
 };
@@ -99,7 +99,7 @@ const newQuestion = {
   question_number: (safeExam.questions?.length || 0) + 1,
   question_content: '',
   question_format: 0,
-  difficulty: 1,
+  level: 1,
   keywords: [],
   sub_questions: [],
   // Legacy aliases (互換性のため)

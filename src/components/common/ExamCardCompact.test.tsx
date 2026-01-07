@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi, describe, it, expect } from 'vitest';
 import ExamCardCompact from './ExamCardCompact';
+import i18next from '@/lib/i18n';
 
 describe('ExamCardCompact', () => {
   it('renders all required elements: chips, title, field, stats and buttons', async () => {
@@ -8,11 +10,11 @@ describe('ExamCardCompact', () => {
       id: 'ex1',
       title: '量子力学基礎 中間試験',
       examType: 1,
-      examTypeLabel: '授業内試験',
+      examTypeLabel: i18next.t('enum.exam.class'), // Use i18n translation
       examYear: 2024,
       university: '帝都理工大学',
       faculty: '理学部物理学科',
-      academicFieldType: '理系',
+      majorType: 0, // Science (理系) from academic_track enum
       academicFieldName: '物理学',
       subjectName: '量子力学I',
       durationMinutes: 90,
@@ -25,8 +27,8 @@ describe('ExamCardCompact', () => {
 
     render(<ExamCardCompact item={item as any} onView={handleView} onGood={handleGood} />);
 
-    // Row 1: Chips
-    expect(screen.getByText('授業内試験')).toBeInTheDocument();
+    // Row 1: Chips - Expect i18n translated values
+    expect(screen.getByText(i18next.t('enum.exam.class'))).toBeInTheDocument();
     expect(screen.getByText('2024')).toBeInTheDocument();
     expect(screen.getByText('帝都理工大学')).toBeInTheDocument();
 

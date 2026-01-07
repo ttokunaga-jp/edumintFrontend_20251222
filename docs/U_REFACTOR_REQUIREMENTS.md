@@ -35,7 +35,7 @@
     - 検索機能とシステムヘルス表示。`src/components/page/HomePage` のコンポーネントを使用。
 2.  **`ProblemViewEditPage.tsx`**
     - 問題の閲覧と編集を同一URL (`/problem/:id`) で管理。Read/Editモードの切り替えはUI状態で行う。
-3.  **`ProblemCreatePage/`** (ディレクトリ)
+3.  **`CreatePage/`** (ディレクトリ)
 
 4.  **`MyPage.tsx`**
     - ユーザープロファイル、Wallet、統計情報。
@@ -66,7 +66,7 @@
 
 #### 2. 主要ページの実装
 - ✅ **`HomePage.tsx`**: 検索機能とシステムヘルス表示が完全に実装
-- ✅ **`ProblemCreatePage.tsx`**: 3段階ウィザード（基本設定 → 問題入力 → 確認・保存）実装完了
+- ✅ **`CreatePage.tsx`**: 3段階ウィザード（基本設定 → 問題入力 → 確認・保存）実装完了
 - ✅ **`ProblemViewEditPage.tsx`**: Read/Editモードの切り替え、メタデータ表示、削除機能完備
 - ✅ **`LoginRegisterPage.tsx`**: ログイン + 新規登録（Register）フロー実装完了
 - ✅ **`MyPage.tsx`**: ユーザープロファイル表示とログアウト機能実装

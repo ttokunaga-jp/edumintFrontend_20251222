@@ -36,7 +36,7 @@ MUI コンポーネントを使用し、旧 `primitives` 依存を排除して�
 - [ ] **LoginRegisterPage**: `useAuth` フックとフォームコンポーネントの結合。
 - [ ] **HomePage**: 検索Hooksと `SearchSection` の結合。
 - [ ] **MyPage**: `useUser` フックと表示コンポーネントの結合。
-- [ ] **ProblemCreatePage**: `Controller` パターンの適用と Generating フローの統合。
+- [ ] **CreatePage**: `Controller` パターンの適用と Generating フローの統合。
 - [x] **ProblemViewEditPage**: 統合作業は終了し、関連ファイルは移動・削除済み（参照はアーカイブに記録）。
 
 ## Phase 5: Final Cleanup & Verification

@@ -68,8 +68,8 @@
 | [src/components/page/HomePage/AdvancedSearchPanel.tsx](src/components/page/HomePage/AdvancedSearchPanel.tsx) | 詳細検索・個別検索・検索ボタンラベルを置換 | 3 |
 | [src/components/page/ProblemViewEditPage/ActionBar.tsx](src/components/page/ProblemViewEditPage/ActionBar.tsx) | 保存・キャンセル・編集ボタンラベルを置換 | 3 |
 | [src/components/page/ProblemViewEditPage/SubQuestionBlock.tsx](src/components/page/ProblemViewEditPage/SubQuestionBlock.tsx) | 問題・答え編集時の保存・キャンセルを置換 | 4 |
-| [src/components/page/ProblemCreatePage/StartPhase.tsx](src/components/page/ProblemCreatePage/StartPhase.tsx) | 削除ボタン・構造確認チェックボックスラベルを置換 | 2 |
-| [src/components/page/ProblemCreatePage/ResultEditor.tsx](src/components/page/ProblemCreatePage/ResultEditor.tsx) | 削除・キャンセル・保存ボタンを置換 | 3 |
+| [src/components/page/CreatePage/StartPhase.tsx](src/components/page/CreatePage/StartPhase.tsx) | 削除ボタン・構造確認チェックボックスラベルを置換 | 2 |
+| [src/components/page/CreatePage/ResultEditor.tsx](src/components/page/CreatePage/ResultEditor.tsx) | 削除・キャンセル・保存ボタンを置換 | 3 |
 
 ---
 
@@ -118,7 +118,7 @@ export const zIndex = {
 
 | ファイル | 修正内容 | 置換前 → 後 |
 |:---|:---|:---|
-| [src/pages/ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx) | インポート `zIndex` 追加、zIndex参照に置換 | `zIndex: 99` → `zIndex: zIndex.appBar` |
+| [src/pages/CreatePage.tsx](src/pages/CreatePage.tsx) | インポート `zIndex` 追加、zIndex参照に置換 | `zIndex: 99` → `zIndex: zIndex.appBar` |
 | [src/components/common/NotificationCenter.tsx](src/components/common/NotificationCenter.tsx) | インポート `zIndex` 追加、zIndex参照に置換 | `zIndex: 9999` → `zIndex: zIndex.notification` |
 | [src/components/page/ProblemViewEditPage/ActionBar.tsx](src/components/page/ProblemViewEditPage/ActionBar.tsx) | インポート `zIndex` 追加、zIndex参照に置換 | `zIndex: 1000` → `zIndex: zIndex.actionBar` |
 

@@ -12,6 +12,9 @@ import notifications from '../mockData/notifications.json';
 import files from '../mockData/files.json';
 import userData from '../mockData/user.json';
 
+// Import factory for dynamic user generation
+export { createDefaultUser, createMultilingualUsers, createMockUser, updateUserSettings, validateUserSettings } from '../factories/userFactory';
+
 export const mockAcademicFields = academicFields;
 export const mockFaculties = faculties;
 export const mockExams: any[] = exams;

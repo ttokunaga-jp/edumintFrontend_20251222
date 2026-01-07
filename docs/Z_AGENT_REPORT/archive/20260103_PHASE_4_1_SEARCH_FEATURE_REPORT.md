@@ -57,7 +57,7 @@ src/features/search/
 
 **Zod Schemas** (入力/出力バリデーション):
 - `SearchQuerySchema`: 検索クエリ (keyword, filters, page, limit)
-- `SearchProblemSchema`: 問題オブジェクト (id, title, difficulty, author等)
+- `SearchProblemSchema`: 問題オブジェクト (id, title, level, author等)
 - `SearchResultSchema`: ユニオン型 (problem | reading)
 - `SearchResponseSchema`: API レスポンス (results, total, page, hasMore)
 
@@ -101,8 +101,8 @@ await retry();
 const { filters, setFilter, clearFilter, clearAllFilters, getActiveFilterCount } = useSearchFilters();
 
 // フィルタ操作
-setFilter('difficulty', 'easy');
-clearFilter('difficulty');
+setFilter('level', 'easy');
+clearFilter('level');
 clearAllFilters();
 const count = getActiveFilterCount();
 ```

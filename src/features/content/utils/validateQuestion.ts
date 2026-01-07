@@ -33,10 +33,10 @@ export function validateQuestion(question: Question): ValidationResult {
   // formatの検証
   // format の値は将来的に自動解析されるため、厳密な値チェックは行いません
 
-  // difficultyの検証
-  if (question.difficulty) {
-    if (!Number.isInteger(question.difficulty.level) || question.difficulty.level < 1 || question.difficulty.level > 5) {
-      errors.difficulty = ['難易度は1～5の整数である必要があります'];
+  // levelの検証
+  if (question.level) {
+    if (!Number.isInteger(question.level.level) || question.level.level < 1 || question.level.level > 5) {
+      errors.level = ['難易度は1～5の整数である必要があります'];
     }
   }
 

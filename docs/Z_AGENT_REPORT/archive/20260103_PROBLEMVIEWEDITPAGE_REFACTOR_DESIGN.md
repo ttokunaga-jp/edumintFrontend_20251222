@@ -152,7 +152,7 @@ export const QuestionSchema = z.object({
   id: z.string().optional().default(''),  // バックエンドが無視、フロント側で temp-id 生成
   questionNumber: z.number().int().positive(),
   questionContent: z.string().min(1, '大問内容は必須です'),
-  difficulty: DifficultyEnum.optional().default('2'),
+  level: DifficultyEnum.optional().default('2'),
   keywords: z.array(z.object({
     id: z.string(),
     keyword: z.string(),
@@ -202,7 +202,7 @@ export const createDefaultQuestion = (index: number): Question => ({
   id: `temp-q-${Date.now()}-${index}`,
   questionNumber: index + 1,
   questionContent: '',
-  difficulty: '2',
+  level: '2',
   keywords: [],
   subQuestions: [createDefaultSubQuestion(0)],
 });
@@ -244,7 +244,7 @@ export function transformToForm(apiData: any): ExamFormValues {
       id: q.id?.toString() || `temp-q-${Date.now()}-${qIdx}`,
       questionNumber: q.question_number || qIdx + 1,
       questionContent: q.question_content || '',
-      difficulty: q.difficulty?.toString() || '2',
+      level: q.level?.toString() || '2',
       keywords: (q.keywords || []).map((kw: any) => ({
         id: kw.id?.toString() || `temp-kw-${Date.now()}`,
         keyword: kw.keyword || '',
@@ -309,7 +309,7 @@ export function transformToApi(formData: ExamFormValues): any {
       id: isTemporaryId(q.id) ? undefined : q.id,
       question_number: q.questionNumber,
       question_content: q.questionContent,
-      difficulty: Number(q.difficulty),
+      level: Number(q.level),
       keywords: q.keywords
         .filter(kw => kw.keyword.trim())
         .map(kw => ({

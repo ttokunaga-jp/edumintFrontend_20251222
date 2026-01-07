@@ -6,22 +6,22 @@ interface SearchParams {
   keyword?: string;
   page?: number;
   limit?: number;
-  sortBy?: 'newest' | 'popular' | 'recommended' | 'views';
+  sortBy?: number;
   subjects?: string[];
   universities?: string[];
   faculties?: string[];
   professor?: string;
   year?: string;
   fieldType?: string;
-  level?: string;
-  formats?: string[];
-  duration?: string;
-  period?: string;
+  level?: string | number;
+  questionType?: (string | number)[];
+  duration?: string | number;
+  period?: string | number;
   isLearned?: boolean;
   isHighRating?: boolean;
   isCommented?: boolean;
   isPosted?: boolean;
-  language?: string;
+  language?: string | number;
 }
 
 interface Problem {
@@ -33,7 +33,7 @@ interface Problem {
   content?: string;
   authorName?: string;
   university?: string;
-  difficulty?: string;
+  level?: string;
   likes?: number;
   views?: number;
   createdAt?: string;

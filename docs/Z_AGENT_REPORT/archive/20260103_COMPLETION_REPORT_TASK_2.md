@@ -1,4 +1,4 @@
-# 📋 Task 2 完了レポート: ProblemCreatePage 5フェーズ再構築
+# 📋 Task 2 完了レポート: CreatePage 5フェーズ再構築
 
 **日時**: 2025-12-22  
 **ステータス**: ✅ **完了** - ビルド成功（1069 modules）、テスト合格（15/15）
@@ -41,7 +41,7 @@ type GenerationPhase =
 
 #### 2.1 `StartPhase.tsx` - ファイル入力 + オプション設定
 
-**ファイル**: [src/components/page/ProblemCreatePage/StartPhase.tsx](src/components/page/ProblemCreatePage/StartPhase.tsx)
+**ファイル**: [src/components/page/CreatePage/StartPhase.tsx](src/components/page/CreatePage/StartPhase.tsx)
 
 **機能**:
 ```
@@ -85,7 +85,7 @@ type GenerationPhase =
 
 #### 2.2 `AnalysisPhase.tsx` - 構造解析のローディング状態
 
-**ファイル**: [src/components/page/ProblemCreatePage/AnalysisPhase.tsx](src/components/page/ProblemCreatePage/AnalysisPhase.tsx)
+**ファイル**: [src/components/page/CreatePage/AnalysisPhase.tsx](src/components/page/CreatePage/AnalysisPhase.tsx)
 
 **表示内容**:
 - CircularProgress (size: 60)
@@ -99,7 +99,7 @@ type GenerationPhase =
 
 #### 2.3 `StructureConfirmation.tsx` - 解析結果の確認
 
-**ファイル**: [src/components/page/ProblemCreatePage/StructureConfirmation.tsx](src/components/page/ProblemCreatePage/StructureConfirmation.tsx)
+**ファイル**: [src/components/page/CreatePage/StructureConfirmation.tsx](src/components/page/CreatePage/StructureConfirmation.tsx)
 
 **表示項目**:
 ```
@@ -123,7 +123,7 @@ type GenerationPhase =
 
 #### 2.4 `GenerationPhase.tsx` - 問題生成のローディング状態
 
-**ファイル**: [src/components/page/ProblemCreatePage/GenerationPhase.tsx](src/components/page/ProblemCreatePage/GenerationPhase.tsx)
+**ファイル**: [src/components/page/CreatePage/GenerationPhase.tsx](src/components/page/CreatePage/GenerationPhase.tsx)
 
 **特徴**:
 - LinearProgress で進捗表示（0→100%）
@@ -135,7 +135,7 @@ type GenerationPhase =
 
 #### 2.5 `ResultEditor.tsx` - 生成問題の編集・公開
 
-**ファイル**: [src/components/page/ProblemCreatePage/ResultEditor.tsx](src/components/page/ProblemCreatePage/ResultEditor.tsx)
+**ファイル**: [src/components/page/CreatePage/ResultEditor.tsx](src/components/page/CreatePage/ResultEditor.tsx)
 
 **機能**:
 ```
@@ -170,7 +170,7 @@ type GenerationPhase =
 
 ### 3. メインページ統合 ✅
 
-**ファイル**: [src/pages/ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx)
+**ファイル**: [src/pages/CreatePage.tsx](src/pages/CreatePage.tsx)
 
 **変更点**:
 ```diff
@@ -180,7 +180,7 @@ type GenerationPhase =
 
 **実装内容**:
 ```typescript
-export default function ProblemCreatePage() {
+export default function CreatePage() {
   const { phase, reset } = useGenerationStore();
 
   return (
@@ -246,12 +246,12 @@ computing gzip size...
 | ファイル | サイズ | 行数 | 用途 |
 |---------|--------|------|------|
 | [src/features/generation/stores/generationStore.ts](src/features/generation/stores/generationStore.ts) | ~90 | Zustand ストア (5フェーズ状態機械) |
-| [src/components/page/ProblemCreatePage/StartPhase.tsx](src/components/page/ProblemCreatePage/StartPhase.tsx) | ~280 | ファイル/テキスト入力 + オプション |
-| [src/components/page/ProblemCreatePage/AnalysisPhase.tsx](src/components/page/ProblemCreatePage/AnalysisPhase.tsx) | ~15 | 解析ローディング状態 |
-| [src/components/page/ProblemCreatePage/StructureConfirmation.tsx](src/components/page/ProblemCreatePage/StructureConfirmation.tsx) | ~120 | 解析結果の確認UI |
-| [src/components/page/ProblemCreatePage/GenerationPhase.tsx](src/components/page/ProblemCreatePage/GenerationPhase.tsx) | ~60 | 生成ローディング状態 |
-| [src/components/page/ProblemCreatePage/ResultEditor.tsx](src/components/page/ProblemCreatePage/ResultEditor.tsx) | ~180 | 生成問題の編集・公開 |
-| [src/pages/ProblemCreatePage.tsx](src/pages/ProblemCreatePage.tsx) | ~70 | ページ統合 (5フェーズ制御) |
+| [src/components/page/CreatePage/StartPhase.tsx](src/components/page/CreatePage/StartPhase.tsx) | ~280 | ファイル/テキスト入力 + オプション |
+| [src/components/page/CreatePage/AnalysisPhase.tsx](src/components/page/CreatePage/AnalysisPhase.tsx) | ~15 | 解析ローディング状態 |
+| [src/components/page/CreatePage/StructureConfirmation.tsx](src/components/page/CreatePage/StructureConfirmation.tsx) | ~120 | 解析結果の確認UI |
+| [src/components/page/CreatePage/GenerationPhase.tsx](src/components/page/CreatePage/GenerationPhase.tsx) | ~60 | 生成ローディング状態 |
+| [src/components/page/CreatePage/ResultEditor.tsx](src/components/page/CreatePage/ResultEditor.tsx) | ~180 | 生成問題の編集・公開 |
+| [src/pages/CreatePage.tsx](src/pages/CreatePage.tsx) | ~70 | ページ統合 (5フェーズ制御) |
 
 ---
 
@@ -301,7 +301,7 @@ exercise / document モードで表示オプションを切り替え → UXの�
 | StructureConfirmation 実装 | ✅ 結果確認UI | 完了 |
 | GenerationPhase 実装 | ✅ 進捗表示付きローディング | 完了 |
 | ResultEditor 実装 | ✅ 編集・公開UI | 完了 |
-| ProblemCreatePage 統合 | ✅ 5フェーズ制御 | 完了 |
+| CreatePage 統合 | ✅ 5フェーズ制御 | 完了 |
 | ビルド成功 | ✅ 1069 modules | 完了 |
 | テスト合格 | ✅ 15/15 passed | 完了 |
 

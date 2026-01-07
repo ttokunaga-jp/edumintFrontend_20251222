@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import {
   TextField,
   Stack,
   Box,
   Typography,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   AutocompleteFilterField,
   SelectFilterField,
 } from '@/components/common/SearchFilterFields';
+import {
+  LANGUAGE_ENUM_OPTIONS,
+  ACADEMIC_TRACK_ENUM_OPTIONS,
+  getEnumLabelKey,
+} from '@/lib/enums/enumHelpers';
 
 // マスターデータ（AdvancedSearchPanelと同じ）
 const UNIVERSITIES = [
@@ -44,27 +50,14 @@ const FIELDS = [
   'アルゴリズム',
 ];
 
-const ACADEMIC_SYSTEMS = [
-  { value: 'liberal-arts', label: '文系' },
-  { value: 'science', label: '理系' },
-];
-
-const LANGUAGES = [
-  { value: 'ja', label: '日本語' },
-  { value: 'en', label: '英語' },
-  { value: 'zh', label: '中国語' },
-  { value: 'ko', label: '韓国語' },
-  { value: 'other', label: 'その他' },
-];
-
 export interface ProfileEditFormData {
   displayName: string;
   email?: string;
   universities?: string[];
   faculties?: string[];
   academicField?: string;
-  academicSystem?: 'liberal-arts' | 'science';
-  language?: string;
+  academicSystem?: number; // Numeric ID (0 or 1)
+  language?: number; // Numeric ID
 }
 
 export interface ProfileEditFormProps {
@@ -80,8 +73,8 @@ export interface ProfileEditFormProps {
     university?: string;
     faculty?: string;
     academicField?: string;
-    academicSystem?: 'liberal-arts' | 'science';
-    language?: string;
+    academicSystem?: number;
+    language?: number;
   };
 }
 
@@ -98,6 +91,13 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   profile,
 }) => {
   const [emailError, setEmailError] = useState<string>('');
+  const { t } = useTranslation();
+
+  const getLanguageLabel = (languageValue: number | undefined): string => {
+    if (languageValue === undefined) return '未設定';
+    const labelKey = getEnumLabelKey('language', languageValue);
+    return labelKey ? t(labelKey) : '未設定';
+  };
 
   const handleFieldChange = (field: keyof ProfileEditFormData, value: any) => {
     onFormChange({
@@ -122,7 +122,7 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
         <Typography variant="subtitle2" sx={{ fontWeight: 600, mt: 2 }}>
           基本情報
         </Typography>
-        
+
         <TextField
           id="display-name-input"
           label="表示名"
@@ -191,16 +191,16 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
 
         <SelectFilterField
           label="学問系統（文系・理系）"
-          options={ACADEMIC_SYSTEMS}
-          value={editForm.academicSystem || profile?.academicSystem || ''}
-          onChange={(value) => handleFieldChange('academicSystem', value)}
+          options={ACADEMIC_TRACK_ENUM_OPTIONS.map(opt => ({ value: opt.value, label: t(opt.labelKey) }))}
+          value={editForm.academicSystem ?? profile?.academicSystem ?? ''}
+          onChange={(value) => handleFieldChange('academicSystem', Number(value))}
         />
 
         <SelectFilterField
           label="言語"
-          options={LANGUAGES}
-          value={editForm.language || profile?.language || ''}
-          onChange={(value) => handleFieldChange('language', value)}
+          options={LANGUAGE_ENUM_OPTIONS.map(opt => ({ value: opt.value, label: t(opt.labelKey) }))}
+          value={editForm.language ?? profile?.language ?? ''}
+          onChange={(value) => handleFieldChange('language', Number(value))}
         />
       </Stack>
     );
@@ -276,11 +276,9 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
           学問系統（文系・理系）
         </Typography>
         <Typography variant="body2">
-          {profile?.academicSystem === 'liberal-arts'
-            ? '文系'
-            : profile?.academicSystem === 'science'
-              ? '理系'
-              : '未設定'}
+          {profile?.academicSystem !== undefined
+            ? t(getEnumLabelKey('academic_track', profile.academicSystem) || '')
+            : '未設定'}
         </Typography>
       </Box>
 
@@ -289,7 +287,7 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
           言語
         </Typography>
         <Typography variant="body2">
-          {LANGUAGES.find((l) => l.value === profile?.language)?.label || '未設定'}
+          {getLanguageLabel(profile?.language)}
         </Typography>
       </Box>
     </Stack>

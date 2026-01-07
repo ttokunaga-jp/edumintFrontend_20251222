@@ -9,7 +9,7 @@
 | HomePage | ✅ Yes | なし | ✅ 正常 |
 | MyPage | ✅ Yes | なし | ✅ 正常 |
 | ProblemViewEditPage | ✅ Yes | なし | ✅ 正常 |
-| ProblemCreatePage | ✅ Yes | なし | ✅ 正常 |
+| CreatePage | ✅ Yes | なし | ✅ 正常 |
 | LoginRegisterPage | ✅ Yes | /login, /register | ✅ 正常 |
 
 **結論**: ✅ すべてのページで **同じ TopMenuBar** を使用（App.tsx 経由で自動配置）
@@ -140,7 +140,7 @@ export function useAppBarEditActions(props: UseAppBarEditActionsProps) {
 │
 └─ AppBarAction 未使用: 3個
    ├─ HomePage (検索のみ)
-   ├─ ProblemCreatePage (フェーズ管理)
+   ├─ CreatePage (フェーズ管理)
    └─ LoginRegisterPage (編集なし)
 ```
 
@@ -187,7 +187,7 @@ useEffect(() => {
 
 **適用予定ページ**:
 - ✅ ProblemViewEditPage
-- 🔲 ProblemCreatePage (結果編集フェーズ)
+- 🔲 CreatePage (結果編集フェーズ)
 - 🔲 他のコンテンツ編集ページ
 
 ---
@@ -294,7 +294,7 @@ Duration: 109.05s
 - [x] 汎用フック設計
 
 ### Phase 2: 他のページへ適用（次期）
-- [ ] ProblemCreatePage: 結果編集フェーズで SAVE ボタン実装（パターン A）
+- [ ] CreatePage: 結果編集フェーズで SAVE ボタン実装（パターン A）
 - [ ] 他のコンテンツ編集ページ: `useAppBarEditActions` フック活用
 - [ ] SAVE ボタン動作の完全統一: isSaving, hasChanges 状態制御の標準化
 

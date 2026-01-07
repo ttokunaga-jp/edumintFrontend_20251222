@@ -171,7 +171,7 @@
   - exam_name / school / subject_id / teacher_id / exam_year / stats(cache)
   - ソーシャル系: good_count / bad_count / comment_count / view_count / ad_count
   └─<1:N> [questions] 大問
-        - question_number / difficulty / question_content
+        - question_number / level / question_content
         └─<1:N> [sub_questions] 小問
               - sub_question_number / sub_question_type_id / sub_question_content
               - answer_content
@@ -195,7 +195,7 @@
 | `subject_id` | BIGINT | FOREIGN KEY → `subjects(id)` | 科目ID |
 | `exam_year` | INT | NOT NULL | 試験年度 |
 | `academic_field_id` | BIGINT | FOREIGN KEY → `academic_fields(id)` | **[追加]** 学問分野ID |
-| `academic_system` | INT | DEFAULT 0 | **[追加]** 学位系統（0: 理系、1: 文系） |
+| `academic_track` | INT | DEFAULT 0 | **[追加]** 学位系統（0: 理系、1: 文系） |
 | `duration_minutes` | INT | NULL | **[追加]** 所要時間（分） |
 | `user_id` | BIGINT | FOREIGN KEY → `users(id)` | 作成者ID |
 | `is_public` | BOOLEAN | DEFAULT TRUE | 公開フラグ |
@@ -215,7 +215,7 @@
 | :--- | :--- | :--- | :--- |
 | `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | 大問ID |
 | `exam_id` | BIGINT | FOREIGN KEY → `exams(id)` | 所属試験ID |
-| `difficulty` | INT | DEFAULT 0 | 難易度（AI推定など） |
+| `level` | INT | DEFAULT 0 | 難易度（AI推定など） |
 | `question_number` | INT | NOT NULL | 大問番号 |
 | `question_content` | TEXT | NOT NULL | 問題文 |
 | `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 作成日時 |

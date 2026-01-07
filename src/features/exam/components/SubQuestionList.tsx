@@ -17,11 +17,13 @@ import type { ExamFormValues } from '../schema';
 interface SubQuestionListProps {
   questionIndex: number;
   isEditMode: boolean;
+  structureOnly?: boolean;
 }
 
 export const SubQuestionList: FC<SubQuestionListProps> = ({
   questionIndex,
   isEditMode,
+  structureOnly,
 }) => {
   const { control } = useFormContext<ExamFormValues>();
 
@@ -65,6 +67,7 @@ export const SubQuestionList: FC<SubQuestionListProps> = ({
               questionIndex={questionIndex}
               subQuestionIndex={subQuestionIndex}
               isEditMode={isEditMode}
+              structureOnly={structureOnly}
               onDelete={() => handleDeleteSubQuestion(subQuestionIndex)}
               canDelete={fields.length > 1}
             />

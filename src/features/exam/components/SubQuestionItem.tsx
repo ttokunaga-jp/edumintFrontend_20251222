@@ -16,6 +16,8 @@ import { ExamQuestionMeta } from './ExamQuestionMeta';
 
 import { QuestionTypeLabels } from '../schema';
 import { FormatRegistry } from './formats/FormatRegistry';
+import { useTranslation } from 'react-i18next';
+import { getEnumOptions } from '@/lib/i18nHelpers';
 import { ExamContentField } from './inputs/ExamContentField';
 import type { ExamFormValues } from '../schema';
 
@@ -23,23 +25,20 @@ interface SubQuestionItemProps {
   questionIndex: number;
   subQuestionIndex: number;
   isEditMode: boolean;
+  structureOnly?: boolean;
   onDelete?: () => void;
   canDelete: boolean;
 }
-
-const questionTypeOptions = Object.entries(QuestionTypeLabels).map(([value, label]) => ({
-  value: Number(value),
-  label,
-}));
 
 export const SubQuestionItem: FC<SubQuestionItemProps> = ({
   questionIndex,
   subQuestionIndex,
   isEditMode,
+  structureOnly,
   onDelete,
   canDelete,
 }) => {
-  const { control, watch } = useFormContext<ExamFormValues>();
+  const { control, watch, formState: { errors } } = useFormContext<ExamFormValues>();
   const basePath = `questions.${questionIndex}.subQuestions.${subQuestionIndex}`;
 
   // アコーディオン展開状態
@@ -59,6 +58,8 @@ export const SubQuestionItem: FC<SubQuestionItemProps> = ({
   };
 
   const questionTypeId = watch(`${basePath}.questionTypeId`);
+  const { t } = useTranslation();
+  const questionTypeOptions = getEnumOptions('questionType', t).map(o => ({ value: Number(o.value), label: o.label }));
 
   // キーワード管理
   const { fields: keywordFields, append, remove } = useFieldArray({
@@ -109,29 +110,32 @@ export const SubQuestionItem: FC<SubQuestionItemProps> = ({
               metaOptions={questionTypeOptions}
               keywords={formattedKeywords}
               isEditMode={isEditMode}
-              onMetaChange={(e) => field.onChange(String(e.target.value))}
+              onMetaChange={(val) => field.onChange(Number(val))}
               onKeywordAdd={handleKeywordAdd}
               onKeywordRemove={handleKeywordRemove}
+              errorMessage={errors.questions?.[questionIndex]?.subQuestions?.[subQuestionIndex]?.keywords?.message}
               onDelete={onDelete}
               canDelete={canDelete}
             />
           )}
         />
 
-        <Divider />
+        {!structureOnly && <Divider />}
 
         {/* 問題セクション */}
-        <Box>
-          <ExamContentField
-            name={`${basePath}.questionContent`}
-            label="問題文"
-            isEditMode={isEditMode}
-            placeholder="問題文を入力してください（Markdown/LaTeX対応）"
-          />
-        </Box>
+        {!structureOnly && (
+          <Box>
+            <ExamContentField
+              name={`${basePath}.questionContent`}
+              label="問題文"
+              isEditMode={isEditMode}
+              placeholder="問題文を入力してください（Markdown/LaTeX対応）"
+            />
+          </Box>
+        )}
 
         {/* 形式別エディタセクション（ID 1-5のみ、アコーディオンなし） */}
-        {['1', '2', '3', '4', '5'].includes(String(questionTypeId)) && (
+        {!structureOnly && [1, 2, 3, 4, 5].includes(Number(questionTypeId)) && (
           <Box sx={{ mt: 2 }}>
             <FormatRegistry
               questionTypeId={String(questionTypeId)}
@@ -142,47 +146,49 @@ export const SubQuestionItem: FC<SubQuestionItemProps> = ({
         )}
 
         {/* 解答解説セクション */}
-        {isEditMode ? (
-          // Editモード: 常時表示 (アコーディオンなし)
-          <Box sx={{ mt: 2 }}>
-            <ExamContentField
-              name={`${basePath}.answerContent`}
-              label="解答解説"
-              isEditMode={true}
-              placeholder="解答や解説を入力してください"
-            />
-          </Box>
-        ) : (
-          // Viewモード: アコーディオン
-          <Accordion
-            expanded={expandedSections.answer}
-            onChange={() => handleAccordionChange('answer')}
-            sx={{
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-              border: '1px solid',
-              borderColor: 'divider',
-              '&:before': { display: 'none' },
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              sx={{
-                backgroundColor: 'action.hover',
-                '&.Mui-expanded': { backgroundColor: 'action.focus' },
-              }}
-            >
-              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                解答解説
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ pt: 2 }}>
+        {!structureOnly && (
+          isEditMode ? (
+            // Editモード: 常時表示 (アコーディオンなし)
+            <Box sx={{ mt: 2 }}>
               <ExamContentField
                 name={`${basePath}.answerContent`}
-                isEditMode={false}
+                label="解答解説"
+                isEditMode={true}
+                placeholder="解答や解説を入力してください"
               />
-            </AccordionDetails>
-          </Accordion>
+            </Box>
+          ) : (
+            // Viewモード: アコーディオン
+            <Accordion
+              expanded={expandedSections.answer}
+              onChange={() => handleAccordionChange('answer')}
+              sx={{
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
+                border: '1px solid',
+                borderColor: 'divider',
+                '&:before': { display: 'none' },
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                sx={{
+                  backgroundColor: 'action.hover',
+                  '&.Mui-expanded': { backgroundColor: 'action.focus' },
+                }}
+              >
+                <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                  解答解説
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ pt: 2 }}>
+                <ExamContentField
+                  name={`${basePath}.answerContent`}
+                  isEditMode={false}
+                />
+              </AccordionDetails>
+            </Accordion>
+          )
         )}
       </Stack>
     </Paper>

@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { mockExams } from '../data';
-import { EXAM_TYPE_LABELS, DIFFICULTY_LEVELS, ACADEMIC_FIELDS, ALLOWED_EXAM_TYPE_IDS } from '../../constants/fixedVariables';
+import { EXAM_TYPE_LABELS, LEVELS, ACADEMIC_FIELDS, ALLOWED_EXAM_TYPE_IDS } from '../../constants/fixedVariables';
+import { getOrderedEnumIds } from '@/lib/enums/enumHelpers';
 
 const apiBase = (import.meta.env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? 'http://localhost:3000/api';
 const withBase = (path: string) => `${apiBase}${path}`;
@@ -8,14 +9,91 @@ const withBase = (path: string) => `${apiBase}${path}`;
 // Convert mockExams to problems format lazily (with enum enforcement)
 let _createdProblems: any[] = [];
 const mapExamToProblem = (exam: any) => {
-  // Enforce: only allow exams with valid examType IDs
+  // Enforce: only allow exams with valid examType IDs from enumMappings.ts
   if (!ALLOWED_EXAM_TYPE_IDS.includes(exam.examType)) {
     return null; // Filter out invalid exam types
   }
 
   const examType = exam.examType;
-  const difficulty = exam.difficulty !== undefined ? exam.difficulty : (exam.questions?.[0]?.difficulty === '1' ? 1 : 2);
-  const academicFieldId = exam.academicFieldId !== undefined ? exam.academicFieldId : (exam.majorType === 1 ? 0 : 1);
+
+  // Resolve Level: Validate against enumMappings or map from legacy object
+  let level = 1; // Default to standard
+  if (typeof exam.level === 'number') {
+    level = exam.level;
+  } else if (typeof exam.level === 'object' && exam.level !== null) {
+    // Legacy object support
+    if (exam.level.label === '基本') level = 0;
+    else if (exam.level.label === '標準') level = 1;
+    else if (exam.level.label === '応用' || exam.level.label === 'やや難') level = 2;
+    else level = exam.level.id;
+  } else if (exam.questions && exam.questions[0] && exam.questions[0].level) {
+    // Fallback to first question level
+    const qLevel = exam.questions[0].level;
+    if (typeof qLevel === 'object') {
+      if (qLevel.label === '基本') level = 0;
+      else if (qLevel.label === '標準') level = 1;
+      else level = 2;
+    } else {
+      level = qLevel;
+    }
+  }
+  // Ensure level is within valid range (0-2)
+  if (![0, 1, 2].includes(level)) level = 1;
+
+
+  // Resolve Academic Field (Map legacy strings to Enum IDs)
+  let academicFieldId: number | undefined = undefined;
+  if (typeof exam.academicFieldId === 'number') {
+    academicFieldId = exam.academicFieldId;
+  } else if (exam.academicFieldName) {
+    const map: Record<string, number> = {
+      // JP
+      '文学': 0, '言語学': 0, '文化': 0,
+      '心理学': 1, '哲学': 1,
+      '法学': 2, '政治学': 2,
+      '経済学': 3, '経営学': 3, '商学': 3,
+      '社会学': 4,
+      '教育学': 6,
+      '情報学': 10, '情報科学': 10, 'コンピュータ科学': 10,
+      '機械工学': 11, '航空宇宙': 11,
+      '電気電子': 12,
+      '建築': 13, '土木': 13,
+      '化学': 14, '材料科学': 14,
+      '数学': 15, '物理学': 15, '地学': 15,
+      '生物学': 16, '生命科学': 16,
+      '医学': 22,
+      // EN
+      'Literature': 0, 'Linguistics': 0,
+      'Psychology': 1, 'Philosophy': 1,
+      'Law': 2, 'Politics': 2,
+      'Economics': 3, 'Business': 3,
+      'Sociology': 4,
+      'Education': 6,
+      'Informatics': 10, 'Computer Science': 10,
+      'Chemistry': 14,
+      'Mathematics': 15, 'Physics': 15,
+      'Biology': 16,
+      'Medicine': 22
+    };
+    // Fuzzy match or exact match
+    for (const [key, id] of Object.entries(map)) {
+      if (exam.academicFieldName.includes(key)) {
+        academicFieldId = id;
+        break;
+      }
+    }
+  }
+
+  // Fallback for academicTrackId if not explicitly set
+  // 0 = Science (10-16, 20-22 recommended), 1 = Humanities (00-06)
+  let academicTrackId = 0; // Default Science
+  if (exam.majorType !== undefined) {
+    academicTrackId = exam.majorType;
+  } else if (academicFieldId !== undefined) {
+    // Infer track from field if possible
+    if (academicFieldId < 10) academicTrackId = 1; // Humanities
+    else academicTrackId = 0; // Science
+  }
 
   return {
     id: exam.id,
@@ -25,16 +103,17 @@ const mapExamToProblem = (exam: any) => {
     subjectName: exam.subjectName,
     university: exam.universityName,
     faculty: exam.facultyName,
-    examType, // Numeric ID
-    examTypeLabel: EXAM_TYPE_LABELS[examType], // Use fixed variable
+    examType, // Numeric ID from enumMappings.examType
+    examTypeLabel: EXAM_TYPE_LABELS[examType], // i18n key
     examYear: exam.examYear || (exam.createdAt ? new Date(exam.createdAt).getFullYear() : undefined),
     durationMinutes: exam.durationMinutes,
-    academicFieldId, // Numeric ID
+    majorType: academicTrackId, // Store normalized numeric ID (0 or 1)
+    academicFieldId, // Mapped ID (0-26) or undefined
     academicFieldName: exam.academicFieldName,
-    academicFieldType: ACADEMIC_FIELDS[academicFieldId] === 'science' ? '理系' : '文系',
-    type: exam.examType === 0 ? 'past_exam' : 'exercise',
-    difficulty, // Numeric ID
-    difficultyLabel: DIFFICULTY_LEVELS[difficulty], // Use fixed variable
+    // academicFieldType is handled by UI using majorType
+    type: examType === 0 ? 'past_exam' : 'exercise',
+    level, // Numeric ID from enumMappings.level
+    levelLabel: LEVELS[level], // i18n key
     rating: 4.5,
     likes: Math.floor(Math.random() * 200) + 50,
     comments: Math.floor(Math.random() * 20) + 5,
@@ -45,9 +124,9 @@ const mapExamToProblem = (exam: any) => {
     updatedAt: '2025-11-20T10:00:00Z',
     content: `${exam.subjectName}の${exam.examName}です。`,
     description: `${exam.universityName} ${exam.facultyName}の${exam.examName}。`,
-    tags: exam.questions?.flatMap(q => q.keywords?.map(k => k.keyword) || []) || [],
+    tags: exam.questions?.flatMap((q: any) => q.keywords?.map((k: any) => k.keyword) || []) || [],
     isPublic: true,
-    questions: exam.questions?.map(q => ({
+    questions: exam.questions?.map((q: any) => ({
       id: `q${q.id}`,
       text: (q.questionContent || q.content || q.text || ''),
       type: 'proof',
@@ -90,7 +169,7 @@ export const problemHandlers = [
     const subjects = url.searchParams.getAll('subjects[]');
     const universities = url.searchParams.getAll('universities[]');
     const faculties = url.searchParams.getAll('faculties[]');
-    const difficulty = url.searchParams.get('level');
+    const level = url.searchParams.get('level');
     const professor = url.searchParams.get('professor');
     const year = url.searchParams.get('year');
     const fieldType = url.searchParams.get('fieldType');
@@ -101,6 +180,7 @@ export const problemHandlers = [
     const isCommented = url.searchParams.get('isCommented') === 'true';
     const isPosted = url.searchParams.get('isPosted') === 'true';
     const language = url.searchParams.get('language');
+    const academicSystemStr = url.searchParams.get('academicSystem');
 
     // キーワードでフィルター
     let filtered = getAllProblems();
@@ -147,11 +227,19 @@ export const problemHandlers = [
       filtered = filtered.filter(p => p.tags?.includes(fieldType));
     }
 
-    if (difficulty) {
-      if (difficulty === 'advanced') {
-        filtered = filtered.filter(p => p.difficulty === 'difficult' || p.difficulty === 'applied');
+    if (level) {
+      if (level === 'advanced') {
+        filtered = filtered.filter(p => p.level === 2); // numeric ID
       } else {
-        filtered = filtered.filter(p => p.difficulty === difficulty);
+        const lvl = parseInt(level);
+        if (!isNaN(lvl)) filtered = filtered.filter(p => p.level === lvl);
+      }
+    }
+
+    if (academicSystemStr) {
+      const sysId = parseInt(academicSystemStr);
+      if (!isNaN(sysId)) {
+        filtered = filtered.filter(p => p.majorType === sysId);
       }
     }
 
@@ -178,7 +266,7 @@ export const problemHandlers = [
         d.setFullYear(d.getFullYear() - 1);
         cutoff = d;
       }
-      
+
       if (period !== 'custom') {
         filtered = filtered.filter(p => new Date(p.createdAt) >= cutoff);
       }
@@ -232,7 +320,7 @@ export const problemHandlers = [
     try {
       // eslint-disable-next-line no-console
       console.debug('[MSW] /search/problems ->', { total, returnedIds: items.map(i => i.id) });
-    } catch (e) {}
+    } catch (e) { }
 
     return HttpResponse.json({
       data: items,

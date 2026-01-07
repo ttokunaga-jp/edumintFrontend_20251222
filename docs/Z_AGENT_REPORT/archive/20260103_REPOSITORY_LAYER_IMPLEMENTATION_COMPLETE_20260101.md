@@ -60,7 +60,7 @@ interface CreateProblemRequest {
   year: number;
   university: string;
   isPublic?: boolean;
-  difficulty?: number;
+  level?: number;
   keywords?: string[];
 }
 ```
@@ -107,7 +107,7 @@ interface CreateQuestionRequest {
   questionNumber: number;
   content: string;
   format: 0 | 1;
-  difficulty?: number;
+  level?: number;
   keywords?: string[];
 }
 ```

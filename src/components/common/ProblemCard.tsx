@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useTranslation } from 'react-i18next';
+import { getEnumLabelKey } from '@/lib/enums/enumHelpers';
 
 export interface ProblemCardItem {
   id: string;
@@ -21,7 +23,7 @@ export interface ProblemCardItem {
   university?: string;
   examName?: string;
   subjectName?: string;
-  difficulty?: string;
+  level?: string;
   content?: string;
   views?: number;
   likes?: number;
@@ -46,14 +48,24 @@ export const ProblemCard: FC<ProblemCardProps> = ({
   onCardClick,
   variant = 'full',
 }) => {
+  const { t } = useTranslation();
   const handleCardClick = () => {
     if (onCardClick) {
       onCardClick(problem.id, problem.examName || '');
     }
   };
 
-  const isDifficultyAdvanced = problem.difficulty === 'advanced';
-  const isDifficultyStandard = problem.difficulty === 'standard';
+  // Resolve level: can be numeric ID or string slug
+  const levelId = typeof problem.level === 'number'
+    ? problem.level
+    : (problem.level === 'advanced' ? 2 : problem.level === 'standard' ? 1 : 0);
+
+  const isDifficultyAdvanced = levelId === 2;
+  const isDifficultyStandard = levelId === 1;
+
+  const levelLabel = typeof problem.level === 'number'
+    ? t(getEnumLabelKey('level', problem.level) || '')
+    : problem.level;
 
   return (
     <Card
@@ -114,9 +126,9 @@ export const ProblemCard: FC<ProblemCardProps> = ({
           {problem.subjectName && (
             <Chip label={problem.subjectName} size="small" variant="outlined" />
           )}
-          {problem.difficulty && (
+          {levelLabel && (
             <Chip
-              label={problem.difficulty}
+              label={levelLabel}
               size="small"
               color={
                 isDifficultyAdvanced

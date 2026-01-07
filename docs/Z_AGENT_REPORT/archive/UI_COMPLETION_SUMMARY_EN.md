@@ -8,7 +8,7 @@
 
 ## 📋 Implementation Summary
 
-### Task 1: Problem Creation Page (ProblemCreatePage) ✅
+### Task 1: Problem Creation Page (CreatePage) ✅
 **Implementation Details**:
 - ✅ Multiple file upload support (react-dropzone integration)
 - ✅ Client-side validation
@@ -21,7 +21,7 @@
 - ✅ File size capacity meter display
 
 **Modified Files**:
-- `src/components/page/ProblemCreatePage/StartPhase.tsx` (complete rewrite)
+- `src/components/page/CreatePage/StartPhase.tsx` (complete rewrite)
 - `src/features/generation/stores/generationStore.ts` (state management update)
 
 ---
@@ -170,10 +170,10 @@ removeFile: (fileName: string) => void
 ### Page Layer (3 files)
 - `src/pages/LoginRegisterPage.tsx` - Complete rewrite ⭐
 - `src/pages/MyPage.tsx` - Complete rewrite ⭐
-- `src/pages/ProblemCreatePage.tsx` - No changes (already compliant)
+- `src/pages/CreatePage.tsx` - No changes (already compliant)
 
 ### Component Layer (2 files)
-- `src/components/page/ProblemCreatePage/StartPhase.tsx` - Complete rewrite ⭐
+- `src/components/page/CreatePage/StartPhase.tsx` - Complete rewrite ⭐
 - `src/components/common/TopMenuBar.tsx` - Popover addition ✏️
 
 ### Store Layer (1 file)

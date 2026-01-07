@@ -20,7 +20,7 @@ export interface SubQuestionFormData {
   id: string;
   questionTypeId: number;
   content: string;
-  difficulty?: Difficulty;
+  level?: Difficulty;
   keywords: Keyword[];
 }
 
@@ -32,7 +32,7 @@ export interface SubQuestionValidation {
   errors: {
     content?: string[];
     questionTypeId?: string[];
-    difficulty?: string[];
+    level?: string[];
     keywords?: string[];
   };
 }

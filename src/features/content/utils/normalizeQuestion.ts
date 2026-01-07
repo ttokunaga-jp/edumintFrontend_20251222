@@ -213,8 +213,8 @@ export function getQuestionDifferences(
   const differences: string[] = [];
 
   if (original.content !== updated.content) differences.push('content');
-  if (original.difficulty?.id !== updated.difficulty?.id)
-    differences.push('difficulty');
+  if (original.level?.id !== updated.level?.id)
+    differences.push('level');
   if (JSON.stringify(original.keywords) !== JSON.stringify(updated.keywords))
     differences.push('keywords');
   if (original.subQuestions.length !== updated.subQuestions.length)

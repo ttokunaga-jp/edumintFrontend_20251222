@@ -21,7 +21,7 @@ type Problem = {
   meta: {
     subject?: string;
     professor?: string;
-    difficulty?: "basic" | "intermediate" | "advanced";
+    level?: "basic" | "intermediate" | "advanced";
     tags?: string[];
   };
   blocks: ContentBlock[];
